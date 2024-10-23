@@ -14,6 +14,7 @@
         *ngIf="
           teamForm.get('teamName')?.invalid && teamForm.get('teamName')?.touched
         "
+        class="error-message"
       >
         Team Name is required.
       </div>
@@ -40,6 +41,7 @@
               player.get('playerName')?.invalid &&
               player.get('playerName')?.touched
             "
+            class="error-message"
           >
             Player Name is required.
           </div>
@@ -53,6 +55,7 @@
               player.get('birthDate')?.invalid &&
               player.get('birthDate')?.touched
             "
+            class="error-message"
           >
             Birth Date is required.
           </div>
@@ -70,6 +73,7 @@
               player.get('shirtSize')?.invalid &&
               player.get('shirtSize')?.touched
             "
+            class="error-message"
           >
             Shirt Size is required.
           </div>
@@ -101,6 +105,7 @@
           teamForm.get('contactPhone')?.invalid &&
           teamForm.get('contactPhone')?.touched
         "
+        class="error-message"
       >
         Valid 10-digit phone number is required.
       </div>
@@ -118,6 +123,7 @@
           teamForm.get('contactEmail')?.invalid &&
           teamForm.get('contactEmail')?.touched
         "
+        class="error-message"
       >
         Valid email is required.
       </div>
