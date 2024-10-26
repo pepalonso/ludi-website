@@ -1,0 +1,17 @@
+{
+  "name": "write-to-db-test",
+  "version": "1.0.0",
+  "description": "Aixo es una funcio lambda que escriura les dades dels equips del ludi3x3 a la basa de dades",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "docker build -t my-db ./database && sam build",
+    "start": "docker run -d -p 8001:8001 my-db && sam local start-api"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "uuid": "^10.0.0"
+  }
+}
