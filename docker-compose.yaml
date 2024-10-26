@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: client
+    ports:
+      - "4200:4200"
+    command: npm start
+    volumes:
+      - .:/app # Mount the entire root directory
+      - /app/node_modules # Prevent conflicts
+    depends_on:
+      - server
+
+  server:
+    image: public.ecr.aws/sam/build-nodejs20.x:1.126.0-20241017233703
+    container_name: server
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/app
+    working_dir: /app
+    environment:
+      - DOCKER_LAMBDA_USE_STDIN=1
+    command: >
+      sh -c "sam build && sam local start-api --host 0.0.0.0 --port 3000"
+    depends_on:
+      - dynamodb
+    links:
+      - dynamodb
+
+  dynamodb:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    container_name: dynamodb
+    ports:
+      - "8001:8001"
+
+volumes:
+  db_data:
