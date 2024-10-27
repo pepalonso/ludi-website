@@ -5,11 +5,11 @@ Resources:
   writetodbtest:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: .
+      CodeUri: src
       Description: ""
       MemorySize: 128
       Timeout: 10
-      Handler: src/index.handler
+      Handler: index.handler
       Runtime: nodejs20.x
       Architectures:
         - x86_64

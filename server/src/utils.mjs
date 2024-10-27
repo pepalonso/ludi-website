@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import { ScanCommand } from "@aws-sdk/lib-dynamodb";
-import { getTableName } from "./config.js";
+import { getTableName } from "./config.mjs";
 
 //data en la que s'ha fet la inscripció
 export const getDate = () => {

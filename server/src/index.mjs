@@ -1,8 +1,8 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 import { v4 as uuid } from "uuid";
-import { getDynamoDbConfig, getTableName } from "./config.js";
-import { checkExistingFields, getDate } from "./utils.js";
+import { getDynamoDbConfig, getTableName } from "./config.mjs";
+import { checkExistingFields, getDate } from "./utils.mjs";
 
 export const handler = async (event) => {
   const dynamoDbConfig = getDynamoDbConfig();
