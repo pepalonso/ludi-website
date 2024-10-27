@@ -7,12 +7,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "docker build -t my-db ./database && sam build",
-    "start": "docker run -d -p 8001:8001 my-db && sam local start-api"
+    "start": "sam build && docker run -d -p 8001:8001 my-db && sam local start-api"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "luxon": "^3.5.0",
     "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.11.0"
   }
 }
