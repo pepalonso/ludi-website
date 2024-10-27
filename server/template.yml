@@ -50,6 +50,12 @@ Resources:
                 - logs:PutLogEvents
               Resource:
                 - arn:aws:logs:eu-west-3:545009840390:log-group:/aws/lambda/write-to-db-test:*
+            - Sid: SESEmailSendPolicy
+              Effect: Allow
+              Action:
+                - ses:SendEmail
+                - ses:SendRawEmail
+              Resource: arn:aws:ses:eu-west-3:545009840390:identity/pepalonsocosta@gmail.com
       RecursiveLoop: Terminate
       SnapStart:
         ApplyOn: None

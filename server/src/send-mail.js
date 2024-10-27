@@ -3,7 +3,7 @@ import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 export const sendEmail = async (toAddress, subject, bodyText) => {
   const client = new SESClient({ region: "eu-west-3" });
   const params = {
-    Source: "ludi3x3@gmail.com",
+    Source: "pepalonsocosta@gmail.com",
     Destination: { ToAddresses: [toAddress] },
     Message: {
       Subject: { Data: subject },
