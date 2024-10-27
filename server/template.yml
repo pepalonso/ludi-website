@@ -8,7 +8,7 @@ Resources:
       CodeUri: .
       Description: ""
       MemorySize: 128
-      Timeout: 3
+      Timeout: 10
       Handler: src/index.handler
       Runtime: nodejs20.x
       Architectures:

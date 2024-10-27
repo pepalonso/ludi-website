@@ -6,6 +6,7 @@ import {
 } from "@aws-sdk/lib-dynamodb";
 import { v4 as uuid } from "uuid";
 import { getDynamoDbConfig, getTableName } from "./config.js";
+import { getDate } from "./utils.js";
 
 export const handler = async (event) => {
   const dynamoDbConfig = getDynamoDbConfig();
@@ -27,13 +28,18 @@ export const handler = async (event) => {
   }
 
   const new_id = uuid();
+  const date = getDate();
+  console.log("date", date);
   const team_name = body.NOM_EQUIP;
 
   const scan_params = {
     TableName: table,
-    FilterExpression: "NOM_EQUIP = :value",
+    FilterExpression:
+      "NOM_EQUIP = :teamName OR NUMERO_CONTACTE = :contactNumber OR MAIL_CONTACTE = :email",
     ExpressionAttributeValues: {
-      ":value": team_name,
+      ":teamName": team_name,
+      ":contactNumber": body.NUMERO_CONTACTE,
+      ":email": body.MAIL_CONTACTE,
     },
   };
 
@@ -60,11 +66,28 @@ export const handler = async (event) => {
     Item: {
       ID_EQUIP: new_id,
       NOM_EQUIP: team_name,
+      DATA_INCRIPCIO: date,
+
       NOM_JUGADOR_1: body.NOM_JUGADOR_1,
       NOM_JUGADOR_2: body.NOM_JUGADOR_2,
       NOM_JUGADOR_3: body.NOM_JUGADOR_3,
-      NOM_JUGADOR_4: body.NOM_JUGADOR_4,
-      NOM_JUGADOR_5: body.NOM_JUGADOR_5,
+      ...(body.NOM_JUGADOR_4 && { NOM_JUGADOR_4: body.NOM_JUGADOR_4 }),
+      ...(body.NOM_JUGADOR_5 && { NOM_JUGADOR_5: body.NOM_JUGADOR_5 }),
+
+      TALLA_JUGADOR_1: body.TALLA_JUGADOR_1,
+      TALLA_JUGADOR_2: body.TALLA_JUGADOR_2,
+      TALLA_JUGADOR_3: body.TALLA_JUGADOR_3,
+      ...(body.TALLA_JUGADOR_4 && { TALLA_JUGADOR_4: body.TALLA_JUGADOR_4 }),
+      ...(body.TALLA_JUGADOR_5 && { TALLA_JUGADOR_5: body.TALLA_JUGADOR_5 }),
+
+      DATA_JUGADOR_1: body.DATA_JUGADOR_1,
+      DATA_JUGADOR_2: body.DATA_JUGADOR_2,
+      DATA_JUGADOR_3: body.DATA_JUGADOR_3,
+      ...(body.DATA_JUGADOR_4 && { DATA_JUGADOR_4: body.DATA_JUGADOR_4 }),
+      ...(body.DATA_JUGADOR_5 && { DATA_JUGADOR_5: body.DATA_JUGADOR_5 }),
+
+      NUMERO_CONTACTE: body.NUMERO_CONTACTE,
+      MAIL_CONTACTE: body.MAIL_CONTACTE,
     },
   };
   console.log("params", { params });
@@ -75,7 +98,11 @@ export const handler = async (event) => {
 
     const response = {
       statusCode: 200,
-      body: JSON.stringify({ message: "Equip afegit correctament", data }),
+      body: JSON.stringify({
+        message: "Equip afegit correctament",
+        data,
+        id_equip: new_id,
+      }),
     };
     return response;
   } catch (err) {
