@@ -60,10 +60,27 @@ Resources:
       SnapStart:
         ApplyOn: None
       Events:
-        Api1:
+        Api1Post:
           Type: Api
           Properties:
             Path: /put-item
             Method: POST
-      RuntimeManagementConfig:
-        UpdateRuntimeOn: Auto
+            Cors:
+              AllowOrigins: "'http://localhost:4200,https://www.ludibasquet.com'"
+              AllowMethods: "'OPTIONS,POST,GET'"
+              AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              MaxAge: "'600'"
+        Api1Options:
+          Type: Api
+          Properties:
+            Path: /put-item
+            Method: OPTIONS
+            ResponseParameters:
+              Method:
+                Headers:
+                  Access-Control-Allow-Origin: "'http://localhost:4200,https://www.ludibasquet.com'"
+                  Access-Control-Allow-Methods: "'OPTIONS,POST,GET'"
+                  Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  Access-Control-Allow-Credentials: "'true'"
+    RuntimeManagementConfig:
+      UpdateRuntimeOn: Auto
