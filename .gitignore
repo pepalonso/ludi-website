@@ -46,4 +46,10 @@ Thumbs.db
 
 node_modules
 
+
+#ingnores sam build
 .aws-sam
+
+#ingnores env variables
+
+.env
