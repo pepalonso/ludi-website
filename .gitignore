@@ -53,3 +53,8 @@ node_modules
 #ingnores env variables
 
 .env
+
+
+#inglore .angular
+
+.angular/
