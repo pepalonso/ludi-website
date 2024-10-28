@@ -5,16 +5,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TeamData } from '../../interfaces/team-data.interface';
 import axios from 'axios';
 import { environment } from '../../../environments/environment';
+import { MatIconModule } from '@angular/material/icon';
+
 
 @Component({
   selector: 'app-ludi3x3',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatIconModule],
   templateUrl: './ludi3x3.component.html',
   styleUrls: ['./ludi3x3.component.css'],
 })
 export class Ludi3x3Component {
   teamForm: FormGroup;
+  jugadorForm: FormGroup;
+  playersList: Array<any> = [];
 
   constructor(private fb: FormBuilder) {
     this.teamForm = this.fb.group({
@@ -23,8 +27,11 @@ export class Ludi3x3Component {
       contactPhone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       contactEmail: ['', [Validators.required, Validators.email]],
     });
-
-    this.addPlayer(); // Add initial players
+    this.jugadorForm = this.fb.group({
+      playerName: ['', Validators.required],
+      birthDate: ['', Validators.required],
+      shirtSize: ['', Validators.required]
+    });
   }
 
   // Getter for players array
@@ -32,24 +39,33 @@ export class Ludi3x3Component {
     return this.teamForm.get('players') as FormArray;
   }
 
-  // Add a new player to the players array
-  addPlayer() {
-    if (this.players.length < 5) {
-      this.players.push(
-        this.fb.group({
-          playerName: ['', Validators.required],
-          birthDate: ['', Validators.required],
-          shirtSize: ['', Validators.required],
-        })
-      );
+  addPlayerToList() {
+    if (this.jugadorForm.valid) {
+      // Agrega una copia del formulario del jugador a la lista
+      this.playersList.push(this.jugadorForm.value);
+
+      // Reinicia el formulario del jugador para que esté vacío nuevamente
+      this.jugadorForm.reset();
+    } else {
+      // Marca todos los campos como "touched" para mostrar errores si no están llenos
+      this.jugadorForm.markAllAsTouched();
     }
   }
 
-  // Remove a player from the list
-  removePlayer(index: number) {
-    if (this.players.length > 3) {
-      this.players.removeAt(index);
-    }
+  addPlayer() {
+    const playerForm = this.fb.group({
+      playerName: ['', Validators.required],
+      birthDate: ['', Validators.required],
+      shirtSize: ['', Validators.required]
+    });
+
+    this.players.push(playerForm);
+  }
+
+  savePlayer(i: number) {
+    const playerData = this.players.at(i).value; // Obtiene los datos del jugador actual
+    this.playersList.push(playerData); // Agrega los datos a la lista de jugadores
+    this.players.removeAt(i); // Opcional: elimina el formulario de la lista
   }
 
   async onSubmit() {
