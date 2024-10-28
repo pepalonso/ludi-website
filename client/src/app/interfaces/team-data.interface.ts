@@ -1,6 +1,12 @@
 export interface TeamData {
   NOM_EQUIP: string;
-  JUGADORS: { NOM: string; NEIXAMENT: string; TALLA_SAMARRETA: string }[];
+  JUGADORS: JugadorData[];
   NUMERO_CONTACTE: string;
   MAIL_CONTACTE: string;
+}
+
+export interface JugadorData {
+  NOM: string;
+  NEIXAMENT: string;
+  TALLA_SAMARRETA: string;
 }
