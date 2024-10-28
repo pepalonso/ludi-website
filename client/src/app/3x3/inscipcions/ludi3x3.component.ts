@@ -1,9 +1,10 @@
-// app/3x3/inscripcions/ludi3x3.component.ts
-
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TeamData } from '../../interfaces/team-data.interface';
+import axios from 'axios';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-ludi3x3',
@@ -51,10 +52,34 @@ export class Ludi3x3Component {
     }
   }
 
-  // Submit form
-  onSubmit() {
+  async onSubmit() {
     if (this.teamForm.valid) {
-      console.log(this.teamForm.value);
+      const teamData: TeamData = {
+        NOM_EQUIP: this.teamForm.value.teamName,
+        NUMERO_CONTACTE: this.teamForm.value.contactPhone,
+        MAIL_CONTACTE: this.teamForm.value.contactEmail,
+        JUGADORS: this.players.value.map((player: any) => ({
+          NOM: player.playerName,
+          NEIXAMENT: player.birthDate,
+          TALLA_SAMARRETA: player.shirtSize,
+        })),
+      };
+
+      try {
+        const response = await axios.post(
+          environment.apiUrl + '/put-item',
+          teamData,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        console.log('Form submitted successfully', response.data);
+      } catch (error) {
+        console.error('Error submitting form', error);
+      }
     } else {
       console.log('Form is invalid');
     }

@@ -1,0 +1,86 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: A lambda function that atempts to write data into a dynamoDB table, wich is routed through an api
+Resources:
+  writetodbtest:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Description: ""
+      MemorySize: 128
+      Timeout: 10
+      Handler: index.handler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      EphemeralStorage:
+        Size: 512
+      Environment:
+        Variables:
+          table_name: 3x3_Test
+      EventInvokeConfig:
+        MaximumEventAgeInSeconds: 21600
+        MaximumRetryAttempts: 2
+      PackageType: Zip
+      Policies:
+        - Statement:
+            - Sid: VisualEditor0
+              Effect: Allow
+              Action:
+                - dynamodb:Scan
+                - dynamodb:PutItem
+              Resource: arn:aws:dynamodb:*:545009840390:table/*/index/*
+            - Sid: VisualEditor1
+              Effect: Allow
+              Action:
+                - dynamodb:PutItem
+                - dynamodb:GetItem
+                - dynamodb:Scan
+                - dynamodb:Query
+                - dynamodb:UpdateItem
+                - dynamodb:UpdateTable
+              Resource: arn:aws:dynamodb:*:545009840390:table/*
+            - Effect: Allow
+              Action:
+                - logs:CreateLogGroup
+              Resource: arn:aws:logs:eu-west-3:545009840390:*
+            - Effect: Allow
+              Action:
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+              Resource:
+                - arn:aws:logs:eu-west-3:545009840390:log-group:/aws/lambda/write-to-db-test:*
+            - Sid: SESEmailSendPolicy
+              Effect: Allow
+              Action:
+                - ses:SendEmail
+                - ses:SendRawEmail
+              Resource: arn:aws:ses:eu-west-3:545009840390:identity/pepalonsocosta@gmail.com
+      RecursiveLoop: Terminate
+      SnapStart:
+        ApplyOn: None
+      Events:
+        Api1Post:
+          Type: Api
+          Properties:
+            Path: /put-item
+            Method: POST
+            Cors:
+              AllowOrigins: "'http://localhost:4200,https://www.ludibasquet.com'"
+              AllowMethods: "'OPTIONS,POST,GET'"
+              AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              MaxAge: "'600'"
+        Api1Options:
+          Type: Api
+          Properties:
+            Path: /put-item
+            Method: OPTIONS
+            ResponseParameters:
+              Method:
+                Headers:
+                  Access-Control-Allow-Origin: "'http://localhost:4200,https://www.ludibasquet.com'"
+                  Access-Control-Allow-Methods: "'OPTIONS,POST,GET'"
+                  Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  Access-Control-Allow-Credentials: "'true'"
+    RuntimeManagementConfig:
+      UpdateRuntimeOn: Auto

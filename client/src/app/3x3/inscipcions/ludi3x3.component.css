@@ -1,0 +1,183 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+* {
+  font-family: sans-serif;
+}
+
+body {
+  height: 100%;
+  min-height: 100vh;
+  margin: -8px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+  background-color: #000000d7;
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 10px 20px rgb(0, 0, 0);
+  border-radius: 10px;
+  min-height: fit-content;
+  box-sizing: border-box; 
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  align-self : center;
+}
+
+.form-group {
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 90%;
+  padding: 20px;
+  background-color: #333;
+  border: 2px solid #fcb900;
+  border-radius: 8px; 
+  box-shadow: 5px 5px 0px #362800;
+}
+
+.form-group2 {
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+input {
+  width: 96%;
+  padding: 10px;
+  border: 2px solid white;
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  font-size: 1.1em;
+  outline: none;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+input:focus {
+  border-color: #fcb900;
+}
+
+input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
+  transform: translateY(-31px);
+  font-size: 0.9em;
+  color: #fcb900;
+}
+
+label {
+  position: absolute;
+  top: 45%;
+  left: 30px;
+  transform: translateY(-45%);
+  transition: 0.3s ease all;
+  color: rgb(141, 141, 141);
+  font-weight: bold;
+  pointer-events: none;
+  background-color: #333;
+  padding: 5px 5px 0 5px;
+}
+
+input:focus ~ .label2,
+input:not(:placeholder-shown) ~ .label2 {
+  transform: translateY(-33px);
+  font-size: 0.9em;
+  color: #fcb900;
+}
+
+.label2 {
+  position: absolute;
+  top: 45%;
+  left: 10px;
+  transform: translateY(-45%);
+  transition: 0.3s ease all;
+  color: white;
+  font-weight: bold;
+  pointer-events: none;
+  background-color: #333;
+  padding: 5px 5px 0 5px;
+}
+
+button {
+  margin-top: 10px;
+}
+
+.error-message {
+  color: red;
+  font-size: 8;
+}
+
+
+.ctti-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+.ctti-table th {
+  background-color: #f9f9f9;
+  color: #333;
+  text-align: left;
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+.ctti-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.ctti-table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.ctti-table th,
+.ctti-table td {
+  text-align: left;
+}
+
+.ctti-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.action-btn {
+  border: 1px solid #ddd;
+  background-color: white;
+  padding: 5px;
+  margin: 0 2px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-btn i,
+.delete-btn i {
+  font-size: 14px;
+}
+
+.edit-btn:hover {
+  background-color: #e0f7fa; /* light blue on hover for edit */
+}
+
+.delete-btn:hover {
+  background-color: #ffebee; /* light red on hover for delete */
+}
+
+.edit-btn {
+  color: #2196f3; /* blue color for edit icon */
+}
+
+.delete-btn {
+  color: #f44336; /* red color for delete icon */
+}
