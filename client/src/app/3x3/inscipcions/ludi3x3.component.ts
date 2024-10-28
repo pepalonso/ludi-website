@@ -54,13 +54,28 @@ export class Ludi3x3Component {
 
   async onSubmit() {
     if (this.teamForm.valid) {
-      const teamData: TeamData = this.teamForm.value;
+      const teamData: TeamData = {
+        NOM_EQUIP: this.teamForm.value.teamName,
+        NUMERO_CONTACTE: this.teamForm.value.contactPhone,
+        MAIL_CONTACTE: this.teamForm.value.contactEmail,
+        JUGADORS: this.players.value.map((player: any) => ({
+          NOM: player.playerName,
+          NEIXAMENT: player.birthDate,
+          TALLA_SAMARRETA: player.shirtSize,
+        })),
+      };
 
       try {
         const response = await axios.post(
           environment.apiUrl + '/put-item',
-          teamData
+          teamData,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
         );
+
         console.log('Form submitted successfully', response.data);
       } catch (error) {
         console.error('Error submitting form', error);
