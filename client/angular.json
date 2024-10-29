@@ -22,6 +22,7 @@
               "path": "src/custom-webpack.config.ts"
             },
             "assets": [
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
@@ -86,5 +87,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "45b014bd-4541-45f8-94d2-e70fa1300b67"
   }
 }
