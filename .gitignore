@@ -55,6 +55,7 @@ node_modules
 .env
 
 
-#inglore .angular
+#inglore .angular and dist sonce are generated during build
 
 .angular/
+client/dist/
