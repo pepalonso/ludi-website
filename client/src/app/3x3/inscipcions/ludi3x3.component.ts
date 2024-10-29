@@ -1,69 +1,101 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TeamData } from '../../interfaces/team-data.interface';
+import { TeamData, JugadorData } from '../../interfaces/team-data.interface';
 import axios from 'axios';
 import { environment } from '../../../environments/environment';
+import { MatIconModule } from '@angular/material/icon';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-ludi3x3',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatIconModule],
   templateUrl: './ludi3x3.component.html',
   styleUrls: ['./ludi3x3.component.css'],
 })
 export class Ludi3x3Component {
   teamForm: FormGroup;
+  jugadorForm: FormGroup;
+  playersList: Array<any> = [];
 
   constructor(private fb: FormBuilder) {
     this.teamForm = this.fb.group({
       teamName: ['', Validators.required],
-      players: this.fb.array([]), // Dynamically add players (3 to 5)
-      contactPhone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      contactPhone: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       contactEmail: ['', [Validators.required, Validators.email]],
     });
-
-    this.addPlayer(); // Add initial players
+    this.jugadorForm = this.fb.group({
+      playerName: ['', Validators.required],
+      birthDate: ['', [Validators.required, this.validadorEdatMinima(15)]],
+      shirtSize: ['', Validators.required],
+    });
   }
 
-  // Getter for players array
+  validadorEdatMinima(edatMinima: number) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const neixament = DateTime.fromISO(control.value);
+      const avui = DateTime.now();
+      const edatJugador = avui.diff(neixament, 'years').years;
+      return edatJugador >= edatMinima
+        ? null
+        : {
+            minimumAge: {
+              requiredAge: edatMinima,
+              actualAge: Math.floor(edatJugador),
+            },
+          };
+    };
+  }
+
   get players(): FormArray {
     return this.teamForm.get('players') as FormArray;
   }
 
-  // Add a new player to the players array
-  addPlayer() {
-    if (this.players.length < 5) {
-      this.players.push(
-        this.fb.group({
-          playerName: ['', Validators.required],
-          birthDate: ['', Validators.required],
-          shirtSize: ['', Validators.required],
-        })
-      );
+  addPlayerToList() {
+    //TODO: MAXIM 5 JUGADORS
+    if (this.jugadorForm.valid) {
+      this.playersList.push(this.jugadorForm.value);
+
+      this.jugadorForm.reset();
+    } else {
+      this.jugadorForm.markAllAsTouched();
     }
   }
 
-  // Remove a player from the list
-  removePlayer(index: number) {
-    if (this.players.length > 3) {
-      this.players.removeAt(index);
+  editPlayer(player: JugadorData) {
+    this.removePlayerFromList(player);
+    this.jugadorForm.reset(player);
+  }
+
+  removePlayerFromList(player: JugadorData) {
+    const index = this.playersList.indexOf(player);
+    if (index !== -1) {
+      this.playersList.splice(index, 1);
     }
   }
 
   async onSubmit() {
-    if (this.teamForm.valid) {
+    if (this.teamForm.valid && this.playersList.length >= 3) {
       const teamData: TeamData = {
         NOM_EQUIP: this.teamForm.value.teamName,
         NUMERO_CONTACTE: this.teamForm.value.contactPhone,
         MAIL_CONTACTE: this.teamForm.value.contactEmail,
-        JUGADORS: this.players.value.map((player: any) => ({
-          NOM: player.playerName,
-          NEIXAMENT: player.birthDate,
-          TALLA_SAMARRETA: player.shirtSize,
+        JUGADORS: this.playersList.map((jugador) => ({
+          NOM: jugador.playerName,
+          NEIXAMENT: jugador.birthDate,
+          TALLA_SAMARRETA: jugador.shirtSize,
         })),
       };
+      console.log('Trying to send data to backend', teamData);
 
       try {
         const response = await axios.post(

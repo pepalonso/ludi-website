@@ -1,121 +1,196 @@
 <!-- app/3x3/inscripcions/ludi3x3.component.html -->
+<header>
+  <div class="carousel">
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+    <img src="../../../assets/logo1.png" alt="Logo" />
+  </div>
+</header>
 <body class="body">
   <div class="container">
-    <h1>L U D I</h1>
     <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <input
-          type="text"
-          id="teamName"
-          formControlName="teamName"
-          placeholder=" "
-          required
-        />
-        <label for="teamName">Nom del equip</label>
-        <!-- <div *ngIf="teamForm.get('teamName')?.invalid && teamForm.get('teamName')?.touched" class="error-message">
-          Team Name is required.
-        </div> -->
-      </div>
+      <div class="primerGrup">
+        <div class="form-group">
+          <input
+            type="text"
+            id="teamName"
+            formControlName="teamName"
+            placeholder=" "
+            required
+          />
+          <label for="teamName">Nom del equip</label>
+          <div *ngIf="teamForm.get('teamName')?.invalid && teamForm.get('teamName')?.touched" class="error-message">
+            Team Name is required.
+          </div>
+        </div>
 
+        <div class="form-group">
+          <input
+            id="contactPhone"
+            formControlName="contactPhone"
+            placeholder=" "
+          />
+          <label for="contactPhone">Contact Phone</label>
+          <div
+            *ngIf="
+              teamForm.get('contactPhone')?.invalid &&
+              teamForm.get('contactPhone')?.touched
+            "
+            class="error-message"
+          >
+            Valid 10-digit phone number is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input
+            id="contactEmail"
+            formControlName="contactEmail"
+            placeholder=" "
+          />
+          <label for="contactEmail">Contact Email</label>
+          <div
+            *ngIf="
+              teamForm.get('contactEmail')?.invalid &&
+              teamForm.get('contactEmail')?.touched
+            "
+            class="error-message"
+          >
+            Valid email is required.
+          </div>
+        </div>
+      </div>
       <div>
         <h2>Jugadors (3 a 5 jugadors)</h2>
         <table class="ctti-table" role="table">
           <thead role="rowgroup">
-             <tr role="row">
-                <th role="columnheader">Nom Jugador/a</th>
-                <th role="columnheader">Data Naixement</th>
-                <th role="columnheader">Tamany Samarreta</th>
-                <th role="columnheader">Accions</th>
-             </tr>
+            <tr role="row">
+              <th role="columnheader">Nom Jugador/a</th>
+              <th role="columnheader">Data Naixement</th>
+              <th role="columnheader">Tamany Samarreta</th>
+              <th role="columnheader"></th>
+            </tr>
           </thead>
           <tbody role="rowgroup">
-             <tr role="row">
-                <td role="cell">body</td>
-                <td role="cell">body</td>
-                <td role="cell">body</td>
-                <td role="cell">
-                  <button class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></button>
-                  <button class="action-btn delete-btn" title="Delete"><i class="fas fa-trash-alt"></i></button>
-                </td>
-             </tr>
+            <tr *ngFor="let player of playersList" role="row">
+              <td role="cell">{{ player.playerName }}</td>
+              <td role="cell">{{ player.birthDate }}</td>
+              <td role="cell">{{ player.shirtSize }}</td>
+              <td role="cell">
+                <button
+                  class="action-btn edit-btn"
+                  title="Edit"
+                  (click)="editPlayer(player)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  class="action-btn delete-btn"
+                  title="Delete"
+                  (click)="removePlayerFromList(player)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
           </tbody>
-       </table>
+        </table>
       </div>
 
-      <div *ngFor="let player of players.controls; let i = index" [formGroupName]="i">
-        <div class="form-group">
-          <div class="form-group2">
-            <input id="playerName" formControlName="playerName" placeholder=" " required/>
-            <label class="label2" for="playerName">Nom jugador/a</label>
-          </div>
-
-          <div *ngIf="player.get('playerName')?.invalid && player.get('playerName')?.touched" class="error-message">
+      <div [formGroup]="jugadorForm" class="form-group">
+        <div class="form-group2">
+          <input
+            id="playerName"
+            formControlName="playerName"
+            placeholder=" "
+            required
+          />
+          <label class="label2" for="playerName">Nom jugador/a</label>
+          <div
+            *ngIf="
+              jugadorForm.get('playerName')?.invalid &&
+              jugadorForm.get('playerName')?.touched
+            "
+            class="error-message"
+          >
             Player Name is required.
           </div>
+        </div>
 
-          <div class="form-group2">
-            <input type="date" id="birthDate" formControlName="birthDate" />
-            <label class="label2" for="birthDate">Data Naixement</label>
-          </div>
-
-          <div *ngIf="player.get('birthDate')?.invalid && player.get('birthDate')?.touched" class="error-message" >
+        <div class="form-group2">
+          <input
+            type="date"
+            id="birthDate"
+            formControlName="birthDate"
+            required
+          />
+          <label class="label2" for="birthDate">Data Naixement</label>
+          <div
+            *ngIf="
+              jugadorForm.get('birthDate')?.invalid &&
+              jugadorForm.get('birthDate')?.touched
+            "
+            class="error-message"
+          >
             Birth Date is required.
           </div>
+        </div>
 
-          <div class="form-group2">
-            <input id="shirtSize" formControlName="shirtSize" placeholder=" " required/>
-            <label class="label2" for="shirtSize">Tamany samarreta</label>
+        <div class="form-group2">
+          
+          <select
+            id="shirtSize"
+            formControlName="shirtSize"
+            required
+          >
+            <option value="" disabled selected hidden>Seleccione una talla</option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+          </select>
+          <label class="label2" for="shirtSize">Tamany samarreta</label>
+          <div
+            *ngIf="
+              jugadorForm.get('shirtSize')?.invalid &&
+              jugadorForm.get('shirtSize')?.touched
+            "
+            class="error-message"
+          >
+            Shirt Size is required.
           </div>
+        </div>
+        
 
-          <div *ngIf="player.get('shirtSize')?.invalid && player.get('shirtSize')?.touched" class="error-message">
-            Player Name is required.
-          </div>
+        <div class="centerButton">
+          <button type="button" (click)="addPlayerToList()">
+            Guardar jugador
+          </button>
         </div>
       </div>
 
-      <button *ngIf="players.length < 5" type="button" (click)="addPlayer()">
-        Add Player
+      
+      <button
+        type="submit"
+        [disabled]="teamForm.invalid || playersList.length < 3"
+      >
+        Submit
       </button>
-
-      <div class="form-group">
-        
-        <input
-          id="contactPhone"
-          formControlName="contactPhone"
-          placeholder="Enter phone number"
-        />
-        <label for="contactPhone">Contact Phone</label>
-        <div
-          *ngIf="
-            teamForm.get('contactPhone')?.invalid &&
-            teamForm.get('contactPhone')?.touched
-          "
-          class="error-message"
-        >
-          Valid 10-digit phone number is required.
-        </div>
-      </div>
-
-      <div class="form-group">
-        
-        <input
-          id="contactEmail"
-          formControlName="contactEmail"
-          placeholder="Enter email"
-        />
-        <label for="contactEmail">Contact Email</label>
-        <div
-          *ngIf="
-            teamForm.get('contactEmail')?.invalid &&
-            teamForm.get('contactEmail')?.touched
-          "
-          class="error-message"
-        >
-          Valid email is required.
-        </div>
-      </div>
-
-      <button type="submit" [disabled]="teamForm.invalid">Submit</button>
     </form>
   </div>
 </body>
