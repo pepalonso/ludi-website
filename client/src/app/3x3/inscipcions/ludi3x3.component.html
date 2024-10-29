@@ -6,20 +6,57 @@
 <body class="body">
   <div class="container">
     <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <input
-          type="text"
-          id="teamName"
-          formControlName="teamName"
-          placeholder=" "
-          required
-        />
-        <label for="teamName">Nom del equip</label>
-        <!-- <div *ngIf="teamForm.get('teamName')?.invalid && teamForm.get('teamName')?.touched" class="error-message">
-          Team Name is required.
-        </div> -->
-      </div>
+      <div class="primerGrup">
+        <div class="form-group">
+          <input
+            type="text"
+            id="teamName"
+            formControlName="teamName"
+            placeholder=" "
+            required
+          />
+          <label for="teamName">Nom del equip</label>
+          <div *ngIf="teamForm.get('teamName')?.invalid && teamForm.get('teamName')?.touched" class="error-message">
+            Team Name is required.
+          </div>
+        </div>
 
+        <div class="form-group">
+          <input
+            id="contactPhone"
+            formControlName="contactPhone"
+            placeholder=" "
+          />
+          <label for="contactPhone">Contact Phone</label>
+          <div
+            *ngIf="
+              teamForm.get('contactPhone')?.invalid &&
+              teamForm.get('contactPhone')?.touched
+            "
+            class="error-message"
+          >
+            Valid 10-digit phone number is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input
+            id="contactEmail"
+            formControlName="contactEmail"
+            placeholder=" "
+          />
+          <label for="contactEmail">Contact Email</label>
+          <div
+            *ngIf="
+              teamForm.get('contactEmail')?.invalid &&
+              teamForm.get('contactEmail')?.touched
+            "
+            class="error-message"
+          >
+            Valid email is required.
+          </div>
+        </div>
+      </div>
       <div>
         <h2>Jugadors (3 a 5 jugadors)</h2>
         <table class="ctti-table" role="table">
@@ -65,7 +102,7 @@
             placeholder=" "
             required
           />
-          <label for="playerName">Nom jugador/a</label>
+          <label class="label2" for="playerName">Nom jugador/a</label>
           <div
             *ngIf="
               jugadorForm.get('playerName')?.invalid &&
@@ -84,7 +121,7 @@
             formControlName="birthDate"
             required
           />
-          <label for="birthDate">Data Naixement</label>
+          <label class="label2" for="birthDate">Data Naixement</label>
           <div
             *ngIf="
               jugadorForm.get('birthDate')?.invalid &&
@@ -97,13 +134,21 @@
         </div>
 
         <div class="form-group2">
-          <input
+          
+          <select
             id="shirtSize"
             formControlName="shirtSize"
-            placeholder=" "
             required
-          />
-          <label for="shirtSize">Tamany samarreta</label>
+          >
+            <option value="" disabled selected hidden>Seleccione una talla</option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+          </select>
+          <label class="label2" for="shirtSize">Tamany samarreta</label>
           <div
             *ngIf="
               jugadorForm.get('shirtSize')?.invalid &&
@@ -114,49 +159,16 @@
             Shirt Size is required.
           </div>
         </div>
+        
 
-        <!-- Botón para agregar el jugador a la lista -->
-        <button type="button" (click)="addPlayerToList()">
-          Guardar jugador
-        </button>
-      </div>
-
-      <div class="form-group">
-        <input
-          id="contactPhone"
-          formControlName="contactPhone"
-          placeholder="Enter phone number"
-        />
-        <label for="contactPhone">Contact Phone</label>
-        <div
-          *ngIf="
-            teamForm.get('contactPhone')?.invalid &&
-            teamForm.get('contactPhone')?.touched
-          "
-          class="error-message"
-        >
-          Valid 10-digit phone number is required.
+        <div class="centerButton">
+          <button type="button" (click)="addPlayerToList()">
+            Guardar jugador
+          </button>
         </div>
       </div>
 
-      <div class="form-group">
-        <input
-          id="contactEmail"
-          formControlName="contactEmail"
-          placeholder="Enter email"
-        />
-        <label for="contactEmail">Contact Email</label>
-        <div
-          *ngIf="
-            teamForm.get('contactEmail')?.invalid &&
-            teamForm.get('contactEmail')?.touched
-          "
-          class="error-message"
-        >
-          Valid email is required.
-        </div>
-      </div>
-
+      
       <button
         type="submit"
         [disabled]="teamForm.invalid || playersList.length < 3"

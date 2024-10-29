@@ -5,7 +5,6 @@ h1 {
 }
 
 header {
-  margin: -8px;
   margin-top: -25px;
   margin-bottom: -25px;
   padding: -8px;
@@ -16,13 +15,12 @@ header {
 body {
   height: 100%;
   min-height: 100vh;
-  margin: -8px;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: Arial, sans-serif;
-  background-color:#000000;
+  background-color:#131313;
 }
 
 .container {
@@ -48,7 +46,7 @@ h1 {
   position: relative;
   margin-top: 10px;
   margin-bottom: 10px;
-  width: 90%;
+  width: 94%;
   padding: 20px;
   background-color: #333;
   border: 2px solid #fcb900;
@@ -58,8 +56,8 @@ h1 {
 
 .form-group2 {
   position: relative;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 40px;
   width: 100%;
 }
 
@@ -124,51 +122,72 @@ button {
 }
 
 .error-message {
+  position: absolute;
+  top: 100%;
+  left: 0;
   color: red;
-  font-size: 8;
+  font-size: 14px;
+  margin-top: 5px;
+  white-space: nowrap;
 }
 
+.primerGrup .form-group .error-message {
+  position: absolute;
+  top: 70%;
+  left: 0;
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-left: 20px;
+  white-space: nowrap;
+}
 
 .ctti-table {
   width: 100%;
   border-collapse: collapse;
   font-family: Arial, sans-serif;
+  border-radius: 10px;
+}
+
+thead {
+  background-color: #333;
 }
 
 .ctti-table th {
-  background-color: #f9f9f9;
-  color: #333;
-  text-align: left;
+  color: #fcb900;
   padding: 10px;
   font-weight: bold;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #fcb900;
 }
 
 .ctti-table td {
+  color: white;
   padding: 10px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #fcb900;
 }
 
 .ctti-table tr:nth-child(even) {
-  background-color: #fafafa;
+  background-color: #707070a9;
 }
 
 .ctti-table th,
 .ctti-table td {
-  text-align: left;
+  text-align: center;
 }
 
 .ctti-table tbody tr:hover {
-  background-color: #f1f1f1;
+  background-color: #999999;
 }
 
 .action-btn {
-  border: 1px solid #ddd;
-  background-color: white;
+  width: 40%;
+  border: 2px solid #ffffff;
+  background-color: #333;
   padding: 5px;
   margin: 0 2px;
   border-radius: 4px;
   cursor: pointer;
+  transition: border-color 0.3s ease, color 0.3s ease;
 }
 
 .edit-btn i,
@@ -177,11 +196,11 @@ button {
 }
 
 .edit-btn:hover {
-  background-color: #e0f7fa; /* light blue on hover for edit */
+  border-color: #fcb900;
 }
 
 .delete-btn:hover {
-  background-color: #ffebee; /* light red on hover for delete */
+  border-color: #fcb900;
 }
 
 .edit-btn {
@@ -191,3 +210,52 @@ button {
 .delete-btn {
   color: #f44336; /* red color for delete icon */
 }
+
+
+select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid white;
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  font-size: 1.1em;
+  outline: none;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+select:focus ~ .label2,
+select:not(:placeholder-shown) ~ .label2 {
+  transform: translateY(-33px);
+  font-size: 0.9em;
+  color: #fcb900;
+}
+
+select:focus {
+  border-color: #fcb900;
+}
+
+button {
+  width: 26%;
+  padding: 5px;
+  border: 2px solid white;
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  font-size: 1.1em;
+  outline: none;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.centerButton button:hover {
+  color: #fcb900;
+  border-color: #fcb900;
+}
+
+.centerButton {
+  display: flex;
+  align-content: end;
+  justify-content: end;
+  margin-top: -20px;
+}
+
