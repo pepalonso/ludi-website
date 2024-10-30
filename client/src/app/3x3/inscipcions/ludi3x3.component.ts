@@ -26,6 +26,7 @@ export class Ludi3x3Component {
   teamForm: FormGroup;
   jugadorForm: FormGroup;
   playersList: Array<any> = [];
+  loading: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.teamForm = this.fb.group({
@@ -83,6 +84,7 @@ export class Ludi3x3Component {
   }
 
   async onSubmit() {
+    this.loading = true;
     if (this.teamForm.valid && this.playersList.length >= 3) {
       const teamData: TeamData = {
         NOM_EQUIP: this.teamForm.value.teamName,
@@ -95,6 +97,8 @@ export class Ludi3x3Component {
         })),
       };
       console.log('Trying to send data to backend', teamData);
+      console.log('url', environment.apiUrl);
+      console.log('token', environment.apiKey);
 
       try {
         const response = await axios.post(
@@ -109,33 +113,39 @@ export class Ludi3x3Component {
 
         console.log('Form submitted successfully', response.data);
         this.showToast();
+        this.teamForm.reset();
+        this.jugadorForm.reset();
+        this.playersList = [];
+        this.loading = false;
       } catch (error) {
+        this.loading = false;
         console.error('Error submitting form', error);
-        this.showToast2();
+        this.showToast2();    
       }
     } else {
+      this.loading = false;
       console.log('Form is invalid');
       this.showToast2();
     }
   }
 
   private showToast() {
-    const toast = document.getElementById('toast');
-    toast!.classList.add('show');
+    const toast = document.getElementById("toast");
+    toast!.classList.add("show");
   }
 
   private showToast2() {
-    const toast = document.getElementById('toast2');
-    toast!.classList.add('show2');
+    const toast = document.getElementById("toast2");
+    toast!.classList.add("show2");
   }
 
   public closeToast() {
-    const toast = document.getElementById('toast');
-    toast!.classList.remove('show');
+    const toast = document.getElementById("toast");
+    toast!.classList.remove("show");
   }
 
   public closeToast2() {
-    const toast = document.getElementById('toast2');
-    toast!.classList.remove('show2');
+    const toast = document.getElementById("toast2");
+    toast!.classList.remove("show2");
   }
 }
