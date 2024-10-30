@@ -1,3 +1,3 @@
 [build]
-  command = "node inject-env.js && ng build --prod"
+  command = "node inject-env.js && ng build --configuration=production"
   publish = "dist/ludi-front"
