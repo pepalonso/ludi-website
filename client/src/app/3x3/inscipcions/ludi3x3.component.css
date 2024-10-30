@@ -1,7 +1,18 @@
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
-
 h1 {
-  background-color: #fcb900;
+  text-align: center;
+  background-color: #d36600;
+  margin-top: 20px;
+  color: white;
+  font-size: 40px;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 20px;
+  color: rgb(255, 255, 255);
+  font-size: 30px;
+  background-color: #d36600;
+  padding: 5px;
 }
 
 header {
@@ -9,8 +20,8 @@ header {
   margin-top: -25px;
   margin-bottom: -25px;
   padding: -8px;
-  background-color: #fcb900;
-  height: 120px;
+  background-color: #0a0a0a;
+  height: 135px;
   align-items: center;
   align-content: center;
   justify-content: center;
@@ -19,21 +30,21 @@ header {
 }
 
 body {
-  height: 100%;
+  border-top: 2px solid #d36600;
+  height: max-content;
   min-height: 130vh;
   padding: 0;
   display: flex;
-  
   font-family: Arial, sans-serif;
   background-color:#131313;
 }
 
 .container {
-  width: 90%;
-  max-width: 800px;
+  width: 100%;
+  max-width: 50%;
   padding: 20px;
   margin: 20px;
-  border-radius: 10px;
+  padding-top: 15px;
   min-height: fit-content;
   box-sizing: border-box; 
   align-content: center;
@@ -41,8 +52,25 @@ body {
   flex-direction: column;
 }
 
-h1 {
-  align-self : center;
+.container2 {
+  max-width: 45%;
+  color: white;
+  font-size: larger;
+  text-align: justify;
+  padding: 15px;
+  margin: 20px;
+}
+
+@media (max-width: 1200px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    height: max-content;
+  }
+  .container, .container2 {
+    max-width: 100%;
+    margin: 10px auto;
+  }
 }
 
 .form-group {
@@ -52,7 +80,7 @@ h1 {
   width: 94%;
   padding: 20px;
   background-color: #333;
-  border: 2px solid #fcb900;
+  border: 2px solid #d36600;
   border-radius: 8px; 
   box-shadow: 5px 5px 0px #362800;
 }
@@ -77,14 +105,14 @@ input {
 }
 
 input:focus {
-  border-color: #fcb900;
+  border-color: #d36600;
 }
 
 input:focus ~ label,
 input:not(:placeholder-shown) ~ label {
   transform: translateY(-31px);
   font-size: 0.9em;
-  color: #fcb900;
+  color: #d36600;
 }
 
 label {
@@ -104,7 +132,7 @@ input:focus ~ .label2,
 input:not(:placeholder-shown) ~ .label2 {
   transform: translateY(-33px);
   font-size: 0.9em;
-  color: #fcb900;
+  color: #d36600;
 }
 
 .label2 {
@@ -118,10 +146,6 @@ input:not(:placeholder-shown) ~ .label2 {
   pointer-events: none;
   background-color: #333;
   padding: 5px 5px 0 5px;
-}
-
-button {
-  margin-top: 10px;
 }
 
 .error-message {
@@ -157,16 +181,16 @@ thead {
 }
 
 .ctti-table th {
-  color: #fcb900;
+  color: #d36600;
   padding: 10px;
   font-weight: bold;
-  border-bottom: 1px solid #fcb900;
+  border-bottom: 1px solid #d36600;
 }
 
 .ctti-table td {
   color: white;
   padding: 10px;
-  border-bottom: 1px solid #fcb900;
+  border-bottom: 1px solid #d36600;
 }
 
 .ctti-table tr:nth-child(even) {
@@ -199,11 +223,11 @@ thead {
 }
 
 .edit-btn:hover {
-  border-color: #fcb900;
+  border-color: #d36600;
 }
 
 .delete-btn:hover {
-  border-color: #fcb900;
+  border-color: #d36600;
 }
 
 .edit-btn {
@@ -231,14 +255,15 @@ select:focus ~ .label2,
 select:not(:placeholder-shown) ~ .label2 {
   transform: translateY(-33px);
   font-size: 0.9em;
-  color: #fcb900;
+  color: #d36600;
 }
 
 select:focus {
-  border-color: #fcb900;
+  border-color: #d36600;
 }
 
 button {
+  margin-top: 10px;
   width: 26%;
   padding: 5px;
   border: 2px solid white;
@@ -251,8 +276,8 @@ button {
 }
 
 .centerButton button:hover {
-  color: #fcb900;
-  border-color: #fcb900;
+  color: #d36600;
+  border-color: #d36600;
 }
 
 .centerButton {
@@ -262,28 +287,172 @@ button {
   margin-top: -20px;
 }
 
-img {
+.slider {
+  width: 100%;
+  height: auto;
+  margin: auto;
+  overflow: hidden;
+}
+
+.slider .slide-track {
+  display: flex;
+  animation: scroll 40s linear infinite;
+  -webkit-animation: scroll 40s linear infinite;
+  width: calc(200px * 28);
+}
+
+.slider .slide {
+  width: 200px;
+}
+
+.slider .slide img {
   width: 130px;
   height: 130px;
+  margin-left: -20px;
 }
 
-.carousel {
-  display: flex;
-  width: calc(100% * 4); /* Ajusta el ancho según el número de imágenes */
-  animation: slide 5s linear infinite;
-}
-
-.carousel img {
-  width: 130px; /* Asegura que cada imagen ocupe el ancho completo */
-  height: 13; /* Ajusta para cubrir todo el alto del header */
-}
-
-/* Animación para el deslizamiento de las imágenes */
-@keyframes slide {
+@keyframes scroll {
   0% {
-    transform: translateX(30%);
+    -webkit-animation: translateX(0);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    -webkit-animation: translateX(calc(-200px * 14));
+    transform: translateX(calc(-200px * 14));
+  }
+}
+
+.informacion {
+  display: table;
+  width: 100%;
+  color: white;
+}
+
+.izquierda, .derecha {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.izquierda {
+  width: 30%;
+  font-weight: bold;
+  color: #d36600;
+}
+
+.derecha {
+  width: 70%;
+}
+
+.remarcat {
+  font-weight: bold;
+  color: #d36600;
+}
+
+.remarcat2 {
+  font-weight: bold;
+  color: #fc0000;
+}
+
+.toast {
+  visibility: hidden; 
+  width: 700px;
+  background-color: #65ff7a;
+  box-shadow: black;
+  color: #000000;
+  text-align: center;
+  border-radius: 5px;
+  padding: 16px;
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  opacity: 0;
+  transition: visibility 0s, opacity 1s ease;
+  font-size: large;
+}
+
+.toast2 {
+  visibility: hidden; 
+  width: 700px;
+  background-color: #ff6565;
+  box-shadow: black;
+  color: #000000;
+  text-align: center;
+  border-radius: 5px;
+  padding: 16px;
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  opacity: 0;
+  transition: visibility 0s, opacity 1s ease;
+  font-size: large;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.toast2.show2 {
+  visibility: visible;
+  opacity: 1;
+}
+
+.close-btn {
+  background-color: #ff3c3c;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 5px;
+  top: 1px;
+  justify-content: end;
+  position: absolute;
+  right: 5px;
+}
+
+
+.spinner {
+  animation: rotate 2s linear infinite;
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+  width: 100px;
+  height: 100px;
+  
+  & .path {
+    stroke: hsl(0, 0%, 100%);
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+  }
+  
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
   }
 }

@@ -1,26 +1,174 @@
-<!-- app/3x3/inscripcions/ludi3x3.component.html -->
+<div class="toast" id="toast">
+  <button class="close-btn" (click)="closeToast()">✖</button>
+  <p>
+    Formulari enviat correctament. T'hem enviat un correu amb les dades (SPAM)
+  </p>
+</div>
+<div class="toast2" id="toast2">
+  <button class="close-btn" (click)="closeToast2()">✖</button>
+  <p>Error a l'enviar el formulari, torna a probar o posat en contacte.</p>
+</div>
 <header>
-  <div class="carousel">
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
-    <img src="../../../assets/logo1.png" alt="Logo" />
+  <div class="slider">
+    <div class="slide-track">
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+      <div class="slide">
+        <img src="../../../assets/logo3x3.png" alt="Logo" />
+      </div>
+    </div>
   </div>
 </header>
 <body class="body">
+  <div class="container2">
+    <h1>I n f o r m a c i ó</h1>
+
+    <p>
+      Amics, amigues i amants del bàsquet, ha arribat l'hora d'anunciar el Ludi
+      3x3
+    </p>
+    <p>
+      Es tracta d'un nou projecte del Ludibàsquet del Nou Caulès, pensat per
+      tots aquells jugadors que ja no poden gaudir d'aquest gran torneig.
+      Consisteix en una competició de categoria "sènior" 3x3 on hi haurà molt de
+      bàsquet, passió, diversió i festa!
+    </p>
+    <div class="informacion">
+      <div class="izquierda">
+        <span>Dia: </span><br />
+        <span>Ubicació: </span><br />
+        <span>Hora convocatoria: </span><br />
+        <span>Dues categories: </span><br />
+        <span>Edat mínima: </span><br />
+        <span>Bar: </span><br />
+        <span>Preu inscripció: </span><br />
+      </div>
+      <div class="derecha">
+        6 de desembre de 2024 <br />
+        Pavelló Municipal de Vidreres <br />
+        11:00h <br />
+        masculina i femenina. <br />
+        15 anys. <br />
+        Servei de bar durant tot el torneig. <br />
+        15€ per jugador en els equips de 3-4 jugadors, i 12€ en equips de 5
+        jugadors. <br />
+      </div>
+    </div>
+    <p>
+      <span class="remarcat2">IMPORTANT:</span> la inscripció no estarà
+      realitzada correctament fins que no es faci el pagament.
+    </p>
+    <p>
+      El pagament es pot fer a la següent conta
+      <span class="remarcat"> ES70 2100 8118 8023 0004 2564 </span> o bé via
+      Bizum al número <br />
+      <span class="remarcat"> +34 699 97 35 91 </span>, al concepte heu de posar
+      el nom de l'equip.
+    </p>
+    <p>
+      Els guanyadors de cada categoria seran premiats amb
+      <span class="remarcat">100 € per equip</span>, i els segons classificats
+      de cada categoria, <span class="remarcat">un lot sorpresa</span>.
+    </p>
+    <p>
+      S'admetran equips mixtos, però aquests competiran a la categoria
+      masculina.
+    </p>
+    <p>No és necessari que els participats estiguin federats!</p>
+    <p>
+      Amb el preu de la inscripció entreguem un lot de benvinguda (peça de
+      roba+menjar).
+    </p>
+    <p>
+      Podreu trobar l’enllaç a la biografia del perfil d'Instagram &#64;ludi3x3
+    </p>
+    <p>Més endevant més informació d’horaris i de partits!</p>
+    <p>T’ho perdràs?</p>
+  </div>
   <div class="container">
+    <div>
+      <h1>F o r m u l a r i</h1>
+    </div>
     <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
       <div class="primerGrup">
         <div class="form-group">
@@ -31,9 +179,15 @@
             placeholder=" "
             required
           />
-          <label for="teamName">Nom del equip</label>
-          <div *ngIf="teamForm.get('teamName')?.invalid && teamForm.get('teamName')?.touched" class="error-message">
-            Team Name is required.
+          <label for="teamName">Nom de l'equip</label>
+          <div
+            *ngIf="
+              teamForm.get('teamName')?.invalid &&
+              teamForm.get('teamName')?.touched
+            "
+            class="error-message"
+          >
+            Es obligatori el nom de l'equip.
           </div>
         </div>
 
@@ -43,7 +197,7 @@
             formControlName="contactPhone"
             placeholder=" "
           />
-          <label for="contactPhone">Contact Phone</label>
+          <label for="contactPhone">Numero de telefon</label>
           <div
             *ngIf="
               teamForm.get('contactPhone')?.invalid &&
@@ -51,7 +205,7 @@
             "
             class="error-message"
           >
-            Valid 10-digit phone number is required.
+            Es obligatori el numero de telefon.
           </div>
         </div>
 
@@ -61,7 +215,7 @@
             formControlName="contactEmail"
             placeholder=" "
           />
-          <label for="contactEmail">Contact Email</label>
+          <label for="contactEmail">Email de contacte</label>
           <div
             *ngIf="
               teamForm.get('contactEmail')?.invalid &&
@@ -69,7 +223,7 @@
             "
             class="error-message"
           >
-            Valid email is required.
+            Es obligatori l'email de contacte.
           </div>
         </div>
       </div>
@@ -80,7 +234,7 @@
             <tr role="row">
               <th role="columnheader">Nom Jugador/a</th>
               <th role="columnheader">Data Naixement</th>
-              <th role="columnheader">Tamany Samarreta</th>
+              <th role="columnheader">Tamany Pantaló</th>
               <th role="columnheader"></th>
             </tr>
           </thead>
@@ -88,7 +242,7 @@
             <tr *ngFor="let player of playersList" role="row">
               <td role="cell">{{ player.playerName }}</td>
               <td role="cell">{{ player.birthDate }}</td>
-              <td role="cell">{{ player.shirtSize }}</td>
+              <td role="cell">{{ player.pantsSize }}</td>
               <td role="cell">
                 <button
                   class="action-btn edit-btn"
@@ -126,7 +280,7 @@
             "
             class="error-message"
           >
-            Player Name is required.
+            Es obligatori el nom del jugador/a.
           </div>
         </div>
 
@@ -145,18 +299,15 @@
             "
             class="error-message"
           >
-            Birth Date is required.
+            Es obligatori la data de naixement.
           </div>
         </div>
 
         <div class="form-group2">
-          
-          <select
-            id="shirtSize"
-            formControlName="shirtSize"
-            required
-          >
-            <option value="" disabled selected hidden>Seleccione una talla</option>
+          <select id="pantsSize" formControlName="pantsSize" required>
+            <option value="" disabled selected hidden>
+              Seleccioni una talla
+            </option>
             <option value="XS">XS</option>
             <option value="S">S</option>
             <option value="M">M</option>
@@ -164,33 +315,40 @@
             <option value="XL">XL</option>
             <option value="XXL">XXL</option>
           </select>
-          <label class="label2" for="shirtSize">Tamany samarreta</label>
+          <label class="label2" for="pantsSize">Tamany pantaló</label>
           <div
             *ngIf="
-              jugadorForm.get('shirtSize')?.invalid &&
-              jugadorForm.get('shirtSize')?.touched
+              jugadorForm.get('pantsSize')?.invalid &&
+              jugadorForm.get('pantsSize')?.touched
             "
             class="error-message"
           >
-            Shirt Size is required.
+            Es obligatori el tamany del pantaló
           </div>
         </div>
-        
 
         <div class="centerButton">
-          <button type="button" (click)="addPlayerToList()">
+          <button
+            type="button"
+            (click)="addPlayerToList()"
+            [disabled]="jugadorForm.invalid || playersList.length >= 5"
+          >
             Guardar jugador
           </button>
         </div>
       </div>
 
-      
       <button
         type="submit"
-        [disabled]="teamForm.invalid || playersList.length < 3"
+        
       >
-        Submit
+        Enviar Formulari
       </button>
     </form>
   </div>
 </body>
+
+<!-- <div *ngIf="loading" class="spinner"></div> -->
+<svg *ngIf="loading" class="spinner" viewBox="0 0 50 50">
+  <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+</svg>

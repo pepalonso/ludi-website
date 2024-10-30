@@ -26,6 +26,7 @@ export class Ludi3x3Component {
   teamForm: FormGroup;
   jugadorForm: FormGroup;
   playersList: Array<any> = [];
+  loading: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.teamForm = this.fb.group({
@@ -36,7 +37,7 @@ export class Ludi3x3Component {
     this.jugadorForm = this.fb.group({
       playerName: ['', Validators.required],
       birthDate: ['', [Validators.required, this.validadorEdatMinima(15)]],
-      shirtSize: ['', Validators.required],
+      pantsSize: ['', Validators.required],
     });
   }
 
@@ -61,8 +62,7 @@ export class Ludi3x3Component {
   }
 
   addPlayerToList() {
-    //TODO: MAXIM 5 JUGADORS
-    if (this.jugadorForm.valid) {
+    if (this.jugadorForm.valid || this.playersList.length < 5) {
       this.playersList.push(this.jugadorForm.value);
 
       this.jugadorForm.reset();
@@ -84,6 +84,7 @@ export class Ludi3x3Component {
   }
 
   async onSubmit() {
+    this.loading = true;
     if (this.teamForm.valid && this.playersList.length >= 3) {
       const teamData: TeamData = {
         NOM_EQUIP: this.teamForm.value.teamName,
@@ -92,14 +93,14 @@ export class Ludi3x3Component {
         JUGADORS: this.playersList.map((jugador) => ({
           NOM: jugador.playerName,
           NEIXAMENT: jugador.birthDate,
-          TALLA_SAMARRETA: jugador.shirtSize,
+          TALLA_SAMARRETA: jugador.pantsSize,
         })),
       };
       console.log('Trying to send data to backend', teamData);
 
       try {
         const response = await axios.post(
-          environment.apiUrl + '/put-item',
+          `${environment.apiUrl}/put-item`,
           teamData,
           {
             headers: {
@@ -109,11 +110,40 @@ export class Ludi3x3Component {
         );
 
         console.log('Form submitted successfully', response.data);
+        this.showToast();
+        this.teamForm.reset();
+        this.jugadorForm.reset();
+        this.playersList = [];
+        this.loading = false;
       } catch (error) {
+        this.loading = false;
         console.error('Error submitting form', error);
+        this.showToast2();
       }
     } else {
+      this.loading = false;
       console.log('Form is invalid');
+      this.showToast2();
     }
+  }
+
+  private showToast() {
+    const toast = document.getElementById('toast');
+    toast!.classList.add('show');
+  }
+
+  private showToast2() {
+    const toast = document.getElementById('toast2');
+    toast!.classList.add('show2');
+  }
+
+  public closeToast() {
+    const toast = document.getElementById('toast');
+    toast!.classList.remove('show');
+  }
+
+  public closeToast2() {
+    const toast = document.getElementById('toast2');
+    toast!.classList.remove('show2');
   }
 }
