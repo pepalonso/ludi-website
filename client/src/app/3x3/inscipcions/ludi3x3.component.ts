@@ -56,6 +56,21 @@ export class Ludi3x3Component {
     };
   }
 
+  getDateError(): string | null {
+    const birthDateControl = this.jugadorForm.get('birthDate');
+
+    if (birthDateControl?.hasError('required')) {
+      return 'Es obligatori la data de naixement.'; // The date of birth is required.
+    }
+
+    if (birthDateControl?.hasError('minimumAge')) {
+      const requiredAge = birthDateControl.getError('minimumAge').requiredAge;
+      return `El jugador ha de tenir al menys ${requiredAge} anys.`; // Player must be at least {requiredAge} years old.
+    }
+
+    return null;
+  }
+
   get players(): FormArray {
     return this.teamForm.get('players') as FormArray;
   }
