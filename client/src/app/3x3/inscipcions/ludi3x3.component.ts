@@ -102,7 +102,7 @@ export class Ludi3x3Component {
 
       try {
         const response = await axios.post(
-          environment.apiUrl + '/put-item',
+          `${environment.apiUrl}/put-item`,
           teamData,
           {
             headers: {
@@ -120,7 +120,7 @@ export class Ludi3x3Component {
       } catch (error) {
         this.loading = false;
         console.error('Error submitting form', error);
-        this.showToast2();    
+        this.showToast2();
       }
     } else {
       this.loading = false;
@@ -130,22 +130,22 @@ export class Ludi3x3Component {
   }
 
   private showToast() {
-    const toast = document.getElementById("toast");
-    toast!.classList.add("show");
+    const toast = document.getElementById('toast');
+    toast!.classList.add('show');
   }
 
   private showToast2() {
-    const toast = document.getElementById("toast2");
-    toast!.classList.add("show2");
+    const toast = document.getElementById('toast2');
+    toast!.classList.add('show2');
   }
 
   public closeToast() {
-    const toast = document.getElementById("toast");
-    toast!.classList.remove("show");
+    const toast = document.getElementById('toast');
+    toast!.classList.remove('show');
   }
 
   public closeToast2() {
-    const toast = document.getElementById("toast2");
-    toast!.classList.remove("show2");
+    const toast = document.getElementById('toast2');
+    toast!.classList.remove('show2');
   }
 }
