@@ -8,12 +8,21 @@ h1 {
   font-size: 40px;
 }
 
+h2 {
+  text-align: center;
+  margin-top: 20px;
+  color: rgb(255, 255, 255);
+  font-size: 30px;
+  background-color: #fcb900;
+  padding: 5px;
+}
+
 header {
   display: flex;
   margin-top: -25px;
   margin-bottom: -25px;
   padding: -8px;
-  background-color: #fcb900;
+  background-color: #0a0a0a;
   height: 135px;
   align-items: center;
   align-content: center;
@@ -23,6 +32,7 @@ header {
 }
 
 body {
+  border-top: 2px solid #fcb900;
   height: 100%;
   min-height: 130vh;
   padding: 0;
@@ -338,8 +348,84 @@ button {
 .izquierda {
   width: 30%; /* Ajusta el ancho según sea necesario */
   font-weight: bold;
+  color: #fcb900;
 }
 
 .derecha {
   width: 70%;
+}
+
+.remarcat {
+  font-weight: bold;
+  color: #fcb900;
+}
+
+.remarcat2 {
+  font-weight: bold;
+  color: #fc0000;
+}
+
+.toast {
+  visibility: hidden; 
+  width: 700px;
+  background-color: #65ff7a;
+  box-shadow: black;
+  color: #000000;
+  text-align: center;
+  border-radius: 5px;
+  padding: 16px;
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  opacity: 0;
+  transition: visibility 0s, opacity 1s ease;
+  font-size: large;
+}
+
+.toast2 {
+  visibility: hidden; 
+  width: 700px;
+  background-color: #ff6565;
+  box-shadow: black;
+  color: #000000;
+  text-align: center;
+  border-radius: 5px;
+  padding: 16px;
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  opacity: 0;
+  transition: visibility 0s, opacity 1s ease;
+  font-size: large;
+}
+
+/* Mostrar Toast */
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.toast2.show2 {
+  visibility: visible;
+  opacity: 1;
+}
+
+.close-btn {
+  background-color: #ff3c3c;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 5px;
+  top: 1px;
+  justify-content: end;
+  position: absolute;
+  right: 5px;
 }
