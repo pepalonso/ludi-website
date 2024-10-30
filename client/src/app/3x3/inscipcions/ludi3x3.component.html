@@ -1,6 +1,8 @@
 <div class="toast" id="toast">
   <button class="close-btn" (click)="closeToast()">✖</button>
-  <p>Formulari enviat correctament. T'hem enviat un correu amb les dades (SPAM)</p>
+  <p>
+    Formulari enviat correctament. T'hem enviat un correu amb les dades (SPAM)
+  </p>
 </div>
 <div class="toast2" id="toast2">
   <button class="close-btn" (click)="closeToast2()">✖</button>
@@ -100,60 +102,68 @@
 <body class="body">
   <div class="container2">
     <h1>I n f o r m a c i ó</h1>
-    
+
     <p>
-      Amics, amigues i amants del bàsquet, ha arribat l'hora d'anunciar el Ludi 3x3
+      Amics, amigues i amants del bàsquet, ha arribat l'hora d'anunciar el Ludi
+      3x3
     </p>
     <p>
-      Es tracta d'un nou projecte del Ludibàsquet del Nou Caulès, pensat per tots aquells jugadors que ja no poden gaudir d'aquest gran torneig. Consisteix en una competició de categoria "sènior" 3x3 on hi haurà molt de bàsquet, passió, diversió i festa!
+      Es tracta d'un nou projecte del Ludibàsquet del Nou Caulès, pensat per
+      tots aquells jugadors que ja no poden gaudir d'aquest gran torneig.
+      Consisteix en una competició de categoria "sènior" 3x3 on hi haurà molt de
+      bàsquet, passió, diversió i festa!
     </p>
     <div class="informacion">
       <div class="izquierda">
-        <span>Dia: </span><br>
-        <span>Ubicació: </span><br>
-        <span>Hora convocatoria: </span><br>
-        <span>Dues categories: </span><br>
-        <span>Edat mínima: </span><br>
-        <span>Bar: </span><br>
-        <span>Preu inscripció: </span><br>
+        <span>Dia: </span><br />
+        <span>Ubicació: </span><br />
+        <span>Hora convocatoria: </span><br />
+        <span>Dues categories: </span><br />
+        <span>Edat mínima: </span><br />
+        <span>Bar: </span><br />
+        <span>Preu inscripció: </span><br />
       </div>
       <div class="derecha">
-        6 de desembre de 2024 <br>
-        Pavelló Municipal de Vidreres <br>
-        11:00h <br>
-        masculina i femenina.  <br>
-        15 anys. <br>
-        Servei de bar durant tot el torneig. <br>
-        15€ per jugador en els equips de 3-4 jugadors, i 12€ en equips de 5 jugadors. <br> 
+        6 de desembre de 2024 <br />
+        Pavelló Municipal de Vidreres <br />
+        11:00h <br />
+        masculina i femenina. <br />
+        15 anys. <br />
+        Servei de bar durant tot el torneig. <br />
+        15€ per jugador en els equips de 3-4 jugadors, i 12€ en equips de 5
+        jugadors. <br />
       </div>
     </div>
     <p>
-      <span class="remarcat2">IMPORTANT:</span> la inscripció no estarà realitzada correctament fins que no es faci el pagament.
+      <span class="remarcat2">IMPORTANT:</span> la inscripció no estarà
+      realitzada correctament fins que no es faci el pagament.
     </p>
     <p>
-      El pagament es pot fer a la següent conta <span class="remarcat"> ES70 2100 8118 8023 0004 2564 </span> o bé via Bizum al número <br> <span class="remarcat"> +34 699 97 35 91 </span>, al concepte heu de posar el nom de l'equip.
+      El pagament es pot fer a la següent conta
+      <span class="remarcat"> ES70 2100 8118 8023 0004 2564 </span> o bé via
+      Bizum al número <br />
+      <span class="remarcat"> +34 699 97 35 91 </span>, al concepte heu de posar
+      el nom de l'equip.
     </p>
     <p>
-      Els guanyadors de cada categoria seran premiats amb <span class="remarcat">100 € per equip</span>, i els segons classificats de cada categoria, <span class="remarcat">un lot sorpresa</span>.
+      Els guanyadors de cada categoria seran premiats amb
+      <span class="remarcat">100 € per equip</span>, i els segons classificats
+      de cada categoria, <span class="remarcat">un lot sorpresa</span>.
     </p>
     <p>
-      S'admetran equips mixtos, però aquests competiran a la categoria masculina.
+      S'admetran equips mixtos, però aquests competiran a la categoria
+      masculina.
     </p>
+    <p>No és necessari que els participats estiguin federats!</p>
     <p>
-      No és necessari que els participats estiguin federats!
-    </p>
-    <p>
-      Amb el preu de la inscripció entreguem un lot de benvinguda (peça de roba+menjar).
+      Amb el preu de la inscripció entreguem un lot de benvinguda (peça de
+      roba+menjar).
     </p>
     <p>
       Podreu trobar l’enllaç a la biografia del perfil d'Instagram &#64;ludi3x3
     </p>
-    <p>
-      Més endevant més informació d’horaris i de partits!
-    </p>
-    <p>
-      T’ho perdràs?
-    </p>
+    <p>Més endevant més informació d’horaris i de partits!</p>
+    <p>T’ho perdràs?</p>
   </div>
   <div class="container">
     <div>
@@ -162,25 +172,57 @@
     <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
       <div class="primerGrup">
         <div class="form-group">
-          <input type="text" id="teamName" formControlName="teamName" placeholder=" " required/>
+          <input
+            type="text"
+            id="teamName"
+            formControlName="teamName"
+            placeholder=" "
+            required
+          />
           <label for="teamName">Nom de l'equip</label>
-          <div *ngIf="teamForm.get('teamName')?.invalid && teamForm.get('teamName')?.touched" class="error-message">
+          <div
+            *ngIf="
+              teamForm.get('teamName')?.invalid &&
+              teamForm.get('teamName')?.touched
+            "
+            class="error-message"
+          >
             Es obligatori el nom de l'equip.
           </div>
         </div>
 
         <div class="form-group">
-          <input id="contactPhone" formControlName="contactPhone" placeholder=" "/>
+          <input
+            id="contactPhone"
+            formControlName="contactPhone"
+            placeholder=" "
+          />
           <label for="contactPhone">Numero de telefon</label>
-          <div *ngIf="teamForm.get('contactPhone')?.invalid && teamForm.get('contactPhone')?.touched" class="error-message">
+          <div
+            *ngIf="
+              teamForm.get('contactPhone')?.invalid &&
+              teamForm.get('contactPhone')?.touched
+            "
+            class="error-message"
+          >
             Es obligatori el numero de telefon.
           </div>
         </div>
 
         <div class="form-group">
-          <input id="contactEmail" formControlName="contactEmail" placeholder=" "/>
+          <input
+            id="contactEmail"
+            formControlName="contactEmail"
+            placeholder=" "
+          />
           <label for="contactEmail">Email de contacte</label>
-          <div *ngIf="teamForm.get('contactEmail')?.invalid && teamForm.get('contactEmail')?.touched" class="error-message">
+          <div
+            *ngIf="
+              teamForm.get('contactEmail')?.invalid &&
+              teamForm.get('contactEmail')?.touched
+            "
+            class="error-message"
+          >
             Es obligatori l'email de contacte.
           </div>
         </div>
@@ -192,7 +234,6 @@
             <tr role="row">
               <th role="columnheader">Nom Jugador/a</th>
               <th role="columnheader">Data Naixement</th>
-              <th role="columnheader">Tamany Samarreta</th>
               <th role="columnheader">Tamany Pantaló</th>
               <th role="columnheader"></th>
             </tr>
@@ -201,13 +242,20 @@
             <tr *ngFor="let player of playersList" role="row">
               <td role="cell">{{ player.playerName }}</td>
               <td role="cell">{{ player.birthDate }}</td>
-              <td role="cell">{{ player.shirtSize }}</td>
               <td role="cell">{{ player.pantsSize }}</td>
               <td role="cell">
-                <button class="action-btn edit-btn" title="Edit" (click)="editPlayer(player)">
+                <button
+                  class="action-btn edit-btn"
+                  title="Edit"
+                  (click)="editPlayer(player)"
+                >
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button  class="action-btn delete-btn"  title="Delete"  (click)="removePlayerFromList(player)">
+                <button
+                  class="action-btn delete-btn"
+                  title="Delete"
+                  (click)="removePlayerFromList(player)"
+                >
                   <mat-icon>delete</mat-icon>
                 </button>
               </td>
@@ -218,40 +266,48 @@
 
       <div [formGroup]="jugadorForm" class="form-group">
         <div class="form-group2">
-          <input id="playerName" formControlName="playerName" placeholder=" " required/>
+          <input
+            id="playerName"
+            formControlName="playerName"
+            placeholder=" "
+            required
+          />
           <label class="label2" for="playerName">Nom jugador/a</label>
-          <div *ngIf="jugadorForm.get('playerName')?.invalid && jugadorForm.get('playerName')?.touched" class="error-message">
+          <div
+            *ngIf="
+              jugadorForm.get('playerName')?.invalid &&
+              jugadorForm.get('playerName')?.touched
+            "
+            class="error-message"
+          >
             Es obligatori el nom del jugador/a.
           </div>
         </div>
 
         <div class="form-group2">
-          <input type="date" id="birthDate" formControlName="birthDate" required/>
+          <input
+            type="date"
+            id="birthDate"
+            formControlName="birthDate"
+            required
+          />
           <label class="label2" for="birthDate">Data Naixement</label>
-          <div *ngIf="jugadorForm.get('birthDate')?.invalid && jugadorForm.get('birthDate')?.touched" class="error-message">
+          <div
+            *ngIf="
+              jugadorForm.get('birthDate')?.invalid &&
+              jugadorForm.get('birthDate')?.touched
+            "
+            class="error-message"
+          >
             Es obligatori la data de naixement.
           </div>
         </div>
 
         <div class="form-group2">
-          <select id="shirtSize" formControlName="shirtSize" required>
-            <option value="" disabled selected hidden>Seleccioni una talla</option>
-            <option value="XS">XS</option>
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-            <option value="XXL">XXL</option>
-          </select>
-          <label class="label2" for="shirtSize">Tamany samarreta</label>
-          <div *ngIf="jugadorForm.get('shirtSize')?.invalid && jugadorForm.get('shirtSize')?.touched" class="error-message">
-            Es obligatori el tamany de la samarreta.
-          </div>
-        </div>
-
-        <div class="form-group2">
           <select id="pantsSize" formControlName="pantsSize" required>
-            <option value="" disabled selected hidden>Seleccioni una talla</option>
+            <option value="" disabled selected hidden>
+              Seleccioni una talla
+            </option>
             <option value="XS">XS</option>
             <option value="S">S</option>
             <option value="M">M</option>
@@ -260,23 +316,32 @@
             <option value="XXL">XXL</option>
           </select>
           <label class="label2" for="pantsSize">Tamany pantaló</label>
-          <div *ngIf="jugadorForm.get('pantsSize')?.invalid && jugadorForm.get('pantsSize')?.touched" class="error-message">
+          <div
+            *ngIf="
+              jugadorForm.get('pantsSize')?.invalid &&
+              jugadorForm.get('pantsSize')?.touched
+            "
+            class="error-message"
+          >
             Es obligatori el tamany del pantaló
           </div>
         </div>
-        
 
         <div class="centerButton">
-          <button type="button" (click)="addPlayerToList()">
+          <button
+            type="button"
+            (click)="addPlayerToList()"
+            [disabled]="jugadorForm.invalid || playersList.length >= 5"
+          >
             Guardar jugador
           </button>
         </div>
       </div>
 
-      
       <button
         type="submit"
-        [disabled]="teamForm.invalid || playersList.length < 3">
+        [disabled]="teamForm.invalid || playersList.length < 3"
+      >
         Enviar Formulari
       </button>
     </form>
