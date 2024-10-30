@@ -37,6 +37,7 @@ export class Ludi3x3Component {
       playerName: ['', Validators.required],
       birthDate: ['', [Validators.required, this.validadorEdatMinima(15)]],
       shirtSize: ['', Validators.required],
+      pantsSize: ['', Validators.required],
     });
   }
 

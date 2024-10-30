@@ -1,7 +1,11 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
 
 h1 {
+  text-align: center;
   background-color: #fcb900;
+  margin-top: 20px;
+  color: white;
+  font-size: 40px;
 }
 
 header {
@@ -10,7 +14,7 @@ header {
   margin-bottom: -25px;
   padding: -8px;
   background-color: #fcb900;
-  height: 120px;
+  height: 135px;
   align-items: center;
   align-content: center;
   justify-content: center;
@@ -23,22 +27,42 @@ body {
   min-height: 130vh;
   padding: 0;
   display: flex;
-  
   font-family: Arial, sans-serif;
   background-color:#131313;
 }
 
 .container {
-  width: 90%;
-  max-width: 800px;
+  width: 100%;
+  max-width: 50%;
   padding: 20px;
   margin: 20px;
-  border-radius: 10px;
+  padding-top: 15px;
   min-height: fit-content;
   box-sizing: border-box; 
   align-content: center;
   display: flex;
   flex-direction: column;
+}
+
+.container2 {
+  max-width: 45%;
+  color: white;
+  font-size: larger;
+  text-align: justify;
+  padding: 15px;
+  margin: 20px;
+}
+
+@media (max-width: 1200px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    height: max-content;
+  }
+  .container, .container2 {
+    max-width: 100%;
+    margin: 10px auto;
+  }
 }
 
 h1 {
@@ -262,28 +286,60 @@ button {
   margin-top: -20px;
 }
 
-img {
+.slider {
+  width: 100%;
+  height: auto;
+  margin: auto;
+  overflow: hidden;
+}
+
+.slider .slide-track {
+  display: flex;
+  animation: scroll 40s linear infinite;
+  -webkit-animation: scroll 40s linear infinite;
+  width: calc(200px * 28);
+}
+
+.slider .slide {
+  width: 200px;
+}
+
+.slider .slide img {
   width: 130px;
   height: 130px;
+  margin-left: -20px;
 }
 
-.carousel {
-  display: flex;
-  width: calc(100% * 4); /* Ajusta el ancho según el número de imágenes */
-  animation: slide 5s linear infinite;
-}
-
-.carousel img {
-  width: 130px; /* Asegura que cada imagen ocupe el ancho completo */
-  height: 13; /* Ajusta para cubrir todo el alto del header */
-}
-
-/* Animación para el deslizamiento de las imágenes */
-@keyframes slide {
+@keyframes scroll {
   0% {
-    transform: translateX(30%);
+    -webkit-animation: translateX(0);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    -webkit-animation: translateX(calc(-200px * 14));
+    transform: translateX(calc(-200px * 14));
   }
+}
+
+
+
+
+.informacion {
+  display: table;
+  width: 100%;
+  color: white;
+}
+
+.izquierda, .derecha {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.izquierda {
+  width: 30%; /* Ajusta el ancho según sea necesario */
+  font-weight: bold;
+}
+
+.derecha {
+  width: 70%;
 }
