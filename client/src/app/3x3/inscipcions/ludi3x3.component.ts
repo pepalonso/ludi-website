@@ -95,6 +95,8 @@ export class Ludi3x3Component {
         })),
       };
       console.log('Trying to send data to backend', teamData);
+      console.log('url', environment.apiUrl);
+      console.log('token', environment.apiKey);
 
       try {
         const response = await axios.post(
