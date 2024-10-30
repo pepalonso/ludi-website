@@ -1,8 +1,6 @@
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
-
 h1 {
   text-align: center;
-  background-color: #fcb900;
+  background-color: #d36600;
   margin-top: 20px;
   color: white;
   font-size: 40px;
@@ -13,7 +11,7 @@ h2 {
   margin-top: 20px;
   color: rgb(255, 255, 255);
   font-size: 30px;
-  background-color: #fcb900;
+  background-color: #d36600;
   padding: 5px;
 }
 
@@ -32,8 +30,8 @@ header {
 }
 
 body {
-  border-top: 2px solid #fcb900;
-  height: 100%;
+  border-top: 2px solid #d36600;
+  height: max-content;
   min-height: 130vh;
   padding: 0;
   display: flex;
@@ -75,10 +73,6 @@ body {
   }
 }
 
-h1 {
-  align-self : center;
-}
-
 .form-group {
   position: relative;
   margin-top: 10px;
@@ -86,7 +80,7 @@ h1 {
   width: 94%;
   padding: 20px;
   background-color: #333;
-  border: 2px solid #fcb900;
+  border: 2px solid #d36600;
   border-radius: 8px; 
   box-shadow: 5px 5px 0px #362800;
 }
@@ -111,14 +105,14 @@ input {
 }
 
 input:focus {
-  border-color: #fcb900;
+  border-color: #d36600;
 }
 
 input:focus ~ label,
 input:not(:placeholder-shown) ~ label {
   transform: translateY(-31px);
   font-size: 0.9em;
-  color: #fcb900;
+  color: #d36600;
 }
 
 label {
@@ -138,7 +132,7 @@ input:focus ~ .label2,
 input:not(:placeholder-shown) ~ .label2 {
   transform: translateY(-33px);
   font-size: 0.9em;
-  color: #fcb900;
+  color: #d36600;
 }
 
 .label2 {
@@ -152,10 +146,6 @@ input:not(:placeholder-shown) ~ .label2 {
   pointer-events: none;
   background-color: #333;
   padding: 5px 5px 0 5px;
-}
-
-button {
-  margin-top: 10px;
 }
 
 .error-message {
@@ -191,16 +181,16 @@ thead {
 }
 
 .ctti-table th {
-  color: #fcb900;
+  color: #d36600;
   padding: 10px;
   font-weight: bold;
-  border-bottom: 1px solid #fcb900;
+  border-bottom: 1px solid #d36600;
 }
 
 .ctti-table td {
   color: white;
   padding: 10px;
-  border-bottom: 1px solid #fcb900;
+  border-bottom: 1px solid #d36600;
 }
 
 .ctti-table tr:nth-child(even) {
@@ -233,11 +223,11 @@ thead {
 }
 
 .edit-btn:hover {
-  border-color: #fcb900;
+  border-color: #d36600;
 }
 
 .delete-btn:hover {
-  border-color: #fcb900;
+  border-color: #d36600;
 }
 
 .edit-btn {
@@ -265,14 +255,15 @@ select:focus ~ .label2,
 select:not(:placeholder-shown) ~ .label2 {
   transform: translateY(-33px);
   font-size: 0.9em;
-  color: #fcb900;
+  color: #d36600;
 }
 
 select:focus {
-  border-color: #fcb900;
+  border-color: #d36600;
 }
 
 button {
+  margin-top: 10px;
   width: 26%;
   padding: 5px;
   border: 2px solid white;
@@ -285,8 +276,8 @@ button {
 }
 
 .centerButton button:hover {
-  color: #fcb900;
-  border-color: #fcb900;
+  color: #d36600;
+  border-color: #d36600;
 }
 
 .centerButton {
@@ -331,9 +322,6 @@ button {
   }
 }
 
-
-
-
 .informacion {
   display: table;
   width: 100%;
@@ -346,9 +334,9 @@ button {
 }
 
 .izquierda {
-  width: 30%; /* Ajusta el ancho según sea necesario */
+  width: 30%;
   font-weight: bold;
-  color: #fcb900;
+  color: #d36600;
 }
 
 .derecha {
@@ -357,7 +345,7 @@ button {
 
 .remarcat {
   font-weight: bold;
-  color: #fcb900;
+  color: #d36600;
 }
 
 .remarcat2 {
@@ -403,7 +391,6 @@ button {
   font-size: large;
 }
 
-/* Mostrar Toast */
 .toast.show {
   visibility: visible;
   opacity: 1;
