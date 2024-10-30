@@ -10,7 +10,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TeamData, JugadorData } from '../../interfaces/team-data.interface';
-import axios from 'axios';
 import { environment } from '../../../environments/environment';
 import { MatIconModule } from '@angular/material/icon';
 import { DateTime } from 'luxon';
@@ -96,20 +95,20 @@ export class Ludi3x3Component {
           TALLA_SAMARRETA: jugador.pantsSize,
         })),
       };
-      console.log('Trying to send data to backend', teamData);
 
       try {
-        const response = await axios.post(
-          `${environment.apiUrl}/put-item`,
-          teamData,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const response = await fetch(`${environment.apiUrl}/put-item`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(teamData),
+        });
 
-        console.log('Form submitted successfully', response.data);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        console.log('Form submitted successfully', data);
         this.showToast();
         this.teamForm.reset();
         this.jugadorForm.reset();

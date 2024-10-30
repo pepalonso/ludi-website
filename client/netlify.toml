@@ -1,3 +1,8 @@
 [build]
   command = "node inject-env.js && ng build --configuration=production"
   publish = "dist/ludi-front"
+  
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
