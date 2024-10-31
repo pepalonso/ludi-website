@@ -9,7 +9,11 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TeamData, JugadorData } from '../../interfaces/team-data.interface';
+import {
+  TeamData,
+  JugadorData,
+  ApiResponse,
+} from '../../interfaces/team-data.interface';
 import { environment } from '../../../environments/environment';
 import { MatIconModule } from '@angular/material/icon';
 import { DateTime } from 'luxon';
@@ -26,6 +30,8 @@ export class Ludi3x3Component {
   jugadorForm: FormGroup;
   playersList: Array<any> = [];
   loading: boolean = false;
+  errorMessage: string = '';
+  apiResponse: ApiResponse | undefined;
 
   constructor(private fb: FormBuilder) {
     this.teamForm = this.fb.group({
@@ -54,6 +60,21 @@ export class Ludi3x3Component {
             },
           };
     };
+  }
+
+  getDateError(): string | null {
+    const birthDateControl = this.jugadorForm.get('birthDate');
+
+    if (birthDateControl?.hasError('required')) {
+      return 'Es obligatori la data de naixement.'; // The date of birth is required.
+    }
+
+    if (birthDateControl?.hasError('minimumAge')) {
+      const requiredAge = birthDateControl.getError('minimumAge').requiredAge;
+      return `El jugador ha de tenir al menys ${requiredAge} anys.`; // Player must be at least {requiredAge} years old.
+    }
+
+    return null;
   }
 
   get players(): FormArray {
@@ -103,26 +124,31 @@ export class Ludi3x3Component {
           body: JSON.stringify(teamData),
         });
 
+        this.apiResponse = await response.json();
+
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
 
-        const data = await response.json();
-        console.log('Form submitted successfully', data);
+        console.log(' api response', this.apiResponse);
+        console.log('Form submitted successfully', this.apiResponse);
         this.showToast();
         this.teamForm.reset();
         this.jugadorForm.reset();
         this.playersList = [];
         this.loading = false;
+        this.errorMessage = '';
       } catch (error) {
         this.loading = false;
         console.error('Error submitting form', error);
-        this.showToast2();
+        this.showToast2(
+          `Error incrivint el equip: ${this.apiResponse?.message || ''}`
+        );
       }
     } else {
       this.loading = false;
       console.log('Form is invalid');
-      this.showToast2();
+      this.showToast2('El formulari no és vàlid. Comproveu els camps.');
     }
   }
 
@@ -131,7 +157,8 @@ export class Ludi3x3Component {
     toast!.classList.add('show');
   }
 
-  private showToast2() {
+  private showToast2(message: string) {
+    this.errorMessage = message;
     const toast = document.getElementById('toast2');
     toast!.classList.add('show2');
   }
