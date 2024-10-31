@@ -120,7 +120,10 @@ export class Ludi3x3Component {
       try {
         const response = await fetch(`${environment.apiUrl}/put-item`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': `${environment.apiKey}`,
+          },
           body: JSON.stringify(teamData),
         });
 
