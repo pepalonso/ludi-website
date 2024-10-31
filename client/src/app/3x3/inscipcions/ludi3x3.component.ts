@@ -124,11 +124,12 @@ export class Ludi3x3Component {
           body: JSON.stringify(teamData),
         });
 
+        this.apiResponse = await response.json();
+
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
 
-        this.apiResponse = await response.json();
         console.log(' api response', this.apiResponse);
         console.log('Form submitted successfully', this.apiResponse);
         this.showToast();
