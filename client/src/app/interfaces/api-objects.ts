@@ -1,3 +1,0 @@
-interface ApiResponse {
-  message?: string;
-}

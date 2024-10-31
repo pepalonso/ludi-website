@@ -9,7 +9,11 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TeamData, JugadorData } from '../../interfaces/team-data.interface';
+import {
+  TeamData,
+  JugadorData,
+  ApiResponse,
+} from '../../interfaces/team-data.interface';
 import { environment } from '../../../environments/environment';
 import { MatIconModule } from '@angular/material/icon';
 import { DateTime } from 'luxon';

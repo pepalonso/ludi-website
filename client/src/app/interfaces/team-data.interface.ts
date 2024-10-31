@@ -10,3 +10,7 @@ export interface JugadorData {
   NEIXAMENT: string;
   TALLA_SAMARRETA: string;
 }
+
+export interface ApiResponse {
+  message?: string;
+}
