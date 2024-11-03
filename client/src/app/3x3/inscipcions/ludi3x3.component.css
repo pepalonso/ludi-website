@@ -36,7 +36,7 @@ body {
   padding: 0;
   display: flex;
   font-family: Arial, sans-serif;
-  background-color:#131313;
+  background-color: #131313;
 }
 
 .container {
@@ -46,7 +46,7 @@ body {
   margin: 20px;
   padding-top: 15px;
   min-height: fit-content;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   align-content: center;
   display: flex;
   flex-direction: column;
@@ -67,7 +67,8 @@ body {
     flex-direction: column;
     height: max-content;
   }
-  .container, .container2 {
+  .container,
+  .container2 {
     max-width: 100%;
     margin: 10px auto;
   }
@@ -81,7 +82,7 @@ body {
   padding: 20px;
   background-color: #333;
   border: 2px solid #d36600;
-  border-radius: 8px; 
+  border-radius: 8px;
   box-shadow: 5px 5px 0px #362800;
 }
 
@@ -238,7 +239,6 @@ thead {
   color: #f44336; /* red color for delete icon */
 }
 
-
 select {
   width: 100%;
   padding: 10px;
@@ -287,6 +287,19 @@ button {
   margin-top: -20px;
 }
 
+.submit-button button:hover {
+  color: #d36600;
+  border-color: #d36600;
+}
+
+.submit-button button.active {
+  color: #fff;
+  background-color: #d36600;
+  border-color: #d36600;
+  box-shadow: 0 0 10px rgba(211, 102, 0, 0.7), 0 0 20px rgba(211, 102, 0, 0.5);
+  transition: box-shadow 0.3s ease;
+}
+
 .slider {
   width: 100%;
   height: auto;
@@ -328,7 +341,8 @@ button {
   color: white;
 }
 
-.izquierda, .derecha {
+.izquierda,
+.derecha {
   display: table-cell;
   vertical-align: top;
 }
@@ -354,7 +368,7 @@ button {
 }
 
 .toast {
-  visibility: hidden; 
+  visibility: hidden;
   width: 700px;
   background-color: #65ff7a;
   box-shadow: black;
@@ -373,7 +387,7 @@ button {
 }
 
 .toast2 {
-  visibility: hidden; 
+  visibility: hidden;
   width: 700px;
   background-color: #ff6565;
   box-shadow: black;
@@ -417,7 +431,6 @@ button {
   right: 5px;
 }
 
-
 .spinner {
   animation: rotate 2s linear infinite;
   z-index: 2;
@@ -427,13 +440,12 @@ button {
   margin: -25px 0 0 -25px;
   width: 100px;
   height: 100px;
-  
+
   & .path {
     stroke: hsl(0, 0%, 100%);
     stroke-linecap: round;
     animation: dash 1.5s ease-in-out infinite;
   }
-  
 }
 
 @keyframes rotate {
