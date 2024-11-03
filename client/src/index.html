@@ -1,14 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ca-ES">
   <head>
     <meta charset="utf-8" />
-    <title>Ludibàsquet</title>
+    <title>Ludibàsquet - Torneig de Bàsquet a Girona</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- Meta Description for SEO -->
+    <meta
+      name="description"
+      content="Ludibàsquet - Participa al torneig de bàsquet a Girona! Inscriu-te al torneig de bàsquet, viu el bàsquet gironí i celebra el bàsquet català."
+    />
+
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta
+      property="og:title"
+      content="Ludibàsquet - Torneig de Bàsquet a Girona"
+    />
+    <meta
+      property="og:description"
+      content="Inscriu-te al torneig de bàsquet Ludibàsquet a Girona! Uneix-te als entusiastes del bàsquet català i gaudeix de la competició."
+    />
+    <meta property="og:url" content="https://ludibasquet.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card Meta Tags for Social Media -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Ludibàsquet - Torneig de Bàsquet a Girona"
+    />
+    <meta
+      name="twitter:description"
+      content="Inscriu-te al torneig de bàsquet Ludibàsquet a Girona! Uneix-te als entusiastes del bàsquet català i gaudeix de la competició."
+    />
+
+    <!-- Structured Data for Local Event -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": "Torneig de Bàsquet Ludibàsquet",
+        "location": {
+          "@type": "Place",
+          "name": "Girona",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Girona",
+            "addressRegion": "CAT",
+            "addressCountry": "ES"
+          }
+        },
+        "startDate": "2024-06-10",
+        "endDate": "2024-06-12",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "description": "Participa al torneig de bàsquet Ludibàsquet a Girona i gaudeix del millor bàsquet català!",
+        "image": ["https://ludibasquet.com/path-to-image.jpg"],
+        "url": "https://ludibasquet.com",
+        "offers": {
+          "@type": "Offer",
+          "url": "https://ludibasquet.com/ludi3x3",
+          "price": "Gratuït",
+          "priceCurrency": "EUR"
+        }
+      }
+    </script>
+  </head>
   <body>
     <app-root></app-root>
   </body>
