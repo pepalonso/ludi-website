@@ -12,9 +12,10 @@ export const checkExistingFields = async (
   ddbDocClient,
   teamName,
   contactNumber,
-  email,
+  email
 ) => {
   const tableName = getTableName();
+  let data;
   const params = {
     TableName: tableName,
     FilterExpression:
@@ -25,8 +26,12 @@ export const checkExistingFields = async (
       ":email": email,
     },
   };
+  try {
+    data = await ddbDocClient.send(new ScanCommand(params));
+  } catch (err) {
+    console.error("error during scan", err);
+  }
 
-  const data = await ddbDocClient.send(new ScanCommand(params));
   const conflicts = [];
 
   if (data.Items && data.Items.length > 0) {
