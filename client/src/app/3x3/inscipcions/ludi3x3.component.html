@@ -2,9 +2,9 @@
   <button class="close-btn" (click)="closeToast()">✖</button>
   <p>
     Felicitats 🥳🥳 La vostra incripció provisional s'ha realitzat correctament!
-    En breus hores rebreu la confirmació en el vostre correu. Per qualsevol
-    dubte contacteu al nostre correu <a>ludi3x3&#64;gmail.com</a>, o bé al
-    nostre Instagram &#64;ludi3x3 Gràcies!🏀🏀
+    En breus moments rebreu la confirmació en el vostre telèfon mòbil. Per
+    qualsevol dubte contacteu al nostre correu <a>ludi3x3&#64;gmail.com</a>, o
+    bé al nostre Instagram &#64;ludi3x3 Gràcies!🏀🏀
   </p>
 </div>
 <div class="toast2" id="toast2">
@@ -316,9 +316,10 @@
             <option value="M">M</option>
             <option value="L">L</option>
             <option value="XL">XL</option>
-            <option value="XXL">XXL</option>
+            <option value="XXL">2XL</option>
+            <option value="XXL">3XL</option>
           </select>
-          <label class="label2" for="pantsSize">Tamany pantaló</label>
+          <label class="label2" for="pantsSize">Tamany samarreta</label>
           <div
             *ngIf="
               jugadorForm.get('pantsSize')?.invalid &&
@@ -341,7 +342,11 @@
         </div>
       </div>
 
-      <button type="submit">Enviar Formulari</button>
+      <div class="submit-button">
+        <button type="submit" [ngClass]="{ active: loading }">
+          {{ loading ? "Enviant..." : "Enviar Formulari" }}
+        </button>
+      </div>
     </form>
   </div>
 </body>
