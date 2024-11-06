@@ -27,6 +27,7 @@ header {
   justify-content: center;
   text-align: center;
   place-items: center;
+  width: 100%;
 }
 
 body {
@@ -37,6 +38,7 @@ body {
   display: flex;
   font-family: Arial, sans-serif;
   background-color: #131313;
+  width: 100%;
 }
 
 .container {
@@ -72,6 +74,20 @@ body {
     max-width: 100%;
     margin: 10px auto;
   }
+  .form-group {
+    width: 88% !important;
+  }
+  .centerButton button, .submit-button button {
+    width: 60% !important;
+  }
+  .action-btn {
+    width: 75% !important;
+    margin-bottom: 5px;
+  }
+
+  .toast, .toast2 {
+    width: 80% !important;
+  }
 }
 
 .form-group {
@@ -93,7 +109,7 @@ body {
   width: 100%;
 }
 
-input {
+input{
   width: 96%;
   padding: 10px;
   border: 2px solid white;
@@ -262,9 +278,20 @@ select:focus {
   border-color: #d36600;
 }
 
+.reconte {
+  display: flex;
+  align-content: end;
+  justify-content: end;
+  margin-right: 70px;
+  margin-top: -30px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
 button {
   margin-top: 10px;
-  width: 26%;
+  width: 28%;
   padding: 5px;
   border: 2px solid white;
   background-color: #333;
@@ -371,6 +398,7 @@ button {
   visibility: hidden;
   width: 700px;
   background-color: #65ff7a;
+  border: 2px solid #00ff22;
   box-shadow: black;
   color: #000000;
   text-align: center;
@@ -390,6 +418,7 @@ button {
   visibility: hidden;
   width: 700px;
   background-color: #ff6565;
+  border: 2px solid rgb(255, 0, 0);
   box-shadow: black;
   color: #000000;
   text-align: center;

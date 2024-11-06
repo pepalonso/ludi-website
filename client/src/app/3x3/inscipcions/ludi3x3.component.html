@@ -237,7 +237,7 @@
             <tr role="row">
               <th role="columnheader">Nom Jugador/a</th>
               <th role="columnheader">Data Naixement</th>
-              <th role="columnheader">Tamany Pantaló</th>
+              <th role="columnheader">Talla Samarreta</th>
               <th role="columnheader"></th>
             </tr>
           </thead>
@@ -319,7 +319,7 @@
             <option value="XXL">2XL</option>
             <option value="XXL">3XL</option>
           </select>
-          <label class="label2" for="pantsSize">Tamany samarreta</label>
+          <label class="label2" for="pantsSize">Talla samarreta</label>
           <div
             *ngIf="
               jugadorForm.get('pantsSize')?.invalid &&
@@ -327,17 +327,19 @@
             "
             class="error-message"
           >
-            Es obligatori el tamany del pantaló
+            Es obligatori la talla de la samarreta
           </div>
         </div>
-
+        <div class="reconte">
+          <p></p>
+        </div>
         <div class="centerButton">
           <button
             type="button"
             (click)="addPlayerToList()"
             [disabled]="jugadorForm.invalid || playersList.length >= 5"
           >
-            Guardar jugador
+            Guardar jugador - {{numeroJugadors +" / 5"}}
           </button>
         </div>
       </div>
