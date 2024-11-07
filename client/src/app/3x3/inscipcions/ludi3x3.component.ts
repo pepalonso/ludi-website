@@ -81,6 +81,10 @@ export class Ludi3x3Component {
     return this.teamForm.get('players') as FormArray;
   }
 
+  get numeroJugadors(): number {
+    return this.playersList.length;
+  }
+
   addPlayerToList() {
     if (this.jugadorForm.valid || this.playersList.length < 5) {
       this.playersList.push(this.jugadorForm.value);
