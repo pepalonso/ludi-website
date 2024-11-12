@@ -3,7 +3,7 @@ import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 import { v4 as uuid } from "uuid";
 import { getDynamoDbConfig, getTableName } from "./config.mjs";
 import { checkExistingFields, getDate } from "./utils.mjs";
-import { sendEmail } from "./send-mail.mjs";
+import { sendMessage } from "./send-whatsapp.mjs";
 
 export const handler = async (event) => {
   console.log("Received event:", JSON.stringify(event));
@@ -48,13 +48,14 @@ export const handler = async (event) => {
   const numero_contacte = body.NUMERO_CONTACTE;
   const mail_contacte = body.MAIL_CONTACTE;
   const jugadors = body.JUGADORS;
+  
 
   try {
     const conflicts = await checkExistingFields(
       ddbDocClient,
       nom_equip,
       numero_contacte,
-      mail_contacte,
+      mail_contacte
     );
     if (conflicts.length > 0) {
       return {
@@ -98,10 +99,8 @@ export const handler = async (event) => {
 
   try {
     const data = await ddbDocClient.send(new PutCommand(params));
-    console.log("Success - item added or updated");
-    const isSend = sendEmail(mail_contacte);
-    console.log("Success - mail send");
-
+    
+    sendMessage(body)
     const response = {
       statusCode: 200,
       headers: {
@@ -111,7 +110,7 @@ export const handler = async (event) => {
         message: "Equip afegit correctament",
         id_equip: new_id,
         hora: date,
-        mail: isSend,
+        //whatsapp: isSend,
         data,
       }),
     };
