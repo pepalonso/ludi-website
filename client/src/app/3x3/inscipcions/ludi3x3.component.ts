@@ -105,7 +105,9 @@ export class Ludi3x3Component {
 
   async onSubmit() {
     this.loading = true;
-    if (this.teamForm.valid && this.playersList.length >= 3) {
+    //Disable the form temporarly
+    //if (this.teamForm.valid && this.playersList.length >= 3) {
+    if (false) {
       const teamData: TeamData = {
         NOM_EQUIP: this.teamForm.value.teamName,
         NUMERO_CONTACTE: this.teamForm.value.contactPhone,
@@ -151,7 +153,9 @@ export class Ludi3x3Component {
     } else {
       this.loading = false;
       console.log('Form is invalid');
-      this.showToast2('El formulari no és vàlid. Comproveu els camps.');
+      //hotfix: temp fix to show error message
+      //this.showToast2('El formulari no és vàlid. Comproveu els camps.');
+      this.showToast2('El formulari actualment esta desactivat.');
     }
   }
 
