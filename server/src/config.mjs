@@ -5,7 +5,7 @@ export const localDynamoDBConfig = {
 };
 
 export const isLocal = () => {
-  return process.env.AWS_SAM_LOCAL;
+  return !!process.env.AWS_SAM_LOCAL || false;
 };
 
 export const getDynamoDbConfig = () => {
@@ -13,5 +13,5 @@ export const getDynamoDbConfig = () => {
 };
 
 export const getTableName = () => {
-  return isLocal() ? process.env.table_name : "EQUIPS_LUDIBASQUET";
+  return isLocal() ? process.env.table_name : "ludi3x3_STAGING";
 };
