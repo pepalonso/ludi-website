@@ -1,86 +1,53 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
-Description: A lambda function that atempts to write data into a dynamoDB table, wich is routed through an api
+Description: A SAM application with an API Gateway and Lambda function that writes to MariaDB
+
 Resources:
-  writetodbtest:
+  LudibasquetApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors:
+        AllowMethods: "'GET,POST,OPTIONS,PUT'"
+        AllowHeaders: "'Content-Type'"
+        AllowOrigin: "'*'"
+      DefinitionBody:
+        openapi: 3.0.1
+        info:
+          title: LudibasquetApi
+          version: 1.0.1
+        paths:
+          /registrar-incripcio:
+            post:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HandleTeamInscription.Arn}/invocations
+                httpMethod: POST
+                type: aws_proxy
+
+  HandleTeamInscription:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src
-      Description: ""
-      MemorySize: 128
-      Timeout: 10
-      Handler: index.handler
-      Runtime: nodejs20.x
-      Architectures:
-        - x86_64
-      EphemeralStorage:
-        Size: 512
+      Handler: app.lambda_handler
+      Runtime: python3.12
+      CodeUri: ./src
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - rds-data:ExecuteStatement
+                - rds-data:BatchExecuteStatement
+              Resource: "*"
       Environment:
         Variables:
-          table_name: 3x3_Test
-      EventInvokeConfig:
-        MaximumEventAgeInSeconds: 21600
-        MaximumRetryAttempts: 2
-      PackageType: Zip
-      Policies:
-        - Statement:
-            - Sid: VisualEditor0
-              Effect: Allow
-              Action:
-                - dynamodb:Scan
-                - dynamodb:PutItem
-              Resource: arn:aws:dynamodb:*:545009840390:table/*/index/*
-            - Sid: VisualEditor1
-              Effect: Allow
-              Action:
-                - dynamodb:PutItem
-                - dynamodb:GetItem
-                - dynamodb:Scan
-                - dynamodb:Query
-                - dynamodb:UpdateItem
-                - dynamodb:UpdateTable
-              Resource: arn:aws:dynamodb:*:545009840390:table/*
-            - Effect: Allow
-              Action:
-                - logs:CreateLogGroup
-              Resource: arn:aws:logs:eu-west-3:545009840390:*
-            - Effect: Allow
-              Action:
-                - logs:CreateLogStream
-                - logs:PutLogEvents
-              Resource:
-                - arn:aws:logs:eu-west-3:545009840390:log-group:/aws/lambda/write-to-db-test:*
-            - Sid: SESEmailSendPolicy
-              Effect: Allow
-              Action:
-                - ses:SendEmail
-                - ses:SendRawEmail
-              Resource: arn:aws:ses:eu-west-3:545009840390:identity/pepalonsocosta@gmail.com
-      RecursiveLoop: Terminate
-      SnapStart:
-        ApplyOn: None
-      Events:
-        Api1Post:
-          Type: Api
-          Properties:
-            Path: /put-item
-            Method: POST
-            Cors:
-              AllowOrigins: "'http://localhost:4200,https://www.ludibasquet.com'"
-              AllowMethods: "'OPTIONS,POST,GET'"
-              AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-              MaxAge: "'600'"
-        Api1Options:
-          Type: Api
-          Properties:
-            Path: /put-item
-            Method: OPTIONS
-            ResponseParameters:
-              Method:
-                Headers:
-                  Access-Control-Allow-Origin: "'http://localhost:4200,https://www.ludibasquet.com'"
-                  Access-Control-Allow-Methods: "'OPTIONS,POST,GET'"
-                  Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-                  Access-Control-Allow-Credentials: "'true'"
-    RuntimeManagementConfig:
-      UpdateRuntimeOn: Auto
+          DB_ENDPOINT: TODO
+          DB_NAME: TODO
+          DB_USER: TODO
+          DB_PASSWORD: TODO
+
+Outputs:
+  ApiUrl:
+    Description: "API Gateway URL"
+    Value: !Sub "https://${LudibasquetApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
