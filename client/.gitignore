@@ -43,19 +43,13 @@ Thumbs.db
 
 
 #server ignores
-
 node_modules
 
 
-#ingnores sam build
-.aws-sam
-
 #ingnores env variables
-
 .env
 
 
 #inglore .angular and dist sonce are generated during build
-
 .angular/
-client/dist/
+dist/
