@@ -43,8 +43,7 @@ body {
   justify-content: center;
   gap: 10%;
   row-gap: 2rem;
-  margin-top: 7rem;
-  margin-bottom: 10rem;
+  margin-top: 3rem;
   flex-wrap: wrap;
 }
 
@@ -66,12 +65,13 @@ body {
 
 .countdown-label {
   font-size: 0.75rem;
+  margin-left: 5px;
   text-transform: uppercase;
   color: #cccccc;
 }
 
 .footer {
-  margin-top: 16rem;
+  margin-top: 5%;
 }
 
 .footer p {
@@ -91,16 +91,12 @@ body {
   color: var(--primary);
   text-decoration: none;
   font-weight: bold;
-  border: 2px solid transparent;
-  padding: 0.5rem 1rem;
   transition: all 0.3s ease;
+  font-size: 0.875rem;
 }
 
-.social-link:hover {
-  background-color: var(--primary);
-  color: #131313;
-  border: 2px solid var(--primary);
-}
+
+
 @media (max-width: 768px) {
   .countdown {
     gap: 2%;
@@ -133,18 +129,13 @@ body {
 @media(max-width: 1148px){
   .footer {
     font-size: 0.875rem;
-    margin-top: 12rem;
+    margin-top: 4rem;
   }
 }
 
 @media (max-width: 768px) {
   .social-icons {
-    gap: 0.5rem;
-  }
-
-  .social-link {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
+    gap: -2rem;
   }
 }
 
