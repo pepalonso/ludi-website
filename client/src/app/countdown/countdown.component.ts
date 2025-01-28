@@ -7,12 +7,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class LudiCountdown implements OnInit, OnDestroy {
   public targetDate: Date = new Date('2025-06-07T00:00:00');
-  intervalId: any;
+  private intervalId: any;
 
-  days: number = 0;
-  hours: number = 0;
-  minutes: number = 0;
-  seconds: number = 0;
+  public days: number = 0;
+  public hours: number = 0;
+  public minutes: number = 0;
+  public seconds: number = 0;
 
   ngOnInit() {
     this.startCountdown();
@@ -22,14 +22,14 @@ export class LudiCountdown implements OnInit, OnDestroy {
     clearInterval(this.intervalId);
   }
 
-  startCountdown() {
+  private startCountdown() {
     this.updateCountdown();
     this.intervalId = setInterval(() => {
       this.updateCountdown();
     }, 1000);
   }
 
-  updateCountdown() {
+  private updateCountdown() {
     const now = new Date().getTime();
     const timeLeft = this.targetDate.getTime() - now;
 
