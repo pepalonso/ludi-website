@@ -6,7 +6,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   styleUrls: ['./countdown.component.css'],
 })
 export class LudiCountdown implements OnInit, OnDestroy {
-  targetDate: Date = new Date('2025-06-07T00:00:00');
+  public targetDate: Date = new Date('2025-06-07T00:00:00');
   intervalId: any;
 
   days: number = 0;
