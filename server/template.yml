@@ -23,7 +23,7 @@ Resources:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HandleTeamInscription.Arn}/invocations
                 httpMethod: POST
                 type: aws_proxy
-          /registration:
+          /inscripcio:
             get:
               x-amazon-apigateway-integration:
                 uri:

@@ -64,7 +64,7 @@ def handle_registration(event):
 
             connection.commit()
 
-            registration_path = f"registration?token={token}"
+            registration_path = f"equip?token={token}"
             registration_url = f"https://{os.getenv('FRONTEND_URL')}/{registration_path}"
             message_sent, message_result = send_whatsapp_message({'club': mapped_body['club'], 'nomEquip': mapped_body['nomEquip'], 'telefon': mapped_body['telefon'], 'registration_path': registration_path})
             print(message_result)
