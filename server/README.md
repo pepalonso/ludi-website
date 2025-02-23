@@ -2,7 +2,7 @@
 
 - deploying the application to aws execute the deploy.py script on the scripts folder. You can do so with this command, on windows, for linux and mac you will need to make the file executable
 
-This will create a packaged.yml that shoud now be included on git
+This will create a packaged.yml that should not be included on git
 
 ```bash
     python scripts/deploy.py

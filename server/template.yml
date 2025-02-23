@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: A SAM application with an API Gateway and Lambda function that writes to MariaDB
 Resources:
@@ -7,9 +7,9 @@ Resources:
     Properties:
       StageName: Prod
       Cors:
-        AllowMethods: "'GET,POST,OPTIONS,PUT'"
-        AllowHeaders: "'Content-Type,Authorization'"
-        AllowOrigin: "'*'"
+        AllowMethods: '''GET,POST,OPTIONS,PUT'''
+        AllowHeaders: '''Content-Type,Authorization'''
+        AllowOrigin: '''*'''
       DefinitionBody:
         openapi: 3.0.1
         info:
@@ -39,24 +39,26 @@ Resources:
       Timeout: 20
       Policies:
         - AWSLambdaBasicExecutionRole
-        - Version: "2012-10-17"
+        - Version: '2012-10-17'
           Statement:
             - Effect: Allow
               Action:
                 - rds-data:ExecuteStatement
                 - rds-data:BatchExecuteStatement
-              Resource: "*"
+              Resource: '*'
       Environment:
         Variables:
-          DB_ENDPOINT: ADD YOUR DB ENDPOINT HERE
-          DB_NAME: ADD YOUR DB NAME HERE
-          DB_USER: ADD YOUR DB USER HERE
-          DB_PASSWORD: ADD YOUR DB PASSWORD HERE
-          ACCOUNT_SID: ADD YOUR TWILIO ACCOUNT SID HERE
-          AUTH_TOKEN: ADD YOUR TWILIO AUTH TOKEN HERE
-          SENDER_PHONE: ADD YOUR TWILIO SENDER PHONE HERE
-          CONTENT_SID: ADD YOUR TWILIO CONTENT SID HERE
-          FRONTEND_URL: ADD YOUR FRONTEND URL HERE
+          DB_ENDPOINT: dummy-endpoint
+          DB_NAME: dummy-db
+          DB_USER: dummy-user
+          DB_PASSWORD: dummy-password
+          ACCOUNT_SID: dummy-sid
+          AUTH_TOKEN: dummy-token
+          SENDER_PHONE: dummy-phone
+          CONTENT_SID: dummy-content
+          FRONTEND_URL: dummy-url
+    Metadata:
+      BuildMethod: python3.12
 Outputs:
   ApiUrl:
     Description: API Gateway URL
