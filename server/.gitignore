@@ -6,10 +6,13 @@ __pycache__/
 
 # Ignore virtual environments
 .venv/
+venv/
 env/
 
 #env variables
 .env
+.env.dev
+.env.prod
 
 #sam-build
 .aws-sam/

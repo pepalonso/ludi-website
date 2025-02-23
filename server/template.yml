@@ -1,16 +1,15 @@
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: A SAM application with an API Gateway and Lambda function that writes to MariaDB
-
 Resources:
   LudibasquetApi:
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
       Cors:
-        AllowMethods: "'GET,POST,OPTIONS,PUT'"
-        AllowHeaders: "'Content-Type'"
-        AllowOrigin: "'*'"
+        AllowMethods: '''GET,POST,OPTIONS,PUT'''
+        AllowHeaders: '''Content-Type,Authorization'''
+        AllowOrigin: '''*'''
       DefinitionBody:
         openapi: 3.0.1
         info:
@@ -24,30 +23,44 @@ Resources:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HandleTeamInscription.Arn}/invocations
                 httpMethod: POST
                 type: aws_proxy
-
+          /registration:
+            get:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HandleTeamInscription.Arn}/invocations
+                httpMethod: POST
+                type: aws_proxy
   HandleTeamInscription:
     Type: AWS::Serverless::Function
     Properties:
       Handler: app.lambda_handler
       Runtime: python3.12
       CodeUri: ./src
+      Timeout: 20
       Policies:
         - AWSLambdaBasicExecutionRole
-        - Version: "2012-10-17"
+        - Version: '2012-10-17'
           Statement:
             - Effect: Allow
               Action:
                 - rds-data:ExecuteStatement
                 - rds-data:BatchExecuteStatement
-              Resource: "*"
+              Resource: '*'
       Environment:
         Variables:
-          DB_ENDPOINT: TODO
-          DB_NAME: TODO
-          DB_USER: TODO
-          DB_PASSWORD: TODO
-
+          DB_ENDPOINT: dummy-endpoint
+          DB_NAME: dummy-db
+          DB_USER: dummy-user
+          DB_PASSWORD: dummy-password
+          ACCOUNT_SID: dummy-sid
+          AUTH_TOKEN: dummy-token
+          SENDER_PHONE: dummy-phone
+          CONTENT_SID: dummy-content
+          FRONTEND_URL: dummy-url
+    Metadata:
+      BuildMethod: python3.12
 Outputs:
   ApiUrl:
-    Description: "API Gateway URL"
-    Value: !Sub "https://${LudibasquetApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+    Description: API Gateway URL
+    Value:
+      Fn::Sub: https://${LudibasquetApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/

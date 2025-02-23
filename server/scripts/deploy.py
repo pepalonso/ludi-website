@@ -1,46 +1,104 @@
 import subprocess
 import sys
+import time
+import boto3
+import os
 
-def run_command(command, description):
+LAMBDA_FUNCTION_NAME = "ludibasquet-stack-HandleTeamInscription-YZZiwneP9FPg"
+FUNCTION_NAME = "HandleTeamInscription"
+BUILD_PATH = f".aws-sam/build/{FUNCTION_NAME}"
+ZIP_NAME = "lambda.zip"
+ZIP_PATH = os.path.abspath(ZIP_NAME)
+
+# AWS Client
+lambda_client = boto3.client("lambda")
+
+def animate_task(task_name):
     """
-    Run a shell command and handle errors.
+    Display an animated loading message while executing a task.
     """
-    print(f"\n{description}...")
+    frames = ["⠋", "⠙", "⠚", "⠞", "⠖", "⠦", "⠴", "⠲", "⠳", "⠓"]
+    print(f"\n🔄 {task_name}", end="", flush=True)
+    return frames
+
+def run_command(command, task_name):
+    """
+    Run a shell command with error handling and animation.
+    """
+    frames = animate_task(task_name)
     try:
-        subprocess.run(command, check=True, shell=True)
-        print(f"✅ {description} completed successfully!")
-    except subprocess.CalledProcessError as e:
-        print(f"❌ {description} failed! Error: {e}")
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        while process.poll() is None:
+            for frame in frames:
+                print(f"\r{frame} {task_name}", end="", flush=True)
+                time.sleep(0.1)
+
+        stdout, stderr = process.communicate()
+        if not process.returncode == 0:
+            print(f"\r❌ {task_name} failed!\n{stderr.decode()}")
+            sys.exit(1)
+    except Exception as e:
+        print(f"\r❌ {task_name} failed!\nError: {e}")
         sys.exit(1)
 
-
-def deploy_to_prod():
+def build_lambda():
     """
-    Deploy the application to production using SAM CLI.
+    Build the SAM application.
     """
-    print("🚀 Starting deployment process...")
+    run_command("sam build", "Building...")
 
-    run_command(
-        "sam validate --lint",
-        "Validating the SAM template"
-    )
+def zip_lambda():
+    """
+    Compress the Lambda function's content into a ZIP file at the root directory.
+    """
+    build_lambda()
 
-    run_command(
-        "sam package --template-file template.yml --s3-bucket ludibasquet-backend-deploymens-prod  --output-template-file packaged.yml",
-        "Packaging the SAM application"
-    )
+    os.chdir(BUILD_PATH)  # Move into the build directory
 
-    run_command(
-        "sam deploy --template-file packaged.yml --stack-name ludibasquet-stack --capabilities CAPABILITY_IAM",
-        "Deploying the SAM stack"
-    )
+    if sys.platform == "win32":
+        command = f'powershell -Command "& {{Compress-Archive -Path * -DestinationPath {ZIP_PATH} -Force}}"'
+    else:
+        command = f"zip -r {ZIP_PATH} ."
 
-    print("\n🎉 Deployment to production completed successfully!")
+    run_command(command, "Compressing")
 
+    os.chdir("../../")  # Move back to root
+
+def upload_lambda():
+    """
+    Upload the ZIP file to AWS Lambda.
+    """
+    print("\n🚀 Uploading to AWS...")
+
+    if not os.path.exists(ZIP_PATH):
+        print(f"❌ Error: The file {ZIP_PATH} does not exist!")
+        sys.exit(1)
+
+    try:
+        with open(ZIP_PATH, "rb") as f:
+            lambda_client.update_function_code(
+                FunctionName=LAMBDA_FUNCTION_NAME,
+                ZipFile=f.read()
+            )
+        print(f"✅ Lambda function {LAMBDA_FUNCTION_NAME} updated successfully!")
+    except Exception as e:
+        print(f"❌ Failed to upload Lambda function! Error: {e}")
+        sys.exit(1)
+
+def deploy_lambda():
+    """
+    Full deployment process: build, zip, and upload Lambda.
+    """
+    print("\n🚀 Starting Lambda deployment process...")
+
+    zip_lambda()
+    upload_lambda()
+
+    print("\n🎉 Deployment completed successfully!")
 
 if __name__ == "__main__":
     try:
-        deploy_to_prod()
+        deploy_lambda()
     except Exception as e:
-        print(f"❌ Unexpected error: {e}")
+        print(f"\n❌ Unexpected error: {e}")
         sys.exit(1)
