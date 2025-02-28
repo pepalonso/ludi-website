@@ -2,9 +2,13 @@
 import { Routes } from '@angular/router';
 import { LudiCountdown } from './countdown/countdown.component';
 import { Ludi3x3Component } from './3x3/inscipcions/ludi3x3.component';
+import { DetallsEquipComponent } from './detalls-equip/detalls-equip.component';
+import { TeamFormComponent } from './team-form/team-form.component';
 
 export const routes: Routes = [
   { path: 'countdown', component: LudiCountdown },
   {path: 'ludi3x3', component: Ludi3x3Component},
+  {path: 'equip', component: DetallsEquipComponent},
+  {path: 'inscripcions', component: TeamFormComponent},
   { path: '**', redirectTo: '/countdown', pathMatch: 'full' },
 ];

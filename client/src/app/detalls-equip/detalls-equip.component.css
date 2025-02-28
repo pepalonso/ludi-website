@@ -1,0 +1,69 @@
+.team-container {
+  background-color: black;
+  color: white;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.team-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary);
+  text-align: center;
+}
+
+.team-info {
+  font-size: 16px;
+    margin: 5px 0;
+}
+
+.team-section {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--primary);
+}
+
+h2 {
+  font-size: 18px;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.coach-role {
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.shirt-size {
+  font-size: 14px;
+  color: gray;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+}
+
+
+.loading .mat-progress-spinner circle {
+  stroke: orange !important;
+}

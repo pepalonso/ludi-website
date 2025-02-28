@@ -1,0 +1,20 @@
+<div class="form-group">
+  <input
+    id="clubInput"
+    type="text"
+    placeholder=" "
+    [value]="selectedClub"
+    (focus)="toggleDropdown(true)"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+  />
+  <label for="clubInput">Club</label>
+  <div class="dropdown" *ngIf="showDropdown && filteredClubs.length">
+    <div
+      class="dropdown-item"
+      *ngFor="let club of filteredClubs"
+      (mousedown)="selectClub(club.club_name)">
+      {{ club.club_name }}
+    </div>
+  </div>
+</div>

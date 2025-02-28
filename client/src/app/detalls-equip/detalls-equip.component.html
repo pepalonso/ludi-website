@@ -1,0 +1,36 @@
+<div *ngIf="!team && !error" class="loading">
+  <mat-spinner color="primary" [diameter]="80"></mat-spinner>
+</div>
+<div *ngIf="error" class="error">Error loading team data.</div>
+
+<div class="team-container" *ngIf="team">
+  <h1 class="team-name">{{ team?.nomEquip }}</h1>
+  <p class="team-info">🏆 Club: {{ team?.club }}</p>
+  <p class="team-info">⚧ Sexe: {{ team?.sexe }}</p>
+
+  <div class="team-section">
+    <h2>Entrenadors</h2>
+    <ul>
+      <li *ngFor="let entrenador of team.entrenadors">
+        {{ entrenador.nom }} {{ entrenador.cognoms }}
+        <span class="coach-role" *ngIf="entrenador.esPrincipal">(Principal)</span>
+        <span class="shirt-size">👕 {{ entrenador.tallaSamarreta }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="team-section">
+    <h2>Jugadors</h2>
+    <ul>
+      <li *ngFor="let jugador of team.jugadors">
+        {{ jugador.nom }} {{ jugador.cognoms }}
+        <span class="shirt-size">👕 {{ jugador.tallaSamarreta }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="team-section" *ngIf="team.intolerancies?.length">
+      <h2>Intoleràncies</h2>
+      <p>{{ team?.intolerancies?.join(', ') }}</p>
+  </div>
+</div>

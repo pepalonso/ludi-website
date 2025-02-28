@@ -13,7 +13,7 @@ import {
   TeamData,
   JugadorData,
   ApiResponse,
-} from '../../interfaces/team-data.interface';
+} from '../../interfaces/ludi3x3.interface';
 import { environment } from '../../../environments/environment';
 import { MatIconModule } from '@angular/material/icon';
 import { DateTime } from 'luxon';
