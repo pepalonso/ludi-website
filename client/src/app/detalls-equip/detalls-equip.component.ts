@@ -27,8 +27,7 @@ export class DetallsEquipComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.token = params['token'] || null;
       if (this.token) {
-        //this.fetchTeamDetails(this.token);
-        this.team = mapTeamResponse(testResponse)
+        this.fetchTeamDetails(this.token);
       }
     });
   }
