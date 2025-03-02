@@ -17,11 +17,11 @@ LAMBDA_FUNCTIONS = [
         "sam_build_dir": ".aws-sam/build/SendWA",
         "zip_filename": "lambda2.zip",
     },
-    # {
-    #    "function_name": "authorizer",
-    #    "sam_build_dir": ".aws-sam/build/AuthorizeWA",
-    #    "zip_filename": "lambda3.zip",
-    # },
+    {
+        "function_name": "authorizer",
+        "sam_build_dir": ".aws-sam/build/AuthorizeWA",
+        "zip_filename": "lambda3.zip",
+    },
 ]
 
 lambda_client = boto3.client("lambda")

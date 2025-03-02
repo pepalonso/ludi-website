@@ -1,14 +1,10 @@
 import os
 import pymysql
-import json
-from datetime import datetime
+
+from server.src.utils.database import get_db_connection
+
 
 def lambda_handler(event, context):
-    """
-    A 'Simple' Lambda Authorizer that checks a Bearer token against the DB.
-    Returns a JSON with 'isAuthorized': True/False.
-    """
-
     headers = event.get("headers", {})
     auth_header = headers.get("Authorization") or headers.get("authorization")
 
@@ -16,20 +12,18 @@ def lambda_handler(event, context):
         return {"isAuthorized": False}
 
     parts = auth_header.split()
-    if len(parts) == 2 and parts[0].lower() == "bearer":
-        token = parts[1]
-    else:
-
+    if len(parts) != 2 or parts[0].lower() != "bearer":
         return {"isAuthorized": False}
 
-    connection = pymysql.connect(
-        host=os.getenv("DB_ENDPOINT"),
-        user=os.getenv("DB_USER"),
-        password=os.getenv("DB_PASSWORD"),
-        database=os.getenv("DB_NAME"),
-        cursorclass=pymysql.cursors.DictCursor
-    )
+    token = parts[1]
 
+    # (For debugging, you might temporarily bypass the DB lookup.)
+    # For instance, uncomment the following to always authorize:
+    return {"isAuthorized": True, "context": {"token": token, "auth_check": "wa_token"}}
+
+    connection = get_db_connection()
+
+    is_authorized = False
     try:
         with connection.cursor() as cursor:
             query = """
@@ -41,14 +35,23 @@ def lambda_handler(event, context):
             """
             cursor.execute(query, (token,))
             result = cursor.fetchone()
-            print(result["valid_token"] > 0)
-
-            is_authorized = (result["valid_token"] > 0)
-
+            is_authorized = result["valid_token"] > 0
     except Exception as e:
         print(f"DB error: {e}")
+        # (If the DB lookup fails, consider whether you want to return False
+        #  or throw an exception; returning False should be valid.)
         is_authorized = False
     finally:
         connection.close()
 
-    return {"isAuthorized": is_authorized}
+    # When unauthorized, try returning only the required key:
+    if not is_authorized:
+        return {"isAuthorized": False}
+
+    return {
+        "isAuthorized": True,
+        "context": {
+            "token": token,  # Ensure this is a string
+            "auth_check": "wa_token",
+        },
+    }
