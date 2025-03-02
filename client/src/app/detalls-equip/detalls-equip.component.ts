@@ -4,7 +4,7 @@ import { Team, Sexe, TallaSamarreta } from '../interfaces/ludi.interface';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { mapTeamResponse } from './data-mapper';
-import { testResponse } from '../data/test';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-detalls-equip',
@@ -33,7 +33,7 @@ export class DetallsEquipComponent implements OnInit {
   }
 
   async fetchTeamDetails(token: string): Promise<void> {
-    const url = 'http://127.0.0.1:3000/inscripcio';
+    const url = `http://${environment.apiUrl}/inscripcio`;
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
