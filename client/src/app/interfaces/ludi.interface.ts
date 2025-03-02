@@ -8,13 +8,14 @@ export interface Entrenador {
   nom: string;
   cognoms: string;
   tallaSamarreta: TallaSamarreta;
-  esPrincipal: boolean;
+  esPrincipal: number;
 }
 
 export interface Team {
   nomEquip: string;
   email: string;
   telefon: string;
+  categoria: string;
   sexe: Sexe;
   club: string;
   intolerancies?: string[];
@@ -35,7 +36,7 @@ export enum TallaSamarreta {
 }
 
 export enum Sexe {
-  MASC = 'Masc',
-  FEM = 'Fem',
+  MASC = 'Masculí',
+  FEM = 'Femení',
   MIXTE = 'Mixte',
 }
