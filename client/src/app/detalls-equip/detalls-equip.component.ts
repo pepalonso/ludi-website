@@ -33,7 +33,7 @@ export class DetallsEquipComponent implements OnInit {
   }
 
   async fetchTeamDetails(token: string): Promise<void> {
-    const url = `http://${environment.apiUrl}/inscripcio`;
+    const url = `https://${environment.apiUrl}/inscripcio`;
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
