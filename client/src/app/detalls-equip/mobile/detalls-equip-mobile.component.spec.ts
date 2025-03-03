@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DetallsEquipComponent } from './detalls-equip.component';
 
+import { DetallsEquipComponentMobile } from './detalls-equip-monile.component';
 
 describe('DetallsEquipComponent', () => {
-  let component: DetallsEquipComponent;
-  let fixture: ComponentFixture<DetallsEquipComponent>;
+  let component: DetallsEquipComponentMobile;
+  let fixture: ComponentFixture<DetallsEquipComponentMobile>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DetallsEquipComponent]
+      imports: [DetallsEquipComponentMobile]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DetallsEquipComponent);
+    fixture = TestBed.createComponent(DetallsEquipComponentMobile);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

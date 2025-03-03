@@ -1,3 +1,4 @@
+import { CLUBS_DATA } from '../data/club-data';
 import { Team, Jugador, Entrenador, TallaSamarreta, Sexe } from '../interfaces/ludi.interface';
 
 /**
@@ -13,7 +14,8 @@ export function mapTeamResponse(response: any): Team {
     club: response.club,
     intolerancies: response.intolerancies || [],
     jugadors: response.jugadors.map(mapJugador),
-    entrenadors: response.entrenadors.map(mapEntrenador)
+    entrenadors: response.entrenadors.map(mapEntrenador),
+    logoUrl: getUrlImage(response.club),
   };
 }
 
@@ -30,6 +32,10 @@ function mapSexe(sexeValue: string): Sexe {
       return Sexe.MIXTE;
   }
 }
+
+function getUrlImage(clubName: string): string {
+  return CLUBS_DATA.find((club) => club.club_name === clubName)?.logo_url || '';
+  }
 
 function mapJugador(jugadorData: any): Jugador {
   return {

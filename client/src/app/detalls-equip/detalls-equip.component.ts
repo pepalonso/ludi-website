@@ -1,29 +1,49 @@
 import { Component, OnInit } from '@angular/core';
+import { Sexe, TallaSamarreta, Team } from '../interfaces/ludi.interface';
 import { ActivatedRoute } from '@angular/router';
-import { Team, Sexe, TallaSamarreta } from '../interfaces/ludi.interface';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { environment } from '../../environments/environment';
+import { mapTeamResponse } from './data-mapper';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { mapTeamResponse } from './data-mapper';
-import { environment } from '../../environments/environment';
+import { TeamMobileComponent } from './mobile/detalls-equip-monile.component';
+import { TeamDesktopComponent } from './desktop/detalls-equip-desktop.component';
+import { testResponse } from '../data/test';
+
 
 @Component({
   selector: 'app-detalls-equip',
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule],
+  imports: [
+    CommonModule,
+    MatProgressSpinnerModule,
+    TeamMobileComponent,
+    TeamDesktopComponent,
+  ],
   templateUrl: './detalls-equip.component.html',
-  styleUrls: ['./detalls-equip.component.css'],
+  styleUrl: './detalls-equip.component.css',
 })
 export class DetallsEquipComponent implements OnInit {
-  token?: string;
-  team?: Team;
-  error: boolean = false;
-  
-  Sexe = Sexe;
-  TallaSamarreta = TallaSamarreta;
+  private token?: string;
+  public team?: Team;
+  public error: boolean = false;
+  public isDesktop: boolean = false;
 
-  constructor(private route: ActivatedRoute) {}
+  public Sexe = Sexe;
+  public TallaSamarreta = TallaSamarreta;
+
+  constructor(
+    private route: ActivatedRoute,
+    private breakpointObserver: BreakpointObserver
+  ) {}
 
   ngOnInit() {
+    this.breakpointObserver
+      .observe([Breakpoints.Handset])
+      .subscribe((result) => {
+        this.isDesktop = !result.matches;
+      });
+
     this.route.queryParams.subscribe((params) => {
       this.token = params['token'] || null;
       if (this.token) {
@@ -32,7 +52,7 @@ export class DetallsEquipComponent implements OnInit {
     });
   }
 
-  async fetchTeamDetails(token: string): Promise<void> {
+  private async fetchTeamDetails(token: string): Promise<void> {
     const url = `https://${environment.apiUrl}/inscripcio`;
     const headers = {
       Authorization: `Bearer ${token}`,

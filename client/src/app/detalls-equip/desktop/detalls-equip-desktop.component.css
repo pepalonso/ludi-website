@@ -1,76 +1,70 @@
-/* General styles */
-.container {
-  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 16px;
-  color: #CCC;
+/* Grid container */
+.parent {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+  padding: 30px;
   background-color: #1A1A1A;
-  min-height: 100vh;
+  color: #CCC;
+  height: 100vh;
+  box-sizing: border-box;
+  max-width: 100vw;
 }
 
-/* Loading state */
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 200px;
+.team-info {
+  box-sizing: border-box;
+  grid-area: 1 / 1 / 4 / 4;
+  background-color: #2B2B2B;
+  padding: 16px;
+  border-radius: 8px;
 }
 
-.loading-text {
-  margin-top: 16px;
-  color: #666;
+.coaches-info {
+  box-sizing: border-box;
+  grid-area: 1 / 4 / 4 / 6;
+  background-color: #2B2B2B;
+  padding: 20px;
+  border-radius: 8px;
 }
 
-/* Error state */
-.error-container {
-  text-align: center;
-  padding: 24px 16px;
-  background-color: #fff9fa;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+.players-info {
+  box-sizing: border-box;
+  grid-area: 1 / 6 / 6 / 8;
+  background-color: #2B2B2B;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #2B2B2B;
 }
 
-.error-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 16px;
-  background-color: #ff5252;
-  color: white;
-  border-radius: 50%;
-  font-size: 28px;
-  font-weight: bold;
+
+.allergies-info {
+  box-sizing: border-box;
+  grid-area: 4 / 2 / 6 / 5;
+  background-color: #2B2B2B;
+  padding: 20px;
+  border-radius: 8px;
 }
 
-/* Team header */
-.team-header {
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--primary);
+.team-header,
+.info-section,
+.entrenadors-section,
+.jugadors-section,
+.intolerancies-section {
+  margin-bottom: 16px;
 }
 
 .team-name {
   font-size: 24px;
   font-weight: 600;
-  margin: 0 0 8px 0;
+  margin-bottom: 8px;
   color: var(--primary);
 }
 
-.team-category {
-  display: inline-block;
-  margin-right: 10px;
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 14px;
-  font-weight: 500;
-  background-color: #fff9fa;
-  color: var(--primary);
-}
-
+.team-category,
 .team-gender {
   display: inline-block;
   padding: 4px 12px;
@@ -79,38 +73,15 @@
   font-weight: 500;
   background-color: #fff9fa;
   color: var(--primary);
+  margin-right: 8px;
 }
 
-
-/* Section styles */
-section {
-  margin-bottom: 32px;
-}
-
-h2 {
-  font-size: 18px;
-  font-weight: 500;
-  margin: 0 0 16px 0;
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-}
-
-h2::after {
-  content: '';
-  flex-grow: 1;
-  height: 1px;
-  background-color: var(--primary);
-  margin-left: 10px;
-}
-
-/* Info cards */
+/* Info cards and lists */
 .info-card,
 .jugador-card,
 .entrenador-card {
   background-color: #333;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   padding: 16px;
   margin-bottom: 16px;
 }
@@ -221,23 +192,29 @@ h3 {
   margin-left: 8px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 480px) {
-  .info-item {
-    flex-direction: column;
-  }
 
-  .label {
-    margin-bottom: 4px;
-  }
+.team-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 32px;
+  /* Adjust spacing as needed */
+}
 
-  h3 {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 
-  .principal-badge {
-    margin-left: 0;
-    margin-top: 4px;
-  }
+.team-logo-container {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+
+}
+
+.team-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* or cover, depending on your desired effect */
+  border-radius: 8px;
+  /* Optional: for rounded corners */
 }
