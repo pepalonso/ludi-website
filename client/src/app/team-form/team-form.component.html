@@ -1,4 +1,4 @@
-<div class="team-form-container">
+<!-- <div class="team-form-container">
   <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <input id="nomEquip" formControlName="nomEquip" placeholder=" " />
@@ -123,4 +123,11 @@
 
     <button type="submit">Enviar Equip</button>
   </form>
-</div>
+</div> -->
+
+<app-steper [stepNames]="steps">
+  <cdk-step> <p>Dades Generals</p> </cdk-step>
+  <cdk-step> <p>Dades Jugadors</p> </cdk-step>
+  <cdk-step> <p>Dades Entrenadors</p> </cdk-step>
+  <cdk-step> <p>Previsualització</p> </cdk-step>
+</app-steper>

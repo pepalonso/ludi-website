@@ -1,0 +1,45 @@
+.example-step {
+  
+}
+
+header {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    height: 90px;
+    background-color: black;
+}
+
+header button {
+    margin: 5px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: var(--primary);
+    border-color: var(--resaltes);
+    text-align: left;
+    padding: 5px;
+}
+
+.example-step {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+.step-number {
+    text-align: left;
+    font-weight: bold;
+    font-size: 50px;
+    margin-right: 5px;
+}
+
+.step-name {
+    text-align: left;
+    font-size: 13px;
+    padding-left: 0;
+}

@@ -1,0 +1,21 @@
+<section class="example-container">
+  <header>
+    @for (step of steps; track step; let i = $index) {
+      <button
+        class="example-step"
+        [class.example-active]="selectedIndex === i"
+        (click)="selectStepByIndex(i)">
+        
+        <span class="step-number">{{ i }}</span>
+        <span class="step-name">{{ getStepName(i) }}</span>
+      </button>
+    }
+  </header>
+  <!-- Tengo que agregar el nombre del step ya esta importado el enum step -->
+  <div [ngTemplateOutlet]="selected ? selected.content : null"></div>
+
+  <footer class="example-step-navigation-bar">
+    <button class="example-nav-button" cdkStepperPrevious>&larr;</button>
+    <button class="example-nav-button" cdkStepperNext>&rarr;</button>
+  </footer>
+</section>
