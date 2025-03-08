@@ -44,7 +44,7 @@
             </h3>
             <div class="entrenador-info">
               <div class="info-item">
-                <span class="label">Talla samarreta</span>
+                <span class="label-samarreta">Talla samarreta</span>
                 <span class="value talla-badge">{{ entrenador.tallaSamarreta }}</span>
               </div>
             </div>
@@ -65,7 +65,7 @@
             <h3>{{ jugador.nom }} {{ jugador.cognoms }}</h3>
             <div class="jugador-info">
               <div class="info-item">
-                <span class="label">Talla samarreta</span>
+                <span class="label-samarreta">Talla samarreta</span>
                 <span class="value talla-badge">{{ jugador.tallaSamarreta }}</span>
               </div>
             </div>
@@ -77,14 +77,17 @@
 
   <!-- Div 4: Allergies Information -->
   <div class="allergies-info">
-    <section class="intolerancies-section" *ngIf="team.intolerancies && team.intolerancies.length > 0">
+    <section class="intolerancies-section" *ngIf="team.intolerancies && team.intolerancies.length> 0">
       <h2>Intoleràncies</h2>
       <div class="intolerancies-container">
-        <span class="intolerancia-tag" *ngFor="let intolerancia of team.intolerancies">
-          {{ intolerancia }}
+        <span class="intolerancia-tag" *ngFor="let i of team.intolerancies">
+          <!-- Only show the count if more than one occurrence -->
+          <span *ngIf="i.count > 1" class="intolerancia-number">
+            {{ i.count }}
+          </span>
+          {{ i.name }}
         </span>
       </div>
     </section>
   </div>
-</div>
 

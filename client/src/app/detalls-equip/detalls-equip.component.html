@@ -12,7 +12,7 @@
 </div>
 
 <!-- Once team details are loaded, render either desktop or mobile component -->
-<div *ngIf="team" [ngStyle]="{'--primary': team.primaryColor || '#d36600'}">
+<div *ngIf="team" [ngStyle]="{'--primary': team.primaryColor || '#d36600', '--secondary': team.secondaryColor || '#ffffff', '--dark': team.darkColor || '#000000'}">
   <ng-container *ngIf="isDesktop; else mobileView">
     <app-team-desktop [team]="team"></app-team-desktop>
   </ng-container>

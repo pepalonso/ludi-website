@@ -13,6 +13,8 @@ import {
  * Note: The function is now async.
  */
 export async function mapTeamResponse(response: any): Promise<Team> {
+  const rawIntolerancies: string[] = response.intolerancies || [];
+  const intolerancies = groupIntolerancies(rawIntolerancies);
   const team: Team = {
     nomEquip: response.nomEquip,
     email: response.email,
@@ -20,18 +22,21 @@ export async function mapTeamResponse(response: any): Promise<Team> {
     categoria: response.categoria,
     sexe: mapSexe(response.sexe),
     club: response.club,
-    intolerancies: response.intolerancies || [],
+    intolerancies: intolerancies,
     jugadors: response.jugadors.map(mapJugador),
     entrenadors: response.entrenadors.map(mapEntrenador),
     logoUrl: getUrlImage(response.club),
     primaryColor: undefined,
+    secondaryColor: undefined,
+    darkColor: undefined,
   };
 
   if (team.logoUrl) {
     try {
       const palette = await Vibrant.from(team.logoUrl).getPalette();
       team.primaryColor = palette.LightVibrant?.hex || '';
-      console.log('Primary color:', team.primaryColor);
+      team.secondaryColor = palette.LightMuted?.hex || '';
+      team.darkColor = palette.DarkVibrant?.hex || '';
     } catch (error) {
       console.error('Error extracting primary color:', error);
     }
@@ -51,6 +56,17 @@ function mapSexe(sexeValue: string): Sexe {
       return Sexe.MASC;
   }
 }
+
+function groupIntolerancies(
+  intolerancies: string[]
+): { name: string; count: number }[] {
+  const counts: { [key: string]: number } = {};
+  intolerancies.forEach((item) => {
+    counts[item] = (counts[item] || 0) + 1;
+  });
+  return Object.keys(counts).map((name) => ({ name, count: counts[name] }));
+}
+
 
 function getUrlImage(clubName: string): string {
   const originalUrl =

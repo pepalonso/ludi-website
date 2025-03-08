@@ -55,13 +55,14 @@
 .jugadors-section,
 .intolerancies-section {
   margin-bottom: 16px;
+  color: var(--primary)
 }
 
 .team-name {
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 8px;
-  color: var(--primary);
+  color: var(--secondary);
 }
 
 .team-category,
@@ -72,7 +73,7 @@
   font-size: 14px;
   font-weight: 500;
   background-color: #fff9fa;
-  color: var(--primary);
+  color: var(--dark);
   margin-right: 8px;
 }
 
@@ -101,6 +102,14 @@
   font-size: 14px;
 }
 
+.label-samarreta{
+  flex: 0 0 40%;
+  color: #ddd;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
 .value {
   flex: 0 0 60%;
   font-weight: 500;
@@ -120,6 +129,22 @@
   border-radius: 16px;
   font-size: 13px;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 6px;
+}
+
+.intolerancia-number {
+  background-color: #861111;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+  font-size: 13px;
+  color: #ffebee;
 }
 
 /* Jugadors and Entrenadors */
@@ -142,8 +167,8 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background-color: #ffe3c9;
-  color: var(--primary);
+  background-color: var(--secondary);
+  color: black;
   border-radius: 50%;
   margin-right: 12px;
   font-weight: 600;
@@ -158,7 +183,7 @@ h3 {
   margin: 0 0 8px 0;
   font-size: 16px;
   font-weight: 500;
-  color: #fff;
+  color: var(--primary);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -169,16 +194,32 @@ h3 {
   font-size: 14px;
 }
 
-/* Talla badges */
 .talla-badge {
-  display: inline-block;
-  padding: 3px 8px;
-  background-color: #dedede;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 60px;
+  max-width: 40px;
+  height: 40px;
+  background-color: var(--secondary);
   color: #1A1A1A;
-  border-radius: 4px;
   font-weight: 600;
-  text-align: center;
-  min-width: 24px;
+  clip-path: polygon(20% 0%,
+      35% 0%,
+      45% 8%,
+      50% 12%,
+      55% 8%,
+      65% 0%,
+      80% 0%,
+      95% 20%,
+      95% 30%,
+      90% 40%,
+      90% 100%,
+      10% 100%,
+      10% 40%,
+      5% 30%,
+      5% 20%
+    );
 }
 
 /* Principal badge */

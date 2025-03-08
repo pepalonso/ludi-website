@@ -18,11 +18,13 @@ export interface Team {
   categoria: string;
   sexe: Sexe;
   club: string;
-  intolerancies?: string[];
+  intolerancies?: { name: string; count: number }[];
   jugadors: Jugador[];
   entrenadors: Entrenador[];
   logoUrl?: string;
   primaryColor?: string;
+  secondaryColor?: string;
+  darkColor?: string;
 }
 
 
