@@ -1,7 +1,7 @@
 import json
 import os
 import traceback
-from messaging import send_whatsapp_message
+from utils.messaging import send_whatsapp_message
 
 
 def lambda_handler(event, context):

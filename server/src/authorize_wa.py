@@ -1,7 +1,7 @@
 import os
 import pymysql
 
-from server.src.utils.database import get_db_connection
+from utils.database import get_db_connection
 
 
 def lambda_handler(event, context):
@@ -17,15 +17,12 @@ def lambda_handler(event, context):
 
     token = parts[1]
 
-    # (For debugging, you might temporarily bypass the DB lookup.)
-    # For instance, uncomment the following to always authorize:
-    return {"isAuthorized": True, "context": {"token": token, "auth_check": "wa_token"}}
-
     connection = get_db_connection()
-
     is_authorized = False
+
     try:
         with connection.cursor() as cursor:
+            # Check if the token is valid (unused and not expired)
             query = """
                 SELECT COUNT(*) AS valid_token
                 FROM wa_tokens
@@ -35,16 +32,29 @@ def lambda_handler(event, context):
             """
             cursor.execute(query, (token,))
             result = cursor.fetchone()
-            is_authorized = result["valid_token"] > 0
+
+            if result["valid_token"] > 0:
+                # Mark the token as used so it cannot be used again.
+                update_query = """
+                    UPDATE wa_tokens
+                    SET is_used = 1,
+                        used_at = NOW()
+                    WHERE token = %s
+                      AND is_used = 0
+                      AND expires_at > NOW()
+                """
+                cursor.execute(update_query, (token,))
+                connection.commit()
+                is_authorized = True
+            else:
+                is_authorized = False
+
     except Exception as e:
         print(f"DB error: {e}")
-        # (If the DB lookup fails, consider whether you want to return False
-        #  or throw an exception; returning False should be valid.)
         is_authorized = False
     finally:
         connection.close()
 
-    # When unauthorized, try returning only the required key:
     if not is_authorized:
         return {"isAuthorized": False}
 
