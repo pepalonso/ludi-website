@@ -49,7 +49,7 @@ Resources:
     Properties:
       Handler: lambda_function.lambda_handler
       Runtime: python3.12
-      CodeUri: ./src
+      CodeUri: ./src/handle_inscription
       Timeout: 10
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -76,9 +76,9 @@ Resources:
   SendWA:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: send_whatsapp.lambda_handler
+      Handler: lambda_function.lambda_handler
       Runtime: python3.12
-      CodeUri: ./src
+      CodeUri: ./src/send_wa
       Timeout: 15
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -94,9 +94,9 @@ Resources:
   AuthorizeWA:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: authorize_wa.lambda_handler
+      Handler: lambda_function.lambda_handler
       Runtime: python3.12
-      CodeUri: ./src
+      CodeUri: ./src/authorizer
       Timeout: 10
       Policies:
         - AWSLambdaBasicExecutionRole
