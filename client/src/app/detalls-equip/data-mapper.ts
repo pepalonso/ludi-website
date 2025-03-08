@@ -1,11 +1,19 @@
+import { Vibrant } from 'node-vibrant/browser';
 import { CLUBS_DATA } from '../data/club-data';
-import { Team, Jugador, Entrenador, TallaSamarreta, Sexe } from '../interfaces/ludi.interface';
+import {
+  Team,
+  Jugador,
+  Entrenador,
+  TallaSamarreta,
+  Sexe,
+} from '../interfaces/ludi.interface';
 
 /**
- * Maps raw API response to properly typed Team object
+ * Maps raw API response to properly typed Team object and extracts the primary color from the logo.
+ * Note: The function is now async.
  */
-export function mapTeamResponse(response: any): Team {
-  return {
+export async function mapTeamResponse(response: any): Promise<Team> {
+  const team: Team = {
     nomEquip: response.nomEquip,
     email: response.email,
     telefon: response.telefon,
@@ -16,7 +24,20 @@ export function mapTeamResponse(response: any): Team {
     jugadors: response.jugadors.map(mapJugador),
     entrenadors: response.entrenadors.map(mapEntrenador),
     logoUrl: getUrlImage(response.club),
+    primaryColor: undefined,
   };
+
+  if (team.logoUrl) {
+    try {
+      const palette = await Vibrant.from(team.logoUrl).getPalette();
+      team.primaryColor = palette.LightVibrant?.hex || '';
+      console.log('Primary color:', team.primaryColor);
+    } catch (error) {
+      console.error('Error extracting primary color:', error);
+    }
+  }
+
+  return team;
 }
 
 function mapSexe(sexeValue: string): Sexe {
@@ -25,23 +46,40 @@ function mapSexe(sexeValue: string): Sexe {
       return Sexe.MASC;
     case 'Fem':
       return Sexe.FEM;
-    case 'Mixte':
-      return Sexe.MIXTE;
     default:
-      console.warn(`Unknown sexe value: ${sexeValue}, defaulting to Mixte`);
-      return Sexe.MIXTE;
+      console.warn(`Unknown sexe value: ${sexeValue}, defaulting to Masc`);
+      return Sexe.MASC;
   }
 }
 
 function getUrlImage(clubName: string): string {
-  return CLUBS_DATA.find((club) => club.club_name === clubName)?.logo_url || '';
+  const originalUrl =
+    CLUBS_DATA.find((club) => club.club_name === clubName)?.logo_url || '';
+  console.log('Original URL:', originalUrl);
+
+  if (
+    originalUrl.startsWith('https://d3ah0nqesr6vwc.cloudfront.net') ||
+    originalUrl.startsWith('https:/d3ah0nqesr6vwc.cloudfront.net')
+  ) {
+    const mappedUrl = originalUrl.replace(
+      /https:\/{1,2}d3ah0nqesr6vwc\.cloudfront\.net/,
+      '/cloudfront'
+    );
+    console.log('Mapped URL:', mappedUrl);
+    return mappedUrl;
   }
+
+  return originalUrl;
+}
+
+
+
 
 function mapJugador(jugadorData: any): Jugador {
   return {
     nom: jugadorData.nom,
     cognoms: jugadorData.cognoms,
-    tallaSamarreta: mapTallaSamarreta(jugadorData.tallaSamarreta)
+    tallaSamarreta: mapTallaSamarreta(jugadorData.tallaSamarreta),
   };
 }
 
@@ -50,7 +88,7 @@ function mapEntrenador(entrenadorData: any): Entrenador {
     nom: entrenadorData.nom,
     cognoms: entrenadorData.cognoms,
     tallaSamarreta: mapTallaSamarreta(entrenadorData.tallaSamarreta),
-    esPrincipal: entrenadorData.esPrincipal
+    esPrincipal: entrenadorData.esPrincipal,
   };
 }
 

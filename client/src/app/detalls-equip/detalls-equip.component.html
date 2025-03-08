@@ -8,11 +8,11 @@
 <!-- Loading state -->
 <div *ngIf="!team && !error" class="loading-container">
   <mat-spinner diameter="40"></mat-spinner>
-  <p>Loading team details...</p>
+  <p>Carregant els detalls de l'equip...</p>
 </div>
 
 <!-- Once team details are loaded, render either desktop or mobile component -->
-<div *ngIf="team">
+<div *ngIf="team" [ngStyle]="{'--primary': team.primaryColor || '#d36600'}">
   <ng-container *ngIf="isDesktop; else mobileView">
     <app-team-desktop [team]="team"></app-team-desktop>
   </ng-container>

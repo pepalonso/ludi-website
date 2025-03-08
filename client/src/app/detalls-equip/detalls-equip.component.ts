@@ -53,7 +53,8 @@ export class DetallsEquipComponent implements OnInit {
   }
 
   private async fetchTeamDetails(token: string): Promise<void> {
-    const url = `https://${environment.apiUrl}/inscripcio`;
+    //const url = `https://${environment.apiUrl}/inscripcio`;
+    const url = `http://localhost:3000/inscripcio`;
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
@@ -72,7 +73,7 @@ export class DetallsEquipComponent implements OnInit {
       }
 
       const responseData = await response.json();
-      this.team = mapTeamResponse(responseData);
+      this.team = await mapTeamResponse(responseData);
     } catch (error) {
       this.error = true;
       console.error('Error fetching team details:', error);

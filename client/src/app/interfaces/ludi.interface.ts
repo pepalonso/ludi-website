@@ -22,6 +22,7 @@ export interface Team {
   jugadors: Jugador[];
   entrenadors: Entrenador[];
   logoUrl?: string;
+  primaryColor?: string;
 }
 
 
@@ -39,5 +40,4 @@ export enum TallaSamarreta {
 export enum Sexe {
   MASC = 'Masculí',
   FEM = 'Femení',
-  MIXTE = 'Mixte',
 }
