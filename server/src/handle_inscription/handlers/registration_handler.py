@@ -59,9 +59,9 @@ def handle_registration(event):
             cursor.execute(insert_team, (
                 mapped_body['nomEquip'], 
                 mapped_body['email'], 
+                mapped_body['categoria'], 
                 mapped_body['telefon'], 
                 mapped_body['sexe'], 
-                mapped_body['categoria'], 
                 club_id
             ))
             team_id = cursor.lastrowid
