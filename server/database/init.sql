@@ -62,3 +62,12 @@ CREATE TABLE wa_tokens (
     is_used BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (team_id) REFERENCES equips(id)
 );
+
+CREATE TABLE qr_tokens (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    team_id INT NOT NULL,
+    token VARCHAR(500) NOT NULL,
+    expires_at DATETIME NOT NULL,
+    created_at DATETIME NOT NULL,
+    FOREIGN KEY (team_id) REFERENCES equips(id)
+);
