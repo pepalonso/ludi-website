@@ -157,6 +157,19 @@ h2::after {
   font-weight: 500;
 }
 
+.intolerancia-number {
+  background-color: #861111;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 5px;
+  font-size: 13px;
+  color: #ffebee;
+}
+
 /* Jugadors and Entrenadors */
 .jugadors-list, .entrenadors-list {
   display: flex;
