@@ -1,11 +1,12 @@
 :root {
     --primary: #d36600;
+    --default: #d36600;
     --background: #131313;
     --text: #ffffff;
     --resaltes: #dd5100;
     --gris: #4d4d4d;
   }
-  
+
 
 html, body { height: 100%; width: 100%;}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
