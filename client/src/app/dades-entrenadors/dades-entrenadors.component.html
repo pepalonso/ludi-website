@@ -1,0 +1,50 @@
+<div class="form-container">
+  <form [formGroup]="entrenadorForm" (ngSubmit)="agregarEntrenador()">
+    <label>Nombre</label>
+    <input type="text" formControlName="nombre" required />
+
+    <label>Primer Apellido</label>
+    <input type="text" formControlName="primerApellido" required />
+
+    <label>Segundo Apellido</label>
+    <input type="text" formControlName="segundoApellido" required />
+
+    <label>Talla de Camiseta</label>
+    <select formControlName="tallaCamiseta" required>
+      <option *ngFor="let talla of tallas" [value]="talla">{{ talla }}</option>
+    </select>
+
+    <label>
+      <input type="checkbox" formControlName="primerEntrenador" />
+      ¿Es Primer Entrenador?
+    </label>
+
+    <button type="submit" [disabled]="entrenadorForm.invalid">Agregar</button>
+  </form>
+</div>
+
+<div *ngIf="entrenadores.length > 0" class="table-container">
+  <table>
+    <thead>
+      <tr>
+          <th>Nombre</th>
+          <th>Primer Apellido</th>
+          <th>Segundo Apellido</th>
+          <th>Talla</th>
+          <th>Primer Entrenador</th>
+          <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entrenador of entrenadores; let i = index">
+          <td>{{ entrenador.nombre }}</td>
+          <td>{{ entrenador.primerApellido }}</td>
+          <td>{{ entrenador.segundoApellido }}</td>
+          <td>{{ entrenador.tallaCamiseta }}</td>
+          <td>{{ entrenador.primerEntrenador ? 'Sí' : 'No' }}</td>
+          <td><button (click)="eliminarEntrenador(i)">❌</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  

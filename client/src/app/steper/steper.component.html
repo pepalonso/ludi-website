@@ -1,0 +1,20 @@
+<section class="stepper-main">
+  <header>
+    @for (step of steps; track step; let i = $index) {
+      <button
+        class="style-button"
+        [class.example-active]="selectedIndex === i"
+        (click)="selectStepByIndex(i)">
+        
+        <span class="step-number">{{ i }}</span>
+        <span class="step-name">{{ getStepName(i) }}</span>
+      </button>
+    }
+  </header>
+  <div [ngTemplateOutlet]="selected ? selected.content : null"></div>
+
+  <footer>
+    <button class="style-button-footer" cdkStepperPrevious>&larr; Pas Anterior</button>
+    <button class="style-button-footer" cdkStepperNext>Següent pas &rarr;</button>
+  </footer>
+</section>

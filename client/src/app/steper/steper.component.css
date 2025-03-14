@@ -1,0 +1,75 @@
+header {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    height: 80px;
+    background-color: black;
+}
+
+button {
+    margin: 5px;
+    width: max-content;
+    border-radius: 10px;
+    background-color: var(--primary);
+    border-color: var(--resaltes);
+    text-align: left;
+    padding: 5px;
+}
+
+.style-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: var(--gris);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.style-button:hover {
+    background-color: #666;
+}
+
+.style-button.example-active {
+    background-color: var(--primary);
+    color: white;
+    font-weight: bold;
+}
+
+.step-number {
+    text-align: left;
+    font-weight: bold;
+    font-size: 40px;
+    margin-right: 5px;
+}
+
+.step-name {
+    text-align: left;
+    font-size: 13px;
+    padding-left: 0;
+}
+
+.stepper-main {
+    height: 100vh;
+}
+
+footer {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+}
+
+.style-button-footer {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
