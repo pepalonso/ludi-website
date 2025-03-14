@@ -8,18 +8,23 @@ export interface Entrenador {
   nom: string;
   cognoms: string;
   tallaSamarreta: TallaSamarreta;
-  esPrincipal: boolean;
+  esPrincipal: number;
 }
 
 export interface Team {
   nomEquip: string;
   email: string;
   telefon: string;
+  categoria: string;
   sexe: Sexe;
   club: string;
-  intolerancies?: string[];
+  intolerancies?: { name: string; count: number }[];
   jugadors: Jugador[];
   entrenadors: Entrenador[];
+  logoUrl?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  darkColor?: string;
 }
 
 
@@ -35,7 +40,6 @@ export enum TallaSamarreta {
 }
 
 export enum Sexe {
-  MASC = 'Masc',
-  FEM = 'Fem',
-  MIXTE = 'Mixte',
+  MASC = 'Masculí',
+  FEM = 'Femení',
 }

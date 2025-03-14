@@ -1,0 +1,93 @@
+<div *ngIf="team" class="parent">
+  <div class="team-info">
+  <div class="team-header-container">
+  <div class="team-header-content">
+    <h1 class="team-name">{{ team.nomEquip }}</h1>
+    <div class="team-category">{{ team.categoria }}</div>
+    <div class="team-gender">{{ team.sexe }}</div>
+  </div>
+  <div class="team-logo-container">
+    <img src="{{ team.logoUrl }}" alt="{{ team.nomEquip }} Logo" class="team-logo">
+  </div>
+</div>
+
+  <section class="info-section">
+    <h2>Informació de l'equip</h2>
+    <div class="info-card">
+      <div class="info-item">
+        <span class="label">Club</span>
+        <span class="value">{{ team.club }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Email</span>
+        <span class="value">{{ team.email }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Telèfon</span>
+        <span class="value">{{ team.telefon }}</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+  <!-- Div 2: Coaches Information -->
+  <div class="coaches-info">
+    <section class="entrenadors-section" *ngIf="team.entrenadors && team.entrenadors.length > 0">
+      <h2>Entrenadors</h2>
+      <div class="entrenadors-list">
+        <div class="entrenador-card" *ngFor="let entrenador of team.entrenadors">
+          <div class="entrenador-details">
+            <h3>
+              {{ entrenador.nom }} {{ entrenador.cognoms }}
+              <span class="principal-badge" *ngIf="entrenador.esPrincipal === 1">Principal</span>
+            </h3>
+            <div class="entrenador-info">
+              <div class="info-item">
+                <span class="label-samarreta">Talla samarreta</span>
+                <span class="value talla-badge">{{ entrenador.tallaSamarreta }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Div 3: Players Information -->
+  <div class="players-info">
+    <section class="jugadors-section" *ngIf="team.jugadors && team.jugadors.length > 0">
+      <h2>Jugadors ({{ team.jugadors.length }})</h2>
+      <div class="jugadors-list">
+        <div class="jugador-card" *ngFor="let jugador of team.jugadors; let i = index">
+          <div class="jugador-number">{{ i + 1 }}</div>
+          <div class="jugador-details">
+            <h3>{{ jugador.nom }} {{ jugador.cognoms }}</h3>
+            <div class="jugador-info">
+              <div class="info-item">
+                <span class="label-samarreta">Talla samarreta</span>
+                <span class="value talla-badge">{{ jugador.tallaSamarreta }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Div 4: Allergies Information -->
+  <div class="allergies-info">
+    <section class="intolerancies-section" *ngIf="team.intolerancies && team.intolerancies.length> 0">
+      <h2>Intoleràncies</h2>
+      <div class="intolerancies-container">
+        <span class="intolerancia-tag" *ngFor="let i of team.intolerancies">
+          <!-- Only show the count if more than one occurrence -->
+          <span *ngIf="i.count > 1" class="intolerancia-number">
+            {{ i.count }}
+          </span>
+          {{ i.name }}
+        </span>
+      </div>
+    </section>
+  </div>
+

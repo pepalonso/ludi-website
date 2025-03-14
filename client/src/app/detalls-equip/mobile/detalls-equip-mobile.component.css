@@ -15,9 +15,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  background-color: #1A1A1A;
-  color:#CCC;
+  min-height: 200px;
 }
 
 .loading-text {
@@ -70,7 +68,7 @@
   font-size: 14px;
   font-weight: 500;
   background-color: #fff9fa;
-  color: var(--primary);
+  color: var(--dark);
 }
 
 .team-gender {
@@ -80,7 +78,7 @@
   font-size: 14px;
   font-weight: 500;
   background-color: #fff9fa;
-  color: var(--primary);
+  color: var(--dark);
 }
 
 
@@ -107,9 +105,7 @@ h2::after {
 }
 
 /* Info cards */
-.info-card,
-.jugador-card,
-.entrenador-card {
+.info-card, .jugador-card, .entrenador-card {
   background-color: #333;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -130,6 +126,14 @@ h2::after {
   flex: 0 0 40%;
   color: #ddd;
   font-size: 14px;
+}
+
+.label-samarreta {
+  flex: 0 0 40%;
+  color: #ddd;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
 }
 
 .value {
@@ -153,16 +157,27 @@ h2::after {
   font-weight: 500;
 }
 
+.intolerancia-number {
+  background-color: #861111;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 5px;
+  font-size: 13px;
+  color: #ffebee;
+}
+
 /* Jugadors and Entrenadors */
-.jugadors-list,
-.entrenadors-list {
+.jugadors-list, .entrenadors-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.jugador-card,
-.entrenador-card {
+.jugador-card, .entrenador-card {
   display: flex;
   align-items: flex-start;
 }
@@ -173,15 +188,14 @@ h2::after {
   justify-content: center;
   width: 32px;
   height: 32px;
-  background-color: #ffe3c9;
-  color: var(--primary);
+  background-color: var(--secondary);
+  color: black;
   border-radius: 50%;
   margin-right: 12px;
   font-weight: 600;
 }
 
-.jugador-details,
-.entrenador-details {
+.jugador-details, .entrenador-details {
   flex: 1;
 }
 
@@ -195,21 +209,36 @@ h3 {
   justify-content: space-between;
 }
 
-.jugador-info,
-.entrenador-info {
+.jugador-info, .entrenador-info {
   font-size: 14px;
 }
 
 /* Talla badges */
 .talla-badge {
-  display: inline-block;
-  padding: 3px 8px;
-  background-color: #dedede;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 60px;
+  max-width: 40px;
+  height: 40px;
+  background-color: var(--secondary);
   color: #1A1A1A;
-  border-radius: 4px;
   font-weight: 600;
-  text-align: center;
-  min-width: 24px;
+  clip-path: polygon(20% 0%,
+      35% 0%,
+      45% 8%,
+      50% 12%,
+      55% 8%,
+      65% 0%,
+      80% 0%,
+      95% 20%,
+      95% 30%,
+      90% 40%,
+      90% 100%,
+      10% 100%,
+      10% 40%,
+      5% 30%,
+      5% 20%);
 }
 
 /* Principal badge */
@@ -225,10 +254,6 @@ h3 {
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
-  .info-item {
-    flex-direction: column;
-  }
-
   .label {
     margin-bottom: 4px;
   }
@@ -242,4 +267,28 @@ h3 {
     margin-left: 0;
     margin-top: 4px;
   }
+}
+
+.team-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.team-header-content {
+  flex: 1;
+}
+
+.team-logo-container {
+  width: 60px;
+  height: 60px;
+  margin-right: 20px;
+}
+
+.team-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
 }

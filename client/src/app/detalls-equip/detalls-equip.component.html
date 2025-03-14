@@ -1,36 +1,22 @@
-<div *ngIf="!team && !error" class="loading">
-  <mat-spinner color="primary" [diameter]="80"></mat-spinner>
+<!-- Error state -->
+<div *ngIf="error" class="error-container">
+  <div class="error-icon">!</div>
+  <h2>Error loading team details</h2>
+  <p>Please try again later.</p>
 </div>
-<div *ngIf="error" class="error">Error loading team data.</div>
 
-<div class="team-container" *ngIf="team">
-  <h1 class="team-name">{{ team?.nomEquip }}</h1>
-  <p class="team-info">🏆 Club: {{ team?.club }}</p>
-  <p class="team-info">⚧ Sexe: {{ team?.sexe }}</p>
+<!-- Loading state -->
+<div *ngIf="!team && !error" class="loading-container">
+  <mat-spinner diameter="40"></mat-spinner>
+  <p>Carregant els detalls de l'equip...</p>
+</div>
 
-  <div class="team-section">
-    <h2>Entrenadors</h2>
-    <ul>
-      <li *ngFor="let entrenador of team.entrenadors">
-        {{ entrenador.nom }} {{ entrenador.cognoms }}
-        <span class="coach-role" *ngIf="entrenador.esPrincipal">(Principal)</span>
-        <span class="shirt-size">👕 {{ entrenador.tallaSamarreta }}</span>
-      </li>
-    </ul>
-  </div>
-
-  <div class="team-section">
-    <h2>Jugadors</h2>
-    <ul>
-      <li *ngFor="let jugador of team.jugadors">
-        {{ jugador.nom }} {{ jugador.cognoms }}
-        <span class="shirt-size">👕 {{ jugador.tallaSamarreta }}</span>
-      </li>
-    </ul>
-  </div>
-
-  <div class="team-section" *ngIf="team.intolerancies?.length">
-      <h2>Intoleràncies</h2>
-      <p>{{ team?.intolerancies?.join(', ') }}</p>
-  </div>
+<!-- Once team details are loaded, render either desktop or mobile component -->
+<div *ngIf="team" [ngStyle]="{'--primary': team.primaryColor || '#d36600', '--secondary': team.secondaryColor || '#ffffff', '--dark': team.darkColor || '#000000'}">
+  <ng-container *ngIf="isDesktop; else mobileView">
+    <app-team-desktop [team]="team"></app-team-desktop>
+  </ng-container>
+  <ng-template #mobileView>
+    <app-team-mobile [team]="team"></app-team-mobile>
+  </ng-template>
 </div>
