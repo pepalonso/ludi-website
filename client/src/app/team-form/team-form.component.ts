@@ -1,10 +1,12 @@
 import { Component, forwardRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { ClubDropdownComponent } from '../utils/club-dropdown/club-dropdown.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SteperComponent } from '../steper/steper.component';
-import { CdkStepper, CdkStepperModule } from '@angular/cdk/stepper';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { DadesGeneralsComponent } from "../dades-generals/dades-generals.component";
+import { DadesJugadorsComponent } from "../dades-jugadors/dades-jugadors.component";
+import { DadesEntrenadorsComponent } from "../dades-entrenadors/dades-entrenadors.component";
 
 export interface StepInterface {
   id: number,
@@ -16,7 +18,7 @@ export interface StepInterface {
   templateUrl: './team-form.component.html',
   styleUrls: ['./team-form.component.css'],
   standalone: true,
-  imports: [ClubDropdownComponent, ReactiveFormsModule, CommonModule, forwardRef(() => SteperComponent), CdkStepper, CdkStepperModule],
+  imports: [ReactiveFormsModule, CommonModule, forwardRef(() => SteperComponent), CdkStepperModule, DadesGeneralsComponent, DadesJugadorsComponent, DadesEntrenadorsComponent],
 })
 export class TeamFormComponent implements OnInit {
   teamForm: FormGroup;
@@ -109,7 +111,7 @@ export class TeamFormComponent implements OnInit {
       },
       {
         id: 3,
-        name: 'Previ'
+        name: 'Resum'
       },
     ]
   }

@@ -1,8 +1,8 @@
-<section class="example-container">
+<section class="stepper-main">
   <header>
     @for (step of steps; track step; let i = $index) {
       <button
-        class="example-step"
+        class="style-button"
         [class.example-active]="selectedIndex === i"
         (click)="selectStepByIndex(i)">
         
@@ -11,11 +11,10 @@
       </button>
     }
   </header>
-  <!-- Tengo que agregar el nombre del step ya esta importado el enum step -->
   <div [ngTemplateOutlet]="selected ? selected.content : null"></div>
 
-  <footer class="example-step-navigation-bar">
-    <button class="example-nav-button" cdkStepperPrevious>&larr;</button>
-    <button class="example-nav-button" cdkStepperNext>&rarr;</button>
+  <footer>
+    <button class="style-button-footer" cdkStepperPrevious>&larr; Pas Anterior</button>
+    <button class="style-button-footer" cdkStepperNext>Següent pas &rarr;</button>
   </footer>
 </section>

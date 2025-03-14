@@ -124,10 +124,11 @@
     <button type="submit">Enviar Equip</button>
   </form>
 </div> -->
-
-<app-steper [stepNames]="steps">
-  <cdk-step> <p>Dades Generals</p> </cdk-step>
-  <cdk-step> <p>Dades Jugadors</p> </cdk-step>
-  <cdk-step> <p>Dades Entrenadors</p> </cdk-step>
-  <cdk-step> <p>Previsualització</p> </cdk-step>
-</app-steper>
+<body>
+  <app-steper class="stepper" [stepNames]="steps">
+    <cdk-step> <app-dades-generals></app-dades-generals> </cdk-step>
+    <cdk-step> <app-dades-jugadors></app-dades-jugadors> </cdk-step>
+    <cdk-step> <app-dades-entrenadors></app-dades-entrenadors> </cdk-step>
+    <cdk-step> <p>Previsualització</p> </cdk-step>
+  </app-steper>
+</body>

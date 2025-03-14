@@ -3,6 +3,7 @@
     --background: #131313;
     --text: #ffffff;
     --resaltes: #dd5100;
+    --gris: #4d4d4d;
   }
   
 
@@ -11,3 +12,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+input, select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
