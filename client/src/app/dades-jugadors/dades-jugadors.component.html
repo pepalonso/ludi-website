@@ -1,0 +1,44 @@
+<div class="form-container">
+  <form [formGroup]="jugadorForm" (ngSubmit)="agregarJugador()">
+    <label>Nombre</label>
+    <input type="text" formControlName="nombre" required />
+
+    <label>Primer Apellido</label>
+    <input type="text" formControlName="primerApellido" required />
+
+    <label>Segundo Apellido</label>
+    <input type="text" formControlName="segundoApellido" required />
+
+    <label>Talla de Camiseta</label>
+    <select formControlName="talla" required>
+      <option *ngFor="let talla of tallas" [value]="talla">{{ talla }}</option>
+    </select>
+  
+    <button type="submit" [disabled]="jugadorForm.invalid">Agregar</button>
+  </form>
+</div>
+  
+  <!-- Tabla para mostrar los jugadores agregados -->
+<div *ngIf="jugadores.length > 0" class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Primer Apellido</th>
+        <th>Segundo Apellido</th>
+        <th>Talla</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let jugador of jugadores; let i = index">
+        <td>{{ jugador.nombre }}</td>
+        <td>{{ jugador.primerApellido }}</td>
+        <td>{{ jugador.segundoApellido }}</td>
+        <td>{{ jugador.talla }}</td>
+        <td><button (click)="eliminarJugador(i)">❌</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  

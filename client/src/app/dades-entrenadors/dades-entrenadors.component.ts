@@ -1,0 +1,40 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-dades-entrenadors',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './dades-entrenadors.component.html',
+  styleUrl: './dades-entrenadors.component.css'
+})
+export class DadesEntrenadorsComponent {
+  entrenadorForm: FormGroup;
+  entrenadores: any[] = [];
+
+  tallas = ['S', 'M', 'L', 'XL', 'XXL'];
+
+  constructor(private fb: FormBuilder) {
+    this.entrenadorForm = this.fb.group({
+      nombre: ['', Validators.required],
+      primerApellido: ['', Validators.required],
+      segundoApellido: ['', Validators.required],
+      tallaCamiseta: ['', Validators.required],
+      primerEntrenador: [false]
+    });
+  }
+
+  agregarEntrenador() {
+    if (this.entrenadorForm.valid && this.entrenadores.length < 2) {
+      this.entrenadores.push(this.entrenadorForm.value);
+      this.entrenadorForm.reset();
+    } else if (this.entrenadores.length >= 2) {
+      alert('Solo se pueden agregar 2 entrenadores.');
+    }
+  }
+
+  eliminarEntrenador(index: number) {
+    this.entrenadores.splice(index, 1);
+  }
+}

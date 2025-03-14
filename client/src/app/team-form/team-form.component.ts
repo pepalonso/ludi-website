@@ -1,18 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, forwardRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { ClubDropdownComponent } from '../utils/club-dropdown/club-dropdown.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SteperComponent } from '../steper/steper.component';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { DadesGeneralsComponent } from "../dades-generals/dades-generals.component";
+import { DadesJugadorsComponent } from "../dades-jugadors/dades-jugadors.component";
+import { DadesEntrenadorsComponent } from "../dades-entrenadors/dades-entrenadors.component";
+
+export interface StepInterface {
+  id: number,
+  name: string
+}
 
 @Component({
   selector: 'app-team-form',
   templateUrl: './team-form.component.html',
   styleUrls: ['./team-form.component.css'],
   standalone: true,
-  imports: [ClubDropdownComponent, ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, forwardRef(() => SteperComponent), CdkStepperModule, DadesGeneralsComponent, DadesJugadorsComponent, DadesEntrenadorsComponent],
 })
 export class TeamFormComponent implements OnInit {
   teamForm: FormGroup;
+
+  public steps!: Array<StepInterface>;
 
   constructor(private fb: FormBuilder) {
     this.teamForm = this.fb.group({
@@ -30,6 +41,7 @@ export class TeamFormComponent implements OnInit {
   ngOnInit(): void {
     this.addPlayer();
     this.addCoach();
+    this.agregarSteps();
   }
 
   get players(): FormArray {
@@ -81,5 +93,26 @@ export class TeamFormComponent implements OnInit {
     } else {
       console.log('Form is invalid');
     }
+  }
+
+  private agregarSteps() {
+    this.steps = [
+      {
+        id: 0,
+        name: 'Dades Generals'
+      },
+      {
+        id: 1,
+        name: 'Dades Jugadors'
+      },
+      {
+        id: 2,
+        name: 'Dades Entrenadors'
+      },
+      {
+        id: 3,
+        name: 'Resum'
+      },
+    ]
   }
 }

@@ -1,0 +1,24 @@
+
+<form [formGroup]="dadesForm" (ngSubmit)="onSubmit()">
+    <label for="club">Club:</label>
+    <app-input-dropdown></app-input-dropdown>
+  
+    <label for="categoria">Categoria:</label>
+    <select id="categoria" formControlName="categoria">
+      <option *ngFor="let categoria of categories" [value]="categoria">{{ categoria }}</option>
+    </select>
+  
+    <label for="sexe">Sexe:</label>
+    <select id="sexe" formControlName="sexe">
+      <option *ngFor="let sexe of sexes" [value]="sexe">{{ sexe }}</option>
+    </select>
+  
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email" placeholder="exemple@gmail.com" />
+  
+    <label for="telefon">Telèfon:</label>
+    <input type="number" id="telefon" formControlName="telefon" placeholder="666555444" />
+  
+    <button type="submit" [disabled]="dadesForm.invalid">Enviar</button>
+</form>
+  

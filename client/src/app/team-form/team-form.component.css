@@ -1,4 +1,4 @@
-.team-form-container {
+/* .team-form-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 1rem;
@@ -78,4 +78,13 @@ button {
 button[type="button"] {
   background-color: #6c757d;
   margin-right: 0.5rem;
+} */
+
+body {
+  background-color: rgb(255, 204, 147);
+}
+
+.stepper {
+  display: block;
+  height: 100vh;
 }
