@@ -3,6 +3,10 @@ body {
 }
 
 .stepper {
-  display: block;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
+  color: #ffffff;
+  background-color: #1a1a1a;
+  font-family: 'Roboto', sans-serif;
 }

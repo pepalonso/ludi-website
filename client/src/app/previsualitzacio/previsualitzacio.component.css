@@ -1,7 +1,9 @@
 .preview-container{
-  max-height: max-content;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100vh - 100px;
 }
-
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {

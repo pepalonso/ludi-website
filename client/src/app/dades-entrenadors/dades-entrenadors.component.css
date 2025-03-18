@@ -1,17 +1,9 @@
-/* Global Styles */
-body {
-  background-color: #1a1a1a;
-  color: #ffffff;
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
 /* Container */
-.player-form-container {
+.coach-form-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+
 }
 
 /* Card Styles */

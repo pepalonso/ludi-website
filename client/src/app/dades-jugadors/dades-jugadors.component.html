@@ -1,63 +1,53 @@
 <div class="player-form-container">
   <div class="form-card">
-    <h2 class="form-title">Agregar Jugador</h2>
+    <h2 class="form-title">Afegir Jugador</h2>
 
     <form [formGroup]="jugadorForm" (ngSubmit)="agregarJugador()">
       <div class="form-group">
         <label for="nombre">Nombre</label>
         <input type="text" id="nombre" formControlName="nombre" required />
         <div class="error-message" *ngIf="jugadorForm.get('nombre')?.invalid && jugadorForm.get('nombre')?.touched">
-          Nombre es requerido
+          EL nom es requerit
         </div>
       </div>
 
       <div class="form-group">
-        <label for="primerApellido">Primer Apellido</label>
+        <label for="primerApellido">Primer Cognom</label>
         <input type="text" id="primerApellido" formControlName="primerApellido" required />
         <div class="error-message" *ngIf="jugadorForm.get('primerApellido')?.invalid && jugadorForm.get('primerApellido')?.touched">
-          Primer apellido es requerido
+          Primer Cognom es requerit
         </div>
       </div>
 
       <div class="form-group">
-        <label for="segundoApellido">Segundo Apellido</label>
-        <input type="text" id="segundoApellido" formControlName="segundoApellido" required />
-        <div class="error-message" *ngIf="jugadorForm.get('segundoApellido')?.invalid && jugadorForm.get('segundoApellido')?.touched">
-          Segundo apellido es requerido
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="talla">Talla de Camiseta</label>
+        <label for="talla">Talla Samarreta</label>
         <select id="talla" formControlName="talla" required>
           <option value="" disabled selected>Seleccionar talla</option>
           <option *ngFor="let talla of tallas" [value]="talla">{{ talla }}</option>
         </select>
         <div class="error-message" *ngIf="jugadorForm.get('talla')?.invalid && jugadorForm.get('talla')?.touched">
-          Talla es requerida
+          La Talla es requerida
         </div>
       </div>
 
       <button type="submit" class="btn-add" [disabled]="jugadorForm.invalid">
         <span class="btn-icon">+</span>
-        <span>Agregar</span>
+        <span>Afegir</span>
       </button>
     </form>
   </div>
 
-  <!-- Tabla para mostrar los jugadores agregados -->
   @if (jugadores.length > 0) {
     <div class="table-card">
-      <h2 class="table-title">Jugadores Registrados</h2>
+      <h2 class="table-title">Jugadors Registrats</h2>
       <div class="table-responsive">
         <table>
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Primer Apellido</th>
-              <th>Segundo Apellido</th>
-              <th>Talla</th>
-              <th>Acciones</th>
+              <th>Nom</th>
+              <th>Primer Cognom</th>
+              <th>Talla Samarreta</th>
+              <th>Accions</th>
             </tr>
           </thead>
           <tbody>
@@ -65,7 +55,6 @@
               <tr>
                 <td>{{ jugador.nombre }}</td>
                 <td>{{ jugador.primerApellido }}</td>
-                <td>{{ jugador.segundoApellido }}</td>
                 <td>{{ jugador.talla }}</td>
                 <td>
                   <button class="btn-delete" (click)="eliminarJugador($index)" aria-label="Eliminar jugador">

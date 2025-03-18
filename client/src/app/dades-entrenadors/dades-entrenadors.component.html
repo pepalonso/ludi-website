@@ -1,13 +1,13 @@
 <div class="coach-form-container">
   <div class="form-card">
-    <h2 class="form-title">Agregar Entrenador</h2>
+    <h2 class="form-title">Afegir Entrenador</h2>
 
     <form [formGroup]="entrenadorForm" (ngSubmit)="agregarEntrenador()">
       <div class="form-group">
-        <label for="nombre">Nombre</label>
+        <label for="nombre">Nom</label>
         <input type="text" id="nombre" formControlName="nombre" required />
         <div class="error-message" *ngIf="entrenadorForm.get('nombre')?.invalid && entrenadorForm.get('nombre')?.touched">
-          Nombre es requerido
+          El nom es requerit
         </div>
       </div>
 
@@ -15,26 +15,18 @@
         <label for="primerApellido">Primer Apellido</label>
         <input type="text" id="primerApellido" formControlName="primerApellido" required />
         <div class="error-message" *ngIf="entrenadorForm.get('primerApellido')?.invalid && entrenadorForm.get('primerApellido')?.touched">
-          Primer apellido es requerido
+          El cognom és requerit
         </div>
       </div>
 
       <div class="form-group">
-        <label for="segundoApellido">Segundo Apellido</label>
-        <input type="text" id="segundoApellido" formControlName="segundoApellido" required />
-        <div class="error-message" *ngIf="entrenadorForm.get('segundoApellido')?.invalid && entrenadorForm.get('segundoApellido')?.touched">
-          Segundo apellido es requerido
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="tallaCamiseta">Talla de Camiseta</label>
+        <label for="tallaCamiseta">Talla de Samarreta</label>
         <select id="tallaCamiseta" formControlName="tallaCamiseta" required>
           <option value="" disabled selected>Seleccionar talla</option>
           <option *ngFor="let talla of tallas" [value]="talla">{{ talla }}</option>
         </select>
         <div class="error-message" *ngIf="entrenadorForm.get('tallaCamiseta')?.invalid && entrenadorForm.get('tallaCamiseta')?.touched">
-          Talla es requerida
+          La talla es requerida
         </div>
       </div>
 
@@ -53,17 +45,16 @@
   <!-- Tabla para mostrar los entrenadores agregados -->
   @if (entrenadores.length > 0) {
     <div class="table-card">
-      <h2 class="table-title">Entrenadores Registrados</h2>
+      <h2 class="table-title">Entrenadors Registrats</h2>
       <div class="table-responsive">
         <table>
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Primer Apellido</th>
-              <th>Segundo Apellido</th>
+              <th>Nom</th>
+              <th>Primer Cognom</th>
               <th>Talla</th>
               <th>Primer Entrenador</th>
-              <th>Acciones</th>
+              <th>Accions</th>
             </tr>
           </thead>
           <tbody>
@@ -71,7 +62,6 @@
               <tr>
                 <td>{{ entrenador.nombre }}</td>
                 <td>{{ entrenador.primerApellido }}</td>
-                <td>{{ entrenador.segundoApellido }}</td>
                 <td>{{ entrenador.tallaCamiseta }}</td>
                 <td>{{ entrenador.primerEntrenador ? 'Sí' : 'No' }}</td>
                 <td>

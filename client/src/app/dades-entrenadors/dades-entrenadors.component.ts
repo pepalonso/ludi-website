@@ -2,6 +2,7 @@ import { CdkStepper } from '@angular/cdk/stepper';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TallaSamarreta } from '../interfaces/ludi.interface';
 
 @Component({
   selector: 'app-dades-entrenadors',
@@ -14,13 +15,13 @@ export class DadesEntrenadorsComponent {
   entrenadorForm: FormGroup;
   entrenadores: any[] = [];
 
-  tallas = ['S', 'M', 'L', 'XL', 'XXL'];
+  //tallas = ['S', 'M', 'L', 'XL', 'XXL'];
+  tallas = Object.values(TallaSamarreta);
 
   constructor(private fb: FormBuilder, private stepper: CdkStepper) {
     this.entrenadorForm = this.fb.group({
       nombre: ['', Validators.required],
       primerApellido: ['', Validators.required],
-      segundoApellido: ['', Validators.required],
       tallaCamiseta: ['', Validators.required],
       primerEntrenador: [false]
     });
