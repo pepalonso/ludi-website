@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TeamMobileComponent } from './mobile/detalls-equip-monile.component';
 import { TeamDesktopComponent } from './desktop/detalls-equip-desktop.component';
-import { testResponse } from '../data/test';
 
 
 @Component({

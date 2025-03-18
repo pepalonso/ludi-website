@@ -1,0 +1,8 @@
+<div *ngIf="team" [ngStyle]="{'--primary': team.primaryColor || '#d36600', '--secondary': team.secondaryColor || '#ffffff', '--dark': team.darkColor || '#000000'}" class="preview-container">
+  <ng-container *ngIf="isDesktop; else mobileView">
+    <app-team-desktop [team]="team"></app-team-desktop>
+  </ng-container>
+  <ng-template #mobileView>
+    <app-team-mobile [team]="team"></app-team-mobile>
+  </ng-template>
+</div>
