@@ -1,3 +1,4 @@
+import { CdkStepper } from '@angular/cdk/stepper';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -7,7 +8,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './dades-entrenadors.component.html',
-  styleUrl: './dades-entrenadors.component.css'
+  styleUrl: './dades-entrenadors.component.css',
 })
 export class DadesEntrenadorsComponent {
   entrenadorForm: FormGroup;
@@ -15,7 +16,7 @@ export class DadesEntrenadorsComponent {
 
   tallas = ['S', 'M', 'L', 'XL', 'XXL'];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private stepper: CdkStepper) {
     this.entrenadorForm = this.fb.group({
       nombre: ['', Validators.required],
       primerApellido: ['', Validators.required],
@@ -36,5 +37,9 @@ export class DadesEntrenadorsComponent {
 
   eliminarEntrenador(index: number) {
     this.entrenadores.splice(index, 1);
+  }
+
+  nextStep() {
+    this.stepper.next();
   }
 }

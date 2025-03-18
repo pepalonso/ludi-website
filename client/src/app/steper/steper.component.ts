@@ -15,7 +15,6 @@ export class SteperComponent extends CdkStepper {
 
   selectStepByIndex(index: number): void {
     this.selectedIndex = index;
-    console.info(this.stepNames)
   }
 
   getStepName(id: number): string {

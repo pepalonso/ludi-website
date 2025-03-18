@@ -8,12 +8,17 @@ form {
 
 label {
     font-weight: bold;
+    color: white;
 }
 
 input, select {
     padding: 5px;
     border-radius: 5px;
     border: 1px solid #ccc;
+}
+
+input:focus, select:focus {
+    background-color: rgb(179, 179, 179);
 }
 
 button {
@@ -26,7 +31,25 @@ button {
 }
 
 button:disabled {
-    background-color: gray;
+    background-color: var(--disabled);
     cursor: not-allowed;
 }
-  
+
+.boton-siguiente {
+    margin: 5px;
+    width: max-content;
+    border-radius: 10px;
+    background-color: var(--primary);
+    border-color: var(--resaltes);
+    text-align: left;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border: none;
+    font-size: 16px;
+} 
+
+.center-button {
+    display: flex; 
+    justify-content: flex-end
+}
