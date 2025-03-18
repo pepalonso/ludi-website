@@ -1,0 +1,31 @@
+.preview-container{
+  max-height: max-content;
+}
+
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .data-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .data-table {
+    font-size: 0.9rem;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 0.5rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btn-anterior,
+  .btn-submit {
+    width: 100%;
+    justify-content: center;
+  }
+}
