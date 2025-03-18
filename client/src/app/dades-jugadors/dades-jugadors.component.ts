@@ -1,3 +1,4 @@
+import { CdkStepper } from '@angular/cdk/stepper';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -15,7 +16,7 @@ export class DadesJugadorsComponent {
 
   tallas = ['S', 'M', 'L', 'XL', 'XXL']; // Opciones para la talla de camiseta
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private stepper: CdkStepper) {
     this.jugadorForm = this.fb.group({
       nombre: ['', Validators.required],
       primerApellido: ['', Validators.required],
@@ -52,5 +53,9 @@ export class DadesJugadorsComponent {
 
   eliminarJugador(index: number) {
     this.jugadores.splice(index, 1); // Elimina el jugador seleccionado
+  }
+
+  nextStep() {
+    this.stepper.next();
   }
 }

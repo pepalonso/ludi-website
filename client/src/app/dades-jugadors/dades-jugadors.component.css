@@ -19,8 +19,8 @@ button {
     cursor: pointer;
 }
   
-button[disabled] {
-    background-color: #ccc;
+button:disabled {
+    background-color: var(--disabled);
     cursor: not-allowed;
 }
   
@@ -76,4 +76,23 @@ tr:last-child td:first-child {
 }
 tr:last-child td:last-child {
     border-bottom-right-radius: 10px;
+}
+
+.boton-siguiente {
+    margin: 5px;
+    width: max-content;
+    border-radius: 10px;
+    background-color: var(--primary);
+    border-color: var(--resaltes);
+    text-align: left;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border: none;
+    font-size: 16px;
+} 
+
+.center-button {
+    display: flex; 
+    justify-content: flex-end
 }

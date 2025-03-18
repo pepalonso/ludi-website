@@ -36,9 +36,12 @@
         <td>{{ jugador.primerApellido }}</td>
         <td>{{ jugador.segundoApellido }}</td>
         <td>{{ jugador.talla }}</td>
-        <td><button (click)="eliminarJugador(i)">❌</button></td>
+        <td><button (click)="eliminarJugador(i)">X</button></td>
       </tr>
     </tbody>
   </table>
 </div>
   
+<div class="center-button">
+  <button class="boton-siguiente" (click)="nextStep()" [disabled]="jugadorForm.invalid">Siguiente</button>
+</div>

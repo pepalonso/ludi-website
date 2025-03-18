@@ -2,13 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClubDropdownComponent } from "../utils/club-dropdown/club-dropdown.component";
+import { CdkStep, CdkStepper } from '@angular/cdk/stepper';
+import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
 
 @Component({
   selector: 'app-dades-generals',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, ClubDropdownComponent],
   templateUrl: './dades-generals.component.html',
-  styleUrl: './dades-generals.component.css'
+  styleUrl: './dades-generals.component.css',
+  providers: [{provide: CdkStep, useExisting: CdkStepper}]
 })
 export class DadesGeneralsComponent {
   dadesForm: FormGroup;
@@ -16,9 +19,12 @@ export class DadesGeneralsComponent {
   categories = ['Escoleta', 'Pre-mini', 'Mini', 'Pre-infantil', 'Infantil', 'Cadet', 'Júnior'];
   sexes = ['Masculí', 'Femení'];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder, 
+    private stepper: CdkStepper, 
+    private previService: PrevisualitzacioService,
+  ) {
     this.dadesForm = this.fb.group({
-      club: ['', Validators.required],
       categoria: ['', Validators.required],
       sexe: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -32,5 +38,10 @@ export class DadesGeneralsComponent {
     } else {
       console.log('Form is invalid');
     }
+  }
+
+  nextStep(){
+    this.previService.setFormData('dadesGenerals', this.dadesForm)
+    this.stepper.next();
   }
 }

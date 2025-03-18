@@ -42,9 +42,13 @@
           <td>{{ entrenador.segundoApellido }}</td>
           <td>{{ entrenador.tallaCamiseta }}</td>
           <td>{{ entrenador.primerEntrenador ? 'Sí' : 'No' }}</td>
-          <td><button (click)="eliminarEntrenador(i)">❌</button></td>
+          <td><button (click)="eliminarEntrenador(i)">X</button></td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<div class="center-button">
+  <button class="boton-siguiente" (click)="nextStep()" [disabled]="entrenadorForm.invalid">Siguiente</button>
 </div>
   
