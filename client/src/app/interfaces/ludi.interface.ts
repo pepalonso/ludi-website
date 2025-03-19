@@ -15,7 +15,7 @@ export interface Team {
   nomEquip: string;
   email: string;
   telefon: string;
-  categoria: string;
+  categoria: Categories;
   sexe: Sexe;
   club: string;
   intolerancies?: { name: string; count: number }[];
@@ -42,4 +42,13 @@ export enum TallaSamarreta {
 export enum Sexe {
   MASC = 'Masculí',
   FEM = 'Femení',
+}
+
+export enum Categories {
+  PREMINI = 'Pre-mini',
+  MINI = 'Mini',
+  PREINFANTIL = 'Pre-infantil',
+  INFANTIL = 'Infantil',
+  CADET = 'Cadet',
+  JUNIOR = 'Júnior',
 }

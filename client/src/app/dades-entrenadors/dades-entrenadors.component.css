@@ -1,9 +1,14 @@
+.background-container {
+  background-color: #1a1a1a;
+
+}
+
 /* Container */
 .coach-form-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-
+  background-color: #1a1a1a;
 }
 
 /* Card Styles */
@@ -209,6 +214,12 @@ tr:last-child td:last-child {
 /* Material Icons */
 .material-icons {
   font-size: 1.2rem;
+}
+
+.center-actions{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Responsive Adjustments */

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ClubDropdownComponent } from "../utils/club-dropdown/club-dropdown.component";
 import { CdkStep, CdkStepper } from '@angular/cdk/stepper';
 import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
+import { Categories, Sexe } from '../interfaces/ludi.interface';
 
 @Component({
   selector: 'app-dades-generals',
@@ -11,24 +12,24 @@ import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
   imports: [ReactiveFormsModule, CommonModule, ClubDropdownComponent],
   templateUrl: './dades-generals.component.html',
   styleUrl: './dades-generals.component.css',
-  providers: [{provide: CdkStep, useExisting: CdkStepper}]
+  providers: [{ provide: CdkStep, useExisting: CdkStepper }],
 })
 export class DadesGeneralsComponent {
   dadesForm: FormGroup;
 
-  categories = ['Escoleta', 'Pre-mini', 'Mini', 'Pre-infantil', 'Infantil', 'Cadet', 'Júnior'];
-  sexes = ['Masculí', 'Femení'];
+  categories = Object.values(Categories);
+  sexes = Object.values(Sexe);
 
   constructor(
-    private fb: FormBuilder, 
-    private stepper: CdkStepper, 
-    private previService: PrevisualitzacioService,
+    private fb: FormBuilder,
+    private stepper: CdkStepper,
+    private previService: PrevisualitzacioService
   ) {
     this.dadesForm = this.fb.group({
       categoria: ['', Validators.required],
       sexe: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      telefon: ['', [Validators.required, Validators.pattern('^[0-9]{9,15}$')]]
+      telefon: ['', [Validators.required, Validators.pattern('^[0-9]{9,15}$')]],
     });
   }
 
@@ -40,8 +41,8 @@ export class DadesGeneralsComponent {
     }
   }
 
-  nextStep(){
-    this.previService.setFormData('dadesGenerals', this.dadesForm)
+  nextStep() {
+    this.previService.setFormData('dadesGenerals', this.dadesForm);
     this.stepper.next();
   }
 }

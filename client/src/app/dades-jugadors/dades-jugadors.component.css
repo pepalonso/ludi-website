@@ -1,10 +1,6 @@
-/* Global Styles */
-body {
+.background-container{
   background-color: #1a1a1a;
-  color: #ffffff;
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
-  padding: 0;
+
 }
 
 /* Container */
@@ -12,6 +8,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  background-color: #1a1a1a;
 
 }
 
@@ -218,6 +215,11 @@ tr:last-child td:last-child {
 /* Material Icons */
 .material-icons {
   font-size: 1.2rem;
+}
+
+.center-trash{
+  display: flex;
+  justify-content: center;
 }
 
 /* Responsive Adjustments */

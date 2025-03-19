@@ -1,78 +1,80 @@
-<div class="player-form-container">
-  <div class="form-card">
-    <h2 class="form-title">Afegir Jugador</h2>
+<div class="background-container">
+  <div class="player-form-container">
+    <div class="form-card">
+      <h2 class="form-title">Afegir Jugador</h2>
 
-    <form [formGroup]="jugadorForm" (ngSubmit)="agregarJugador()">
-      <div class="form-group">
-        <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" formControlName="nombre" required />
-        <div class="error-message" *ngIf="jugadorForm.get('nombre')?.invalid && jugadorForm.get('nombre')?.touched">
-          EL nom es requerit
+      <form [formGroup]="jugadorForm" (ngSubmit)="agregarJugador()">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" formControlName="nombre" required />
+          <div class="error-message" *ngIf="jugadorForm.get('nombre')?.invalid && jugadorForm.get('nombre')?.touched">
+            EL nom es requerit
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="primerApellido">Primer Cognom</label>
-        <input type="text" id="primerApellido" formControlName="primerApellido" required />
-        <div class="error-message" *ngIf="jugadorForm.get('primerApellido')?.invalid && jugadorForm.get('primerApellido')?.touched">
-          Primer Cognom es requerit
+        <div class="form-group">
+          <label for="primerApellido">Primer Cognom</label>
+          <input type="text" id="primerApellido" formControlName="primerApellido" required />
+          <div class="error-message" *ngIf="jugadorForm.get('primerApellido')?.invalid && jugadorForm.get('primerApellido')?.touched">
+            Primer Cognom es requerit
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="talla">Talla Samarreta</label>
-        <select id="talla" formControlName="talla" required>
-          <option value="" disabled selected>Seleccionar talla</option>
-          <option *ngFor="let talla of tallas" [value]="talla">{{ talla }}</option>
-        </select>
-        <div class="error-message" *ngIf="jugadorForm.get('talla')?.invalid && jugadorForm.get('talla')?.touched">
-          La Talla es requerida
+        <div class="form-group">
+          <label for="talla">Talla Samarreta</label>
+          <select id="talla" formControlName="talla" required>
+            <option value="" disabled selected>Seleccionar talla</option>
+            <option *ngFor="let talla of tallas" [value]="talla">{{ talla }}</option>
+          </select>
+          <div class="error-message" *ngIf="jugadorForm.get('talla')?.invalid && jugadorForm.get('talla')?.touched">
+            La Talla es requerida
+          </div>
         </div>
-      </div>
 
-      <button type="submit" class="btn-add" [disabled]="jugadorForm.invalid">
-        <span class="btn-icon">+</span>
-        <span>Afegir</span>
-      </button>
-    </form>
-  </div>
-
-  @if (jugadores.length > 0) {
-    <div class="table-card">
-      <h2 class="table-title">Jugadors Registrats</h2>
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Primer Cognom</th>
-              <th>Talla Samarreta</th>
-              <th>Accions</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (jugador of jugadores; track $index) {
-              <tr>
-                <td>{{ jugador.nombre }}</td>
-                <td>{{ jugador.primerApellido }}</td>
-                <td>{{ jugador.talla }}</td>
-                <td>
-                  <button class="btn-delete" (click)="eliminarJugador($index)" aria-label="Eliminar jugador">
-                    <span class="material-icons">delete</span>
-                  </button>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
+        <button type="submit" class="btn-add" [disabled]="jugadorForm.invalid">
+          <span class="btn-icon">+</span>
+          <span>Afegir</span>
+        </button>
+      </form>
     </div>
-  }
 
-  <div class="navigation-controls">
-    <button class="btn-next" (click)="nextStep()">
-      <span>Siguiente</span>
-      <span class="material-icons">arrow_forward</span>
-    </button>
+    @if (jugadores.length > 0) {
+      <div class="table-card">
+        <h2 class="table-title">Jugadors Registrats</h2>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Primer Cognom</th>
+                <th>Talla Samarreta</th>
+                <th>Accions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (jugador of jugadores; track $index) {
+                <tr>
+                  <td>{{ jugador.nombre }}</td>
+                  <td>{{ jugador.primerApellido }}</td>
+                  <td>{{ jugador.talla }}</td>
+                  <td class="center-trash">
+                    <button class="btn-delete" (click)="eliminarJugador($index)" aria-label="Eliminar jugador">
+                      <span class="material-icons">delete</span>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    <div class="navigation-controls">
+      <button class="btn-next" (click)="nextStep()">
+        <span>Siguiente</span>
+        <span class="material-icons">arrow_forward</span>
+      </button>
+    </div>
   </div>
 </div>

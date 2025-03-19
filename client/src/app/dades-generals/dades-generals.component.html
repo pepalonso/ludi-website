@@ -1,26 +1,47 @@
+<div class="background-container">
+<div class="form-container">
+  <div class="form-card">
+    <h2 class="form-title">Dades del Club</h2>
 
-<form [formGroup]="dadesForm" (ngSubmit)="onSubmit()">
-    <label for="club">Club:</label>
-    <app-input-dropdown></app-input-dropdown>
-  
-    <label for="categoria">Categoria:</label>
-    <select id="categoria" formControlName="categoria">
-      <option *ngFor="let categoria of categories" [value]="categoria">{{ categoria }}</option>
-    </select>
-  
-    <label for="sexe">Sexe:</label>
-    <select id="sexe" formControlName="sexe">
-      <option *ngFor="let sexe of sexes" [value]="sexe">{{ sexe }}</option>
-    </select>
-  
-    <label for="email">Email:</label>
-    <input type="email" id="email" formControlName="email" placeholder="exemple@gmail.com" />
-  
-    <label for="telefon">Telèfon:</label>
-    <input type="number" id="telefon" formControlName="telefon" placeholder="666555444" />
+    <form [formGroup]="dadesForm" (ngSubmit)="onSubmit()">
+      <div class="form-group-custom">
+        <label for="club">Club</label>
+        <app-input-dropdown></app-input-dropdown>
+      </div>
 
-    <div class="center-button">
-      <button class="boton-siguiente" (click)="nextStep()" [disabled]="dadesForm.invalid">Siguiente</button>
-    </div>
-</form>
-  
+      <div class="form-group">
+        <label for="categoria">Categoria</label>
+        <select id="categoria" formControlName="categoria">
+          <option value="" disabled selected>Seleccionar categoria</option>
+          <option *ngFor="let categoria of categories" [value]="categoria">{{ categoria }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="sexe">Sexe</label>
+        <select id="sexe" formControlName="sexe">
+          <option value="" disabled selected>Seleccionar sexe</option>
+          <option *ngFor="let sexe of sexes" [value]="sexe">{{ sexe }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email" placeholder="exemple@gmail.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="telefon">Telèfon</label>
+        <input type="tel" id="telefon" formControlName="telefon" placeholder="666555444" />
+      </div>
+
+      <div class="navigation-controls">
+        <button class="btn-next" (click)="nextStep()" [disabled]="dadesForm.invalid">
+          <span>Siguiente</span>
+          <span class="material-icons">arrow_forward</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>

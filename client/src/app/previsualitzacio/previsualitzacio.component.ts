@@ -1,9 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { CdkStepper } from '@angular/cdk/stepper';
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
-import { Sexe, TallaSamarreta, Team } from '../interfaces/ludi.interface';
+import { Categories, Sexe, TallaSamarreta, Team } from '../interfaces/ludi.interface';
 import { TeamMobileComponent } from '../detalls-equip/mobile/detalls-equip-monile.component';
 import { TeamDesktopComponent } from '../detalls-equip/desktop/detalls-equip-desktop.component';
 
@@ -19,7 +17,7 @@ export class PrevisualitzacioComponent {
     nomEquip: 'Equip Exemple',
     email: 'equip@exemple.com',
     telefon: '666777888',
-    categoria: 'Cadet',
+    categoria: Categories.MINI,
     sexe: Sexe.MASC,
     club: 'Club Esportiu Exemple',
     intolerancies: [
