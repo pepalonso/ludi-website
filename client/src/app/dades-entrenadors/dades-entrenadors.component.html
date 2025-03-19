@@ -1,3 +1,4 @@
+<div class="background-container">
 <div class="coach-form-container">
   <div class="form-card">
     <h2 class="form-title">Afegir Entrenador</h2>
@@ -64,7 +65,7 @@
                 <td>{{ entrenador.primerApellido }}</td>
                 <td>{{ entrenador.tallaCamiseta }}</td>
                 <td>{{ entrenador.primerEntrenador ? 'Sí' : 'No' }}</td>
-                <td>
+                <td class="center-actions">
                   <button class="btn-delete" (click)="eliminarEntrenador($index)" aria-label="Eliminar entrenador">
                     <span class="material-icons">delete</span>
                   </button>
@@ -83,4 +84,5 @@
       <span class="material-icons">arrow_forward</span>
     </button>
   </div>
+</div>
 </div>

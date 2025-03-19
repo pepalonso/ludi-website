@@ -1,55 +1,160 @@
+.background-container {
+  background-color: #1a1a1a;
+
+}
+
+/* Global Styles */
+body {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Form Container */
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #1a1a1a;
+}
+
+/* Card Styles */
+.form-card {
+  background-color: #252525;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Form Title */
+.form-title {
+  color: #D36701;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+/* Form Styles */
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 100%;
-    margin: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group-custom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 label {
-    font-weight: bold;
-    color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff;
 }
 
-input, select {
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+input,
+select
+{
+  background-color: #333333;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
-input:focus, select:focus {
-    background-color: rgb(179, 179, 179);
+input::placeholder {
+  color: #888888;
 }
 
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #D36701;
+  box-shadow: 0 0 0 2px rgba(211, 103, 1, 0.2);
+  background-color: #333333;
+}
+
+/* Button Styles */
 button {
-    margin-top: 10px;
-    padding: 8px;
-    background-color: var(--primary, blue);
-    color: white;
-    border: none;
-    cursor: pointer;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: 8px;
 }
 
-button:disabled {
-    background-color: var(--disabled);
-    cursor: not-allowed;
+.btn-next {
+  background-color: #D36701;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
 }
 
-.boton-siguiente {
-    margin: 5px;
-    width: max-content;
-    border-radius: 10px;
-    background-color: var(--primary);
-    border-color: var(--resaltes);
-    text-align: left;
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    border: none;
-    font-size: 16px;
-} 
+.btn-next:hover {
+  background-color: #f07b1c;
+  transform: translateY(-2px);
+}
 
-.center-button {
-    display: flex; 
-    justify-content: flex-end
+.btn-next:disabled {
+  background-color: #555555;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Navigation Controls */
+.navigation-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+/* Material Icons */
+.material-icons {
+  font-size: 1.2rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 1rem;
+  }
+
+  .form-card {
+    padding: 1.5rem;
+  }
+}
+
+/* Custom styling for app-input-dropdown */
+::ng-deep app-input-dropdown {
+  display: block;
+}
+
+::ng-deep app-input-dropdown .dropdown-container {
+  background-color: #333333;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+::ng-deep app-input-dropdown .dropdown-container:focus-within {
+  border-color: #D36701;
+  box-shadow: 0 0 0 2px rgba(211, 103, 1, 0.2);
 }
