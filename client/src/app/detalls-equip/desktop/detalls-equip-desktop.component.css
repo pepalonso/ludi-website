@@ -8,9 +8,10 @@
   padding: 30px;
   background-color: #1A1A1A;
   color: #CCC;
-  height: 100vh;
+  height: 100%;
   box-sizing: border-box;
   max-width: 100vw;
+  overflow-y: auto;
 }
 
 .team-info {
