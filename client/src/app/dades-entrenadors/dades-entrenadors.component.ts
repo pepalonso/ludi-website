@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TallaSamarreta } from '../interfaces/ludi.interface';
+import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
 
 @Component({
   selector: 'app-dades-entrenadors',
@@ -18,12 +19,16 @@ export class DadesEntrenadorsComponent {
   //tallas = ['S', 'M', 'L', 'XL', 'XXL'];
   tallas = Object.values(TallaSamarreta);
 
-  constructor(private fb: FormBuilder, private stepper: CdkStepper) {
+  constructor(
+    private fb: FormBuilder, 
+    private stepper: CdkStepper,
+    private previService: PrevisualitzacioService
+  ) {
     this.entrenadorForm = this.fb.group({
-      nombre: ['', Validators.required],
-      primerApellido: ['', Validators.required],
-      tallaCamiseta: ['', Validators.required],
-      primerEntrenador: [false]
+      nom: ['', Validators.required],
+      cognoms: ['', Validators.required],
+      tallaSamarreta: ['', Validators.required],
+      esPrincipal: [false]
     });
   }
 
@@ -41,6 +46,7 @@ export class DadesEntrenadorsComponent {
   }
 
   nextStep() {
+    this.previService.setFormData({entrenadors: this.entrenadores});
     this.stepper.next();
   }
 }

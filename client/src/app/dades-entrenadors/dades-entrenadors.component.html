@@ -1,88 +1,88 @@
 <div class="background-container">
-<div class="coach-form-container">
-  <div class="form-card">
-    <h2 class="form-title">Afegir Entrenador</h2>
+  <div class="coach-form-container">
+    <div class="form-card">
+      <h2 class="form-title">Afegir Entrenador</h2>
 
-    <form [formGroup]="entrenadorForm" (ngSubmit)="agregarEntrenador()">
-      <div class="form-group">
-        <label for="nombre">Nom</label>
-        <input type="text" id="nombre" formControlName="nombre" required />
-        <div class="error-message" *ngIf="entrenadorForm.get('nombre')?.invalid && entrenadorForm.get('nombre')?.touched">
-          El nom es requerit
+      <form [formGroup]="entrenadorForm" (ngSubmit)="agregarEntrenador()">
+        <div class="form-group">
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" formControlName="nom" required />
+          <div class="error-message" *ngIf="entrenadorForm.get('nom')?.invalid && entrenadorForm.get('nom')?.touched">
+            El nom es requerit
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="primerApellido">Primer Apellido</label>
-        <input type="text" id="primerApellido" formControlName="primerApellido" required />
-        <div class="error-message" *ngIf="entrenadorForm.get('primerApellido')?.invalid && entrenadorForm.get('primerApellido')?.touched">
-          El cognom és requerit
+        <div class="form-group">
+          <label for="cognoms">Primer Apellido</label>
+          <input type="text" id="cognoms" formControlName="cognoms" required />
+          <div class="error-message" *ngIf="entrenadorForm.get('cognoms')?.invalid && entrenadorForm.get('cognoms')?.touched">
+            El cognom és requerit
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="tallaCamiseta">Talla de Samarreta</label>
-        <select id="tallaCamiseta" formControlName="tallaCamiseta" required>
-          <option value="" disabled selected>Seleccionar talla</option>
-          <option *ngFor="let talla of tallas" [value]="talla">{{ talla }}</option>
-        </select>
-        <div class="error-message" *ngIf="entrenadorForm.get('tallaCamiseta')?.invalid && entrenadorForm.get('tallaCamiseta')?.touched">
-          La talla es requerida
+        <div class="form-group">
+          <label for="tallaSamarreta">Talla de Samarreta</label>
+          <select id="tallaSamarreta" formControlName="tallaSamarreta" required>
+            <option value="" disabled selected>Seleccionar talla</option>
+            <option *ngFor="let talla of tallas" [value]="talla">{{ talla }}</option>
+          </select>
+          <div class="error-message" *ngIf="entrenadorForm.get('tallaSamarreta')?.invalid && entrenadorForm.get('tallaSamarreta')?.touched">
+            La talla es requerida
+          </div>
         </div>
-      </div>
 
-      <div class="checkbox-group">
-        <input type="checkbox" id="primerEntrenador" formControlName="primerEntrenador" />
-        <label for="primerEntrenador" class="checkbox-label">¿Es Primer Entrenador?</label>
-      </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="esPrincipal" formControlName="esPrincipal" />
+          <label for="esPrincipal" class="checkbox-label">¿Es Primer Entrenador?</label>
+        </div>
 
-      <button type="submit" class="btn-add" [disabled]="entrenadorForm.invalid">
-        <span class="btn-icon">+</span>
-        <span>Agregar</span>
-      </button>
-    </form>
-  </div>
-
-  <!-- Tabla para mostrar los entrenadores agregados -->
-  @if (entrenadores.length > 0) {
-    <div class="table-card">
-      <h2 class="table-title">Entrenadors Registrats</h2>
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Nom</th>
-              <th>Primer Cognom</th>
-              <th>Talla</th>
-              <th>Primer Entrenador</th>
-              <th>Accions</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (entrenador of entrenadores; track $index) {
-              <tr>
-                <td>{{ entrenador.nombre }}</td>
-                <td>{{ entrenador.primerApellido }}</td>
-                <td>{{ entrenador.tallaCamiseta }}</td>
-                <td>{{ entrenador.primerEntrenador ? 'Sí' : 'No' }}</td>
-                <td class="center-actions">
-                  <button class="btn-delete" (click)="eliminarEntrenador($index)" aria-label="Eliminar entrenador">
-                    <span class="material-icons">delete</span>
-                  </button>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
+        <button type="submit" class="btn-add" [disabled]="entrenadorForm.invalid">
+          <span class="btn-icon">+</span>
+          <span>Agregar</span>
+        </button>
+      </form>
     </div>
-  }
 
-  <div class="navigation-controls">
-    <button class="btn-next" (click)="nextStep()">
-      <span>Siguiente</span>
-      <span class="material-icons">arrow_forward</span>
-    </button>
+    <!-- Tabla para mostrar los entrenadores agregados -->
+    @if (entrenadores.length > 0) {
+      <div class="table-card">
+        <h2 class="table-title">Entrenadors Registrats</h2>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Primer Cognom</th>
+                <th>Talla</th>
+                <th>Primer Entrenador</th>
+                <th>Accions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (entrenador of entrenadores; track $index) {
+                <tr>
+                  <td>{{ entrenador.nom }}</td>
+                  <td>{{ entrenador.cognoms }}</td>
+                  <td>{{ entrenador.tallaSamarreta }}</td>
+                  <td>{{ entrenador.esPrincipal ? 'Sí' : 'No' }}</td>
+                  <td class="center-actions">
+                    <button class="btn-delete" (click)="eliminarEntrenador($index)" aria-label="Eliminar entrenador">
+                      <span class="material-icons">delete</span>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    <div class="navigation-controls">
+      <button class="btn-next" (click)="nextStep()">
+        <span>Siguiente</span>
+        <span class="material-icons">arrow_forward</span>
+      </button>
+    </div>
   </div>
-</div>
 </div>

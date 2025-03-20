@@ -6,7 +6,7 @@
     <form [formGroup]="dadesForm" (ngSubmit)="onSubmit()">
       <div class="form-group-custom">
         <label for="club">Club</label>
-        <app-input-dropdown></app-input-dropdown>
+        <app-input-dropdown formControlName="club"></app-input-dropdown>
       </div>
 
       <div class="form-group">
@@ -34,14 +34,13 @@
         <label for="telefon">Telèfon</label>
         <input type="tel" id="telefon" formControlName="telefon" placeholder="666555444" />
       </div>
-
-      <div class="navigation-controls">
-        <button class="btn-next" (click)="nextStep()" [disabled]="dadesForm.invalid">
-          <span>Siguiente</span>
-          <span class="material-icons">arrow_forward</span>
-        </button>
-      </div>
     </form>
+  </div>
+  <div class="navigation-controls">
+    <button class="btn-next" (click)="nextStep()" [disabled]="dadesForm.invalid">
+      <span>Siguiente</span>
+      <span class="material-icons">arrow_forward</span>
+    </button>
   </div>
 </div>
 </div>

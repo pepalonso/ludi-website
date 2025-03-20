@@ -26,6 +26,7 @@ export class DadesGeneralsComponent {
     private previService: PrevisualitzacioService
   ) {
     this.dadesForm = this.fb.group({
+      club: ['', Validators.required],
       categoria: ['', Validators.required],
       sexe: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -42,7 +43,7 @@ export class DadesGeneralsComponent {
   }
 
   nextStep() {
-    this.previService.setFormData('dadesGenerals', this.dadesForm);
+    this.previService.setFormData(this.dadesForm);
     this.stepper.next();
   }
 }

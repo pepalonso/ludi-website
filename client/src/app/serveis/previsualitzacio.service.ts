@@ -1,20 +1,18 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrevisualitzacioService {
-  private formData: any = {
-    dadesGenerals: {},
-    dadesJugadors: {},
-    dadesEntrenadors: {}
-  };
+  private formData = new BehaviorSubject<any>({});
 
-  public setFormData(step: string, data: any) {
-    this.formData[step] = data;
+  public setFormData(stepData: any) {
+    const currentData = this.formData.value;
+    this.formData.next({ ...currentData, ...stepData });
   }
 
   public getFormData() {
-    return this.formData;
+    return this.formData.asObservable();
   }
 }

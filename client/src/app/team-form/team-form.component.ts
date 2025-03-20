@@ -8,6 +8,7 @@ import { DadesGeneralsComponent } from "../dades-generals/dades-generals.compone
 import { DadesJugadorsComponent } from "../dades-jugadors/dades-jugadors.component";
 import { DadesEntrenadorsComponent } from "../dades-entrenadors/dades-entrenadors.component";
 import { PrevisualitzacioComponent } from '../previsualitzacio/previsualitzacio.component';
+import { FooterComponent } from "../utils/footer/footer.component";
 
 export interface StepInterface {
   id: number,
@@ -19,7 +20,7 @@ export interface StepInterface {
   templateUrl: './team-form.component.html',
   styleUrls: ['./team-form.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, forwardRef(() => SteperComponent), CdkStepperModule, DadesGeneralsComponent, DadesJugadorsComponent, DadesEntrenadorsComponent, PrevisualitzacioComponent],
+  imports: [ReactiveFormsModule, CommonModule, forwardRef(() => SteperComponent), CdkStepperModule, DadesGeneralsComponent, DadesJugadorsComponent, DadesEntrenadorsComponent, PrevisualitzacioComponent, FooterComponent],
 })
 export class TeamFormComponent implements OnInit {
   teamForm: FormGroup;

@@ -1,6 +1,5 @@
 .background-container {
   background-color: #1a1a1a;
-
 }
 
 /* Container */
@@ -216,15 +215,14 @@ tr:last-child td:last-child {
   font-size: 1.2rem;
 }
 
-.center-actions{
+.center-trash{
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-  .player-form-container {
+  .coach-form-container {
     padding: 1rem;
   }
 
