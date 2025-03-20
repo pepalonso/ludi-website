@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { ClubService } from './club.service';
 
 interface Club {
@@ -13,15 +14,20 @@ interface Club {
   styleUrls: ['./club-dropdown.component.css'],
   imports: [CommonModule],
   standalone: true,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ClubDropdownComponent),
+      multi: true
+    }
+  ]
 })
-export class ClubDropdownComponent implements OnInit {
+export class ClubDropdownComponent implements OnInit, ControlValueAccessor {
   clubs: Club[] = [];
   filteredClubs: Club[] = [];
   selectedClub: string = '';
   showDropdown: boolean = false;
   private debounceTimeout: any;
-
-  @Output() clubSelected = new EventEmitter<string>();
 
   constructor(private clubService: ClubService) {}
 
@@ -42,7 +48,6 @@ export class ClubDropdownComponent implements OnInit {
     clearTimeout(this.debounceTimeout);
     const inputValue = (event.target as HTMLInputElement).value.toLowerCase();
 
-    // Show dropdown as soon as user starts typing
     this.showDropdown = true;
 
     this.debounceTimeout = setTimeout(() => {
@@ -50,17 +55,38 @@ export class ClubDropdownComponent implements OnInit {
         club.club_name.toLowerCase().includes(inputValue)
       );
     }, 200);
+
+    this.selectedClub = (event.target as HTMLInputElement).value;
+    this.onChange(this.selectedClub);
   }
 
   selectClub(clubName: string): void {
     this.selectedClub = clubName;
     this.showDropdown = false;
-    this.clubSelected.emit(clubName);
+    this.onChange(clubName);
+    this.onTouched();
   }
 
   onBlur(): void {
     setTimeout(() => {
       this.showDropdown = false;
-    }, 200); // Slight delay to allow click event to register
+    }, 200);
+    this.onTouched();
+  }
+
+  // Métodos de ControlValueAccessor
+  private onChange: (value: string) => void = () => {};
+  private onTouched: () => void = () => {};
+
+  writeValue(value: string): void {
+    this.selectedClub = value;
+  }
+
+  registerOnChange(fn: (value: string) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
   }
 }

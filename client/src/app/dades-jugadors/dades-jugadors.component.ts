@@ -2,6 +2,7 @@ import { CdkStepper } from '@angular/cdk/stepper';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
 
 @Component({
   selector: 'app-dades-jugadors',
@@ -12,50 +13,50 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class DadesJugadorsComponent {
   jugadorForm: FormGroup;
-  jugadores: any[] = []; // Lista de jugadores agregados
+  jugadores: any[] = [];
 
-  tallas = ['S', 'M', 'L', 'XL', 'XXL']; // Opciones para la talla de camiseta
+  tallas = ['S', 'M', 'L', 'XL', 'XXL']; 
 
-  constructor(private fb: FormBuilder, private stepper: CdkStepper) {
+  constructor(private fb: FormBuilder, private stepper: CdkStepper, private previService: PrevisualitzacioService) {
     this.jugadorForm = this.fb.group({
-      nombre: ['', Validators.required],
-      primerApellido: ['', Validators.required],
-      segundoApellido: ['', Validators.required],
-      talla: ['', Validators.required]
+      nom: ['', Validators.required],
+      cognoms: ['', Validators.required],
+      tallaSamarreta: ['', Validators.required]
     });
 
-    this.jugadores = [{
-      nombre: 'aram',
-      primerApellido: 'a',
-      segundoApellido: 'a',
-      talla: 'S'
-    },
-    {
-      nombre: 'aram',
-      primerApellido: 'a',
-      segundoApellido: 'a',
-      talla: 'S'
-    },
-    {
-      nombre: 'aram',
-      primerApellido: 'a',
-      segundoApellido: 'a',
-      talla: 'S'
-    }]
+    // this.jugadores = [{
+    //   nombre: 'aram',
+    //   primerApellido: 'a',
+    //   segundoApellido: 'a',
+    //   talla: 'S'
+    // },
+    // {
+    //   nombre: 'aram',
+    //   primerApellido: 'a',
+    //   segundoApellido: 'a',
+    //   talla: 'S'
+    // },
+    // {
+    //   nombre: 'aram',
+    //   primerApellido: 'a',
+    //   segundoApellido: 'a',
+    //   talla: 'S'
+    // }]
   }
 
   agregarJugador() {
     if (this.jugadorForm.valid) {
-      this.jugadores.push(this.jugadorForm.value); // Agrega el jugador a la lista
-      this.jugadorForm.reset(); // Resetea el formulario
+      this.jugadores.push(this.jugadorForm.value);
+      this.jugadorForm.reset();
     }
   }
 
   eliminarJugador(index: number) {
-    this.jugadores.splice(index, 1); // Elimina el jugador seleccionado
+    this.jugadores.splice(index, 1);
   }
 
   nextStep() {
+    this.previService.setFormData({jugadors: this.jugadores});
     this.stepper.next();
   }
 }

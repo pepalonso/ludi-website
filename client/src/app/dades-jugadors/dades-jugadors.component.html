@@ -5,28 +5,28 @@
 
       <form [formGroup]="jugadorForm" (ngSubmit)="agregarJugador()">
         <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" formControlName="nombre" required />
-          <div class="error-message" *ngIf="jugadorForm.get('nombre')?.invalid && jugadorForm.get('nombre')?.touched">
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" formControlName="nom" required />
+          <div class="error-message" *ngIf="jugadorForm.get('nom')?.invalid && jugadorForm.get('nom')?.touched">
             EL nom es requerit
           </div>
         </div>
 
         <div class="form-group">
-          <label for="primerApellido">Primer Cognom</label>
-          <input type="text" id="primerApellido" formControlName="primerApellido" required />
-          <div class="error-message" *ngIf="jugadorForm.get('primerApellido')?.invalid && jugadorForm.get('primerApellido')?.touched">
+          <label for="cognoms">Primer Cognom</label>
+          <input type="text" id="cognoms" formControlName="cognoms" required />
+          <div class="error-message" *ngIf="jugadorForm.get('cognoms')?.invalid && jugadorForm.get('cognoms')?.touched">
             Primer Cognom es requerit
           </div>
         </div>
 
         <div class="form-group">
-          <label for="talla">Talla Samarreta</label>
-          <select id="talla" formControlName="talla" required>
+          <label for="tallaSamarreta">Talla Samarreta</label>
+          <select id="tallaSamarreta" formControlName="tallaSamarreta" required>
             <option value="" disabled selected>Seleccionar talla</option>
             <option *ngFor="let talla of tallas" [value]="talla">{{ talla }}</option>
           </select>
-          <div class="error-message" *ngIf="jugadorForm.get('talla')?.invalid && jugadorForm.get('talla')?.touched">
+          <div class="error-message" *ngIf="jugadorForm.get('tallaSamarreta')?.invalid && jugadorForm.get('tallaSamarreta')?.touched">
             La Talla es requerida
           </div>
         </div>
@@ -54,9 +54,9 @@
             <tbody>
               @for (jugador of jugadores; track $index) {
                 <tr>
-                  <td>{{ jugador.nombre }}</td>
-                  <td>{{ jugador.primerApellido }}</td>
-                  <td>{{ jugador.talla }}</td>
+                  <td>{{ jugador.nom }}</td>
+                  <td>{{ jugador.cognoms }}</td>
+                  <td>{{ jugador.tallaSamarreta }}</td>
                   <td class="center-trash">
                     <button class="btn-delete" (click)="eliminarJugador($index)" aria-label="Eliminar jugador">
                       <span class="material-icons">delete</span>
