@@ -44,7 +44,7 @@ export class DadesGeneralsComponent {
   }
 
   nextStep() {
-    this.previService.setFormData('dadesGenerals', this.dadesForm);
+    this.previService.setFormData(this.dadesForm);
     this.stepper.next();
   }
 }

@@ -2,6 +2,7 @@ import { CdkStepper } from '@angular/cdk/stepper';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
 import { TallaSamarreta } from '../interfaces/ludi.interface';
 
 @Component({
@@ -17,31 +18,31 @@ export class DadesJugadorsComponent {
 
   tallas = Object.values(TallaSamarreta);
 
-  constructor(private fb: FormBuilder, private stepper: CdkStepper) {
+  constructor(private fb: FormBuilder, private stepper: CdkStepper, private previService: PrevisualitzacioService) {
     this.jugadorForm = this.fb.group({
-      nombre: ['', Validators.required],
-      primerApellido: ['', Validators.required],
-      talla: ['', Validators.required]
+      nom: ['', Validators.required],
+      cognoms: ['', Validators.required],
+      tallaSamarreta: ['', Validators.required]
     });
 
-    this.jugadores = [{
-      nombre: 'aram',
-      primerApellido: 'a',
-      segundoApellido: 'a',
-      talla: 'S'
-    },
-    {
-      nombre: 'aram',
-      primerApellido: 'a',
-      segundoApellido: 'a',
-      talla: 'S'
-    },
-    {
-      nombre: 'aram',
-      primerApellido: 'a',
-      segundoApellido: 'a',
-      talla: 'S'
-    }]
+    // this.jugadores = [{
+    //   nombre: 'aram',
+    //   primerApellido: 'a',
+    //   segundoApellido: 'a',
+    //   talla: 'S'
+    // },
+    // {
+    //   nombre: 'aram',
+    //   primerApellido: 'a',
+    //   segundoApellido: 'a',
+    //   talla: 'S'
+    // },
+    // {
+    //   nombre: 'aram',
+    //   primerApellido: 'a',
+    //   segundoApellido: 'a',
+    //   talla: 'S'
+    // }]
   }
 
   agregarJugador() {
@@ -56,6 +57,7 @@ export class DadesJugadorsComponent {
   }
 
   nextStep() {
+    this.previService.setFormData({jugadors: this.jugadores});
     this.stepper.next();
   }
 }

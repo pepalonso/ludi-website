@@ -137,6 +137,10 @@ button {
   font-size: 1.2rem;
 }
 
+select:has(option:disabled:checked) {
+  color: gray; /* Color estilo placeholder */
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .form-container {

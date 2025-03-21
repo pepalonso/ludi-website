@@ -6,7 +6,7 @@
       <form [formGroup]="dadesForm" (ngSubmit)="onSubmit()">
         <div class="form-group-custom">
           <label for="club">Club</label>
-          <app-input-dropdown (clubSelected)="dadesForm.patchValue({ club: $event })"></app-input-dropdown>
+          <app-input-dropdown formControlName="club"></app-input-dropdown>
           <div class="error-message" *ngIf="dadesForm.get('club')?.invalid && dadesForm.get('club')?.touched">
             El camp Club és requerit.
           </div>
@@ -65,5 +65,11 @@
         </div>
       </form>
     </div>
+  </div>
+  <div class="navigation-controls">
+    <button class="btn-next" (click)="nextStep()" [disabled]="dadesForm.invalid">
+      <span>Siguiente</span>
+      <span class="material-icons">arrow_forward</span>
+    </button>
   </div>
 </div>

@@ -5,35 +5,35 @@
 
       <form [formGroup]="entrenadorForm" (ngSubmit)="agregarEntrenador()">
         <div class="form-group">
-          <label for="nombre">Nom</label>
-          <input type="text" id="nombre" formControlName="nombre" required />
-          <div class="error-message" *ngIf="entrenadorForm.get('nombre')?.invalid && entrenadorForm.get('nombre')?.touched">
-            El nom és requerit.
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" formControlName="nom" required />
+          <div class="error-message" *ngIf="entrenadorForm.get('nom')?.invalid && entrenadorForm.get('nom')?.touched">
+            El nom es requerit
           </div>
         </div>
 
         <div class="form-group">
-          <label for="primerApellido">Primer Apellido</label>
-          <input type="text" id="primerApellido" formControlName="primerApellido" required />
-          <div class="error-message" *ngIf="entrenadorForm.get('primerApellido')?.invalid && entrenadorForm.get('primerApellido')?.touched">
-            El cognom és requerit.
+          <label for="cognoms">Primer Apellido</label>
+          <input type="text" id="cognoms" formControlName="cognoms" required />
+          <div class="error-message" *ngIf="entrenadorForm.get('cognoms')?.invalid && entrenadorForm.get('cognoms')?.touched">
+            El cognom és requerit
           </div>
         </div>
 
         <div class="form-group">
-          <label for="tallaCamiseta">Talla de Samarreta</label>
-          <select id="tallaCamiseta" formControlName="tallaCamiseta" required>
+          <label for="tallaSamarreta">Talla de Samarreta</label>
+          <select id="tallaSamarreta" formControlName="tallaSamarreta" required>
             <option value="" disabled selected>Seleccionar talla</option>
             <option *ngFor="let talla of tallas" [value]="talla">{{ talla }}</option>
           </select>
-          <div class="error-message" *ngIf="entrenadorForm.get('tallaCamiseta')?.invalid && entrenadorForm.get('tallaCamiseta')?.touched">
-            La talla és requerida.
+          <div class="error-message" *ngIf="entrenadorForm.get('tallaSamarreta')?.invalid && entrenadorForm.get('tallaSamarreta')?.touched">
+            La talla es requerida
           </div>
         </div>
 
         <div class="checkbox-group">
-          <input type="checkbox" id="primerEntrenador" formControlName="primerEntrenador" />
-          <label for="primerEntrenador" class="checkbox-label">¿Es Primer Entrenador?</label>
+          <input type="checkbox" id="esPrincipal" formControlName="esPrincipal" />
+          <label for="esPrincipal" class="checkbox-label">¿Es Primer Entrenador?</label>
         </div>
 
         <div class="error-message" *ngIf="maxCoachesReached">
@@ -71,10 +71,10 @@
           </thead>
           <tbody>
             <tr *ngFor="let entrenador of entrenadores; index as i">
-              <td>{{ entrenador.nombre }}</td>
-              <td>{{ entrenador.primerApellido }}</td>
-              <td>{{ entrenador.tallaCamiseta }}</td>
-              <td>{{ entrenador.primerEntrenador ? 'Sí' : 'No' }}</td>
+              <td>{{ entrenador.nom }}</td>
+              <td>{{ entrenador.cognoms }}</td>
+              <td>{{ entrenador.tallaSamarreta }}</td>
+              <td>{{ entrenador.esPrincipal ? 'Sí' : 'No' }}</td>
               <td class="center-actions">
                 <button class="btn-delete" (click)="eliminarEntrenador(i)" aria-label="Eliminar entrenador">
                   <span class="material-icons">delete</span>

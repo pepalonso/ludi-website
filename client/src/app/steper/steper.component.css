@@ -4,7 +4,7 @@ header {
     flex-wrap: nowrap;
     justify-content: space-around;
     height: 80px;
-    background-color: black;
+    background-color: #1a1a1a;
 }
 
 button {
