@@ -27,10 +27,11 @@ export class DadesGeneralsComponent {
   ) {
     this.dadesForm = this.fb.group({
       club: ['', Validators.required],
+      nomEquip: [''],
       categoria: ['', Validators.required],
       sexe: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      telefon: ['', [Validators.required, Validators.pattern('^[0-9]{9,15}$')]],
+      telefon: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
     });
   }
 

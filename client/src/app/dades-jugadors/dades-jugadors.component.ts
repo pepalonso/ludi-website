@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
+import { TallaSamarreta } from '../interfaces/ludi.interface';
 
 @Component({
   selector: 'app-dades-jugadors',
@@ -15,7 +16,7 @@ export class DadesJugadorsComponent {
   jugadorForm: FormGroup;
   jugadores: any[] = [];
 
-  tallas = ['S', 'M', 'L', 'XL', 'XXL']; 
+  tallas = Object.values(TallaSamarreta);
 
   constructor(private fb: FormBuilder, private stepper: CdkStepper, private previService: PrevisualitzacioService) {
     this.jugadorForm = this.fb.group({

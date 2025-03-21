@@ -15,8 +15,6 @@ import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
 export class DadesEntrenadorsComponent {
   entrenadorForm: FormGroup;
   entrenadores: any[] = [];
-
-  //tallas = ['S', 'M', 'L', 'XL', 'XXL'];
   tallas = Object.values(TallaSamarreta);
 
   constructor(
@@ -25,19 +23,45 @@ export class DadesEntrenadorsComponent {
     private previService: PrevisualitzacioService
   ) {
     this.entrenadorForm = this.fb.group({
-      nom: ['', Validators.required],
-      cognoms: ['', Validators.required],
-      tallaSamarreta: ['', Validators.required],
-      esPrincipal: [false]
+      nombre: ['', Validators.required],
+      primerApellido: ['', Validators.required],
+      tallaCamiseta: ['', Validators.required],
+      primerEntrenador: [false]
     });
   }
 
+  get maxCoachesReached(): boolean {
+    return this.entrenadores.length >= 3;
+  }
+
+  get duplicatePrincipal(): boolean {
+    return (
+      this.entrenadorForm.get('primerEntrenador')?.value === true &&
+      this.entrenadores.some((e) => e.primerEntrenador === true)
+    );
+  }
+
+  get thirdCoachPrincipalMissing(): boolean {
+    return (
+      this.entrenadores.length === 2 &&
+      !this.entrenadores.some((e) => e.primerEntrenador === true) &&
+      this.entrenadorForm.get('primerEntrenador')?.value === false
+    );
+  }
+
   agregarEntrenador() {
-    if (this.entrenadorForm.valid && this.entrenadores.length < 2) {
+    if (
+      this.entrenadorForm.valid &&
+      !this.maxCoachesReached &&
+      !this.duplicatePrincipal &&
+      !this.thirdCoachPrincipalMissing
+    ) {
       this.entrenadores.push(this.entrenadorForm.value);
       this.entrenadorForm.reset();
-    } else if (this.entrenadores.length >= 2) {
-      alert('Solo se pueden agregar 2 entrenadores.');
+    } else {
+      alert(
+        'Hay errores en el formulario o se han cumplido las condiciones para no poder agregar más entrenadores.'
+      );
     }
   }
 

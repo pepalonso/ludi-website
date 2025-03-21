@@ -36,47 +36,55 @@
           <label for="esPrincipal" class="checkbox-label">¿Es Primer Entrenador?</label>
         </div>
 
-        <button type="submit" class="btn-add" [disabled]="entrenadorForm.invalid">
+        <div class="error-message" *ngIf="maxCoachesReached">
+          Només es poden afegir 3 entrenadors.
+        </div>
+        <div class="error-message" *ngIf="duplicatePrincipal">
+          Ja existeix un entrenador principal. Només es pot designar un.
+        </div>
+        <div class="error-message" *ngIf="thirdCoachPrincipalMissing">
+          El tercer entrenador s'ha de designar com a principal, ja que encara no n'hi ha cap.
+        </div>
+
+
+        <button type="submit" class="btn-add"
+          [disabled]="entrenadorForm.invalid || maxCoachesReached || duplicatePrincipal || thirdCoachPrincipalMissing">
           <span class="btn-icon">+</span>
           <span>Agregar</span>
         </button>
       </form>
     </div>
 
-    <!-- Tabla para mostrar los entrenadores agregados -->
-    @if (entrenadores.length > 0) {
-      <div class="table-card">
-        <h2 class="table-title">Entrenadors Registrats</h2>
-        <div class="table-responsive">
-          <table>
-            <thead>
-              <tr>
-                <th>Nom</th>
-                <th>Primer Cognom</th>
-                <th>Talla</th>
-                <th>Primer Entrenador</th>
-                <th>Accions</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (entrenador of entrenadores; track $index) {
-                <tr>
-                  <td>{{ entrenador.nom }}</td>
-                  <td>{{ entrenador.cognoms }}</td>
-                  <td>{{ entrenador.tallaSamarreta }}</td>
-                  <td>{{ entrenador.esPrincipal ? 'Sí' : 'No' }}</td>
-                  <td class="center-actions">
-                    <button class="btn-delete" (click)="eliminarEntrenador($index)" aria-label="Eliminar entrenador">
-                      <span class="material-icons">delete</span>
-                    </button>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
+    <!-- Table for showing added coaches -->
+    <div class="table-card" *ngIf="entrenadores.length > 0">
+      <h2 class="table-title">Entrenadors Registrats</h2>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Primer Cognom</th>
+              <th>Talla</th>
+              <th>Primer Entrenador</th>
+              <th>Accions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entrenador of entrenadores; index as i">
+              <td>{{ entrenador.nom }}</td>
+              <td>{{ entrenador.cognoms }}</td>
+              <td>{{ entrenador.tallaSamarreta }}</td>
+              <td>{{ entrenador.esPrincipal ? 'Sí' : 'No' }}</td>
+              <td class="center-actions">
+                <button class="btn-delete" (click)="eliminarEntrenador(i)" aria-label="Eliminar entrenador">
+                  <span class="material-icons">delete</span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    }
+    </div>
 
     <div class="navigation-controls">
       <button class="btn-next" (click)="nextStep()">

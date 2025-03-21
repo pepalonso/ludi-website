@@ -63,6 +63,12 @@ label {
   color: #ffffff;
 }
 
+.error-message {
+  color: #ff4d4d;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
 input,
 select
 {
