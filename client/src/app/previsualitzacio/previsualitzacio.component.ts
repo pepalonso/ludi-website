@@ -17,46 +17,46 @@ import { environment } from '../../environments/environment';
   styleUrl: './previsualitzacio.component.css',
 })
 export class PrevisualitzacioComponent {
-   public team: Team = {
-     nomEquip: 'Equip Exemple',
-     email: 'equip@exemple.com',
-     telefon: '666777888',
-     categoria: Categories.MINI,
-     sexe: Sexe.MASC,
-     club: 'Club Esportiu Exemple',
-     intolerancies: [
-       { name: 'Gluten', count: 2 },
-       { name: 'Lactosa', count: 1 },
-     ],
-     jugadors: [
-       {
-         nom: 'Marc',
-         cognoms: 'Garcia Puig',
-         tallaSamarreta: TallaSamarreta.M,
-       },
-       {
-         nom: 'Laura',
-         cognoms: 'Martínez Font',
-         tallaSamarreta: TallaSamarreta.M,
-       },
-     ],
-     entrenadors: [
-       {
-         nom: 'Joan',
-         cognoms: 'Ferrer Sala',
-         tallaSamarreta: TallaSamarreta.M,
-         esPrincipal: 1,
-       },
-       {
-         nom: 'Marta',
-         cognoms: 'López Vidal',
-         tallaSamarreta: TallaSamarreta.M,
-         esPrincipal: 0,
-       },
-     ],
-     fitxes: ['exaple']
-   };
-  //public team!: Team;
+   //public team: Team = {
+   //  nomEquip: 'Equip Exemple',
+   //  email: 'equip@exemple.com',
+   //  telefon: '666777888',
+   //  categoria: Categories.MINI,
+   //  sexe: Sexe.MASC,
+   //  club: 'Club Esportiu Exemple',
+   //  intolerancies: [
+   //    { name: 'Gluten', count: 2 },
+   //    { name: 'Lactosa', count: 1 },
+   //  ],
+   //  jugadors: [
+   //    {
+   //      nom: 'Marc',
+   //      cognoms: 'Garcia Puig',
+   //      tallaSamarreta: TallaSamarreta.M,
+   //    },
+   //    {
+   //      nom: 'Laura',
+   //      cognoms: 'Martínez Font',
+   //      tallaSamarreta: TallaSamarreta.M,
+   //    },
+   //  ],
+   //  entrenadors: [
+   //    {
+   //      nom: 'Joan',
+   //      cognoms: 'Ferrer Sala',
+   //      tallaSamarreta: TallaSamarreta.M,
+   //      esPrincipal: 1,
+   //    },
+   //    {
+   //      nom: 'Marta',
+   //      cognoms: 'López Vidal',
+   //      tallaSamarreta: TallaSamarreta.M,
+   //      esPrincipal: 0,
+   //    },
+   //  ],
+   //  fitxes: ['exaple']
+   //};
+  public team!: Team;
   public isDesktop: boolean = false;
   public apiResponse: any;
 
