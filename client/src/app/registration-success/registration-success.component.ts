@@ -35,6 +35,13 @@ export class RegistrationSuccessComponent {
 
   public constructor(private router: Router) {}
 
+  ngOnInit(): void {
+    const state = this.router.getCurrentNavigation()?.extras.state;
+    if (state) {
+      this.registration = state as RegistrationProps;
+    }
+  }
+
   private inscriptionPrice = 50;
   private priceErrorMessage = `Per saber l'import posat en cntacte amb nsaoltres`;
 
@@ -54,8 +61,7 @@ export class RegistrationSuccessComponent {
   }
 
   public copyToClipboard(value: string) {
-    navigator.clipboard
-      .writeText(value)
+    navigator.clipboard.writeText(value);
   }
 }
 

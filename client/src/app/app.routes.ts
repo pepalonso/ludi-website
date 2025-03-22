@@ -6,6 +6,7 @@ import { TeamFormComponent } from './team-form/team-form.component';
 import { DetallsEquipComponent } from './detalls-equip/detalls-equip.component';
 import { SteperComponent } from './steper/steper.component';
 import { RedirectorComponent } from './utils/redirector/redirector.component';
+import { RegistrationSuccessComponent } from './registration-success/registration-success.component';
 
 export const routes: Routes = [
   { path: 'equip', component: DetallsEquipComponent },
@@ -14,5 +15,6 @@ export const routes: Routes = [
   { path: 'inscripcions', component: TeamFormComponent },
   { path: 'stepper', component: SteperComponent },
   { path: 'contactawha', component: RedirectorComponent },
+  { path: 'inscripcio-completa', component: RegistrationSuccessComponent },
   { path: '**', redirectTo: '/countdown', pathMatch: 'full' },
 ];
