@@ -7,11 +7,11 @@ import zipfile
 
 # --------- CONFIGURATION ---------
 LAMBDA_FUNCTIONS = [
-    # {
-    #   "function_name": "write-to-db",
-    #   "sam_build_dir": ".aws-sam/build/HandleTeamInscription",
-    #   "zip_filename": "lambda.zip",
-    # },
+    {
+      "function_name": "write-to-db",
+      "sam_build_dir": ".aws-sam/build/HandleTeamInscription",
+      "zip_filename": "lambda.zip",
+    },
     #{
     #    "function_name": "send-WA",
     #    "sam_build_dir": ".aws-sam/build/SendWA",
@@ -22,11 +22,11 @@ LAMBDA_FUNCTIONS = [
     #    "sam_build_dir": ".aws-sam/build/AuthorizeWA",
     #    "zip_filename": "lambda3.zip",
     #},
-    {
-        "function_name": "fitxes_uploader",
-        "sam_build_dir": ".aws-sam/build/FitxesUploader",
-        "zip_filename": "fitxes_uploader.zip",
-    },
+    #{
+    #    "function_name": "fitxes_uploader",
+    #    "sam_build_dir": ".aws-sam/build/FitxesUploader",
+    #    "zip_filename": "fitxes_uploader.zip",
+    #},
 ]
 
 lambda_client = boto3.client("lambda")

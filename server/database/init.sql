@@ -71,3 +71,10 @@ CREATE TABLE qr_tokens (
     created_at DATETIME NOT NULL,
     FOREIGN KEY (team_id) REFERENCES equips(id)
 );
+
+CREATE TABLE fitxes_documents (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    url VARCHAR(2083) NOT NULL,
+    id_equip INT NOT NULL,
+    FOREIGN KEY (id_equip) REFERENCES equips(id)
+);

@@ -30,11 +30,12 @@ def handle_registration(event):
             'entrenadors': [
                 {'nom': e.get('nom'), 'cognoms': e.get('cognoms'), 'tallaSamarreta': e.get('tallaSamarreta'), 'esPrincipal': e.get('esPrincipal')}
                 for e in body.get('entrenadors', [])
-            ]
+            ],
+            'fitxes': body.get('fitxes', []),
         }
         print(mapped_body)
 
-        required_fields = ['nomEquip', 'email', 'categoria', 'telefon', 'jugadors', 'entrenadors', 'sexe', 'club']
+        required_fields = ['nomEquip', 'email', 'categoria', 'telefon', 'jugadors', 'entrenadors', 'sexe', 'club', 'fitxes']
         missing_fields = [field for field in required_fields if not mapped_body.get(field)]
         if missing_fields:
             return create_error_response(400, f"Missing required fields: {', '.join(missing_fields)}")
@@ -75,18 +76,22 @@ def handle_registration(event):
             for entrenador in mapped_body['entrenadors']:
                 cursor.execute("INSERT INTO entrenadors (nom, cognoms, talla_samarreta, es_principal, id_equip) VALUES (%s, %s, %s, %s, %s)",
                                (entrenador['nom'], entrenador['cognoms'], entrenador['tallaSamarreta'], entrenador['esPrincipal'], team_id))
+            
+            # 5. Insert fitxes (fitxes_documents)
+            for fitxa in mapped_body.get('fitxes', []):
+                cursor.execute("INSERT INTO fitxes_documents (url, id_equip) VALUES (%s, %s)", (fitxa, team_id))
 
-            # 5. Insert intolerances if present
+            # 6. Insert intolerances if present
             for intolerancia in mapped_body.get('intolerancies', []):
                 cursor.execute("INSERT INTO intolerancies (nom, id_equip) VALUES (%s, %s)", (intolerancia, team_id))
 
-            # 6. Registration token (for confirmation URL)
+            # 7. Registration token (for confirmation URL)
             token = secrets.token_urlsafe(32)
             token_expiry = datetime.utcnow() + timedelta(days=120)
             cursor.execute("INSERT INTO registration_tokens (team_id, token, expires_at, created_at) VALUES (%s, %s, %s, %s)",
                            (team_id, token, token_expiry, datetime.utcnow()))
 
-            # 7. WhatsApp token (for quick login/verification)
+            # 8. WhatsApp token (for quick login/verification)
             wa_token = secrets.token_urlsafe(32)
             wa_token_expiry = datetime.utcnow() + timedelta(minutes=5)
             cursor.execute("INSERT INTO wa_tokens (team_id, token, expires_at, created_at) VALUES (%s, %s, %s, %s)",
