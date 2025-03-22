@@ -6,7 +6,7 @@
     <div class="team-category">{{ team.categoria }}</div>
     <div class="team-gender">{{ team.sexe }}</div>
   </div>
-  <div class="team-logo-container">
+  <div class="team-logo-container" *ngIf="team?.logoUrl">
     <img src="{{ team.logoUrl }}" alt="{{ team.nomEquip }} Logo" class="team-logo">
   </div>
 </div>

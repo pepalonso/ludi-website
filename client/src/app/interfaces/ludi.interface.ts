@@ -21,6 +21,7 @@ export interface Team {
   intolerancies?: { name: string; count: number }[];
   jugadors: Jugador[];
   entrenadors: Entrenador[];
+  fitxes?: string[];
   logoUrl?: string;
   primaryColor?: string;
   secondaryColor?: string;

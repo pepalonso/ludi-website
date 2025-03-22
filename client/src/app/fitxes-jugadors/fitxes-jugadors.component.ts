@@ -36,9 +36,10 @@ export class FitxesJugadorsComponent {
   }>();
 
   public team!: Team;
-  files: FileItem[] = [];
-  isDragging = false;
-  isUploading = false;
+  public files: FileItem[] = [];
+  public isDragging = false;
+  public isUploading = false;
+  arnsFitxes: string[] = [];
 
   constructor(private http: HttpClient, private stepper: CdkStepper, private previService: PrevisualitzacioService) {
     this.previService.getFormData().subscribe((data) => {
@@ -183,11 +184,12 @@ export class FitxesJugadorsComponent {
 
                 const responseBody: any = event.body;
                 if (responseBody && responseBody.files) {
-                  responseBody.files.forEach((uploadedFile: any) => {
-                    //TODO: PUT in the form
-                    console.log(`File ARN: ${uploadedFile.arn}`);
-                  });
+                  const fileArns: string[] = responseBody.files.map(
+                    (uploadedFile: any) => uploadedFile.arn
+                  );
+                  this.arnsFitxes = fileArns;
                 }
+
               }
 
             }
@@ -282,6 +284,8 @@ export class FitxesJugadorsComponent {
   }
 
   nextStep() {
+    console.log(this.arnsFitxes);
+    this.previService.setFormData({ fitxes: this.arnsFitxes });
     this.stepper.next();
   }
 
