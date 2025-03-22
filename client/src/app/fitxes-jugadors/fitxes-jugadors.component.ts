@@ -2,6 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {  HttpClient, HttpEventType } from '@angular/common/http';
 import { finalize } from 'rxjs/operators';
 import { CdkStepper } from '@angular/cdk/stepper';
+import { environment } from '../../environments/environment';
+import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
+import { Team } from '../interfaces/ludi.interface';
 
 interface FileItem {
   file: File;
@@ -24,7 +27,7 @@ export class FitxesJugadorsComponent {
   @Input() maxFiles = 5;
   @Input() maxFileSize = 5;
   @Input() acceptedFileTypes = '*';
-  @Input() uploadUrl = '';
+  @Input() uploadUrl = `${environment.apiUrl}/enviar-fitxes`;
 
   @Output() filesChanged = new EventEmitter<File[]>();
   @Output() uploadComplete = new EventEmitter<{
@@ -32,20 +35,23 @@ export class FitxesJugadorsComponent {
     files: FileItem[];
   }>();
 
+  public team!: Team;
   files: FileItem[] = [];
   isDragging = false;
   isUploading = false;
 
-  constructor(
-    private http: HttpClient,
-    private stepper: CdkStepper,
-  ) {}
+  constructor(private http: HttpClient, private stepper: CdkStepper, private previService: PrevisualitzacioService) {
+    this.previService.getFormData().subscribe((data) => {
+      if (data.value) {
+        this.team = data.value;
+      }
+    });
+  }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       this.addFiles(Array.from(input.files));
-      // Reset input so the same file can be selected again
       input.value = '';
     }
   }
@@ -142,6 +148,11 @@ export class FitxesJugadorsComponent {
       }
 
       const formData = new FormData();
+
+      const key = this.team.nomEquip ?
+       `${this.team.club}/${this.team.categoria}-${this.team.sexe}/${this.team.nomEquip}` :
+       `${this.team.club}/${this.team.categoria}-${this.team.sexe}`
+      formData.append('key', key);
       formData.append('file', fileItem.file, fileItem.name);
 
       this.http
@@ -169,7 +180,16 @@ export class FitxesJugadorsComponent {
                 fileItem.uploaded = true;
                 fileItem.progress = 100;
                 completedUploads++;
+
+                const responseBody: any = event.body;
+                if (responseBody && responseBody.files) {
+                  responseBody.files.forEach((uploadedFile: any) => {
+                    //TODO: PUT in the form
+                    console.log(`File ARN: ${uploadedFile.arn}`);
+                  });
+                }
               }
+
             }
           },
           (error) => {
@@ -180,9 +200,6 @@ export class FitxesJugadorsComponent {
     });
   }
 
-  /**
-   * Check if all uploads are complete
-   */
   private checkUploadCompletion(completed: number, failed: number): void {
     if (completed + failed === this.files.length) {
       this.isUploading = false;
@@ -193,9 +210,7 @@ export class FitxesJugadorsComponent {
     }
   }
 
-  /**
-   * Format file size to human-readable format
-   */
+
   private formatFileSize(bytes: number): string {
     if (bytes === 0) return '0 Bytes';
 
@@ -206,9 +221,6 @@ export class FitxesJugadorsComponent {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
-  /**
-   * Get file type icon based on file extension
-   */
   private getFileType(file: File): string {
     const extension = file.name.split('.').pop()?.toLowerCase() || '';
 
