@@ -5,6 +5,68 @@
   height: 100vh - 100px;
 }
 
+button {
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: 8px;
+}
+
+.navigation-controls {
+  display: flex;
+  margin-top: 1rem;
+  padding: 30px;
+}
+
+.esquerra {
+  display: flex;
+  width: 50%;
+  justify-content: left;
+}
+
+.dreta {
+  display: flex;
+  width: 50%;
+  justify-content: right;
+}
+
+.btn-next {
+  background-color: #D36701;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.btn-next:hover {
+  background-color: #f07b1c;
+  transform: translateY(-2px);
+}
+
+.btn-next:disabled {
+  background-color: #555555;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-prev {
+  background-color: #D36701;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.btn-prev:hover {
+  background-color: #f07b1c;
+  transform: translateY(-2px);
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
   .data-grid {

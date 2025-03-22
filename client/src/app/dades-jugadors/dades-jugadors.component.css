@@ -128,10 +128,6 @@ button {
   margin-top: 1rem;
 }
 
-.navigation-controls button {
-  width: 40%;
-}
-
 .esquerra {
   display: flex;
   width: 50%;

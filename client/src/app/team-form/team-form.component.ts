@@ -10,6 +10,8 @@ import { DadesEntrenadorsComponent } from "../dades-entrenadors/dades-entrenador
 import { PrevisualitzacioComponent } from '../previsualitzacio/previsualitzacio.component';
 import { FooterComponent } from "../utils/footer/footer.component";
 import { FitxesJugadorsComponent } from '../fitxes-jugadors/fitxes-jugadors.component';
+import { DretsImatgeComponent } from "../drets-imatge/drets-imatge.component";
+import { IntoleranciesAlergiesComponent } from "../intolerancies-alergies/intolerancies-alergies.component";
 
 export interface StepInterface {
   id: number,
@@ -21,7 +23,7 @@ export interface StepInterface {
   templateUrl: './team-form.component.html',
   styleUrls: ['./team-form.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, forwardRef(() => SteperComponent),FitxesJugadorsComponent, CdkStepperModule, DadesGeneralsComponent, DadesJugadorsComponent, DadesEntrenadorsComponent, PrevisualitzacioComponent, FooterComponent],
+  imports: [ReactiveFormsModule, CommonModule, forwardRef(() => SteperComponent), FitxesJugadorsComponent, CdkStepperModule, DadesGeneralsComponent, DadesJugadorsComponent, DadesEntrenadorsComponent, PrevisualitzacioComponent, FooterComponent, DretsImatgeComponent, IntoleranciesAlergiesComponent],
 })
 export class TeamFormComponent implements OnInit {
   teamForm: FormGroup;
@@ -118,6 +120,14 @@ export class TeamFormComponent implements OnInit {
       },
       {
         id: 4,
+        name: 'Observacions'
+      },
+      {
+        id: 5,
+        name: 'Drets Imatge'
+      },
+      {
+        id: 6,
         name: 'Resum'
       },
     ]

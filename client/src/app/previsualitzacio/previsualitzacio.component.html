@@ -5,4 +5,17 @@
   <ng-template #mobileView>
     <app-team-mobile [team]="team"></app-team-mobile>
   </ng-template>
+  <div class="navigation-controls">
+    <div class="esquerra">
+      <button class="btn-prev" (click)="previStep()">
+        <span class="material-icons">arrow_back</span>
+        <span>Anterior</span>
+      </button>
+    </div>
+    <div class="dreta">
+      <button class="btn-next" (click)="enviarForm()">
+        <span>Enviar Formulari</span>
+      </button>
+    </div>
+  </div>
 </div>
