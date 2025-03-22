@@ -60,4 +60,8 @@ export class DadesJugadorsComponent {
     this.previService.setFormData({jugadors: this.jugadores});
     this.stepper.next();
   }
+  
+  previStep() {
+    this.stepper.previous();
+  }
 }

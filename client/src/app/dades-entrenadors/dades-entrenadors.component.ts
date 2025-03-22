@@ -23,10 +23,10 @@ export class DadesEntrenadorsComponent {
     private previService: PrevisualitzacioService
   ) {
     this.entrenadorForm = this.fb.group({
-      nombre: ['', Validators.required],
-      primerApellido: ['', Validators.required],
-      tallaCamiseta: ['', Validators.required],
-      primerEntrenador: [false]
+      nom: ['', Validators.required],
+      cognoms: ['', Validators.required],
+      tallaSamarreta: ['', Validators.required],
+      esPrincipal: [false]
     });
   }
 
@@ -36,16 +36,16 @@ export class DadesEntrenadorsComponent {
 
   get duplicatePrincipal(): boolean {
     return (
-      this.entrenadorForm.get('primerEntrenador')?.value === true &&
-      this.entrenadores.some((e) => e.primerEntrenador === true)
+      this.entrenadorForm.get('esPrincipal')?.value === true &&
+      this.entrenadores.some((e) => e.esPrincipal === true)
     );
   }
 
   get thirdCoachPrincipalMissing(): boolean {
     return (
       this.entrenadores.length === 2 &&
-      !this.entrenadores.some((e) => e.primerEntrenador === true) &&
-      this.entrenadorForm.get('primerEntrenador')?.value === false
+      !this.entrenadores.some((e) => e.esPrincipal === true) &&
+      this.entrenadorForm.get('esPrincipal')?.value === false
     );
   }
 
@@ -72,5 +72,9 @@ export class DadesEntrenadorsComponent {
   nextStep() {
     this.previService.setFormData({entrenadors: this.entrenadores});
     this.stepper.next();
+  }
+
+  previStep() {
+    this.stepper.previous();
   }
 }

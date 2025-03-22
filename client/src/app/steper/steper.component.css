@@ -54,10 +54,6 @@ button {
     padding-left: 0;
 }
 
-.stepper-main {
-    height: 100vh;
-}
-
 footer {
     display: flex;
     flex-flow: row;
@@ -72,4 +68,65 @@ footer {
     color: white;
     font-size: 16px;
     cursor: pointer;
+}
+
+.mobile-stepper {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    height: 80px;
+    background-color: #1a1a1a;
+    justify-content: flex-start;
+    padding-left: 1rem;
+  }
+
+.progress-circle {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+.circular-chart {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.circle-bg {
+    fill: none;
+    stroke: #eee;
+    stroke-width: 4;
+}
+
+.circle {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 4;
+    stroke-linecap: round;
+    transition: stroke-dasharray 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .desktop-stepper {
+        display: none;
+    }
+
+    .mobile-stepper {
+        display: flex;
+    }
+
+    .step-number {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    .step-name {
+        font-size: 20px;
+        font-weight: bold;
+    }
 }
