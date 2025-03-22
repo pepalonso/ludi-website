@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {  HttpClient, HttpEventType } from '@angular/common/http';
 import { finalize } from 'rxjs/operators';
+import { CdkStepper } from '@angular/cdk/stepper';
 
 interface FileItem {
   file: File;
@@ -35,7 +36,10 @@ export class FitxesJugadorsComponent {
   isDragging = false;
   isUploading = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private stepper: CdkStepper,
+  ) {}
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -263,5 +267,13 @@ export class FitxesJugadorsComponent {
       default:
         return 'insert_drive_file';
     }
+  }
+
+  nextStep() {
+    this.stepper.next();
+  }
+
+  previStep() {
+    this.stepper.previous();
   }
 }

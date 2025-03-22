@@ -109,11 +109,15 @@ export class TeamFormComponent implements OnInit {
         name: 'Dades Jugadors'
       },
       {
-        id: 2,
-        name: 'Dades Entrenadors'
+        id:2,
+        name: 'Fitxes Jugadors'
       },
       {
         id: 3,
+        name: 'Dades Entrenadors'
+      },
+      {
+        id: 4,
         name: 'Resum'
       },
     ]

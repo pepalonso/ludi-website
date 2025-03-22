@@ -56,20 +56,13 @@
             <span *ngIf="dadesForm.get('telefon')?.errors?.['pattern']">El telèfon ha de tindre 9 dígits.</span>
           </div>
         </div>
-
-        <div class="navigation-controls">
-          <button class="btn-next" (click)="nextStep()" [disabled]="dadesForm.invalid">
-            <span>Siguiente</span>
-            <span class="material-icons">arrow_forward</span>
-          </button>
-        </div>
       </form>
     </div>
-  </div>
-  <div class="navigation-controls">
-    <button class="btn-next" (click)="nextStep()" [disabled]="dadesForm.invalid">
-      <span>Siguiente</span>
-      <span class="material-icons">arrow_forward</span>
-    </button>
+    <div class="navigation-controls">
+      <button class="btn-next" (click)="nextStep()" [disabled]="dadesForm.invalid">
+        <span>Siguiente</span>
+        <span class="material-icons">arrow_forward</span>
+      </button>
+    </div>
   </div>
 </div>

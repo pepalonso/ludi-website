@@ -123,6 +123,27 @@ button {
   background-color: rgba(255, 77, 77, 0.1);
 }
 
+.navigation-controls {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.navigation-controls button {
+  width: 40%;
+}
+
+.esquerra {
+  display: flex;
+  width: 50%;
+  justify-content: left;
+}
+
+.dreta {
+  display: flex;
+  width: 50%;
+  justify-content: right;
+}
+
 .btn-next {
   background-color: #D36701;
   color: #ffffff;
@@ -140,6 +161,19 @@ button {
   background-color: #555555;
   cursor: not-allowed;
   transform: none;
+}
+
+.btn-prev {
+  background-color: #D36701;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.btn-prev:hover {
+  background-color: #f07b1c;
+  transform: translateY(-2px);
 }
 
 /* Table Styles */
@@ -203,13 +237,6 @@ tr:last-child td:first-child {
 
 tr:last-child td:last-child {
   border-bottom-right-radius: 8px;
-}
-
-/* Navigation Controls */
-.navigation-controls {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
 }
 
 /* Material Icons */

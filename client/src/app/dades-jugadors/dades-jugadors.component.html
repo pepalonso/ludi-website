@@ -38,43 +38,48 @@
       </form>
     </div>
 
-    @if (jugadores.length > 0) {
-      <div class="table-card">
-        <h2 class="table-title">Jugadors Registrats</h2>
-        <div class="table-responsive">
-          <table>
-            <thead>
-              <tr>
-                <th>Nom</th>
-                <th>Primer Cognom</th>
-                <th>Talla Samarreta</th>
-                <th>Accions</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (jugador of jugadores; track $index) {
-                <tr>
-                  <td>{{ jugador.nom }}</td>
-                  <td>{{ jugador.cognoms }}</td>
-                  <td>{{ jugador.tallaSamarreta }}</td>
-                  <td class="center-trash">
-                    <button class="btn-delete" (click)="eliminarJugador($index)" aria-label="Eliminar jugador">
-                      <span class="material-icons">delete</span>
-                    </button>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
+    <div class="table-card" *ngIf="jugadores.length > 0">
+      <h2 class="table-title">Jugadors Registrats</h2>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Primer Cognom</th>
+              <th>Talla Samarreta</th>
+              <th>Accions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let jugador of jugadores; index as i">
+              <td>{{ jugador.nom }}</td>
+              <td>{{ jugador.cognoms }}</td>
+              <td>{{ jugador.tallaSamarreta }}</td>
+              <td class="center-trash">
+                <button class="btn-delete" (click)="eliminarJugador(i)" aria-label="Eliminar jugador">
+                  <span class="material-icons">delete</span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    }
+    </div>
+    
 
     <div class="navigation-controls">
-      <button class="btn-next" (click)="nextStep()">
-        <span>Siguiente</span>
-        <span class="material-icons">arrow_forward</span>
-      </button>
+      <div class="esquerra">
+        <button class="btn-prev" (click)="previStep()">
+          <span class="material-icons">arrow_back</span>
+          <span>Anterior</span>
+        </button>
+      </div>
+      <div class="dreta">
+        <button class="btn-next" (click)="nextStep()">
+          <span>Següent</span>
+          <span class="material-icons">arrow_forward</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>

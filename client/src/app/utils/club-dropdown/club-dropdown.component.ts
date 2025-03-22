@@ -48,7 +48,6 @@ export class ClubDropdownComponent implements OnInit, ControlValueAccessor {
     clearTimeout(this.debounceTimeout);
     const inputValue = (event.target as HTMLInputElement).value;
     this.selectedClub = inputValue;
-      this.clubSelected.emit(inputValue);
 
     this.showDropdown = true;
 

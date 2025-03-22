@@ -1,5 +1,5 @@
 <section class="stepper-main">
-  <header>
+  <header class="desktop-stepper">
     @for (step of steps; track step; let i = $index) {
       <button
         class="style-button"
@@ -11,5 +11,17 @@
       </button>
     }
   </header>
+  
+  <div class="mobile-stepper">
+    <div class="progress-circle">
+      <svg viewBox="0 0 36 36" class="circular-chart">
+        <path class="circle-bg" d="M18 2.084a15.916 15.916 0 1 1 0 31.832 15.916 15.916 0 1 1 0-31.832" />
+        <path class="circle" [attr.stroke-dasharray]="(selectedIndex / (steps.length - 1)) * 100 + ', 100'" d="M18 2.084a15.916 15.916 0 1 1 0 31.832 15.916 15.916 0 1 1 0-31.832" />
+      </svg>
+      <span class="step-number">{{ selectedIndex + 1 }}</span>
+    </div>
+    <span class="step-name">{{ getStepName(selectedIndex) }}</span>
+  </div>
+
   <div [ngTemplateOutlet]="selected ? selected.content : null"></div>
 </section>
