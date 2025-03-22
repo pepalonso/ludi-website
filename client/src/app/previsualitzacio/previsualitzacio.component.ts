@@ -94,7 +94,7 @@ export class PrevisualitzacioComponent {
     console.log('Enviando formulario', this.team);
 
     try{
-      const response = await fetch(`${environment.apiUrl}/registrar-incripcio`, {
+      const response = await fetch(`https://${environment.apiUrl}/registrar-incripcio`, {
         method: 'POST',
           headers: {
             'Content-Type': 'application/json',
