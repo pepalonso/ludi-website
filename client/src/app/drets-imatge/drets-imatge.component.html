@@ -1,0 +1,37 @@
+<div class="background-container">
+    <div class="form-container">
+        <div class="form-card">
+            <h2 class="form-title">Drets d'imatge</h2>
+
+            <p class="drets-text">
+                Heu de descarregar-vos aquest document de Drets d'Imatge, fer-lo arribar a les families i el dia del ludibàsquet és <b> indispensable </b> que cada nen i nena el porti firmat pel seu pare/mare/tutor legal.
+            </p>
+            
+            <button (click)="downloadPDF()" class="btn-download">
+                <span class="btn-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                </span>
+                Descarregar PDF
+            </button>
+        </div>
+        <div class="navigation-controls">
+            <div class="esquerra">
+                <button class="btn-prev" (click)="previStep()">
+                    <span class="material-icons">arrow_back</span>
+                    <span>Anterior</span>
+                </button>
+            </div>
+            <div class="dreta">
+                <button [disabled]="habilitarNext" class="btn-next" (click)="nextStep()">
+                    <span>Següent</span>
+                    <span class="material-icons">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+  

@@ -5,6 +5,7 @@ import { Categories, Sexe, TallaSamarreta, Team } from '../interfaces/ludi.inter
 import { TeamMobileComponent } from '../detalls-equip/mobile/detalls-equip-monile.component';
 import { TeamDesktopComponent } from '../detalls-equip/desktop/detalls-equip-desktop.component';
 import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
+import { CdkStepper } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-previsualitzacio',
@@ -56,7 +57,7 @@ export class PrevisualitzacioComponent {
   public team!: Team;
   public isDesktop: boolean = false;
 
-  constructor(private breakpointObserver: BreakpointObserver, private previService: PrevisualitzacioService) {}
+  constructor(private breakpointObserver: BreakpointObserver, private previService: PrevisualitzacioService, private stepper: CdkStepper,) {}
 
   ngOnInit() {
     this.breakpointObserver
@@ -73,9 +74,20 @@ export class PrevisualitzacioComponent {
         this.team.entrenadors = data.entrenadors;
       }
       if(data.jugadors){
-        this.team.jugadors = data.jugadors
+        this.team.jugadors = data.jugadors;
+      }
+      if(data.intolerancies) {
+        this.team.intolerancies = data.intolerancies;
       }
       console.log('Datos de previsualización:', data.value);
     });
+  }
+
+  enviarForm() {
+    // Funcio per enviar el formulari
+  }
+
+  previStep() {
+    this.stepper.previous();
   }
 }
