@@ -68,10 +68,9 @@ function groupIntolerancies(
 }
 
 
-function getUrlImage(clubName: string): string {
+export function getUrlImage(clubName: string): string {
   const originalUrl =
     CLUBS_DATA.find((club) => club.club_name === clubName)?.logo_url || '';
-  console.log('Original URL:', originalUrl);
 
   if (
     originalUrl.startsWith('https://d3ah0nqesr6vwc.cloudfront.net') ||
@@ -81,7 +80,6 @@ function getUrlImage(clubName: string): string {
       /https:\/{1,2}d3ah0nqesr6vwc\.cloudfront\.net/,
       '/cloudfront'
     );
-    console.log('Mapped URL:', mappedUrl);
     return mappedUrl;
   }
 

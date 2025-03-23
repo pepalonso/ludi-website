@@ -27,7 +27,7 @@ export class FitxesJugadorsComponent {
   @Input() maxFiles = 5;
   @Input() maxFileSize = 5;
   @Input() acceptedFileTypes = '*';
-  @Input() uploadUrl = `${environment.apiUrl}/enviar-fitxes`;
+  @Input() uploadUrl = `https://${environment.apiUrl}/enviar-fitxes`;
 
   @Output() filesChanged = new EventEmitter<File[]>();
   @Output() uploadComplete = new EventEmitter<{

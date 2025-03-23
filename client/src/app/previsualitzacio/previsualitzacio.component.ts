@@ -9,6 +9,8 @@ import { CdkStepper } from '@angular/cdk/stepper';
 import { CLUBS_DATA } from '../data/club-data';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import { getUrlImage } from '../detalls-equip/data-mapper';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-previsualitzacio',
@@ -61,11 +63,13 @@ export class PrevisualitzacioComponent {
   public isDesktop: boolean = false;
   public apiResponse: any;
 
+
   constructor(
     private breakpointObserver: BreakpointObserver,
     private previService: PrevisualitzacioService,
     private stepper: CdkStepper,
-    private router: Router
+    private router: Router,
+    private http: HttpClient,
   ) {}
 
   ngOnInit() {
@@ -78,9 +82,7 @@ export class PrevisualitzacioComponent {
     this.previService.getFormData().subscribe((data) => {
       if (data.value) {
         this.team = data.value;
-        this.team.logoUrl = CLUBS_DATA.find(
-          (club) => club.club_name === this.team.club
-        )?.logo_url;
+        this.team.logoUrl = getUrlImage(this.team.club);
       }
       if (data.entrenadors) {
         this.team.entrenadors = data.entrenadors;
@@ -98,39 +100,42 @@ export class PrevisualitzacioComponent {
     });
   }
 
-  async enviarForm() {
+  enviarForm() {
+    if (this.team.intolerancies && Array.isArray(this.team.intolerancies)) {
+      const intolerancyList: string[] = [];
+      this.team.intolerancies.forEach((item) => {
+        if (typeof item === 'string') {
+          intolerancyList.push(item);
+        } else {
+          for (let i = 0; i < item.count; i++) {
+            intolerancyList.push(item.name);
+          }
+        }
+      });
+      this.team.intolerancies = intolerancyList;
+    }
     console.log('Enviando formulario', this.team);
 
-    try {
-      const response = await fetch(
-        `https://${environment.apiUrl}/registrar-incripcio`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': `${environment.apiKey}`,
-          },
-          body: JSON.stringify(this.team),
-        }
-      );
+    const url = `https://${environment.apiUrl}/registrar-incripcio`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
 
-      const jsonResponse = await response.json();
-      const { registration_url, registration_path, wa_token } = jsonResponse;
+    this.http.post(url, this.team, { headers }).subscribe({
+      next: (response: any) => {
+        const { registration_url, registration_path, wa_token } = response;
+        this.apiResponse = { registration_url, registration_path, wa_token };
 
-      this.apiResponse = { registration_url, registration_path, wa_token };
+        console.log('Registration successful', this.apiResponse);
 
-      console.log('Registration successful', this.apiResponse);
-
-      this.router.navigate(['/registration-success'], {
-        state: this.apiResponse,
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-    } catch (error) {
-      console.error('Error submitting form', error);
-    }
+        this.router.navigate(['/registration-success'], {
+          state: this.apiResponse,
+        });
+      },
+      error: (error) => {
+        console.error('Error submitting form', error);
+      },
+    });
   }
 
   previStep() {
