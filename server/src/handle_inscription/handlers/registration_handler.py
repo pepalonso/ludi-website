@@ -35,7 +35,7 @@ def handle_registration(event):
         }
         print(mapped_body)
 
-        required_fields = ['nomEquip', 'email', 'categoria', 'telefon', 'jugadors', 'entrenadors', 'sexe', 'club', 'fitxes']
+        required_fields = ['email', 'categoria', 'telefon', 'jugadors', 'entrenadors', 'sexe', 'club', 'fitxes']
         missing_fields = [field for field in required_fields if not mapped_body.get(field)]
         if missing_fields:
             return create_error_response(400, f"Missing required fields: {', '.join(missing_fields)}")
