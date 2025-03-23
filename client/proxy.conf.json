@@ -1,0 +1,11 @@
+{
+  "/cloudfront": {
+    "target": "https://d3ah0nqesr6vwc.cloudfront.net",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/cloudfront": ""
+    }
+  }
+}
