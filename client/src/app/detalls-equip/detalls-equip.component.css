@@ -1,0 +1,245 @@
+/* General styles */
+.container {
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+  color: #CCC;
+  background-color: #1A1A1A;
+  min-height: 100vh;
+}
+
+/* Loading state */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #1A1A1A;
+  color:#CCC;
+}
+
+.loading-text {
+  margin-top: 16px;
+  color: #666;
+}
+
+/* Error state */
+.error-container {
+  text-align: center;
+  padding: 24px 16px;
+  background-color: #fff9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.error-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  background-color: #ff5252;
+  color: white;
+  border-radius: 50%;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Team header */
+.team-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--primary);
+}
+
+.team-name {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: var(--primary);
+}
+
+.team-category {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #fff9fa;
+  color: var(--primary);
+}
+
+.team-gender {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #fff9fa;
+  color: var(--primary);
+}
+
+
+/* Section styles */
+section {
+  margin-bottom: 32px;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 16px 0;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+}
+
+h2::after {
+  content: '';
+  flex-grow: 1;
+  height: 1px;
+  background-color: var(--primary);
+  margin-left: 10px;
+}
+
+/* Info cards */
+.info-card,
+.jugador-card,
+.entrenador-card {
+  background-color: #333;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.info-item {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  flex: 0 0 40%;
+  color: #ddd;
+  font-size: 14px;
+}
+
+.value {
+  flex: 0 0 60%;
+  font-weight: 500;
+}
+
+/* Intolerancies */
+.intolerancies-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.intolerancia-tag {
+  background-color: #c62828;
+  color: #ffebee;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Jugadors and Entrenadors */
+.jugadors-list,
+.entrenadors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.jugador-card,
+.entrenador-card {
+  display: flex;
+  align-items: flex-start;
+}
+
+.jugador-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: #ffe3c9;
+  color: var(--primary);
+  border-radius: 50%;
+  margin-right: 12px;
+  font-weight: 600;
+}
+
+.jugador-details,
+.entrenador-details {
+  flex: 1;
+}
+
+h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.jugador-info,
+.entrenador-info {
+  font-size: 14px;
+}
+
+/* Talla badges */
+.talla-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  background-color: #dedede;
+  color: #1A1A1A;
+  border-radius: 4px;
+  font-weight: 600;
+  text-align: center;
+  min-width: 24px;
+}
+
+/* Principal badge */
+.principal-badge {
+  background-color: var(--primary);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .info-item {
+    flex-direction: column;
+  }
+
+  .label {
+    margin-bottom: 4px;
+  }
+
+  h3 {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .principal-badge {
+    margin-left: 0;
+    margin-top: 4px;
+  }
+}

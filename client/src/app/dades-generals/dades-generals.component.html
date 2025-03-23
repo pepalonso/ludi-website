@@ -1,0 +1,68 @@
+<div class="background-container">
+  <div class="form-container">
+    <div class="form-card">
+      <h2 class="form-title">Dades del Equip</h2>
+
+      <form [formGroup]="dadesForm" (ngSubmit)="onSubmit()">
+        <div class="form-group-custom">
+          <label for="club">Club</label>
+          <app-input-dropdown formControlName="club"></app-input-dropdown>
+          <div class="error-message" *ngIf="dadesForm.get('club')?.invalid && dadesForm.get('club')?.touched">
+            El camp Club és requerit.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="categoria">Categoria</label>
+          <select id="categoria" formControlName="categoria">
+            <option value="" disabled selected>Seleccionar categoria</option>
+            <option *ngFor="let categoria of categories" [value]="categoria">{{ categoria }}</option>
+          </select>
+          <div class="error-message" *ngIf="dadesForm.get('categoria')?.invalid && dadesForm.get('categoria')?.touched">
+            La categoria és requerida.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="sexe">Sexe</label>
+          <select id="sexe" formControlName="sexe">
+            <option value="" disabled selected>Seleccionar sexe</option>
+            <option *ngFor="let sexe of sexes" [value]="sexe">{{ sexe }}</option>
+          </select>
+          <div class="error-message" *ngIf="dadesForm.get('sexe')?.invalid && dadesForm.get('sexe')?.touched">
+            El sexe és requerit.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="teamName">Nom de l'equip (Opcional)</label>
+          <input type="text" id="teamName" formControlName="nomEquip" placeholder="vermell, Taronja, B..." />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email" placeholder="exemple@gmail.com" />
+          <div class="error-message" *ngIf="dadesForm.get('email')?.invalid && dadesForm.get('email')?.touched">
+            <span *ngIf="dadesForm.get('email')?.errors?.['required']">El camp Email és requerit.</span>
+            <span *ngIf="dadesForm.get('email')?.errors?.['email']">L'Email ha de ser vàlid.</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="telefon">Telèfon</label>
+          <input type="tel" id="telefon" formControlName="telefon" placeholder="666555444" />
+          <div class="error-message" *ngIf="dadesForm.get('telefon')?.invalid && dadesForm.get('telefon')?.touched">
+            <span *ngIf="dadesForm.get('telefon')?.errors?.['required']">El camp Telèfon és requerit.</span>
+            <span *ngIf="dadesForm.get('telefon')?.errors?.['pattern']">El telèfon ha de tindre 9 dígits.</span>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="navigation-controls">
+      <button class="btn-next" (click)="nextStep()" [disabled]="dadesForm.invalid">
+        <span>Següent</span>
+        <span class="material-icons">arrow_forward</span>
+      </button>
+    </div>
+  </div>
+</div>

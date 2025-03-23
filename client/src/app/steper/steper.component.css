@@ -1,0 +1,127 @@
+header {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    height: 80px;
+    background-color: #1a1a1a;
+}
+
+button {
+    margin: 5px;
+    width: max-content;
+    border-radius: 10px;
+    background-color: var(--primary);
+    border-color: var(--resaltes);
+    text-align: left;
+    padding: 5px;
+}
+
+.style-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: var(--gris);
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.style-button.example-active {
+    background-color: var(--primary);
+    color: white;
+    font-weight: bold;
+}
+
+.step-number {
+    text-align: left;
+    font-weight: bold;
+    font-size: 40px;
+    margin-right: 5px;
+}
+
+.step-name {
+    text-align: left;
+    font-size: 13px;
+    padding-left: 0;
+}
+
+footer {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+}
+
+.style-button-footer {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.mobile-stepper {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    height: 80px;
+    background-color: #1a1a1a;
+    justify-content: flex-start;
+    padding-left: 1rem;
+  }
+
+.progress-circle {
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+
+.circular-chart {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.circle-bg {
+    fill: none;
+    stroke: #eee;
+    stroke-width: 4;
+}
+
+.circle {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 4;
+    stroke-linecap: round;
+    transition: stroke-dasharray 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .desktop-stepper {
+        display: none;
+    }
+
+    .mobile-stepper {
+        display: flex;
+    }
+
+    .step-number {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    .step-name {
+        font-size: 20px;
+        font-weight: bold;
+    }
+}

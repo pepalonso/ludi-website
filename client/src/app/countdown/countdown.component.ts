@@ -1,9 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { RegistrationStateService } from '../serveis/registration-data.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-countdown',
   templateUrl: './countdown.component.html',
   styleUrls: ['./countdown.component.css'],
+  imports: [CommonModule, RouterLink],
+  standalone: true
 })
 export class LudiCountdown implements OnInit, OnDestroy {
   public targetDate: Date = new Date('2025-06-07T00:00:00');
@@ -14,12 +19,20 @@ export class LudiCountdown implements OnInit, OnDestroy {
   public minutes: number = 0;
   public seconds: number = 0;
 
+  public constructor(
+      private router: Router,
+    ) {}
+
   ngOnInit() {
     this.startCountdown();
   }
 
   ngOnDestroy() {
     clearInterval(this.intervalId);
+  }
+
+  public handleGoToInscriptions() {
+    this.router.navigate(['/info-inscriptions']);
   }
 
   private startCountdown() {
@@ -35,7 +48,9 @@ export class LudiCountdown implements OnInit, OnDestroy {
 
     if (timeLeft > 0) {
       this.days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      this.hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      this.hours = Math.floor(
+        (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
       this.minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
       this.seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
     } else {

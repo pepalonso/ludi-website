@@ -1,4 +1,3 @@
-pymysql
 twilio
 python-dotenv
-jwt
+boto3

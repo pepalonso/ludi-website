@@ -2,14 +2,13 @@ from twilio.rest import Client
 import os
 from dotenv import load_dotenv
 import json
-import re
 
 load_dotenv()
 
 def clean_phone_number(phone):
     """
     Clean and validate phone number format.
-    Returns formatted phone number starting with 34 (without +)
+    Returns formatted phone number starting with 34 (without +).
     """
     phone = ''.join(filter(str.isdigit, phone))
     
@@ -24,15 +23,12 @@ def clean_phone_number(phone):
     if len(phone) == 9:
         return f"34{phone}"
 
-        
     raise ValueError(f"Invalid phone number format: {phone}")
-
-
 
 def send_whatsapp_message(team_data):
     """
-    Send WhatsApp message using Twilio
-    Returns tuple (success: bool, result: str)
+    Send WhatsApp message using Twilio.
+    Returns tuple (success: bool, result: str).
     """
     try:
         account_sid = os.getenv('ACCOUNT_SID')
@@ -48,15 +44,16 @@ def send_whatsapp_message(team_data):
         club = team_data.get('club', '')
         team_name = team_data.get('nomEquip', '')
         receiver_number = team_data.get('telefon', '')
-        jugadors = team_data.get('jugadors', [])
-        entrenadors = team_data.get('entrenadors', [])
+
+        # Now stored as strings directly
+        num_players = team_data.get('jugadors', '0')
+        num_coaches = team_data.get('entrenadors', '0')
 
         if not receiver_number:
             return False, "Missing receiver phone number"
             
         formatted_number = clean_phone_number(receiver_number)
     
-        
         message = client.messages.create(
             content_sid=content_sid,
             from_=f'whatsapp:+{sender}',
@@ -64,8 +61,8 @@ def send_whatsapp_message(team_data):
             content_variables=json.dumps({
                 'club': club,
                 'name': team_name,
-                'players_num': str(len(jugadors)),
-                'coaches_num': str(len(entrenadors)),
+                'players_num': num_players,
+                'coaches_num': num_coaches,
                 'path_read': team_data.get('registration_path', ''),
                 'path_write': team_data.get('registration_path', '')
             })
@@ -73,5 +70,4 @@ def send_whatsapp_message(team_data):
         return message.status, message.sid
         
     except Exception as e:
-        return False, str(e) 
-
+        return False, str(e)

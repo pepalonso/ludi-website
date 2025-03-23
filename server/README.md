@@ -67,5 +67,8 @@ Get the container ID and use it here:
 and inside the container run:
 
 ```bash
-    mariadb -u root -p my-secret-pw
+    mariadb -u root -p admin
+
+    #If not, run withouit admin
+    mariadb -u root -p
 ```

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LudiCountdown } from './countdown.component';
+import { ClubDropdownComponent } from './club-dropdown.component';
 
-describe('CountdownComponent', () => {
-  let component: LudiCountdown;
-  let fixture: ComponentFixture<LudiCountdown>;
+describe('ClubDropdownComponent', () => {
+  let component: ClubDropdownComponent;
+  let fixture: ComponentFixture<ClubDropdownComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LudiCountdown]
+      imports: [ClubDropdownComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(LudiCountdown);
+    fixture = TestBed.createComponent(ClubDropdownComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
