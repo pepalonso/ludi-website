@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Sexe, TallaSamarreta, Team } from '../interfaces/ludi.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { environment } from '../../environments/environment';
 import { mapTeamResponse } from './data-mapper';
@@ -32,6 +32,7 @@ export class DetallsEquipComponent implements OnInit {
   public TallaSamarreta = TallaSamarreta;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private breakpointObserver: BreakpointObserver
   ) {}
@@ -75,6 +76,7 @@ export class DetallsEquipComponent implements OnInit {
     } catch (error) {
       this.error = true;
       console.error('Error fetching team details:', error);
+      this.router.navigate(['/404']);
     }
   }
 }

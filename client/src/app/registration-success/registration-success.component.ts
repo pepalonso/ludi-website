@@ -117,8 +117,6 @@ export class RegistrationSuccessComponent {
       this.router.navigate(['/inscripcions']);
     }
 
-    console.log('Registration data:', this.registration);
-    console.log('WhatsApp token:', this._waToken);
   }
 
   private updatePaymentConcept() {
@@ -194,7 +192,9 @@ export class RegistrationSuccessComponent {
 
   public navigateTeamDetails() {
     if (this.registration.registrationPath) {
-      this.router.navigate([this.registration.registrationPath]);
+      this.router.navigateByUrl(this.registration.registrationPath);
+
+
     }
   }
 

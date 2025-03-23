@@ -1,15 +1,19 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Categories, Sexe, TallaSamarreta, type Team } from '../interfaces/ludi.interface';
+import type { Team } from '../interfaces/ludi.interface';
 import { TeamMobileComponent } from '../detalls-equip/mobile/detalls-equip-monile.component';
 import { TeamDesktopComponent } from '../detalls-equip/desktop/detalls-equip-desktop.component';
 import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
 import { CdkStepper } from '@angular/cdk/stepper';
 import { environment } from '../../environments/environment';
-import  { Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { getUrlImage } from '../detalls-equip/data-mapper';
-import {  HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+   HttpErrorResponse,
+} from '@angular/common/http';
 import { RegistrationStateService } from '../serveis/registration-data.service';
 
 @Component({
@@ -27,13 +31,18 @@ export class PrevisualitzacioComponent {
   public errorMessage: string | null = null;
   public contactPhone = '659173158';
 
+  // Toast properties
+  public showToast = false;
+  public toastMessage = '';
+  public toastType: 'success' | 'error' = 'error';
+
   constructor(
     private breakpointObserver: BreakpointObserver,
     private previService: PrevisualitzacioService,
     private stepper: CdkStepper,
     private router: Router,
     private http: HttpClient,
-    private registrationStateService: RegistrationStateService,
+    private registrationStateService: RegistrationStateService
   ) {}
 
   ngOnInit() {
@@ -107,13 +116,44 @@ export class PrevisualitzacioComponent {
           state: state,
         });
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         this.isSubmitting = false;
         console.error('Error submitting form', error);
-        this.errorMessage =
+
+        let errorMsg =
           'Hi ha hagut un error en processar la sol·licitud. Si us plau, contacta amb el suport.';
+
+        if (error.status === 400) {
+          if (error.error && typeof error.error === 'object') {
+            if (error.error.message) {
+              errorMsg = error.error.message;
+            } else if (error.error.error) {
+              errorMsg = error.error.error;
+            } else if (error.error.detail) {
+              errorMsg = error.error.detail;
+            }
+          }
+
+          this.showToastMessage(errorMsg, 'error');
+        } else {
+          this.errorMessage = errorMsg;
+        }
       },
     });
+  }
+
+  public showToastMessage(message: string, type: 'success' | 'error') {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.showToast = true;
+
+    setTimeout(() => {
+      this.showToast = false;
+    }, 5000);
+  }
+
+  public hideToast() {
+    this.showToast = false;
   }
 
   previStep() {

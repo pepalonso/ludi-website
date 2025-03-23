@@ -7,7 +7,7 @@
     <div class="team-gender">{{ team.sexe }}</div>
   </div>
   <div class="team-logo-container" *ngIf="team?.logoUrl">
-    <img src="{{ team.logoUrl }}" alt="{{ team.nomEquip }} Logo" class="team-logo">
+    <img src="{{ team.logoUrl }}" alt="{{ team.club }} Logo" class="team-logo">
   </div>
 </div>
 
@@ -17,6 +17,10 @@
       <div class="info-item">
         <span class="label">Club</span>
         <span class="value">{{ team.club }}</span>
+      </div>
+      <div class="info-item" *ngIff="team.nomEquip">
+        <span class="label">Nom Equip</span>
+        <span class="value">{{ team.nomEquip }}</span>
       </div>
       <div class="info-item">
         <span class="label">Email</span>
