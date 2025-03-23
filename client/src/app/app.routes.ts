@@ -20,5 +20,5 @@ export const routes: Routes = [
   { path: 'contactawha', component: RedirectorComponent },
   { path: 'inscripcio-completa', component: RegistrationSuccessComponent },
   { path: '404', component: NotFoundComponent},
-  { path: '**', redirectTo: '/info-inscripcions', pathMatch: 'full' },
+  { path: '**', redirectTo: '/countdown', pathMatch: 'full' },
 ];

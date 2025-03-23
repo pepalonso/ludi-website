@@ -1,11 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { RegistrationStateService } from '../serveis/registration-data.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-countdown',
   templateUrl: './countdown.component.html',
   styleUrls: ['./countdown.component.css'],
+  imports: [CommonModule, RouterLink],
+  standalone: true
 })
 export class LudiCountdown implements OnInit, OnDestroy {
   public targetDate: Date = new Date('2025-06-07T00:00:00');

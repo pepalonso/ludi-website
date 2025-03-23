@@ -39,6 +39,7 @@ export class FitxesJugadorsComponent {
   public files: FileItem[] = [];
   public isDragging = false;
   public isUploading = false;
+  public habilitarSeguent = true;
   arnsFitxes: string[] = [];
 
   constructor(private http: HttpClient, private stepper: CdkStepper, private previService: PrevisualitzacioService) {
@@ -189,7 +190,7 @@ export class FitxesJugadorsComponent {
                   );
                   this.arnsFitxes = fileArns;
                 }
-
+                this.habilitarSeguent = false;
               }
 
             }

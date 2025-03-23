@@ -63,6 +63,7 @@ export class IntoleranciesAlergiesComponent implements OnInit {
 
   nextStep() {
     this.previService.setFormData({intolerancies: this.intolerancesList});
+    this.previService.setFormData({observacions: this.observacions.value});
     this.stepper.next();
   }
 

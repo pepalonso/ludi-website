@@ -99,7 +99,7 @@
       </button>
     </div>
     <div class="dreta">
-      <button class="btn-next" (click)="nextStep()">
+      <button class="btn-next" (click)="nextStep()" [disabled]="habilitarSeguent">
         <span>Següent</span>
         <span class="material-icons">arrow_forward</span>
       </button>

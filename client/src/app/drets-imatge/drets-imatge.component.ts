@@ -17,6 +17,7 @@ export class DretsImatgeComponent {
   constructor(private previService: PrevisualitzacioService, private stepper: CdkStepper,){
 
   }
+  
   downloadPDF(): void {
     const link = document.createElement('a');
     link.href = 'assets/Drets_Imatge_Ludibàsquet_2025.pdf';

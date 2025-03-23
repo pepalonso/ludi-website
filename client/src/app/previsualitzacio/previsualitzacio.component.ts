@@ -1,7 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import type { Team } from '../interfaces/ludi.interface';
+import { Categories, Sexe, TallaSamarreta, type Team } from '../interfaces/ludi.interface';
 import { TeamMobileComponent } from '../detalls-equip/mobile/detalls-equip-monile.component';
 import { TeamDesktopComponent } from '../detalls-equip/desktop/detalls-equip-desktop.component';
 import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
@@ -43,7 +43,53 @@ export class PrevisualitzacioComponent {
     private router: Router,
     private http: HttpClient,
     private registrationStateService: RegistrationStateService
-  ) {}
+  ) {
+
+    this.team = {
+      nomEquip: "FC Barcelona U10",
+      email: "contact@fcbarcelona.com",
+      telefon: "+34 934 123 456",
+      categoria: Categories.MINI,
+      sexe: Sexe.MASC,
+      club: "FC Barcelona",
+      intolerancies: [
+        { name: "Gluten", count: 2 },
+        { name: "Lactose", count: 1 },
+      ],
+      jugadors: [
+        {
+          nom: "Marc",
+          cognoms: "Gonzalez",
+          tallaSamarreta: TallaSamarreta.M,
+        },
+        {
+          nom: "Alex",
+          cognoms: "Martinez",
+          tallaSamarreta: TallaSamarreta.L,
+        },
+        {
+          nom: "Luca",
+          cognoms: "Perez",
+          tallaSamarreta: TallaSamarreta.S,
+        },
+      ],
+      entrenadors: [
+        {
+          nom: "Juan",
+          cognoms: "Lopez",
+          tallaSamarreta: TallaSamarreta.XL,
+          esPrincipal: 1, // 1 indicates the main coach
+        },
+        {
+          nom: "David",
+          cognoms: "Garcia",
+          tallaSamarreta: TallaSamarreta.L,
+          esPrincipal: 0, // 0 indicates an assistant coach
+        },
+      ],
+      fitxes: ["12345", "67890"]
+    };
+  }
 
   ngOnInit() {
     this.breakpointObserver
@@ -68,6 +114,9 @@ export class PrevisualitzacioComponent {
       }
       if (data.fitxes) {
         this.team.fitxes = data.fitxes;
+      }
+      if(data.observacions) {
+        this.team.observacions = data.observacions;
       }
       console.log('Datos de previsualización:', data.value);
     });

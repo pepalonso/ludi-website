@@ -45,7 +45,7 @@
                 </button>
             </div>
             <div class="dreta">
-                <button [disabled]="habilitarNext && habilitarNext2" class="btn-next" (click)="nextStep()">
+                <button [disabled]="habilitarNext || habilitarNext2" class="btn-next" (click)="nextStep()">
                     <span>Següent</span>
                     <span class="material-icons">arrow_forward</span>
                 </button>
