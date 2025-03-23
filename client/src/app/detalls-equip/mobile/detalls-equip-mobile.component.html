@@ -4,7 +4,7 @@
   <div *ngIf="team" class="team-details">
     <div class="team-header-container">
     <div class="team-header-content">
-      <h1 class="team-name">{{ team.nomEquip }}</h1>
+      <h1 class="team-name">{{ team.club }}</h1>
       <div class="team-category">{{ team.categoria }}</div>
       <div class="team-gender">{{ team.sexe }}</div>
     </div>
@@ -19,6 +19,10 @@
         <div class="info-item">
           <span class="label">Club</span>
           <span class="value">{{ team.club }}</span>
+        </div>
+        <div class="info-item" *ngIf="team.nomEquip">
+          <span class="label">Nom Equip</span>
+          <span class="value">{{ team.nomEquip }}</span>
         </div>
         <div class="info-item">
           <span class="label">Categoria</span>

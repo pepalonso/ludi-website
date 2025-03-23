@@ -17,6 +17,6 @@ export const routes: Routes = [
   { path: 'stepper', component: SteperComponent },
   { path: 'contactawha', component: RedirectorComponent },
   { path: 'inscripcio-completa', component: RegistrationSuccessComponent },
-  {path: '404', component: NotFoundComponent},
+  { path: '404', component: NotFoundComponent},
   { path: '**', redirectTo: '/inscripcions', pathMatch: 'full' },
 ];

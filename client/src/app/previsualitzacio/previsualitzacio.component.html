@@ -11,6 +11,13 @@
 </div>
 
 <div *ngIf="team" [ngStyle]="{'--primary': team.primaryColor || '#d36600', '--secondary': team.secondaryColor || '#ffffff', '--dark': team.darkColor || '#000000'}" class="preview-container">
+  <div *ngIf="showToast" class="toast" [ngClass]="{'toast-success': toastType === 'success', 'toast-error': toastType === 'error'}">
+    <div class="toast-content">
+      <span>{{ toastMessage }}</span>
+    </div>
+    <button class="toast-close" (click)="hideToast()">×</button>
+  </div>
+
   <ng-container *ngIf="isDesktop; else mobileView">
     <app-team-desktop [team]="team"></app-team-desktop>
   </ng-container>
