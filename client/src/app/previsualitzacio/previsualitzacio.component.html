@@ -5,17 +5,28 @@
   <ng-template #mobileView>
     <app-team-mobile [team]="team"></app-team-mobile>
   </ng-template>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+    <p>Contacta amb nosaltres: <a [href]="getWhatsAppLink()" target="_blank">+34{{ contactPhone }}</a></p>
+  </div>
+
   <div class="navigation-controls">
     <div class="esquerra">
-      <button class="btn-prev" (click)="previStep()">
+      <button class="btn-prev" (click)="previStep()" [disabled]="isSubmitting">
         <span class="material-icons">arrow_back</span>
         <span>Anterior</span>
       </button>
     </div>
     <div class="dreta">
-      <button class="btn-next" (click)="enviarForm()">
-        <span>Enviar Formulari</span>
+      <button class="btn-next" (click)="enviarForm()" [disabled]="isSubmitting">
+        <span *ngIf="!isSubmitting">Enviar Formulari</span>
+        <span *ngIf="isSubmitting" class="loading-text">
+          <span class="spinner"></span>
+          Processant...
+        </span>
       </button>
     </div>
   </div>
 </div>
+

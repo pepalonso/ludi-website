@@ -1,6 +1,5 @@
 :host {
   display: block;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .success-container {
@@ -10,6 +9,7 @@
   background-color: #121212;
   color: #ffffff;
   min-height: 100vh;
+  position: relative;
 }
 
 .header {
@@ -162,11 +162,11 @@
 }
 
 .copy-value {
-  display: none;
-  left: 0;
   display: flex;
   flex-direction: row;
   gap: 10px;
+  align-items: center;
+  flex: 1;
 }
 
 .copy-icon {
@@ -174,6 +174,84 @@
   height: 20px;
 }
 
+.whatsapp-link {
+  color: #25d366;
+  text-decoration: none;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.whatsapp-link:hover {
+  text-decoration: underline;
+}
+
+.whatsapp-link::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 8px;
+}
+
+/* Toast notification styles */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  min-width: 250px;
+  max-width: 350px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+.toast-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.toast-error {
+  background-color: #f44336;
+  color: white;
+}
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+  opacity: 0.8;
+}
+
+.toast-close:hover {
+  opacity: 1;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 
 @media (max-width: 600px) {
   .header {
@@ -197,5 +275,17 @@
   .contact-label {
     width: 100%;
     margin-bottom: 5px;
+  }
+
+  .copy-value {
+    justify-content: space-between;
+  }
+
+  .toast {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    width: auto;
+    max-width: none;
   }
 }

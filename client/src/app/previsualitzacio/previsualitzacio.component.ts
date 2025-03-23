@@ -1,16 +1,16 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { Categories, Sexe, TallaSamarreta, Team } from '../interfaces/ludi.interface';
+import { Component } from '@angular/core';
+import { Categories, Sexe, TallaSamarreta, type Team } from '../interfaces/ludi.interface';
 import { TeamMobileComponent } from '../detalls-equip/mobile/detalls-equip-monile.component';
 import { TeamDesktopComponent } from '../detalls-equip/desktop/detalls-equip-desktop.component';
 import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
 import { CdkStepper } from '@angular/cdk/stepper';
-import { CLUBS_DATA } from '../data/club-data';
 import { environment } from '../../environments/environment';
-import { Router } from '@angular/router';
+import  { Router } from '@angular/router';
 import { getUrlImage } from '../detalls-equip/data-mapper';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {  HttpClient, HttpHeaders } from '@angular/common/http';
+import { RegistrationStateService } from '../serveis/registration-data.service';
 
 @Component({
   selector: 'app-previsualitzacio',
@@ -20,55 +20,60 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrl: './previsualitzacio.component.css',
 })
 export class PrevisualitzacioComponent {
-  //public team: Team = {
-  //  nomEquip: 'Equip Exemple',
-  //  email: 'equip@exemple.com',
-  //  telefon: '666777888',
-  //  categoria: Categories.MINI,
-  //  sexe: Sexe.MASC,
-  //  club: 'Club Esportiu Exemple',
-  //  intolerancies: [
-  //    { name: 'Gluten', count: 2 },
-  //    { name: 'Lactosa', count: 1 },
-  //  ],
-  //  jugadors: [
-  //    {
-  //      nom: 'Marc',
-  //      cognoms: 'Garcia Puig',
-  //      tallaSamarreta: TallaSamarreta.M,
-  //    },
-  //    {
-  //      nom: 'Laura',
-  //      cognoms: 'Martínez Font',
-  //      tallaSamarreta: TallaSamarreta.M,
-  //    },
-  //  ],
-  //  entrenadors: [
-  //    {
-  //      nom: 'Joan',
-  //      cognoms: 'Ferrer Sala',
-  //      tallaSamarreta: TallaSamarreta.M,
-  //      esPrincipal: 1,
-  //    },
-  //    {
-  //      nom: 'Marta',
-  //      cognoms: 'López Vidal',
-  //      tallaSamarreta: TallaSamarreta.M,
-  //      esPrincipal: 0,
-  //    },
-  //  ],
-  //  fitxes: ['exaple']
-  //};
-  public team!: Team;
-  public isDesktop: boolean = false;
+  //public team!: Team;
+  public team: Team = {
+    nomEquip: 'Warriors',
+    email: 'warriors@example.com',
+    telefon: '658712783',
+    categoria: Categories.CADET,
+    sexe: Sexe.MASC,
+    club: 'Golden State Club',
+    fitxes: ['fitxa1.pdf', 'fitxa2.pdf'],
+    intolerancies: [
+      { name: 'Gluten', count: 1 },
+      { name: 'Lactosa', count: 2 },
+    ],
+    jugadors: [
+      {
+        nom: 'Stephen',
+        cognoms: 'Curry',
+        tallaSamarreta: TallaSamarreta.M,
+      },
+      {
+        nom: 'Klay',
+        cognoms: 'Thompson',
+        tallaSamarreta: TallaSamarreta.L,
+      },
+    ],
+    entrenadors: [
+      {
+        nom: 'Steve',
+        cognoms: 'Kerr',
+        tallaSamarreta: TallaSamarreta.XL,
+        esPrincipal: 1,
+      },
+      {
+        nom: 'Mike',
+        cognoms: 'Brown',
+        tallaSamarreta: TallaSamarreta.L,
+        esPrincipal: 0,
+      },
+    ],
+  };
+
+  public isDesktop = false;
   public apiResponse: any;
+  public isSubmitting = false;
+  public errorMessage: string | null = null;
+  public contactPhone = '659173158';
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     private previService: PrevisualitzacioService,
     private stepper: CdkStepper,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private registrationStateService: RegistrationStateService,
   ) {}
 
   ngOnInit() {
@@ -100,13 +105,16 @@ export class PrevisualitzacioComponent {
   }
 
   enviarForm() {
+    if (this.isSubmitting) return;
+
+    this.isSubmitting = true;
+    this.errorMessage = null;
+
     if (this.team.fitxes) {
       this.team.fitxes = this.team.fitxes.map((fitxa) =>
         fitxa.normalize('NFC')
       );
     }
-
-    console.log('Enviando formulario', this.team);
 
     const payload = {
       ...this.team,
@@ -122,22 +130,37 @@ export class PrevisualitzacioComponent {
 
     this.http.post(url, payload, { headers }).subscribe({
       next: (response: any) => {
+        this.isSubmitting = false;
         const { registration_url, registration_path, wa_token } = response;
-        this.apiResponse = { registration_url, registration_path, wa_token };
 
-        console.log('Registration successful', this.apiResponse);
+        const state = {
+          registration_url,
+          registration_path,
+          wa_token,
+          team: this.team,
+        };
 
+        console.log('Registration successful', state);
+
+        this.registrationStateService.state = state;
         this.router.navigate(['/inscripcio-completa'], {
-          state: this.apiResponse,
+          state: state,
         });
       },
       error: (error) => {
+        this.isSubmitting = false;
         console.error('Error submitting form', error);
+        this.errorMessage =
+          'Hi ha hagut un error en processar la sol·licitud. Si us plau, contacta amb el suport.';
       },
     });
   }
 
   previStep() {
     this.stepper.previous();
+  }
+
+  getWhatsAppLink(): string {
+    return `https://wa.me/${this.contactPhone}`;
   }
 }

@@ -1,4 +1,12 @@
 <div class="success-container">
+  <!-- Toast notification -->
+  <div *ngIf="showToast" class="toast" [ngClass]="{'toast-success': toastType === 'success', 'toast-error': toastType === 'error'}">
+    <div class="toast-content">
+      <span>{{ toastMessage }}</span>
+    </div>
+    <button class="toast-close" (click)="hideToast()">×</button>
+  </div>
+
   <div class="header">
     <h1 class="title">Onyar</h1>
     <img *ngIf="imageUrl" [attr.src]="imageUrl" alt="Onyar Basketball Logo" class="logo">
@@ -15,15 +23,27 @@
     <div class="info-card">
       <div class="info-row">
         <span class="info-label">Club</span>
+        <span class="info-value">{{ club || 'No disponible' }}</span>
+      </div>
+      <div *ngIf="teamName" class="info-row">
+        <span class="info-label">Equip</span>
         <span class="info-value">{{ teamName }}</span>
       </div>
       <div class="info-row">
         <span class="info-label">Categoria</span>
-        <span class="info-value">{{ categoria }}</span>
+        <span class="info-value">{{ categoria || 'No disponible' }}</span>
       </div>
       <div class="info-row">
         <span class="info-label">Sexe</span>
-        <span class="info-value">{{ sexe }}</span>
+        <span class="info-value">{{ sexe || 'No disponible' }}</span>
+      </div>
+      <div *ngIf="numPlayers" class="info-row">
+        <span class="info-label">Jugadors</span>
+        <span class="info-value">{{ numPlayers }}</span>
+      </div>
+      <div *ngIf="numEntrenadors" class="info-row">
+        <span class="info-label">Entrenadors</span>
+        <span class="info-value">{{ numEntrenadors }}</span>
       </div>
     </div>
   </div>
@@ -49,11 +69,9 @@
         <div class="copy-value">
           <span class="info-value">{{ paymentInfo.concept }}</span>
           <button class="copy-btn" (click)="copyToClipboard(paymentInfo.concept)">
-
             <img src="../../assets/copy.png" alt="Copy Icon" class="copy-icon">
           </button>
         </div>
-
       </div>
       <div class="payment-note">
         <p>Si us plau, realitza el pagament en els pròxims 3 dies per confirmar la teva inscripció.</p>
@@ -74,6 +92,5 @@
       Tornar a l'inici
     </a>
   </div>
-
 </div>
 
