@@ -1,3 +1,15 @@
+<div *ngIf="!team" class="background-container">
+  <div class="form-container">
+      <div class="form-card">
+          <h2 class="form-title">Formulari Incomplert</h2>
+
+          <p class="drets-text">
+            Si us plau, acabeu d'emplenar el formulari per poder visualitzar les dades finals, gràcies.
+          </p>
+      </div>
+  </div>
+</div>
+
 <div *ngIf="team" [ngStyle]="{'--primary': team.primaryColor || '#d36600', '--secondary': team.secondaryColor || '#ffffff', '--dark': team.darkColor || '#000000'}" class="preview-container">
   <ng-container *ngIf="isDesktop; else mobileView">
     <app-team-desktop [team]="team"></app-team-desktop>
@@ -10,23 +22,23 @@
     <p>{{ errorMessage }}</p>
     <p>Contacta amb nosaltres: <a [href]="getWhatsAppLink()" target="_blank">+34{{ contactPhone }}</a></p>
   </div>
+</div>
 
-  <div class="navigation-controls">
-    <div class="esquerra">
-      <button class="btn-prev" (click)="previStep()" [disabled]="isSubmitting">
-        <span class="material-icons">arrow_back</span>
-        <span>Anterior</span>
-      </button>
-    </div>
-    <div class="dreta">
-      <button class="btn-next" (click)="enviarForm()" [disabled]="isSubmitting">
-        <span *ngIf="!isSubmitting">Enviar Formulari</span>
-        <span *ngIf="isSubmitting" class="loading-text">
-          <span class="spinner"></span>
-          Processant...
-        </span>
-      </button>
-    </div>
+<div class="navigation-controls">
+  <div class="esquerra">
+    <button class="btn-prev" (click)="previStep()" [disabled]="isSubmitting">
+      <span class="material-icons">arrow_back</span>
+      <span>Anterior</span>
+    </button>
+  </div>
+  <div class="dreta">
+    <button class="btn-next" (click)="enviarForm()" [disabled]="isSubmitting || !team">
+      <span *ngIf="!isSubmitting">Enviar Formulari</span>
+      <span *ngIf="isSubmitting" class="loading-text">
+        <span class="spinner"></span>
+        Processant...
+      </span>
+    </button>
   </div>
 </div>
 
