@@ -2,7 +2,7 @@ body {
   margin: 0;
   font-family: 'Arial', sans-serif;
   background-color: #131313;
-  color: #ffffff; 
+  color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,23 +15,23 @@ body {
   text-align: center;
   height: 100%;
   width: 100%;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   background: #1a1a1a;
   border: 2px solid #d36600;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .header h1 {
   font-size: 2.5rem;
   color: #d36600;
   margin-top: 6rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .header p {
   font-size: 1rem;
   color: #cccccc;
-  margin-bottom: 2rem;
+  margin-bottom: 5rem;
   max-width: 60%;
   margin-left: auto;
   margin-right: auto;
@@ -41,7 +41,7 @@ body {
 .countdown {
   display: flex;
   justify-content: center;
-  gap: 10%;
+  gap: 6%;
   row-gap: 2rem;
   margin-top: 3rem;
   flex-wrap: wrap;
@@ -96,6 +96,20 @@ body {
 }
 
 
+.inscripcions-button {
+  background-color: #d36600;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10%;
+  width: 300px;
+  height: 60px;
+}
+
 
 @media (max-width: 768px) {
   .countdown {
@@ -104,7 +118,7 @@ body {
   }
 
   .countdown-item {
-    flex: 1 1 20%; 
+    flex: 1 1 20%;
     max-width: 30%;
   }
 }
@@ -142,7 +156,7 @@ body {
 @media (max-width: 480px) {
   .social-icons {
     flex-direction: column;
-    gap: 0.75rem; 
+    gap: 0.75rem;
   }
 
   .footer p {
