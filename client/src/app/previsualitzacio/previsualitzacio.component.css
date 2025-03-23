@@ -1,4 +1,4 @@
-.preview-container{
+.preview-container {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -36,7 +36,7 @@ button {
 }
 
 .btn-next {
-  background-color: #D36701;
+  background-color: #d36701;
   color: #ffffff;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -49,13 +49,13 @@ button {
 }
 
 .btn-next:disabled {
-  background-color: #555555;
+  background-color: #999999;
   cursor: not-allowed;
   transform: none;
 }
 
 .btn-prev {
-  background-color: #D36701;
+  background-color: #d36701;
   color: #ffffff;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -65,6 +65,53 @@ button {
 .btn-prev:hover {
   background-color: #f07b1c;
   transform: translateY(-2px);
+}
+
+.btn-prev:disabled {
+  background-color: #999999;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.error-message {
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 30px 0;
+  color: #c62828;
+}
+
+.error-message a {
+  color: #d36701;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.error-message a:hover {
+  text-decoration: underline;
+}
+
+.loading-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Mobile Responsive Styles */
@@ -91,5 +138,11 @@ button {
   .btn-submit {
     width: 100%;
     justify-content: center;
+  }
+
+  .error-message {
+    margin: 1rem 15px 0;
+    padding: 0.75rem;
+    font-size: 0.9rem;
   }
 }
