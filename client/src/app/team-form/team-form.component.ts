@@ -120,7 +120,7 @@ export class TeamFormComponent implements OnInit {
       },
       {
         id: 4,
-        name: 'Observacions'
+        name: 'Intoleràncies'
       },
       {
         id: 5,

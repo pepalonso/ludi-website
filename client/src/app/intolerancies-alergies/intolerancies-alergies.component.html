@@ -2,14 +2,14 @@
     <div class="coach-form-container">
       <div class="form-card">
         <h2 class="form-title">Observacions</h2>
-  
+
         <form [formGroup]="intoleranceForm" (ngSubmit)="addIntolerance()">
           <div class="form-group">
             <label for="name">Tipus Intolerancia/Alergia:</label>
-            <input 
-                type="text" 
-                id="name" 
-                formControlName="name" 
+            <input
+                type="text"
+                id="name"
+                formControlName="name"
                 placeholder="e.g., Lactose, Gluten, Peanuts"
             >
             <div *ngIf="intoleranceForm.get('name')?.invalid && intoleranceForm.get('name')?.touched" class="error-message">
@@ -17,13 +17,13 @@
                 <span *ngIf="intoleranceForm.get('name')?.errors?.['minlength']">Name must be at least 2 characters.</span>
             </div>
           </div>
-  
+
           <div class="form-group">
                 <label for="count">Numero de persones:</label>
-                <input 
-                    type="number" 
-                    id="count" 
-                    formControlName="count" 
+                <input
+                    type="number"
+                    id="count"
+                    formControlName="count"
                     min="1"
                 >
                 <div *ngIf="intoleranceForm.get('count')?.invalid && intoleranceForm.get('count')?.touched" class="error-message">
@@ -44,8 +44,8 @@
           <table>
             <thead>
               <tr>
-                <th>Intolerancia o Alergia</th>
-                <th>Quantitat persones</th>
+                <th>Intolerància o Al·lergia</th>
+                <th>Número de persones</th>
                 <th>Accions</th>
               </tr>
             </thead>
@@ -79,4 +79,3 @@
       </div>
     </div>
   </div>
-  

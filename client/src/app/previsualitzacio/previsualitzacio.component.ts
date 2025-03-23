@@ -20,47 +20,7 @@ import { RegistrationStateService } from '../serveis/registration-data.service';
   styleUrl: './previsualitzacio.component.css',
 })
 export class PrevisualitzacioComponent {
-  //public team!: Team;
-  public team: Team = {
-    nomEquip: 'Warriors',
-    email: 'warriors@example.com',
-    telefon: '658712783',
-    categoria: Categories.CADET,
-    sexe: Sexe.MASC,
-    club: 'Golden State Club',
-    fitxes: ['fitxa1.pdf', 'fitxa2.pdf'],
-    intolerancies: [
-      { name: 'Gluten', count: 1 },
-      { name: 'Lactosa', count: 2 },
-    ],
-    jugadors: [
-      {
-        nom: 'Stephen',
-        cognoms: 'Curry',
-        tallaSamarreta: TallaSamarreta.M,
-      },
-      {
-        nom: 'Klay',
-        cognoms: 'Thompson',
-        tallaSamarreta: TallaSamarreta.L,
-      },
-    ],
-    entrenadors: [
-      {
-        nom: 'Steve',
-        cognoms: 'Kerr',
-        tallaSamarreta: TallaSamarreta.XL,
-        esPrincipal: 1,
-      },
-      {
-        nom: 'Mike',
-        cognoms: 'Brown',
-        tallaSamarreta: TallaSamarreta.L,
-        esPrincipal: 0,
-      },
-    ],
-  };
-
+  public team!: Team;
   public isDesktop = false;
   public apiResponse: any;
   public isSubmitting = false;

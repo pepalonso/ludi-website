@@ -1,7 +1,7 @@
 <div class="background-container">
   <div class="form-container">
     <div class="form-card">
-      <h2 class="form-title">Dades del Club</h2>
+      <h2 class="form-title">Dades del Equip</h2>
 
       <form [formGroup]="dadesForm" (ngSubmit)="onSubmit()">
         <div class="form-group-custom">
@@ -35,7 +35,7 @@
         </div>
 
         <div class="form-group">
-          <label for="teamName">Nom del Equip (Opcional)</label>
+          <label for="teamName">Nom de l'equip (Opcional)</label>
           <input type="text" id="teamName" formControlName="nomEquip" placeholder="vermell, Taronja, B..." />
         </div>
 
@@ -60,7 +60,7 @@
     </div>
     <div class="navigation-controls">
       <button class="btn-next" (click)="nextStep()" [disabled]="dadesForm.invalid">
-        <span>Siguiente</span>
+        <span>Següent</span>
         <span class="material-icons">arrow_forward</span>
       </button>
     </div>

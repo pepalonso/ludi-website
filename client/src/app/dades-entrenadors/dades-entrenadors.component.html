@@ -13,7 +13,7 @@
         </div>
 
         <div class="form-group">
-          <label for="cognoms">Primer Apellido</label>
+          <label for="cognoms">Primer cognom</label>
           <input type="text" id="cognoms" formControlName="cognoms" required />
           <div class="error-message" *ngIf="entrenadorForm.get('cognoms')?.invalid && entrenadorForm.get('cognoms')?.touched">
             El cognom és requerit
@@ -33,7 +33,7 @@
 
         <div class="checkbox-group">
           <input type="checkbox" id="esPrincipal" formControlName="esPrincipal" />
-          <label for="esPrincipal" class="checkbox-label">¿Es Primer Entrenador?</label>
+          <label for="esPrincipal" class="checkbox-label">És primer entrenador?</label>
         </div>
 
         <div class="error-message" *ngIf="maxCoachesReached">
