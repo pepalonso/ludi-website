@@ -22,7 +22,7 @@ def handle_registration(event):
             'sexe': body.get('sexe'),
             'club': body.get('club'),
             'categoria': body.get('categoria'),
-            'observacions': body.get('observacions'),
+            'observacions': body.get('observacions', {}).get('observacio', ""),
             'intolerancies': body.get('intolerancies', ""),
             'jugadors': [
                 {'nom': j.get('nom'), 'cognoms': j.get('cognoms'), 'tallaSamarreta': j.get('tallaSamarreta')}
