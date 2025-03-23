@@ -168,7 +168,6 @@ export class PrevisualitzacioComponent {
     return  this.team && 
             this.team.entrenadors && 
             this.team.jugadors && 
-            this.team.intolerancies && 
             this.team.fitxes;
   }
 }

@@ -108,8 +108,14 @@ function mapEntrenador(entrenadorData: any): Entrenador {
 
 function mapTallaSamarreta(tallaValue: string): TallaSamarreta {
   switch (tallaValue) {
-    case 'XS':
-      return TallaSamarreta.XS;
+    case '8':
+      return TallaSamarreta.vuit;
+    case '10':
+      return TallaSamarreta.deu;
+    case '12':
+      return TallaSamarreta.dotze;
+    case '14':
+      return TallaSamarreta.catorze;
     case 'S':
       return TallaSamarreta.S;
     case 'M':

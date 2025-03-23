@@ -1,4 +1,4 @@
-<div *ngIf="!team" class="background-container">
+<div *ngIf="!formCompletat" class="background-container">
   <div class="form-container">
       <div class="form-card">
           <h2 class="form-title">Formulari Incomplert</h2>
@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<div *ngIf="team" [ngStyle]="{'--primary': team.primaryColor || '#d36600', '--secondary': team.secondaryColor || '#ffffff', '--dark': team.darkColor || '#000000'}" class="preview-container">
+<div *ngIf="formCompletat" [ngStyle]="{'--primary': team.primaryColor || '#d36600', '--secondary': team.secondaryColor || '#ffffff', '--dark': team.darkColor || '#000000'}" class="preview-container">
   <div *ngIf="showToast" class="toast" [ngClass]="{'toast-success': toastType === 'success', 'toast-error': toastType === 'error'}">
     <div class="toast-content">
       <span>{{ toastMessage }}</span>

@@ -124,7 +124,7 @@ export class TeamFormComponent implements OnInit {
       },
       {
         id: 5,
-        name: 'Drets Imatge'
+        name: 'Documents'
       },
       {
         id: 6,
