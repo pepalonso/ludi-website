@@ -163,4 +163,11 @@ export class PrevisualitzacioComponent {
   getWhatsAppLink(): string {
     return `https://wa.me/${this.contactPhone}`;
   }
+
+  public get formCompletat(){
+    return  this.team && 
+            this.team.entrenadors && 
+            this.team.jugadors && 
+            this.team.fitxes;
+  }
 }

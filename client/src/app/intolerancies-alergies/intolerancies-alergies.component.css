@@ -19,6 +19,11 @@
     padding: 2rem;
     margin-bottom: 2rem;
   }
+
+  textarea {
+    resize: none;
+    height: 100px;
+  }
   
   /* Titles */
   .form-title,
@@ -50,7 +55,8 @@
   }
   
   input,
-  select {
+  select,
+  textarea {
     background-color: #333333;
     border: 1px solid transparent;
     border-radius: 8px;
@@ -61,7 +67,8 @@
   }
   
   input:focus,
-  select:focus {
+  select:focus,
+  textarea:focus {
     outline: none;
     border-color: #D36701;
     box-shadow: 0 0 0 2px rgba(211, 103, 1, 0.2);

@@ -3,6 +3,20 @@
       <div class="form-card">
         <h2 class="form-title">Observacions</h2>
 
+        <form [formGroup]="observacions">
+          <div class="form-group">
+            <label for="observacio">Observacions:</label>
+            <textarea
+                type="text"
+                id="observacio"
+                formControlName="observacio"
+            > </textarea>
+          </div>
+        </form>
+      </div>
+      <div class="form-card">
+        <h2 class="form-title">Alergies / Intolerancies</h2>
+
         <form [formGroup]="intoleranceForm" (ngSubmit)="addIntolerance()">
           <div class="form-group">
             <label for="name">Tipus Intolerancia/Alergia:</label>
@@ -10,11 +24,11 @@
                 type="text"
                 id="name"
                 formControlName="name"
-                placeholder="e.g., Lactose, Gluten, Peanuts"
+                placeholder="exemple: Lactosa, Gluten, Alegia Peix"
             >
             <div *ngIf="intoleranceForm.get('name')?.invalid && intoleranceForm.get('name')?.touched" class="error-message">
-                <span *ngIf="intoleranceForm.get('name')?.errors?.['required']">Name is required.</span>
-                <span *ngIf="intoleranceForm.get('name')?.errors?.['minlength']">Name must be at least 2 characters.</span>
+                <span *ngIf="intoleranceForm.get('name')?.errors?.['required']">Nom obligatori</span>
+                <span *ngIf="intoleranceForm.get('name')?.errors?.['minlength']">Escriu minim dos caracters</span>
             </div>
           </div>
 
@@ -27,8 +41,8 @@
                     min="1"
                 >
                 <div *ngIf="intoleranceForm.get('count')?.invalid && intoleranceForm.get('count')?.touched" class="error-message">
-                    <span *ngIf="intoleranceForm.get('count')?.errors?.['required']">Number of persons is required.</span>
-                    <span *ngIf="intoleranceForm.get('count')?.errors?.['min']">At least 1 person is required.</span>
+                    <span *ngIf="intoleranceForm.get('count')?.errors?.['required']">Numero de personas es obligatori</span>
+                    <span *ngIf="intoleranceForm.get('count')?.errors?.['min']">Minim una persona</span>
                 </div>
           </div>
             <button [disabled]="intoleranceForm.invalid" type="submit" class="btn-add">

@@ -3,6 +3,8 @@
     <div class="form-card">
       <h2 class="form-title">Afegir Entrenador</h2>
 
+      <p>Podeu afegir un mínim d'1 entrenador i un màxim de 3 entrenadors.</p>
+
       <form [formGroup]="entrenadorForm" (ngSubmit)="agregarEntrenador()">
         <div class="form-group">
           <label for="nom">Nom</label>
@@ -93,7 +95,7 @@
         </button>
       </div>
       <div class="dreta">
-        <button class="btn-next" (click)="nextStep()">
+        <button class="btn-next" (click)="nextStep()" [disabled]="entrenadores.length < 1 || entrenadores.length > 3">
           <span>Següent</span>
           <span class="material-icons">arrow_forward</span>
         </button>

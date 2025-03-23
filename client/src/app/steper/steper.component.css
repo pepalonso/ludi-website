@@ -27,12 +27,7 @@ button {
     background-color: var(--gris);
     color: white;
     font-size: 16px;
-    cursor: pointer;
     transition: background-color 0.3s ease-in-out;
-}
-
-.style-button:hover {
-    background-color: #666;
 }
 
 .style-button.example-active {

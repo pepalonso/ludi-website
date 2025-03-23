@@ -24,25 +24,6 @@ export class DadesJugadorsComponent {
       cognoms: ['', Validators.required],
       tallaSamarreta: ['', Validators.required]
     });
-
-    // this.jugadores = [{
-    //   nombre: 'aram',
-    //   primerApellido: 'a',
-    //   segundoApellido: 'a',
-    //   talla: 'S'
-    // },
-    // {
-    //   nombre: 'aram',
-    //   primerApellido: 'a',
-    //   segundoApellido: 'a',
-    //   talla: 'S'
-    // },
-    // {
-    //   nombre: 'aram',
-    //   primerApellido: 'a',
-    //   segundoApellido: 'a',
-    //   talla: 'S'
-    // }]
   }
 
   agregarJugador() {

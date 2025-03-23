@@ -109,6 +109,35 @@ button {
   animation: spin 1s ease-in-out infinite;
 }
 
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #1a1a1a;
+}
+
+.form-card {
+  background-color: #252525;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.form-title {
+  color: #D36701;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.drets-text {
+  color: white;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
 .toast {
   position: fixed;
   top: 20px;

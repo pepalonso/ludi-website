@@ -17,6 +17,7 @@ interface Intolerance {
   styleUrl: './intolerancies-alergies.component.css'
 })
 export class IntoleranciesAlergiesComponent implements OnInit {
+  observacions: FormGroup;
   intoleranceForm: FormGroup;
   intolerancesList: Intolerance[] = [];
 
@@ -29,6 +30,10 @@ export class IntoleranciesAlergiesComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(2)]],
       count: ['', [Validators.required, Validators.min(1)]]
     });
+
+    this.observacions = this.fb.group({
+      observacio: ['']
+    })
   }
 
   ngOnInit(): void {

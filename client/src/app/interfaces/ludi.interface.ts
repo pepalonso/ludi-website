@@ -30,7 +30,10 @@ export interface Team {
 
 
 export enum TallaSamarreta {
-  XS = 'XS',
+  vuit = '8',
+  deu = '10',
+  dotze = '12',
+  catorze = '14',
   S = 'S',
   M = 'M',
   L = 'L',
