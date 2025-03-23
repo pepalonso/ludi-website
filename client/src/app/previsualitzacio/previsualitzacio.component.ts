@@ -63,13 +63,12 @@ export class PrevisualitzacioComponent {
   public isDesktop: boolean = false;
   public apiResponse: any;
 
-
   constructor(
     private breakpointObserver: BreakpointObserver,
     private previService: PrevisualitzacioService,
     private stepper: CdkStepper,
     private router: Router,
-    private http: HttpClient,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -101,7 +100,6 @@ export class PrevisualitzacioComponent {
   }
 
   enviarForm() {
-
     if (this.team.fitxes) {
       this.team.fitxes = this.team.fitxes.map((fitxa) =>
         fitxa.normalize('NFC')
@@ -110,19 +108,26 @@ export class PrevisualitzacioComponent {
 
     console.log('Enviando formulario', this.team);
 
+    const payload = {
+      ...this.team,
+      intolerancies: this.team.intolerancies?.flatMap((item) =>
+        Array(item.count).fill(item.name)
+      ),
+    };
+
     const url = `https://${environment.apiUrl}/registrar-incripcio`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
 
-    this.http.post(url, this.team, { headers }).subscribe({
+    this.http.post(url, payload, { headers }).subscribe({
       next: (response: any) => {
         const { registration_url, registration_path, wa_token } = response;
         this.apiResponse = { registration_url, registration_path, wa_token };
 
         console.log('Registration successful', this.apiResponse);
 
-        this.router.navigate(['/registration-success'], {
+        this.router.navigate(['/inscripcio-completa'], {
           state: this.apiResponse,
         });
       },

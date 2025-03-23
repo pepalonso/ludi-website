@@ -18,7 +18,7 @@ export class DadesEntrenadorsComponent {
   tallas = Object.values(TallaSamarreta);
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private stepper: CdkStepper,
     private previService: PrevisualitzacioService
   ) {
@@ -56,7 +56,11 @@ export class DadesEntrenadorsComponent {
       !this.duplicatePrincipal &&
       !this.thirdCoachPrincipalMissing
     ) {
-      this.entrenadores.push(this.entrenadorForm.value);
+      const entrenador = { ...this.entrenadorForm.value };
+      if (entrenador.esPrincipal == null) {
+        entrenador.esPrincipal = false;
+      }
+      this.entrenadores.push(entrenador);
       this.entrenadorForm.reset();
     } else {
       alert(
