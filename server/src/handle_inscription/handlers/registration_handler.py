@@ -23,7 +23,7 @@ def handle_registration(event):
             'club': body.get('club'),
             'categoria': body.get('categoria'),
             'observacions': body.get('observacions'),
-            'intolerancies': body.get('intolerancies'),
+            'intolerancies': body.get('intolerancies', ""),
             'jugadors': [
                 {'nom': j.get('nom'), 'cognoms': j.get('cognoms'), 'tallaSamarreta': j.get('tallaSamarreta')}
                 for j in body.get('jugadors', [])
@@ -56,7 +56,7 @@ def handle_registration(event):
             # 2. Insert team
             insert_team = """
             INSERT INTO equips (nom, email, categoria, telefon, sexe, club_id, observacions) 
-            VALUES (%s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
             """
             cursor.execute(insert_team, (
                 mapped_body['nomEquip'], 
@@ -64,7 +64,7 @@ def handle_registration(event):
                 mapped_body['categoria'], 
                 mapped_body['telefon'], 
                 mapped_body['sexe'], 
-                club_id
+                club_id,
                 mapped_body['observacions']
             ))
             team_id = cursor.lastrowid
