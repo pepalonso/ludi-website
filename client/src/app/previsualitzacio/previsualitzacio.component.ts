@@ -101,19 +101,13 @@ export class PrevisualitzacioComponent {
   }
 
   enviarForm() {
-    if (this.team.intolerancies && Array.isArray(this.team.intolerancies)) {
-      const intolerancyList: string[] = [];
-      this.team.intolerancies.forEach((item) => {
-        if (typeof item === 'string') {
-          intolerancyList.push(item);
-        } else {
-          for (let i = 0; i < item.count; i++) {
-            intolerancyList.push(item.name);
-          }
-        }
-      });
-      this.team.intolerancies = intolerancyList;
+
+    if (this.team.fitxes) {
+      this.team.fitxes = this.team.fitxes.map((fitxa) =>
+        fitxa.normalize('NFC')
+      );
     }
+
     console.log('Enviando formulario', this.team);
 
     const url = `https://${environment.apiUrl}/registrar-incripcio`;

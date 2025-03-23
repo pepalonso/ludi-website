@@ -18,7 +18,7 @@ export interface Team {
   categoria: Categories;
   sexe: Sexe;
   club: string;
-  intolerancies?: ({ name: string; count: number } | string)[];
+  intolerancies?: { name: string; count: number }[];
   jugadors: Jugador[];
   entrenadors: Entrenador[];
   fitxes?: string[];
