@@ -31,7 +31,8 @@ def lambda_handler(event, context):
         }
 
         response = requests.post(n8n_endpoint, headers=headers, json=team_data)
-
+        if response.status_code != 200:
+            raise Exception(f"Failed to send data to n8n. Status code: {response.status_code}, Response: {response.text}")
         status, result = send_whatsapp_message(team_data)
         print("DEBUG: WhatsApp message status:", status, "result:", result)
 
