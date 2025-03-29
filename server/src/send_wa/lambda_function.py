@@ -1,19 +1,19 @@
 import json
 import os
 import traceback
+import requests
 from utils.messaging import send_whatsapp_message
 
 
 def lambda_handler(event, context):
-    try:
-        # Log the full event for debugging purposes
-        print("DEBUG: Received event:", json.dumps(event))
 
-        # 1. Parse the JSON body from the HTTP request
+    n8n_endpoint = os.getenv("N8N_ENDPOINT")
+    bearer_token = os.getenv("BEARER_TOKEN")
+
+    try:
+
         body_str = event.get("body", "{}")
-        print("DEBUG: Raw body string:", body_str)
         body = json.loads(body_str)
-        print("DEBUG: Parsed body:", body)
 
         team_data = {
             "club": body.get("club_name", ""),
@@ -25,6 +25,14 @@ def lambda_handler(event, context):
         }
         print("DEBUG: Team data prepared:", team_data)
 
+        headers = {
+            "Authorization": f"Bearer {bearer_token}",
+            "Content-Type": "application/json",
+        }
+
+        response = requests.post(n8n_endpoint, headers=headers, json=team_data)
+        if response.status_code != 200:
+            raise Exception(f"Failed to send data to n8n. Status code: {response.status_code}, Response: {response.text}")
         status, result = send_whatsapp_message(team_data)
         print("DEBUG: WhatsApp message status:", status, "result:", result)
 
@@ -44,7 +52,6 @@ def lambda_handler(event, context):
     except Exception as e:
         error_details = traceback.format_exc()
         print("ERROR: Exception processing event:", error_details)
-        # Return error details in the response for troubleshooting purposes.
         return {
             "statusCode": 500,
             "body": json.dumps(
