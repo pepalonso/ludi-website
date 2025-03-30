@@ -12,21 +12,26 @@ LAMBDA_FUNCTIONS = [
     #  "sam_build_dir": ".aws-sam/build/HandleTeamInscription",
     #  "zip_filename": "lambda.zip",
     # },
-    {
-        "function_name": "send-WA",
-        "sam_build_dir": ".aws-sam/build/SendWA",
-        "zip_filename": "lambda2.zip",
-    },
-    {
-        "function_name": "authorizer",
-        "sam_build_dir": ".aws-sam/build/AuthorizeWA",
-        "zip_filename": "lambda3.zip",
-    },
+    # {
+    #    "function_name": "send-WA",
+    #    "sam_build_dir": ".aws-sam/build/SendWA",
+    #    "zip_filename": "lambda2.zip",
+    # },
+    # {
+    #    "function_name": "authorizer",
+    #    "sam_build_dir": ".aws-sam/build/AuthorizeWA",
+    #    "zip_filename": "lambda3.zip",
+    # },
     # {
     #    "function_name": "fitxes_uploader",
     #    "sam_build_dir": ".aws-sam/build/FitxesUploader",
     #    "zip_filename": "fitxes_uploader.zip",
     # },
+    {
+        "function_name": "n8n_reader",
+        "sam_build_dir": ".aws-sam/build/n8nReader",
+        "zip_filename": "n8nReader.zip",
+    },
 ]
 
 lambda_client = boto3.client("lambda")
