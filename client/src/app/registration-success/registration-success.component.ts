@@ -58,7 +58,7 @@ export class RegistrationSuccessComponent {
   private priceErrorMessage = `Per saber l'import posat en contacte amb nosaltres`;
 
   paymentInfo = {
-    accountNumber: 'ES12 3456 7890 1234 5678 9012',
+    accountNumber: 'ES70 2100 8118 8023 0004 2564',
     amount: '0€',
     concept: '',
   };
