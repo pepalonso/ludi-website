@@ -19,10 +19,10 @@
   </div>
 
   <ng-container *ngIf="isDesktop; else mobileView">
-    <app-team-desktop [team]="team"></app-team-desktop>
+    <app-previsualitzacio-desktop [team]="team"></app-previsualitzacio-desktop>
   </ng-container>
   <ng-template #mobileView>
-    <app-team-mobile [team]="team"></app-team-mobile>
+    <app-previsualitzacio-mobile [team]="team"></app-previsualitzacio-mobile>
   </ng-template>
 
   <div *ngIf="errorMessage" class="error-message">
