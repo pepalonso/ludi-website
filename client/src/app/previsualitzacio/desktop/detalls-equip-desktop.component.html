@@ -1,13 +1,4 @@
 <div *ngIf="team" class="parent">
-  <!-- Toast notification -->
-  <div *ngIf="showToast" class="toast" [ngClass]="{'toast-success': toastType === 'success', 'toast-error': toastType === 'error'}">
-    <div class="toast-content">
-      <span>{{ toastMessage }}</span>
-    </div>
-    <button class="toast-close" (click)="hideToast()">×</button>
-  </div>
-
-
   <div class="team-info">
   <div class="team-header-container">
   <div class="team-header-content">
@@ -43,42 +34,6 @@
   </section>
 </div>
 
-  <div class="payment-info">
-  <section class="payment-section">
-    <h2>Informació pagament</h2>
-    <div class="info-card">
-      <div class="info-row">
-        <span class="info-label">Compte Bancari</span>
-        <div class="copy-value">
-          <span class="info-value">{{ paymentInfo().account }}</span>
-          <button class="copy-btn" (click)="copyToClipboard(paymentInfo().account)">
-            <img src="../../assets/copy.png" alt="Copy Icon" class="copy-icon">
-          </button>
-        </div>
-      </div>
-
-      <div class="info-row">
-        <span class="info-label">Import</span>
-        <span class="info-value">{{ paymentInfo().import }}</span>
-      </div>
-
-      <div class="info-row">
-        <span class="info-label">Concepte</span>
-        <div class="copy-value">
-          <span class="info-value">{{ paymentInfo().concepte }}</span>
-          <button class="copy-btn" (click)="copyToClipboard(paymentInfo().concepte)">
-            <img src="../../assets/copy.png" alt="Copy Icon" class="copy-icon">
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-  </div>
-
-
-
- 
 
   <!-- Div 2: Coaches Information -->
   <div class="coaches-info">
