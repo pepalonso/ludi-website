@@ -47,9 +47,9 @@ export async function mapTeamResponse(response: any): Promise<Team> {
 
 function mapSexe(sexeValue: string): Sexe {
   switch (sexeValue) {
-    case 'Masc':
+    case 'Masculí':
       return Sexe.MASC;
-    case 'Fem':
+    case 'Femení':
       return Sexe.FEM;
     default:
       console.warn(`Unknown sexe value: ${sexeValue}, defaulting to Masc`);
