@@ -11,6 +11,7 @@ CREATE TABLE equips (
     telefon VARCHAR(255) NOT NULL,
     sexe VARCHAR(50) NOT NULL,
     club_id INT NOT NULL,
+    observacions TEXT,
     data_incripcio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (club_id) REFERENCES clubs(id)
 );
