@@ -1,0 +1,246 @@
+<div class="edit-registration-container">
+  <div class="edit-header">
+    <h2>Editar Inscripció</h2>
+    <button class="close-button" (click)="cancelEdit()">×</button>
+  </div>
+
+  <div class="edit-select">
+    <label for="editOption">Què vols modificar?</label>
+    <select id="editOption" [(ngModel)]="selectedOption" (ngModelChange)="onOptionChange()">
+      <option value="none">Selecciona una opció</option>
+      <option value="player-add">Afegir jugador</option>
+      <option value="player-edit">Modificar jugador</option>
+      <option value="player-delete">Eliminar jugador</option>
+      <option value="coach-add">Afegir entrenador</option>
+      <option value="coach-edit">Modificar entrenador</option>
+      <option value="coach-delete">Eliminar entrenador</option>
+      <option value="intolerancies">Gestionar intoleràncies</option>
+      <option value="observations">Afegir observacions</option>
+    </select>
+  </div>
+
+  <!-- Add Player -->
+  <div class="edit-form" *ngIf="selectedOption === 'player-add'">
+    <h3>Afegir nou jugador</h3>
+    <div class="form-group">
+      <label for="playerName">Nom</label>
+      <input type="text" id="playerName" [(ngModel)]="newPlayer.nom" (ngModelChange)="validateForm()">
+    </div>
+    <div class="form-group">
+      <label for="playerSurname">Cognoms</label>
+      <input type="text" id="playerSurname" [(ngModel)]="newPlayer.cognoms" (ngModelChange)="validateForm()">
+    </div>
+    <div class="form-group">
+      <label for="playerSize">Talla samarreta</label>
+      <select id="playerSize" [(ngModel)]="newPlayer.tallaSamarreta">
+        <option *ngFor="let size of tallaSamarretaOptions" [value]="size">{{size}}</option>
+      </select>
+    </div>
+    <div class="action-buttons">
+      <button class="cancel-button" (click)="cancelEdit()">Cancel·lar</button>
+      <button class="save-button" [disabled]="!isFormValid" (click)="addPlayer()">Afegir</button>
+    </div>
+  </div>
+
+  <!-- Edit Player -->
+  <div class="edit-form" *ngIf="selectedOption === 'player-edit'">
+    <h3>Modificar jugador</h3>
+    <div class="form-group select-group" *ngIf="selectedPlayerId === -1">
+      <label for="selectPlayerToEdit">Selecciona un jugador</label>
+      <select id="selectPlayerToEdit" [(ngModel)]="selectedPlayerId" (ngModelChange)="selectPlayerToEdit($event)">
+        <option [value]="-1">Selecciona un jugador</option>
+        <option *ngFor="let player of team.jugadors; let i = index" [value]="i">
+          {{player.nom}} {{player.cognoms}}
+        </option>
+      </select>
+    </div>
+    <div *ngIf="selectedPlayerId !== -1">
+      <div class="form-group">
+        <label for="editPlayerName">Nom</label>
+        <input type="text" id="editPlayerName" [(ngModel)]="newPlayer.nom" (ngModelChange)="validateForm()">
+      </div>
+      <div class="form-group">
+        <label for="editPlayerSurname">Cognoms</label>
+        <input type="text" id="editPlayerSurname" [(ngModel)]="newPlayer.cognoms" (ngModelChange)="validateForm()">
+      </div>
+      <div class="form-group">
+        <label for="editPlayerSize">Talla samarreta</label>
+        <select id="editPlayerSize" [(ngModel)]="newPlayer.tallaSamarreta">
+          <option *ngFor="let size of tallaSamarretaOptions" [value]="size">{{size}}</option>
+        </select>
+      </div>
+      <div class="action-buttons">
+        <button class="cancel-button" (click)="selectedPlayerId = -1">Tornar</button>
+        <button class="save-button" [disabled]="!isFormValid" (click)="updatePlayer()">Desar canvis</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Player -->
+  <div class="edit-form" *ngIf="selectedOption === 'player-delete'">
+    <h3>Eliminar jugador</h3>
+    <div class="delete-list">
+      <div *ngFor="let player of team.jugadors; let i = index" class="delete-item">
+        <div class="delete-info">
+          <span class="delete-number">{{i + 1}}</span>
+          <span>{{player.nom}} {{player.cognoms}} ({{player.tallaSamarreta}})</span>
+        </div>
+        <button class="delete-button" (click)="deletePlayer(i)">Eliminar</button>
+      </div>
+      <div *ngIf="team.jugadors.length === 0" class="empty-message">
+        No hi ha jugadors per eliminar
+      </div>
+    </div>
+    <div class="action-buttons">
+      <button class="cancel-button" (click)="cancelEdit()">Tornar</button>
+    </div>
+  </div>
+
+  <!-- Add Coach -->
+  <div class="edit-form" *ngIf="selectedOption === 'coach-add'">
+    <h3>Afegir nou entrenador</h3>
+    <div class="form-group">
+      <label for="coachName">Nom</label>
+      <input type="text" id="coachName" [(ngModel)]="newCoach.nom" (ngModelChange)="validateForm()">
+    </div>
+    <div class="form-group">
+      <label for="coachSurname">Cognoms</label>
+      <input type="text" id="coachSurname" [(ngModel)]="newCoach.cognoms" (ngModelChange)="validateForm()">
+    </div>
+    <div class="form-group">
+      <label for="coachSize">Talla samarreta</label>
+      <select id="coachSize" [(ngModel)]="newCoach.tallaSamarreta">
+        <option *ngFor="let size of tallaSamarretaOptions" [value]="size">{{size}}</option>
+      </select>
+    </div>
+    <div class="form-group checkbox-group">
+      <label>
+        <input type="checkbox" [ngModel]="newCoach.esPrincipal === 1"
+               (ngModelChange)="newCoach.esPrincipal = $event ? 1 : 0">
+        És entrenador principal
+      </label>
+    </div>
+    <div class="action-buttons">
+      <button class="cancel-button" (click)="cancelEdit()">Cancel·lar</button>
+      <button class="save-button" [disabled]="!isFormValid" (click)="addCoach()">Afegir</button>
+    </div>
+  </div>
+
+  <!-- Edit Coach -->
+  <div class="edit-form" *ngIf="selectedOption === 'coach-edit'">
+    <h3>Modificar entrenador</h3>
+    <div class="form-group select-group" *ngIf="selectedCoachId === -1">
+      <label for="selectCoachToEdit">Selecciona un entrenador</label>
+      <select id="selectCoachToEdit" [(ngModel)]="selectedCoachId" (ngModelChange)="selectCoachToEdit($event)">
+        <option [value]="-1">Selecciona un entrenador</option>
+        <option *ngFor="let coach of team.entrenadors; let i = index" [value]="i">
+          {{coach.nom}} {{coach.cognoms}} {{coach.esPrincipal === 1 ? '(Principal)' : ''}}
+        </option>
+      </select>
+    </div>
+    <div *ngIf="selectedCoachId !== -1">
+      <div class="form-group">
+        <label for="editCoachName">Nom</label>
+        <input type="text" id="editCoachName" [(ngModel)]="newCoach.nom" (ngModelChange)="validateForm()">
+      </div>
+      <div class="form-group">
+        <label for="editCoachSurname">Cognoms</label>
+        <input type="text" id="editCoachSurname" [(ngModel)]="newCoach.cognoms" (ngModelChange)="validateForm()">
+      </div>
+      <div class="form-group">
+        <label for="editCoachSize">Talla samarreta</label>
+        <select id="editCoachSize" [(ngModel)]="newCoach.tallaSamarreta">
+          <option *ngFor="let size of tallaSamarretaOptions" [value]="size">{{size}}</option>
+        </select>
+      </div>
+      <div class="form-group checkbox-group">
+        <label>
+          <input type="checkbox" [ngModel]="newCoach.esPrincipal === 1"
+                 (ngModelChange)="newCoach.esPrincipal = $event ? 1 : 0">
+          És entrenador principal
+        </label>
+      </div>
+      <div class="action-buttons">
+        <button class="cancel-button" (click)="selectedCoachId = -1">Tornar</button>
+        <button class="save-button" [disabled]="!isFormValid" (click)="updateCoach()">Desar canvis</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Coach -->
+  <div class="edit-form" *ngIf="selectedOption === 'coach-delete'">
+    <h3>Eliminar entrenador</h3>
+    <div class="delete-list">
+      <div *ngFor="let coach of team.entrenadors; let i = index" class="delete-item">
+        <div class="delete-info">
+          <span>{{coach.nom}} {{coach.cognoms}} ({{coach.tallaSamarreta}})</span>
+          <span *ngIf="coach.esPrincipal === 1" class="principal-badge">Principal</span>
+        </div>
+        <button class="delete-button" [disabled]="coach.esPrincipal === 1" (click)="deleteCoach(i)">
+          {{coach.esPrincipal === 1 ? 'No es pot eliminar' : 'Eliminar'}}
+        </button>
+      </div>
+      <div *ngIf="team.entrenadors.length === 0" class="empty-message">
+        No hi ha entrenadors per eliminar
+      </div>
+    </div>
+    <div class="action-buttons">
+      <button class="cancel-button" (click)="cancelEdit()">Tornar</button>
+    </div>
+  </div>
+
+  <!-- Manage Intolerances -->
+  <div class="edit-form" *ngIf="selectedOption === 'intolerancies'">
+    <h3>Gestionar intoleràncies</h3>
+
+    <div class="form-group">
+      <label for="intoleranceText">Nova intolerància</label>
+      <div class="input-with-button">
+        <input type="text" id="intoleranceText" [(ngModel)]="newIntoleranceText" (ngModelChange)="validateForm()">
+        <button class="add-button" [disabled]="!isFormValid" (click)="addIntolerance()">Afegir</button>
+      </div>
+    </div>
+
+    <div class="intolerancies-list" *ngIf="team.intolerancies && team.intolerancies.length > 0">
+      <h4>Intoleràncies actuals</h4>
+      <div class="intolerancies-container">
+        <div *ngFor="let intolerance of team.intolerancies; let i = index" class="intolerance-item">
+          <div class="intolerance-tag">
+            <span *ngIf="intolerance.count > 1" class="intolerancia-number">{{ intolerance.count }}</span>
+            {{ intolerance.name }}
+          </div>
+          <div class="intolerance-actions">
+            <button class="action-button" (click)="decrementIntolerance(i)" title="Reduir comptador">-</button>
+            <button class="action-button delete-button" (click)="deleteIntolerance(i)" title="Eliminar">×</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!team.intolerancies || team.intolerancies.length === 0" class="empty-message">
+      No hi ha intoleràncies registrades
+    </div>
+
+    <div class="action-buttons">
+      <button class="cancel-button" (click)="cancelEdit()">Tornar</button>
+    </div>
+  </div>
+
+  <!-- Edit Observations -->
+  <div class="edit-form" *ngIf="selectedOption === 'observations'">
+    <h3>Afegir observacions</h3>
+    <div class="form-group">
+      <label for="observationsText">Observacions</label>
+      <textarea id="observationsText" [(ngModel)]="observationsText" rows="5"></textarea>
+    </div>
+    <div class="action-buttons">
+      <button class="cancel-button" (click)="cancelEdit()">Cancel·lar</button>
+      <button class="save-button" (click)="saveObservations()">Desar observacions</button>
+    </div>
+  </div>
+
+  <!-- Default state - no option selected -->
+  <div class="edit-form default-message" *ngIf="selectedOption === 'none'">
+    <p>Selecciona una opció per editar la inscripció del teu equip</p>
+  </div>
+</div>

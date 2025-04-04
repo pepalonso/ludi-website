@@ -1,0 +1,508 @@
+:host {
+  --primary: #4ADE80;
+  --secondary: #4ADE80;
+  --dark: #222;
+}
+
+.edit-registration-container {
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  background-color: #1A1A1A;
+  border-radius: 16px;
+  margin: 20px 0;
+  padding: 16px;
+  color: #CCC;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+
+  h2 {
+    margin: 0;
+    color: var(--primary);
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .close-button {
+    background: none;
+    border: none;
+    color: #CCC;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--primary);
+    }
+  }
+}
+
+.edit-select {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #ddd;
+  }
+
+  select {
+    width: 100%;
+    padding: 12px 10px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background-color: #333;
+    color: #FFF;
+    font-size: 16px;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cccccc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+  }
+}
+
+.edit-form {
+  background-color: #333;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--primary);
+  }
+
+  h4 {
+    font-size: 16px;
+    margin: 16px 0 8px;
+    color: #EEE;
+  }
+}
+
+.form-group {
+  margin-bottom: 16px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #ddd;
+  }
+
+  input[type="text"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #FFF;
+    font-size: 16px;
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+
+  label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary);
+  }
+}
+
+.input-with-button {
+  display: flex;
+  gap: 10px;
+
+  input {
+    flex: 1;
+  }
+
+  button {
+    padding: 0 20px;
+    border-radius: 8px;
+    background-color: var(--primary);
+    color: #1A1A1A;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+
+  button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s, opacity 0.2s;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .cancel-button {
+    background-color: #444;
+    color: #fff;
+
+    &:hover:not(:disabled) {
+      background-color: #555;
+    }
+  }
+
+  .save-button {
+    background-color: var(--primary);
+    color: #1A1A1A;
+
+    &:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+  }
+}
+
+.delete-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+.delete-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #222;
+  border-radius: 8px;
+  margin-bottom: 8px;
+
+  .delete-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .delete-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: var(--secondary);
+    color: #1A1A1A;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .delete-button {
+    background-color: #e53935;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover:not(:disabled) {
+      background-color: #d32f2f;
+    }
+
+    &:disabled {
+      background-color: #666;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.principal-badge {
+  background-color: var(--primary);
+  color: #1A1A1A;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.intolerancies-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.intolerance-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.intolerance-tag {
+  background-color: #c62828;
+  color: #ffebee;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.intolerance-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.action-button {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background-color: #444;
+  color: white;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #555;
+  }
+
+  &.delete-button {
+    background-color: #c62828;
+
+    &:hover {
+      background-color: #b71c1c;
+    }
+  }
+}
+
+.intolerancia-number {
+  background-color: #861111;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 5px;
+  font-size: 13px;
+  color: #ffebee;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+  font-style: italic;
+}
+
+.default-message {
+  text-align: center;
+  padding: 30px 20px;
+
+  p {
+    color: #999;
+    font-size: 16px;
+  }
+}
+
+.add-button {
+  background-color: var(--primary);
+  color: #1A1A1A;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.talla-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--secondary);
+  color: #1A1A1A;
+  font-weight: 600;
+  clip-path: polygon(20% 0%,
+      35% 0%,
+      45% 8%,
+      50% 12%,
+      55% 8%,
+      65% 0%,
+      80% 0%,
+      95% 20%,
+      95% 30%,
+      90% 40%,
+      90% 100%,
+      10% 100%,
+      10% 40%,
+      5% 30%,
+      5% 20%);
+}
+
+h2::after {
+  content: '';
+  flex-grow: 1;
+  height: 1px;
+  background-color: var(--primary);
+  margin-left: 10px;
+}
+
+.edit-button {
+  display: block;
+  width: 100%;
+  background-color: var(--primary);
+  color: #1A1A1A;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 20px 0;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+@media (max-width: 480px) {
+  .edit-registration-container {
+    padding: 15px;
+  }
+
+  .edit-form {
+    padding: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .input-with-button {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+      margin-top: 8px;
+    }
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+}
+
+:host ::ng-deep {
+  .team-name {
+    font-size: 24px;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .team-category,
+  .team-gender {
+    display: inline-block;
+    background-color: white;
+    color: black;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 8px;
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 16px 0;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+  }
+}

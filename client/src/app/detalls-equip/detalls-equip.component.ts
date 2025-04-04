@@ -23,7 +23,7 @@ import { TeamDesktopComponent } from './desktop/detalls-equip-desktop.component'
   styleUrl: './detalls-equip.component.css',
 })
 export class DetallsEquipComponent implements OnInit {
-  private token?: string;
+  public token?: string;
   public team?: Team;
   public error: boolean = false;
   public isDesktop: boolean = false;
@@ -53,7 +53,9 @@ export class DetallsEquipComponent implements OnInit {
   }
 
   private async fetchTeamDetails(token: string): Promise<void> {
-    const url = `https://${environment.apiUrl}/inscripcio`;
+    const url = environment.production
+      ? `https://${environment.apiUrl}/inscripcio`
+      : `http://${environment.apiUrl}/inscripcio`;
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
