@@ -79,3 +79,14 @@ CREATE TABLE fitxes_documents (
     id_equip INT NOT NULL,
     FOREIGN KEY (id_equip) REFERENCES equips(id)
 );
+
+-- Create the centralized changes log table
+CREATE TABLE changes_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    entity_type VARCHAR(50) NOT NULL, -- e.g. 'jugador', 'entrenador', 'intolerancia'
+    entity_id INT NOT NULL,
+    action ENUM('INSERT', 'UPDATE', 'DELETE') NOT NULL,
+    changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    old_data LONGTEXT,
+    new_data LONGTEXT
+);

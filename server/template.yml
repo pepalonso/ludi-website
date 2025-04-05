@@ -16,6 +16,65 @@ Resources:
           title: LudibasquetApi
           version: 1.0.1
         paths:
+          /enviar-fitxes:
+            post:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FitxesUploader.Arn}/invocations
+                httpMethod: POST
+                type: aws_proxy
+          /jugador:
+            post:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HandleTeamInscription.Arn}/invocations
+                httpMethod: POST
+                type: aws_proxy
+            put:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HandleTeamInscription.Arn}/invocations
+                httpMethod: PUT
+                type: aws_proxy
+            delete:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HandleTeamInscription.Arn}/invocations
+                httpMethod: DELETE
+                type: aws_proxy
+          /entrenador:
+            post:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HandleTeamInscription.Arn}/invocations
+                httpMethod: POST
+                type: aws_proxy
+            put:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HandleTeamInscription.Arn}/invocations
+                httpMethod: PUT
+                type: aws_proxy
+            delete:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HandleTeamInscription.Arn}/invocations
+                httpMethod: DELETE
+                type: aws_proxy
+          /equip:
+            put:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HandleTeamInscription.Arn}/invocations
+                httpMethod: PUT
+                type: aws_proxy
+          /intolerancies:
+            put:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HandleTeamInscription.Arn}/invocations
+                httpMethod: PUT
+                type: aws_proxy
           /registrar-incripcio:
             post:
               x-amazon-apigateway-integration:

@@ -85,7 +85,8 @@ def handle_team_get(event):
             # Get jugadors
             cursor.execute(
                 """
-                SELECT nom,
+                SELECT id,
+                       nom,
                        cognoms,
                        talla_samarreta AS tallaSamarreta
                 FROM jugadors
@@ -98,7 +99,8 @@ def handle_team_get(event):
             # Get entrenadors
             cursor.execute(
                 """
-                SELECT nom,
+                SELECT id,
+                       nom,
                        cognoms,
                        talla_samarreta AS tallaSamarreta,
                        es_principal AS esPrincipal
