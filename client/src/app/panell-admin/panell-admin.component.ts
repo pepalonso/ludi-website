@@ -166,14 +166,13 @@ export class PanellAdminComponent implements OnInit {
     };
   }
 
-  async loadData(): Promise<void> {
+  async loadData(filters?: { club?: string; categoria?: string; sexe?: string }): Promise<void> {
     this.loading = true;
 
     try {
-      // Load all data in parallel
       await Promise.all([
         this.loadClubs(),
-        this.loadEquips(),
+        this.loadEquips(filters),
         this.loadJugadors(),
         this.loadEntrenadors(),
         this.loadStatistics(),
@@ -193,6 +192,7 @@ export class PanellAdminComponent implements OnInit {
     }
   }
 
+
   async loadClubs(): Promise<void> {
     const enpoint = `${this.host}/clubs`;
 
@@ -205,13 +205,25 @@ export class PanellAdminComponent implements OnInit {
     });
 
     const data = await response.json();
-    this.clubs = data.clubs || [];
+    this.clubs = data
+
   }
 
-  async loadEquips(): Promise<void> {
-    const enpoint = `${this.host}/equips`;
+  async loadEquips(filters?: { club?: string; categoria?: string; sexe?: string }): Promise<void> {
+    let endpoint = `${this.host}/equips`;
 
-    const response = await fetch(enpoint, {
+    const queryParams: string[] = [];
+    if (filters) {
+      if (filters.club) queryParams.push(`club_id=${filters.club}`);
+      if (filters.categoria) queryParams.push(`categoria=${filters.categoria}`);
+      if (filters.sexe) queryParams.push(`sexe=${filters.sexe}`);
+    }
+
+    if (queryParams.length > 0) {
+      endpoint += `?${queryParams.join('&')}`;
+    }
+
+    const response = await fetch(endpoint, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${this.token}`,
@@ -220,7 +232,7 @@ export class PanellAdminComponent implements OnInit {
     });
 
     const data = await response.json();
-    this.equips = data.equips || [];
+    this.equips = data;
 
     // Add club name to each team
     this.equips.forEach((equip) => {
@@ -228,6 +240,7 @@ export class PanellAdminComponent implements OnInit {
       equip.club_nom = club ? club.nom : 'Unknown';
     });
   }
+
 
   async loadJugadors(): Promise<void> {
 
@@ -242,7 +255,8 @@ export class PanellAdminComponent implements OnInit {
     });
 
     const data = await response.json();
-    this.jugadors = data.jugadors || [];
+    this.jugadors = data
+
 
     // Add team name to each player
     this.jugadors.forEach((jugador) => {
@@ -263,7 +277,8 @@ export class PanellAdminComponent implements OnInit {
     });
 
     const data = await response.json();
-    this.entrenadors = data.entrenadors || [];
+    this.entrenadors = data
+
 
     // Add team name to each coach
     this.entrenadors.forEach((entrenador) => {
@@ -284,7 +299,8 @@ export class PanellAdminComponent implements OnInit {
     });
 
     const data = await response.json();
-    this.statistics = data.estadistiques || [];
+    this.statistics = data
+
   }
 
   prepareFilters(): void {
@@ -304,12 +320,12 @@ export class PanellAdminComponent implements OnInit {
           label: 'Teams by Category',
           data: Object.values(this.statistics.equipsByCategoria),
           backgroundColor: [
-            'rgba(var(--primary-rgb), 0.7)',
-            'rgba(var(--primary-rgb), 0.5)',
-            'rgba(var(--primary-rgb), 0.3)',
             'rgba(255, 159, 64, 0.7)',
             'rgba(255, 205, 86, 0.7)',
             'rgba(75, 192, 192, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 99, 132, 0.7)',
           ],
         },
       ],
@@ -323,8 +339,8 @@ export class PanellAdminComponent implements OnInit {
           label: 'Teams by Gender',
           data: Object.values(this.statistics.equipsBySexe),
           backgroundColor: [
-            'rgba(var(--primary-rgb), 0.8)',
-            'rgba(54, 162, 235, 0.8)',
+            'rgba(0, 0, 0, 0.6)',
+            'rgba(211, 103, 1, 0.6 )',
           ],
         },
       ],
@@ -351,8 +367,10 @@ export class PanellAdminComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.loadData(); // Refresh data with filters
+    const filters = this.filterForm.value;
+    this.loadData(filters);
   }
+
 
   resetFilters(): void {
     this.filterForm.reset();
