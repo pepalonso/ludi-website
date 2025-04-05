@@ -1,14 +1,16 @@
 :host {
-  --primary: #4ADE80;
-  --secondary: #4ADE80;
-  --dark: #222;
+  display: block;
+  background-color: #1A1A1A;
+  min-height: 100vh;
+  padding: 16px;
 }
 
 .edit-registration-container {
   font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
   background-color: #1A1A1A;
   border-radius: 16px;
-  margin: 20px 0;
+  margin: 0 auto;
+  max-width: 600px;
   padding: 16px;
   color: #CCC;
   animation: slideUp 0.3s ease-out;
@@ -24,6 +26,79 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+// Loading spinner
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: #CCC;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(74, 222, 128, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  margin-top: 16px;
+  color: #CCC;
+}
+
+// Error container
+.error-container {
+  text-align: center;
+  padding: 30px 20px;
+  background-color: #333;
+  border-radius: 12px;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.error-message {
+  color: #f44336;
+  margin-bottom: 20px;
+}
+
+// Team info header
+.team-info-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--primary);
+}
+
+.team-name {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: var(--primary);
+}
+
+.team-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.team-category, .team-gender {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: white;
+  color: #1A1A1A;
 }
 
 .edit-header {
@@ -423,23 +498,81 @@ h2::after {
   margin-left: 10px;
 }
 
-.edit-button {
-  display: block;
-  width: 100%;
-  background-color: var(--primary);
-  color: #1A1A1A;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  margin: 20px 0;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s;
+// Back button
+.back-button-container {
+  margin-top: 30px;
+  text-align: center;
+}
 
+.back-button {
+  background-color: #333;
+  color: #CCC;
+  border: 1px solid #444;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  
   &:hover {
-    opacity: 0.9;
+    background-color: #444;
   }
+}
+
+// Toast notification styles
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  min-width: 250px;
+  max-width: 350px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.toast-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.toast-error {
+  background-color: #f44336;
+  color: white;
+}
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+  opacity: 0.8;
+}
+
+.toast-close:hover {
+  opacity: 1;
 }
 
 @media (max-width: 480px) {
@@ -474,35 +607,5 @@ h2::after {
 
   h3 {
     font-size: 16px;
-  }
-}
-
-:host ::ng-deep {
-  .team-name {
-    font-size: 24px;
-    color: var(--primary);
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-
-  .team-category,
-  .team-gender {
-    display: inline-block;
-    background-color: white;
-    color: black;
-    padding: 4px 12px;
-    border-radius: 16px;
-    font-size: 14px;
-    font-weight: 500;
-    margin-right: 8px;
-  }
-
-  h2 {
-    font-size: 18px;
-    font-weight: 500;
-    margin: 0 0 16px 0;
-    color: var(--primary);
-    display: flex;
-    align-items: center;
   }
 }

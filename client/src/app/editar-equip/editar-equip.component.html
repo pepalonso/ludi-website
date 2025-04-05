@@ -1,7 +1,39 @@
-<div class="edit-registration-container">
+<!-- Toast notification -->
+<div *ngIf="showToast" class="toast" [ngClass]="{'toast-success': toastType === 'success', 'toast-error': toastType === 'error'}">
+  <div class="toast-content">
+    <span>{{ toastMessage }}</span>
+  </div>
+  <button class="toast-close" (click)="hideToast()">×</button>
+</div>
+
+<!-- Loading state -->
+<div *ngIf="isLoading" class="loading-container">
+  <div class="spinner"></div>
+  <p class="loading-text">Carregant dades de l'equip...</p>
+</div>
+
+<!-- Error state -->
+<div *ngIf="error && !isLoading" class="error-container">
+  <div class="error-message">
+    <p>No s'han pogut carregar les dades de l'equip.</p>
+    <button class="cancel-button" (click)="navigateBack()">Tornar</button>
+  </div>
+</div>
+
+<!-- Edit form - only show when data is loaded and no errors -->
+<div *ngIf="!isLoading && !error && team" class="edit-registration-container">
   <div class="edit-header">
     <h2>Editar Inscripció</h2>
     <button class="close-button" (click)="cancelEdit()">×</button>
+  </div>
+
+  <!-- Team info header -->
+  <div class="team-info-header">
+    <h1 class="team-name">{{ team.club }}</h1>
+    <div class="team-badges">
+      <span class="team-category">{{ team.categoria }}</span>
+      <span class="team-gender">{{ team.sexe }}</span>
+    </div>
   </div>
 
   <div class="edit-select">
@@ -37,7 +69,7 @@
       </select>
     </div>
     <div class="action-buttons">
-      <button class="cancel-button" (click)="cancelEdit()">Cancel·lar</button>
+      <button class="cancel-button" (click)="selectedOption = 'none'">Cancel·lar</button>
       <button class="save-button" [disabled]="!isFormValid" (click)="addPlayer()">Afegir</button>
     </div>
   </div>
@@ -92,7 +124,7 @@
       </div>
     </div>
     <div class="action-buttons">
-      <button class="cancel-button" (click)="cancelEdit()">Tornar</button>
+      <button class="cancel-button" (click)="selectedOption = 'none'">Tornar</button>
     </div>
   </div>
 
@@ -121,7 +153,7 @@
       </label>
     </div>
     <div class="action-buttons">
-      <button class="cancel-button" (click)="cancelEdit()">Cancel·lar</button>
+      <button class="cancel-button" (click)="selectedOption = 'none'">Cancel·lar</button>
       <button class="save-button" [disabled]="!isFormValid" (click)="addCoach()">Afegir</button>
     </div>
   </div>
@@ -185,7 +217,7 @@
       </div>
     </div>
     <div class="action-buttons">
-      <button class="cancel-button" (click)="cancelEdit()">Tornar</button>
+      <button class="cancel-button" (click)="selectedOption = 'none'">Tornar</button>
     </div>
   </div>
 
@@ -222,7 +254,7 @@
     </div>
 
     <div class="action-buttons">
-      <button class="cancel-button" (click)="cancelEdit()">Tornar</button>
+      <button class="cancel-button" (click)="selectedOption = 'none'">Tornar</button>
     </div>
   </div>
 
@@ -234,7 +266,7 @@
       <textarea id="observationsText" [(ngModel)]="observationsText" rows="5"></textarea>
     </div>
     <div class="action-buttons">
-      <button class="cancel-button" (click)="cancelEdit()">Cancel·lar</button>
+      <button class="cancel-button" (click)="selectedOption = 'none'">Cancel·lar</button>
       <button class="save-button" (click)="saveObservations()">Desar observacions</button>
     </div>
   </div>
@@ -242,5 +274,10 @@
   <!-- Default state - no option selected -->
   <div class="edit-form default-message" *ngIf="selectedOption === 'none'">
     <p>Selecciona una opció per editar la inscripció del teu equip</p>
+  </div>
+
+  <!-- Back button at the bottom -->
+  <div class="back-button-container">
+    <button class="back-button" (click)="navigateBack()">Tornar a la pàgina de l'equip</button>
   </div>
 </div>

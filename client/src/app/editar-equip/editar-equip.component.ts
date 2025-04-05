@@ -1,8 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Entrenador, Jugador, TallaSamarreta, Team } from '../interfaces/ludi.interface';
-import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
+import { mapTeamResponse } from '../detalls-equip/data-mapper';
 
 type EditOption =
   | 'player-add'
@@ -22,48 +24,92 @@ type EditOption =
   templateUrl: './editar-equip.component.html',
   styleUrls: ['./editar-equip.component.scss'],
 })
-export class EditRegistrationComponent {
-  @Input() team!: Team;
-  @Output() teamChange = new EventEmitter<Team>();
-  @Output() close = new EventEmitter<void>();
-  @Output() showToastEvent = new EventEmitter<{
-    message: string;
-    type: 'success' | 'error';
-  }>();
+export class EditRegistrationComponent implements OnInit {
+  public token?: string;
+  public team?: Team;
+  public error: boolean = false;
+  public isLoading: boolean = true;
+  public isDesktop: boolean = false;
 
-  selectedOption: EditOption = 'none';
-  selectedPlayerId: number = -1;
-  selectedCoachId: number = -1;
+  public selectedOption: EditOption = 'none';
+  public selectedPlayerId: number = -1;
+  public selectedCoachId: number = -1;
 
-  newPlayer: Jugador = {
+  public newPlayer: Jugador = {
     nom: '',
     cognoms: '',
     tallaSamarreta: TallaSamarreta.M,
   };
-  newCoach: Entrenador = {
+  public newCoach: Entrenador = {
     nom: '',
     cognoms: '',
     tallaSamarreta: TallaSamarreta.M,
     esPrincipal: 0,
   };
 
-  newIntoleranceText: string = '';
-  observationsText: string = '';
+  public newIntoleranceText: string = '';
+  public observationsText: string = '';
 
-  tallaSamarretaOptions = Object.values(TallaSamarreta);
-  isFormValid = false;
+  public tallaSamarretaOptions = Object.values(TallaSamarreta);
+  public isFormValid = false;
 
-  constructor(private router: Router) {}
+  // Toast notification properties
+  public showToast: boolean = false;
+  public toastMessage: string = '';
+  public toastType: 'success' | 'error' = 'success';
 
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras.state && navigation.extras.state['team']) {
-      this.team = navigation.extras.state['team'];
-    }
-    console.log('Team:', this.team);
-    this.observationsText = this.team.observacions || '';
+    this.route.queryParams.subscribe((params) => {
+      this.token = params['token'] || null;
+      if (this.token) {
+        this.fetchTeamDetails(this.token);
+      } else {
+        this.error = true;
+        this.isLoading = false;
+        this.showToastNotification("No s'ha trobat el token de l'equip", 'error');
+      }
+    });
+  }
 
+  private async fetchTeamDetails(token: string): Promise<void> {
+    this.isLoading = true;
+    const url = environment.production
+      ? `https://${environment.apiUrl}/inscripcio`
+      : `http://${environment.apiUrl}/inscripcio`;
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers,
+      });
+
+      if (!response.ok) {
+        console.error('Error fetching team details:', response.statusText);
+        this.error = true;
+        this.isLoading = false;
+        this.showToastNotification("Error carregant les dades de l'equip", 'error');
+        return;
+      }
+
+      const responseData = await response.json();
+      this.team = await mapTeamResponse(responseData);
+      this.observationsText = this.team.observacions || '';
+      this.isLoading = false;
+    } catch (error) {
+      this.error = true;
+      this.isLoading = false;
+      console.error('Error fetching team details:', error);
+      this.showToastNotification("Error carregant les dades de l'equip", 'error');
+    }
   }
 
   onOptionChange() {
@@ -83,53 +129,130 @@ export class EditRegistrationComponent {
 
   selectPlayerToEdit(index: number) {
     this.selectedPlayerId = index;
-    if (index >= 0 && index < this.team.jugadors.length) {
+    if (this.team && index >= 0 && index < this.team.jugadors.length) {
       const player = this.team.jugadors[index];
       this.newPlayer = { ...player };
     }
     this.validateForm();
   }
 
-  addPlayer() {
+  async addPlayer() {
+    if (!this.token || !this.team) return;
     if (this.newPlayer.nom && this.newPlayer.cognoms) {
-      const updatedTeam = { ...this.team };
-      updatedTeam.jugadors = [...this.team.jugadors, { ...this.newPlayer }];
-      this.teamChange.emit(updatedTeam);
-      this.resetNewPlayerForm();
-      this.showToastEvent.emit({
-        message: 'Jugador afegit correctament',
-        type: 'success',
-      });
+      try {
+        const url = environment.production
+          ? `https://${environment.apiUrl}/jugador`
+          : `http://${environment.apiUrl}/jugador`;
+        
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            jugador: {
+              nom: this.newPlayer.nom,
+              cognoms: this.newPlayer.cognoms,
+              tallaSamarreta: this.newPlayer.tallaSamarreta
+            }
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to add player');
+        }
+
+        // Refresh team data
+        await this.fetchTeamDetails(this.token);
+        this.resetNewPlayerForm();
+        this.showToastNotification('Jugador afegit correctament', 'success');
+      } catch (error) {
+        console.error('Error adding player:', error);
+        this.showToastNotification('Error afegint jugador', 'error');
+      }
     }
   }
 
-  updatePlayer() {
-    if (
-      this.selectedPlayerId >= 0 &&
-      this.newPlayer.nom &&
-      this.newPlayer.cognoms
-    ) {
-      const updatedTeam = { ...this.team };
-      updatedTeam.jugadors = [...this.team.jugadors];
-      updatedTeam.jugadors[this.selectedPlayerId] = { ...this.newPlayer };
-      this.teamChange.emit(updatedTeam);
-      this.resetNewPlayerForm();
-      this.selectedPlayerId = -1;
-      this.showToastEvent.emit({
-        message: 'Jugador actualitzat correctament',
-        type: 'success',
-      });
+  async updatePlayer() {
+    if (!this.token || !this.team) return;
+    if (this.selectedPlayerId >= 0 && this.newPlayer.nom && this.newPlayer.cognoms) {
+      try {
+        const url = environment.production
+          ? `https://${environment.apiUrl}/jugador`
+          : `http://${environment.apiUrl}/jugador`;
+        
+        // Get the player ID 
+        const playerId = this.team.jugadors[this.selectedPlayerId].id || this.selectedPlayerId;
+        
+        const response = await fetch(url, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            jugador_old: {
+              id: playerId
+            },
+            jugador_new: {
+              nom: this.newPlayer.nom,
+              cognoms: this.newPlayer.cognoms,
+              tallaSamarreta: this.newPlayer.tallaSamarreta
+            }
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update player');
+        }
+
+        // Refresh team data
+        await this.fetchTeamDetails(this.token);
+        this.resetNewPlayerForm();
+        this.selectedPlayerId = -1;
+        this.showToastNotification('Jugador actualitzat correctament', 'success');
+      } catch (error) {
+        console.error('Error updating player:', error);
+        this.showToastNotification('Error actualitzant jugador', 'error');
+      }
     }
   }
 
-  deletePlayer(index: number) {
-    const updatedTeam = { ...this.team };
-    updatedTeam.jugadors = this.team.jugadors.filter((_, i) => i !== index);
-    this.teamChange.emit(updatedTeam);
-    this.showToastEvent.emit({
-      message: 'Jugador eliminat correctament',
-      type: 'success',
-    });
+  async deletePlayer(index: number) {
+    if (!this.token || !this.team) return;
+    try {
+      const url = environment.production
+        ? `https://${environment.apiUrl}/jugador`
+        : `http://${environment.apiUrl}/jugador`;
+      
+      // Get the player ID (assuming it's available in your data model)
+      const playerId = this.team.jugadors[index].id || index;
+      
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          jugador: {
+            id: playerId
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete player');
+      }
+
+      // Refresh team data
+      await this.fetchTeamDetails(this.token);
+      this.showToastNotification('Jugador eliminat correctament', 'success');
+    } catch (error) {
+      console.error('Error deleting player:', error);
+      this.showToastNotification('Error eliminant jugador', 'error');
+    }
   }
 
   // Coach methods
@@ -144,178 +267,364 @@ export class EditRegistrationComponent {
 
   selectCoachToEdit(index: number) {
     this.selectedCoachId = index;
-    if (index >= 0 && index < this.team.entrenadors.length) {
+    if (this.team && index >= 0 && index < this.team.entrenadors.length) {
       const coach = this.team.entrenadors[index];
       this.newCoach = { ...coach };
     }
     this.validateForm();
   }
 
-  addCoach() {
+  async addCoach() {
+    if (!this.token || !this.team) return;
     if (this.newCoach.nom && this.newCoach.cognoms) {
-      if (
-        this.newCoach.esPrincipal === 1 &&
-        this.team.entrenadors.some((e) => e.esPrincipal === 1)
-      ) {
-        this.showToastEvent.emit({
-          message: 'Ja existeix un entrenador principal',
-          type: 'error',
-        });
+      if (this.newCoach.esPrincipal === 1 && this.team.entrenadors.some(e => e.esPrincipal === 1)) {
+        this.showToastNotification('Ja existeix un entrenador principal', 'error');
         return;
       }
 
-      const updatedTeam = { ...this.team };
-      updatedTeam.entrenadors = [
-        ...this.team.entrenadors,
-        { ...this.newCoach },
-      ];
-      this.teamChange.emit(updatedTeam);
-      this.resetNewCoachForm();
-      this.showToastEvent.emit({
-        message: 'Entrenador afegit correctament',
-        type: 'success',
-      });
+      try {
+        const url = environment.production
+          ? `https://${environment.apiUrl}/entrenador`
+          : `http://${environment.apiUrl}/entrenador`;
+        
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            entrenador: {
+              nom: this.newCoach.nom,
+              cognoms: this.newCoach.cognoms,
+              tallaSamarreta: this.newCoach.tallaSamarreta,
+              esPrincipal: this.newCoach.esPrincipal === 1
+            }
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to add coach');
+        }
+
+        // Refresh team data
+        await this.fetchTeamDetails(this.token);
+        this.resetNewCoachForm();
+        this.showToastNotification('Entrenador afegit correctament', 'success');
+      } catch (error) {
+        console.error('Error adding coach:', error);
+        this.showToastNotification('Error afegint entrenador', 'error');
+      }
     }
   }
 
-  updateCoach() {
-    if (
-      this.selectedCoachId >= 0 &&
-      this.newCoach.nom &&
-      this.newCoach.cognoms
-    ) {
-      const isPrincipalChange =
-        this.newCoach.esPrincipal === 1 &&
-        this.team.entrenadors[this.selectedCoachId].esPrincipal !== 1;
-      if (
-        isPrincipalChange &&
-        this.team.entrenadors.some(
-          (e, i) => e.esPrincipal === 1 && i !== this.selectedCoachId
-        )
-      ) {
-        this.showToastEvent.emit({
-          message: 'Ja existeix un entrenador principal',
-          type: 'error',
-        });
+  async updateCoach() {
+    if (!this.token || !this.team) return;
+    if (this.selectedCoachId >= 0 && this.newCoach.nom && this.newCoach.cognoms) {
+      // Check if we're making a new principal coach when another one already exists
+      const isPrincipalChange = this.newCoach.esPrincipal === 1 && 
+                               this.team.entrenadors[this.selectedCoachId].esPrincipal !== 1;
+      
+      if (isPrincipalChange && this.team.entrenadors.some((e, i) => e.esPrincipal === 1 && i !== this.selectedCoachId)) {
+        this.showToastNotification('Ja existeix un entrenador principal', 'error');
         return;
       }
 
-      const updatedTeam = { ...this.team };
-      updatedTeam.entrenadors = [...this.team.entrenadors];
-      updatedTeam.entrenadors[this.selectedCoachId] = { ...this.newCoach };
-      this.teamChange.emit(updatedTeam);
-      this.resetNewCoachForm();
-      this.selectedCoachId = -1;
-      this.showToastEvent.emit({
-        message: 'Entrenador actualitzat correctament',
-        type: 'success',
-      });
+      try {
+        const url = environment.production
+          ? `https://${environment.apiUrl}/entrenador`
+          : `http://${environment.apiUrl}/entrenador`;
+        
+        // Get the coach ID (assuming it's available in your data model)
+        const coachId = this.team.entrenadors[this.selectedCoachId].id || this.selectedCoachId;
+        
+        const response = await fetch(url, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            entrenador_old: {
+              id: coachId
+            },
+            entrenador_new: {
+              nom: this.newCoach.nom,
+              cognoms: this.newCoach.cognoms,
+              tallaSamarreta: this.newCoach.tallaSamarreta,
+              esPrincipal: this.newCoach.esPrincipal === 1
+            }
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update coach');
+        }
+
+        // Refresh team data
+        await this.fetchTeamDetails(this.token);
+        this.resetNewCoachForm();
+        this.selectedCoachId = -1;
+        this.showToastNotification('Entrenador actualitzat correctament', 'success');
+      } catch (error) {
+        console.error('Error updating coach:', error);
+        this.showToastNotification('Error actualitzant entrenador', 'error');
+      }
     }
   }
 
-  deleteCoach(index: number) {
+  async deleteCoach(index: number) {
+    if (!this.token || !this.team) return;
     const coach = this.team.entrenadors[index];
+    
     if (coach.esPrincipal === 1) {
-      this.showToastEvent.emit({
-        message: "No es pot eliminar l'entrenador principal",
-        type: 'error',
-      });
+      this.showToastNotification("No es pot eliminar l'entrenador principal", 'error');
       return;
     }
 
-    const updatedTeam = { ...this.team };
-    updatedTeam.entrenadors = this.team.entrenadors.filter(
-      (_, i) => i !== index
-    );
-    this.teamChange.emit(updatedTeam);
-    this.showToastEvent.emit({
-      message: 'Entrenador eliminat correctament',
-      type: 'success',
-    });
+    try {
+      const url = environment.production
+        ? `https://${environment.apiUrl}/entrenador`
+        : `http://${environment.apiUrl}/entrenador`;
+      
+      const coachId = coach.id || index;
+      
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          entrenador: {
+            id: coachId
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete coach');
+      }
+
+      // Refresh team data
+      await this.fetchTeamDetails(this.token);
+      this.showToastNotification('Entrenador eliminat correctament', 'success');
+    } catch (error) {
+      console.error('Error deleting coach:', error);
+      this.showToastNotification('Error eliminant entrenador', 'error');
+    }
   }
 
-  addIntolerance() {
+  // Intolerances methods
+  async addIntolerance() {
+    if (!this.token || !this.team) return;
     if (!this.newIntoleranceText.trim()) return;
 
-    const updatedTeam = { ...this.team };
-    const normalizedIntolerance = this.newIntoleranceText.trim().toLowerCase();
-
-    if (!updatedTeam.intolerancies) {
-      updatedTeam.intolerancies = [];
-    }
-
-    const existingIndex = updatedTeam.intolerancies.findIndex(
-      (i) => i.name.toLowerCase() === normalizedIntolerance
-    );
-
-    if (existingIndex >= 0) {
-      updatedTeam.intolerancies[existingIndex] = {
-        ...updatedTeam.intolerancies[existingIndex],
-        count: updatedTeam.intolerancies[existingIndex].count + 1,
-      };
-    } else {
-      updatedTeam.intolerancies.push({
-        name: this.newIntoleranceText.trim(),
-        count: 1,
+    try {
+      // For intolerances, we need to update the entire list
+      const currentIntolerances = this.team.intolerancies || [];
+      const normalizedIntolerance = this.newIntoleranceText.trim().toLowerCase();
+      
+      // Check if intolerance already exists
+      const existingIndex = currentIntolerances.findIndex(i => 
+        i.name.toLowerCase() === normalizedIntolerance);
+      
+      let updatedIntolerances;
+      
+      if (existingIndex >= 0) {
+        // Increment count if it exists
+        updatedIntolerances = [...currentIntolerances];
+        updatedIntolerances[existingIndex] = {
+          ...updatedIntolerances[existingIndex],
+          count: updatedIntolerances[existingIndex].count + 1
+        };
+      } else {
+        // Add new intolerance
+        updatedIntolerances = [
+          ...currentIntolerances,
+          {
+            name: this.newIntoleranceText.trim(),
+            count: 1
+          }
+        ];
+      }
+      
+      // Convert to the format expected by your API
+      const intoleranciesForApi = updatedIntolerances.reduce((acc, item) => {
+        // Add the intolerance name to the array multiple times based on count
+        for (let i = 0; i < item.count; i++) {
+          acc.push(item.name);
+        }
+        return acc;
+      }, [] as string[]);
+      
+      const url = environment.production
+        ? `https://${environment.apiUrl}/intolerancies`
+        : `http://${environment.apiUrl}/intolerancies`;
+      
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          intolerancies: intoleranciesForApi
+        })
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to update intolerances');
+      }
+
+      // Refresh team data
+      await this.fetchTeamDetails(this.token);
+      this.newIntoleranceText = '';
+      this.showToastNotification('Intolerància afegida correctament', 'success');
+    } catch (error) {
+      console.error('Error updating intolerances:', error);
+      this.showToastNotification('Error afegint intolerància', 'error');
     }
-
-    this.teamChange.emit(updatedTeam);
-    this.newIntoleranceText = '';
-    this.showToastEvent.emit({
-      message: 'Intolerància afegida correctament',
-      type: 'success',
-    });
   }
 
-  decrementIntolerance(index: number) {
-    if (!this.team.intolerancies) return;
+  async decrementIntolerance(index: number) {
+    if (!this.token || !this.team || !this.team.intolerancies) return;
+    
+    try {
+      const currentIntolerances = [...this.team.intolerancies];
+      let updatedIntolerances;
+      
+      if (currentIntolerances[index].count > 1) {
+        // Decrement count
+        updatedIntolerances = [...currentIntolerances];
+        updatedIntolerances[index] = {
+          ...updatedIntolerances[index],
+          count: updatedIntolerances[index].count - 1
+        };
+      } else {
+        // Remove if count is 1
+        updatedIntolerances = currentIntolerances.filter((_, i) => i !== index);
+      }
+      
+      // Convert to the format expected by your API
+      const intoleranciesForApi = updatedIntolerances.reduce((acc, item) => {
+        // Add the intolerance name to the array multiple times based on count
+        for (let i = 0; i < item.count; i++) {
+          acc.push(item.name);
+        }
+        return acc;
+      }, [] as string[]);
+      
+      const url = environment.production
+        ? `https://${environment.apiUrl}/intolerancies`
+        : `http://${environment.apiUrl}/intolerancies`;
+      
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          intolerancies: intoleranciesForApi
+        })
+      });
 
-    const updatedTeam = { ...this.team };
-    updatedTeam.intolerancies = [...this.team.intolerancies];
+      if (!response.ok) {
+        throw new Error('Failed to update intolerances');
+      }
 
-    if (updatedTeam.intolerancies[index].count > 1) {
-      updatedTeam.intolerancies[index] = {
-        ...updatedTeam.intolerancies[index],
-        count: updatedTeam.intolerancies[index].count - 1,
-      };
-    } else {
-      updatedTeam.intolerancies = updatedTeam.intolerancies.filter(
-        (_, i) => i !== index
-      );
+      // Refresh team data
+      await this.fetchTeamDetails(this.token);
+      this.showToastNotification('Intolerància actualitzada correctament', 'success');
+    } catch (error) {
+      console.error('Error updating intolerances:', error);
+      this.showToastNotification('Error actualitzant intolerància', 'error');
     }
-
-    this.teamChange.emit(updatedTeam);
-    this.showToastEvent.emit({
-      message: 'Intolerància actualitzada correctament',
-      type: 'success',
-    });
   }
 
-  deleteIntolerance(index: number) {
-    if (!this.team.intolerancies) return;
+  async deleteIntolerance(index: number) {
+    if (!this.token || !this.team || !this.team.intolerancies) return;
+    
+    try {
+      const currentIntolerances = [...this.team.intolerancies];
+      const updatedIntolerances = currentIntolerances.filter((_, i) => i !== index);
+      
+      // Convert to the format expected by your API
+      const intoleranciesForApi = updatedIntolerances.reduce((acc, item) => {
+        // Add the intolerance name to the array multiple times based on count
+        for (let i = 0; i < item.count; i++) {
+          acc.push(item.name);
+        }
+        return acc;
+      }, [] as string[]);
+      
+      const url = environment.production
+        ? `https://${environment.apiUrl}/intolerancies`
+        : `http://${environment.apiUrl}/intolerancies`;
+      
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          intolerancies: intoleranciesForApi
+        })
+      });
 
-    const updatedTeam = { ...this.team };
-    updatedTeam.intolerancies = this.team.intolerancies.filter(
-      (_, i) => i !== index
-    );
-    this.teamChange.emit(updatedTeam);
-    this.showToastEvent.emit({
-      message: 'Intolerància eliminada correctament',
-      type: 'success',
-    });
+      if (!response.ok) {
+        throw new Error('Failed to update intolerances');
+      }
+
+      // Refresh team data
+      await this.fetchTeamDetails(this.token);
+      this.showToastNotification('Intolerància eliminada correctament', 'success');
+    } catch (error) {
+      console.error('Error updating intolerances:', error);
+      this.showToastNotification('Error eliminant intolerància', 'error');
+    }
   }
 
-  saveObservations() {
-    const updatedTeam = {
-      ...this.team,
-      observacions: this.observationsText.trim(),
-    };
-    this.teamChange.emit(updatedTeam);
-    this.showToastEvent.emit({
-      message: 'Observacions desades correctament',
-      type: 'success',
-    });
+  // Observations methods
+  async saveObservations() {
+    if (!this.token || !this.team) return;
+    
+    try {
+      const url = environment.production
+        ? `https://${environment.apiUrl}/equip`
+        : `http://${environment.apiUrl}/equip`;
+      
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          equip: {
+            nom: this.team.nomEquip,
+            email: this.team.email,
+            categoria: this.team.categoria,
+            telefon: this.team.telefon,
+            sexe: this.team.sexe,
+            observacions: this.observationsText.trim()
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update team observations');
+      }
+
+      // Refresh team data
+      await this.fetchTeamDetails(this.token);
+      this.showToastNotification('Observacions desades correctament', 'success');
+    } catch (error) {
+      console.error('Error updating observations:', error);
+      this.showToastNotification('Error desant observacions', 'error');
+    }
   }
 
   validateForm() {
@@ -339,6 +648,27 @@ export class EditRegistrationComponent {
   }
 
   cancelEdit() {
-    this.close.emit();
+    this.navigateBack();
+  }
+
+  navigateBack() {
+    this.router.navigate(['/equip'], { 
+      queryParams: { token: this.token } 
+    });
+  }
+
+  showToastNotification(message: string, type: 'success' | 'error') {
+    this.toastMessage = message;
+    this.toastType = type;
+    this.showToast = true;
+    
+    // Auto-hide toast after 3 seconds
+    setTimeout(() => {
+      this.hideToast();
+    }, 3000);
+  }
+
+  hideToast() {
+    this.showToast = false;
   }
 }
