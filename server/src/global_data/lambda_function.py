@@ -1,0 +1,161 @@
+import datetime
+from utils.response import create_error_response, create_success_response
+from utils.database import get_db_connection
+
+
+def lambda_handler(event, context):
+    # Allow only GET method
+    if event.get("httpMethod") != "GET":
+        return create_error_response(405, "Method not allowed")
+
+    path = event.get("path", "")
+
+    try:
+        connection = get_db_connection()
+    except Exception as e:
+        return create_error_response(500, str(e))
+
+    try:
+        with connection.cursor() as cursor:
+            # GET /clubs
+            if path == "/clubs":
+                query = "SELECT id, nom FROM clubs;"
+                cursor.execute(query)
+                clubs = cursor.fetchall()
+                return create_success_response(clubs)
+
+            # GET /api/equips
+            elif path == "/equips":
+                query = """
+                    SELECT 
+                        e.id,
+                        e.nom,
+                        e.email,
+                        e.categoria,
+                        e.telefon,
+                        e.sexe,
+                        e.club_id,
+                        e.data_incripcio,
+                        c.nom as club_nom,
+                        (SELECT COUNT(*) FROM jugadors WHERE id_equip = e.id) as jugadors,
+                        (SELECT COUNT(*) FROM entrenadors WHERE id_equip = e.id) as entrenadors
+                    FROM equips e
+                    JOIN clubs c ON e.club_id = c.id;
+                """
+                cursor.execute(query)
+                equips = cursor.fetchall()
+
+                # Manually convert the datetime field to ISO 8601 string format with "Z" suffix
+                for equip in equips:
+                    if equip.get("data_incripcio") is not None:
+                        equip["data_incripcio"] = (
+                            equip["data_incripcio"].isoformat() + "Z"
+                        )
+
+                return create_success_response(equips)
+
+            # GET /jugadors
+            elif path == "/jugadors":
+                query = """
+                    SELECT 
+                        j.id,
+                        j.nom,
+                        j.cognoms,
+                        j.talla_samarreta,
+                        j.id_equip,
+                        e.nom as equip_nom
+                    FROM jugadors j
+                    JOIN equips e ON j.id_equip = e.id;
+                """
+                cursor.execute(query)
+                jugadors = cursor.fetchall()
+                return create_success_response(jugadors)
+
+            # GET /entrenadors
+            elif path == "/entrenadors":
+                query = """
+                    SELECT 
+                        en.id,
+                        en.nom,
+                        en.cognoms,
+                        en.talla_samarreta,
+                        en.es_principal,
+                        en.id_equip,
+                        e.nom as equip_nom
+                    FROM entrenadors en
+                    JOIN equips e ON en.id_equip = e.id;
+                """
+                cursor.execute(query)
+                entrenadors = cursor.fetchall()
+                return create_success_response(entrenadors)
+
+            # GET /estadistiques
+            elif path == "/estadistiques":
+                stats = {}
+
+                # Total counts
+                cursor.execute("SELECT COUNT(*) as total FROM clubs;")
+                stats["totalClubs"] = cursor.fetchone()["total"]
+
+                cursor.execute("SELECT COUNT(*) as total FROM equips;")
+                stats["totalEquips"] = cursor.fetchone()["total"]
+
+                cursor.execute("SELECT COUNT(*) as total FROM jugadors;")
+                stats["totalJugadors"] = cursor.fetchone()["total"]
+
+                cursor.execute("SELECT COUNT(*) as total FROM entrenadors;")
+                stats["totalEntrenadors"] = cursor.fetchone()["total"]
+
+                # Equips by Categoria
+                cursor.execute(
+                    "SELECT categoria, COUNT(*) as count FROM equips GROUP BY categoria;"
+                )
+                equips_categoria = cursor.fetchall()
+                stats["equipsByCategoria"] = {
+                    row["categoria"]: row["count"] for row in equips_categoria
+                }
+
+                # Equips by Sexe
+                cursor.execute(
+                    "SELECT sexe, COUNT(*) as count FROM equips GROUP BY sexe;"
+                )
+                equips_sexe = cursor.fetchall()
+                stats["equipsBySexe"] = {
+                    row["sexe"]: row["count"] for row in equips_sexe
+                }
+
+                # Inscripcions per Dia (using the data_incripcio timestamp)
+                cursor.execute(
+                    "SELECT DATE(data_incripcio) as dia, COUNT(*) as count FROM equips GROUP BY dia;"
+                )
+                inscripcions = cursor.fetchall()
+                # Convert date objects to string formatted as YYYY-MM-DD
+                stats["inscripcionsPorDia"] = {
+                    (
+                        row["dia"].strftime("%Y-%m-%d")
+                        if isinstance(row["dia"], (datetime.date, datetime.datetime))
+                        else row["dia"]
+                    ): row["count"]
+                    for row in inscripcions
+                }
+
+                # Clubs with most teams
+                cursor.execute(
+                    """
+                    SELECT c.id, c.nom, COUNT(*) as equipCount 
+                    FROM clubs c 
+                    JOIN equips e ON c.id = e.club_id 
+                    GROUP BY c.id, c.nom 
+                    ORDER BY equipCount DESC;
+                """
+                )
+                stats["clubsWithMostTeams"] = cursor.fetchall()
+
+                return create_success_response(stats)
+
+            else:
+                return create_error_response(404, "Not found")
+    except Exception as e:
+        return create_error_response(500, f"Error processing request: {str(e)}")
+    finally:
+        connection.close()
