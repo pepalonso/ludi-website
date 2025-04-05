@@ -11,6 +11,7 @@ import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { environment } from '../../environments/environment';
+import { Categories, Sexe } from '../interfaces/ludi.interface';
 
 interface Club {
   id: number;
@@ -261,7 +262,8 @@ export class PanellAdminComponent implements OnInit {
     // Add team name to each player
     this.jugadors.forEach((jugador) => {
       const equip = this.equips.find((e) => e.id === jugador.id_equip);
-      jugador.equip_nom = equip ? equip.nom : 'Unknown';
+      const club = this.clubs.find((c) => c.id === equip?.club_id);
+      jugador.equip_nom = equip?.nom ?? club?.nom
     });
   }
 
@@ -283,7 +285,8 @@ export class PanellAdminComponent implements OnInit {
     // Add team name to each coach
     this.entrenadors.forEach((entrenador) => {
       const equip = this.equips.find((e) => e.id === entrenador.id_equip);
-      entrenador.equip_nom = equip ? equip.nom : 'Unknown';
+      const club = this.clubs.find((c) => c.id === equip?.club_id);
+      entrenador.equip_nom = equip?.nom ?? club?.nom
     });
   }
 
@@ -304,15 +307,13 @@ export class PanellAdminComponent implements OnInit {
   }
 
   prepareFilters(): void {
-    // Extract unique categories and sexes
-    this.categories = [...new Set(this.equips.map((e) => e.categoria))];
-    this.sexes = [...new Set(this.equips.map((e) => e.sexe))];
+    this.categories = Object.values(Categories)
+    this.sexes = Object.values(Sexe)
   }
 
   prepareCharts(): void {
     if (!this.statistics) return;
 
-    // Categories chart
     this.categoriaChartData = {
       labels: Object.keys(this.statistics.equipsByCategoria),
       datasets: [
@@ -356,10 +357,10 @@ export class PanellAdminComponent implements OnInit {
       labels: labels,
       datasets: [
         {
-          label: 'Daily Registrations',
+          label: 'Inscripcions per dia',
           data: data,
           fill: false,
-          borderColor: 'var(--primary)',
+          borderColor: '#D36701',
           tension: 0.4,
         },
       ],
