@@ -1,0 +1,224 @@
+<div class="admin-container">
+  <header>
+    <h1>Panell Inscripcions Ludibàsquet</h1>
+  </header>
+
+  <nav class="nav-tabs">
+    <button
+      [class.active]="activeTab === 'dashboard'"
+      (click)="setActiveTab('dashboard')">
+      Dashboard
+    </button>
+    <button
+      [class.active]="activeTab === 'teams'"
+      (click)="setActiveTab('teams')">
+      Equips
+    </button>
+    <button
+      [class.active]="activeTab === 'players'"
+      (click)="setActiveTab('players')">
+      Jugadors
+    </button>
+    <button
+      [class.active]="activeTab === 'coaches'"
+      (click)="setActiveTab('coaches')">
+      Entrenadors
+    </button>
+  </nav>
+
+  <div class="loading-overlay" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Carregant dades...</p>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="tab-content" *ngIf="activeTab === 'dashboard' && !loading">
+    <div class="stats-overview">
+      <div class="stat-card">
+        <span class="stat-value">{{ statistics?.totalClubs || 0 }}</span>
+        <span class="stat-label">Clubs</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">{{ statistics?.totalEquips || 0 }}</span>
+        <span class="stat-label">Equips</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">{{ statistics?.totalJugadors || 0 }}</span>
+        <span class="stat-label">Jugadors</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">{{ statistics?.totalEntrenadors || 0 }}</span>
+        <span class="stat-label">Entrenadors</span>
+      </div>
+    </div>
+
+    <div class="chart-row">
+      <div class="chart-container">
+        <h3>Equips per categorìa</h3>
+        <p-chart type="bar" [data]="categoriaChartData" [options]="chartOptions"></p-chart>
+      </div>
+
+      <div class="chart-container">
+        <h3>Equips per gènere</h3>
+        <p-chart type="pie" [data]="sexeChartData" [options]="chartOptions"></p-chart>
+      </div>
+    </div>
+
+    <div class="chart-row">
+      <div class="chart-container full-width">
+        <h3>Incripcións Diaries</h3>
+        <p-chart type="line" [data]="inscripcionesChartData" [options]="chartOptions"></p-chart>
+      </div>
+    </div>
+
+    <div class="clubs-ranking">
+      <h3>Clubs amb més equips</h3>
+      <div class="club-list">
+        <div class="club-item" *ngFor="let club of statistics?.clubsWithMostTeams; let i = index">
+          <span class="rank">{{ i + 1 }}</span>
+          <span class="club-name">{{ club.nom }}</span>
+          <span class="club-count">{{ club.equipCount }} equips</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teams Tab -->
+  <div class="tab-content" *ngIf="activeTab === 'teams' && !loading">
+    <div class="filters">
+      <form [formGroup]="filterForm" class="filter-form">
+        <div class="filter-group">
+          <label for="club">Club</label>
+          <select formControlName="club" id="club">
+            <option value="">Tots els Clubs</option>
+            <option *ngFor="let club of clubs" [value]="club.id">{{ club.nom }}</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="categoria">Categoría</label>
+          <select formControlName="categoria" id="categoria">
+            <option value="">Totes les categoríes</option>
+            <option *ngFor="let categoria of categories" [value]="categoria">{{ categoria }}</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="sexe">Sexe</label>
+          <select formControlName="sexe" id="sexe">
+            <option value="">Tots</option>
+            <option *ngFor="let sexe of sexes" [value]="sexe">{{ sexe }}</option>
+          </select>
+        </div>
+
+        <div class="filter-actions">
+          <button type="button" (click)="applyFilters()" class="btn-primary">Apply</button>
+          <button type="button" (click)="resetFilters()" class="btn-secondary">Reset</button>
+        </div>
+      </form>
+
+      <button (click)="exportToCSV('teams')" class="btn-export">
+        <span class="icon">📥</span> Exportar a CSV
+      </button>
+    </div>
+
+    <div class="data-table">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom Equip</th>
+            <th>Categoría</th>
+            <th>Sexe</th>
+            <th>Club</th>
+            <th>Email</th>
+            <th>Telèfon</th>
+            <th>Data Incripció</th>
+            <th>Jugadors</th>
+            <th>Entrenadors</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let equip of equips">
+            <td>{{ equip.id }}</td>
+            <td>{{ equip.nom }}</td>
+            <td>{{ equip.categoria }}</td>
+            <td>{{ equip.sexe }}</td>
+            <td>{{ equip.club_nom }}</td>
+            <td>{{ equip.email }}</td>
+            <td>{{ equip.telefon }}</td>
+            <td>{{ equip.data_incripcio | date:'short' }}</td>
+            <td>{{ equip.jugadors || 0 }}</td>
+            <td>{{ equip.entrenadors || 0 }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Players Tab -->
+  <div class="tab-content" *ngIf="activeTab === 'players' && !loading">
+    <div class="filters">
+      <button (click)="exportToCSV('players')" class="btn-export">
+        <span class="icon">📥</span> Exportar a CSV
+      </button>
+    </div>
+
+    <div class="data-table">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Cognoms</th>
+            <th>Equip</th>
+            <th>Talla Samarreta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let jugador of jugadors">
+            <td>{{ jugador.id }}</td>
+            <td>{{ jugador.nom }}</td>
+            <td>{{ jugador.cognoms }}</td>
+            <td>{{ jugador.equip_nom }}</td>
+            <td>{{ jugador.talla_samarreta }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Coaches Tab -->
+  <div class="tab-content" *ngIf="activeTab === 'coaches' && !loading">
+    <div class="filters">
+      <button (click)="exportToCSV('coaches')" class="btn-export">
+        <span class="icon">📥</span> Exportar a CSV
+      </button>
+    </div>
+
+    <div class="data-table">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Cognom</th>
+            <th>Equip</th>
+            <th>es Primer?</th>
+            <th>Talla samarreta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entrenador of entrenadors">
+            <td>{{ entrenador.id }}</td>
+            <td>{{ entrenador.nom }}</td>
+            <td>{{ entrenador.cognoms }}</td>
+            <td>{{ entrenador.equip_nom }}</td>
+            <td>{{ entrenador.es_principal ? 'Sí' : 'No' }}</td>
+            <td>{{ entrenador.talla_samarreta }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

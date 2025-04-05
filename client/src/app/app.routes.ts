@@ -10,8 +10,12 @@ import { RegistrationSuccessComponent } from './registration-success/registratio
 import { NotFoundComponent } from './not-found/not-found.component';
 import { InformacioInscripcioComponent } from './informacio-inscripcio/informacio-inscripcio.component';
 import { EditRegistrationComponent } from './editar-equip/editar-equip.component';
+import { LoginComponent } from './login/login.component';
+import { PanellAdminComponent } from './panell-admin/panell-admin.component';
 
 export const routes: Routes = [
+  { path: 'administrador-login', component: LoginComponent},
+  { path: 'administrador', component: PanellAdminComponent},
   { path: 'equip', component: DetallsEquipComponent },
   { path: 'countdown', component: LudiCountdown },
   { path: 'ludi3x3', component: Ludi3x3Component },
