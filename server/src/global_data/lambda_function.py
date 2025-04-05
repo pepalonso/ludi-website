@@ -5,10 +5,20 @@ from utils.database import get_db_connection
 
 def lambda_handler(event, context):
     # Allow only GET method
-    if event.get("httpMethod") != "GET":
-        return create_error_response(405, "Method not allowed")
 
-    path = event.get("path", "")
+    if "httpMethod" in event:  # REST API Gateway
+        http_method = event["httpMethod"]
+        path = event["path"]
+    elif (
+        "requestContext" in event and "http" in event["requestContext"]
+    ):  # HTTP API Gateway
+        http_method = event["requestContext"]["http"]["method"]
+        path = event["requestContext"]["http"]["path"]
+    else:
+        return create_error_response(400, "Unsupported API Gateway format")
+
+    if http_method != "GET":
+        return create_error_response(405, "Method not allowed")
 
     try:
         connection = get_db_connection()
