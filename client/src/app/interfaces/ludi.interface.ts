@@ -1,10 +1,12 @@
 export interface Jugador {
+  id?: string;
   nom: string;
   cognoms: string;
   tallaSamarreta: TallaSamarreta;
 }
 
 export interface Entrenador {
+  id?: string;
   nom: string;
   cognoms: string;
   tallaSamarreta: TallaSamarreta;

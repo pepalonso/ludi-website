@@ -376,3 +376,22 @@ h3 {
 .toast-close:hover {
   opacity: 1;
 }
+
+.edit-button {
+  display: block;
+  width: 100%;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 20px 0;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
