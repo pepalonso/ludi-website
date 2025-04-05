@@ -24,8 +24,12 @@ def lambda_handler(event, context):
                 clubs = cursor.fetchall()
                 return create_success_response(clubs)
 
-            # GET /api/equips
+            # GET /equips with optional query parameters for filtering
             elif path == "/equips":
+                # Retrieve query parameters
+                query_params = event.get("queryStringParameters") or {}
+
+                # Base query
                 query = """
                     SELECT 
                         e.id,
@@ -40,9 +44,28 @@ def lambda_handler(event, context):
                         (SELECT COUNT(*) FROM jugadors WHERE id_equip = e.id) as jugadors,
                         (SELECT COUNT(*) FROM entrenadors WHERE id_equip = e.id) as entrenadors
                     FROM equips e
-                    JOIN clubs c ON e.club_id = c.id;
+                    JOIN clubs c ON e.club_id = c.id
                 """
-                cursor.execute(query)
+
+                filters = []
+                values = []
+
+                # Check for each supported query parameter and build filter conditions
+                if query_params.get("club_id"):
+                    filters.append("e.club_id = %s")
+                    values.append(query_params.get("club_id"))
+                if query_params.get("categoria"):
+                    filters.append("e.categoria = %s")
+                    values.append(query_params.get("categoria"))
+                if query_params.get("sexe"):
+                    filters.append("e.sexe = %s")
+                    values.append(query_params.get("sexe"))
+
+                if filters:
+                    query += " WHERE " + " AND ".join(filters)
+
+                # Execute query with parameters
+                cursor.execute(query, values)
                 equips = cursor.fetchall()
 
                 # Manually convert the datetime field to ISO 8601 string format with "Z" suffix
@@ -147,7 +170,7 @@ def lambda_handler(event, context):
                     JOIN equips e ON c.id = e.club_id 
                     GROUP BY c.id, c.nom 
                     ORDER BY equipCount DESC;
-                """
+                    """
                 )
                 stats["clubsWithMostTeams"] = cursor.fetchall()
 
