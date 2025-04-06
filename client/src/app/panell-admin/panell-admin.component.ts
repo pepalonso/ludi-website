@@ -10,8 +10,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { environment } from '../../environments/environment';
 import { Categories, Sexe } from '../interfaces/ludi.interface';
+import { environment } from '../../environments/environment.prod';
 
 interface Club {
   id: number;
