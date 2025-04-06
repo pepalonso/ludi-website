@@ -24,18 +24,13 @@ def lambda_handler(event, context):
     try:
         # Verify the Firebase token.
         decoded_token = auth.verify_id_token(token)
-
-        # Check if the token includes an "admin" custom claim.
-        if decoded_token.get("admin", False):
-            return {
-                "isAuthorized": True,
-                "context": {
-                    "uid": decoded_token.get("uid"),
-                    "auth_check": "firebase_admin",
-                },
-            }
-        else:
-            return {"isAuthorized": False}
+        return {
+            "isAuthorized": True,
+            "context": {
+                "uid": decoded_token.get("uid"),
+                "auth_check": "firebase_admin",
+            },
+        }
     except Exception as e:
         print(f"Firebase token verification failed: {e}")
         return {"isAuthorized": False}
