@@ -12,6 +12,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { Categories, Sexe } from '../interfaces/ludi.interface';
 import { environment } from '../../environments/environment.prod';
+import { Router } from '@angular/router';
+import { AuthService } from '../serveis/auth.service';
 
 interface Club {
   id: number;
@@ -31,6 +33,7 @@ interface Equip {
   club_nom?: string;
   jugadors?: number;
   entrenadors?: number;
+  token?: string;
 }
 
 interface Jugador {
@@ -81,9 +84,9 @@ interface Statistics {
   providers: [MessageService],
 })
 export class PanellAdminComponent implements OnInit {
-  auth = getAuth(firebaseApp);
-  token: string = '';
-  loading: boolean = true;
+  private auth = getAuth(firebaseApp);
+  private token: string = '';
+  public loading: boolean = true;
   private host = environment.production
           ? `https://${environment.apiUrl}`
           : `http://${environment.apiUrl}`;
@@ -91,28 +94,30 @@ export class PanellAdminComponent implements OnInit {
 
   // Data
   clubs: Club[] = [];
-  equips: Equip[] = [];
-  jugadors: Jugador[] = [];
-  entrenadors: Entrenador[] = [];
-  statistics: Statistics | null = null;
+  public equips: Equip[] = [];
+  public jugadors: Jugador[] = [];
+  public entrenadors: Entrenador[] = [];
+  public statistics: Statistics | null = null;
 
   // Charts
-  categoriaChartData: any;
-  sexeChartData: any;
-  inscripcionesChartData: any;
-  chartOptions: any;
+  public categoriaChartData: any;
+  public sexeChartData: any;
+  public inscripcionesChartData: any;
+  public chartOptions: any;
 
   // Filters
-  filterForm: FormGroup;
-  categories: string[] = [];
-  sexes: string[] = [];
+  public filterForm: FormGroup;
+  public categories: string[] = [];
+  public sexes: string[] = [];
 
   // Active tab
-  activeTab: 'dashboard' | 'teams' | 'players' | 'coaches' = 'dashboard';
+  public activeTab: 'dashboard' | 'teams' | 'players' | 'coaches' = 'dashboard';
 
   constructor(
     private fb: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router,
+    private authService: AuthService,
   ) {
     this.filterForm = this.fb.group({
       club: [''],
@@ -135,6 +140,16 @@ export class PanellAdminComponent implements OnInit {
         window.location.href = '/administrador-login';
       }
     });
+
+    this.authService.getToken()
+      .then((token: string) => {
+        this.token = token;
+        this.loadData();
+      })
+      .catch(error => {
+        console.error('Authentication error:', error);
+        this.router.navigate(['/administrador-login']);
+      });
   }
 
   setupChartOptions(): void {
@@ -498,5 +513,9 @@ export class PanellAdminComponent implements OnInit {
     });
 
     return result;
+  }
+
+  public navigateToTeamLink(token?: string): void {
+    this.router.navigate(['/equip'], { queryParams: { token } });
   }
 }

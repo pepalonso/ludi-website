@@ -139,7 +139,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let equip of equips">
+          <tr *ngFor="let equip of equips" (click)="navigateToTeamLink(equip?.token)">
             <td>{{ equip.id }}</td>
             <td>{{ equip.nom }}</td>
             <td>{{ equip.categoria }}</td>

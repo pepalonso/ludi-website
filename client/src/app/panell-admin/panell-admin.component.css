@@ -295,6 +295,7 @@ th {
   color: #ccc;
   font-weight: 500;
   position: sticky;
+  cursor: pointer;
   top: 0;
 }
 
