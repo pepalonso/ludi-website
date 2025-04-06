@@ -39,7 +39,7 @@ def lambda_handler(event, context):
                 # Retrieve query parameters
                 query_params = event.get("queryStringParameters") or {}
 
-                # Base query
+                # Base query with registration token subquery added
                 query = """
                     SELECT 
                         e.id,
@@ -51,6 +51,12 @@ def lambda_handler(event, context):
                         e.club_id,
                         e.data_incripcio,
                         c.nom as club_nom,
+                        (SELECT token 
+                        FROM registration_tokens 
+                        WHERE team_id = e.id 
+                        AND is_revoked = FALSE 
+                        AND expires_at > NOW()
+                        ORDER BY created_at DESC LIMIT 1) as token,
                         (SELECT COUNT(*) FROM jugadors WHERE id_equip = e.id) as jugadors,
                         (SELECT COUNT(*) FROM entrenadors WHERE id_equip = e.id) as entrenadors
                     FROM equips e
