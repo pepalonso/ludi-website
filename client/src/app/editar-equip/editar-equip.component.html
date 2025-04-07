@@ -261,6 +261,7 @@
   <!-- Edit Observations -->
   <div class="edit-form" *ngIf="selectedOption === 'observations'">
     <h3>Afegir observacions</h3>
+    <p class="observacions-descripcio">Les observacions que afegiu sobreescriuran les que hàgiu posat prèviament</p>
     <div class="form-group">
       <label for="observationsText">Observacions</label>
       <textarea id="observationsText" [(ngModel)]="observationsText" rows="5"></textarea>
