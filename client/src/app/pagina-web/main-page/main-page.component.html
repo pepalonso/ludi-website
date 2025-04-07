@@ -1,0 +1,90 @@
+<div class="basketball-site">
+    <!-- Navigation Menu -->
+    <nav [class.main-nav]="true" [class.scrolled]="isScrolled">
+      <div class="nav-container">
+        <a routerLink="/pagina-principal" class="nav-item">INICI</a>
+        <a routerLink="/qui-som" class="nav-item">QUI SOM</a>
+        <a href="#" class="nav-item">ENTITATS</a>
+        <a href="#" class="nav-item">INSCRIPCIONS</a>
+        <a href="#" class="nav-item">CONTACTE</a>
+      </div>
+    </nav>
+  
+    <!-- Hero Carousel Section -->
+    <div class="hero-carousel">
+      <div class="carousel-container">
+        <div class="carousel-images" [style.transform]="'translateX(-' + (currentImageIndex * 100) + '%)'">
+          <div class="carousel-image" *ngFor="let image of carouselImages">
+            <img [src]="image" alt="Basketball event">
+            <div class="hero-text">
+              <h2>BENVINGUTS AL</h2>
+              <h1>LUDIBÀSQUET</h1>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control prev" (click)="prevImage()">❮</button>
+        <button class="carousel-control next" (click)="nextImage()">❯</button>
+      </div>
+  
+      <!-- Scrolling Text Banner -->
+      <div class="scrolling-banner">
+        <div class="scrolling-text">
+          <span *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">BÀSQUET 24 HORES&nbsp;&nbsp;</span>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Carousel Indicators -->
+    <div class="carousel-indicators">
+      <div class="indicator-container">
+        <span *ngFor="let image of carouselImages; let i = index" 
+              [class.active]="i === currentImageIndex"
+              (click)="currentImageIndex = i"></span>
+      </div>
+    </div>
+  
+    <!-- Section Labels -->
+    <!-- <div class="section-labels"> -->
+        <section class="countdown">
+            <div class="countdown-item">
+                <span class="countdown-time">{{ days }}</span>
+                <span class="countdown-label">Dies</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-time">{{ hours }}</span>
+                <span class="countdown-label">Hores</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-time">{{ minutes }}</span>
+                <span class="countdown-label">Minuts</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-time">{{ seconds }}</span>
+                <span class="countdown-label">Segons</span>
+            </div>
+        </section>
+    <!-- </div> -->
+  
+    <!-- Photo Gallery -->
+    <div class="photo-gallery">
+      <div class="gallery-container">
+        <div class="gallery-item" *ngFor="let image of galleryImages">
+          <img [src]="image" alt="Basketball gallery image">
+        </div>
+      </div>
+    </div>
+  
+    <!-- Text Content -->
+    <div class="text-content">
+      <div class="content-container">
+        <div class="content-column">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla.</p>
+        </div>
+        <div class="content-column">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

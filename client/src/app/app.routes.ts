@@ -9,6 +9,8 @@ import { RedirectorComponent } from './utils/redirector/redirector.component';
 import { RegistrationSuccessComponent } from './registration-success/registration-success.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { InformacioInscripcioComponent } from './informacio-inscripcio/informacio-inscripcio.component';
+import { MainPageComponent } from './pagina-web/main-page/main-page.component';
+import { QuiSomComponent } from './pagina-web/qui-som/qui-som.component';
 
 export const routes: Routes = [
   { path: 'equip', component: DetallsEquipComponent },
@@ -20,5 +22,7 @@ export const routes: Routes = [
   { path: 'contactawha', component: RedirectorComponent },
   { path: 'inscripcio-completa', component: RegistrationSuccessComponent },
   { path: '404', component: NotFoundComponent},
+  { path: 'pagina-principal', component: MainPageComponent},
+  { path: 'qui-som', component: QuiSomComponent},
   { path: '**', redirectTo: '/countdown', pathMatch: 'full' },
 ];
