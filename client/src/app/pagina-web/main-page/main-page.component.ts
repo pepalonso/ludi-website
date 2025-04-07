@@ -1,11 +1,12 @@
 import { Component, HostListener, OnDestroy, type OnInit } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { RouterModule } from "@angular/router"
+import { NavMenuComponent } from "../nav-menu/nav-menu.component";
 
 @Component({
   selector: "app-main-page",
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NavMenuComponent],
   templateUrl: "./main-page.component.html",
   styleUrls: ["./main-page.component.scss"],
 })
@@ -18,13 +19,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
   public hours: number = 0;
   public minutes: number = 0;
   public seconds: number = 0;
-
-  isScrolled = false;
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    this.isScrolled = window.scrollY > 50;
-  }
   
   carouselImages: string[] = [
     "assets/images/carrusel-1.JPG",

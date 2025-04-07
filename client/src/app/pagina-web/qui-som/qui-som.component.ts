@@ -1,6 +1,7 @@
 import { Component } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { RouterModule } from "@angular/router"
+import { NavMenuComponent } from "../nav-menu/nav-menu.component";
 
 interface TeamMember {
   name: string
@@ -18,7 +19,7 @@ interface ValueItem {
 @Component({
   selector: "app-qui-som",
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NavMenuComponent],
   templateUrl: "./qui-som.component.html",
   styleUrls: ["./qui-som.component.scss"],
 })

@@ -1,0 +1,48 @@
+<div class="basketball-site">
+    <!-- Navigation Menu -->
+    <app-nav-menu></app-nav-menu>
+  
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>GALERIA</h1>
+        <p class="hero-subtitle">Recull fotogràfic de les nostres activitats i esdeveniments</p>
+      </div>
+      
+      <!-- Scrolling Text Banner -->
+      <div class="scrolling-banner">
+        <div class="scrolling-text">
+          <span *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">MOMENTS LUDIBÀSQUET&nbsp;&nbsp;</span>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Gallery Years Section -->
+    <section class="gallery-years-section">
+      <div class="container">
+        <h2 class="section-title">ARXIU FOTOGRÀFIC</h2>
+        <p class="section-description">Explora les imatges de les nostres activitats i esdeveniments organitzades per anys.</p>
+        
+        <div class="gallery-grid">
+          <div class="gallery-year-card" *ngFor="let gallery of galleries">
+            <a [routerLink]="['/galeria', gallery.year]" class="gallery-year-link">
+              <div class="gallery-year-image">
+                <img [src]="gallery.coverImage" [alt]="gallery.title">
+                <div class="gallery-year-overlay">
+                  <div class="gallery-year-number">{{gallery.year}}</div>
+                </div>
+              </div>
+              <div class="gallery-year-info">
+                <h3>{{gallery.title}}</h3>
+                <p>{{gallery.description}}</p>
+                <span class="gallery-count">{{gallery.images.length}} imatges</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  

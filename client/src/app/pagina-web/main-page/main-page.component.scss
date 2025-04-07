@@ -6,55 +6,6 @@
     overflow-x: hidden;
   }
   
-  /* Navigation Menu */
-
-  .main-nav {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    background-color: transparent;
-  }
-  
-  .main-nav.scrolled {
-    background-color: black;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  
-  .nav-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .nav-item {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 14px;
-    letter-spacing: 1px;
-    transition: color 0.3s;
-    
-    &:hover {
-      color: #ff6600;
-    }
-  }
-  
-  .user-icon {
-    color: white;
-    
-    &:hover {
-      color: #ff6600;
-    }
-  }
-  
   /* Hero Carousel */
   .hero-carousel {
     position: relative;
@@ -293,18 +244,23 @@
     justify-content: center;
     gap: 6%;
     row-gap: 2rem;
-    margin-top: 3rem;
+    padding: 40px 0;
     flex-wrap: wrap;
   }
   
   .countdown-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; /* Esto centra horizontalmente los elementos hijos */
     text-align: center;
-    background: #1f1f1f;
+    background: #000000;
     padding: 1rem;
     border: 2px solid var(--primary);
     flex: 1 1 calc(25% - 2rem);
     max-width: 200px;
     box-sizing: border-box;
+    border-radius: 20px;
   }
   
   .countdown-time {
