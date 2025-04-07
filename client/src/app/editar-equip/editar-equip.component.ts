@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Entrenador, Jugador, TallaSamarreta, Team } from '../interfaces/ludi.interface';
-import { environment } from '../../environments/environment';
 import { mapTeamResponse } from '../detalls-equip/data-mapper';
+import { environment } from '../../environments/environment.prod';
 
 type EditOption =
   | 'player-add'
