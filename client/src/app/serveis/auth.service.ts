@@ -1,24 +1,44 @@
 import { Injectable } from '@angular/core';
-import { getAuth } from 'firebase/auth';
+import { BehaviorSubject } from 'rxjs';
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { firebaseApp } from '../app.config';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  constructor() {}
+  private auth = getAuth(firebaseApp);
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+
+  constructor() {
+    // Keep track of auth state changes
+    onAuthStateChanged(this.auth, (user) => {
+      this.currentUserSubject.next(user);
+    });
+  }
+
+  getCurrentUser(): User | null {
+    return this.currentUserSubject.value;
+  }
+
+  isAuthenticated(): boolean {
+    return this.currentUserSubject.value !== null;
+  }
 
   /**
-   * Returns the Firebase ID token of the currently authenticated user.
-   * @returns Promise<string> containing the token.
+   * Returns Firebase ID token of the authenticated user.
    */
   getToken(): Promise<string> {
-    const auth = getAuth(firebaseApp);
-    const user = auth.currentUser;
+    const user = this.auth.currentUser;
     if (user) {
       return user.getIdToken();
     } else {
       return Promise.reject('User is not authenticated');
     }
   }
+
+  /**
+   * Observable to react to auth state changes
+   */
+  user$ = this.currentUserSubject.asObservable();
 }

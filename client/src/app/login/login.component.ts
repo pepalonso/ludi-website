@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { browserLocalPersistence, getAuth, setPersistence, signInWithEmailAndPassword } from 'firebase/auth';
 import { firebaseApp } from '../app.config';
 
 @Component({
@@ -35,10 +35,11 @@ export class LoginComponent {
     const { email, password } = this.loginForm.value;
 
     try {
+      await setPersistence(this.auth, browserLocalPersistence);
       await signInWithEmailAndPassword(this.auth, email, password);
       this.router.navigate(['/administrador']);
     } catch (error: any) {
-      this.errorMessage = error.message || 'Login failed';
+      this.errorMessage = error.message || 'Identificació incorrecta';
     }
   }
 }
