@@ -27,10 +27,20 @@ LAMBDA_FUNCTIONS = [
     #    "sam_build_dir": ".aws-sam/build/FitxesUploader",
     #    "zip_filename": "fitxes_uploader.zip",
     # },
+    # {
+    #     "function_name": "n8n_reader",
+    #     "sam_build_dir": ".aws-sam/build/n8nReader",
+    #     "zip_filename": "n8nReader.zip",
+    # },
     {
-        "function_name": "n8n_reader",
-        "sam_build_dir": ".aws-sam/build/n8nReader",
-        "zip_filename": "n8nReader.zip",
+        "function_name": "admin_authorizer",
+        "sam_build_dir": ".aws-sam/build/adminAuthorizer",
+        "zip_filename": "adminAuthorization.zip",
+    },
+    {
+        "function_name": "global_reader",
+        "sam_build_dir": ".aws-sam/build/globalData",
+        "zip_filename": "globalDataReader.zip",
     },
 ]
 

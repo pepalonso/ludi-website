@@ -103,6 +103,41 @@ Resources:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AuthorizeWA.Arn}/invocations
                 httpMethod: POST
                 type: aws_proxy
+          /equips:
+            get:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${globalData.Arn}/invocations
+                httpMethod: GET
+                type: aws_proxy
+          /jugadors:
+            get:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${globalData.Arn}/invocations
+                httpMethod: GET
+                type: aws_proxy
+          /entrenadors:
+            get:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${globalData.Arn}/invocations
+                httpMethod: GET
+                type: aws_proxy
+          /clubs:
+            get:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${globalData.Arn}/invocations
+                httpMethod: GET
+                type: aws_proxy
+          /estadistiques:
+            get:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${globalData.Arn}/invocations
+                httpMethod: GET
+                type: aws_proxy
   HandleTeamInscription:
     Type: AWS::Serverless::Function
     Properties:
@@ -207,6 +242,50 @@ Resources:
       Handler: lambda_function.lambda_handler
       Runtime: python3.12
       CodeUri: ./src/n8n_reader
+      Timeout: 10
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - rds-data:ExecuteStatement
+                - rds-data:BatchExecuteStatement
+              Resource: '*'
+      Environment:
+        Variables:
+          DB_ENDPOINT: dummy-endpoint
+          DB_NAME: dummy-db
+          DB_USER: dummy-user
+          DB_PASSWORD: dummy-password
+          FRONTEND_URL: dummy-url
+    Metadata:
+      BuildMethod: python3.12
+  adminAuthorizer:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.12
+      CodeUri: ./src/admin
+      Timeout: 10
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - rds-data:ExecuteStatement
+                - rds-data:BatchExecuteStatement
+              Resource: '*'
+      Environment: null
+    Metadata:
+      BuildMethod: python3.12
+  globalData:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.12
+      CodeUri: ./src/global_data
       Timeout: 10
       Policies:
         - AWSLambdaBasicExecutionRole
