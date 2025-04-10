@@ -305,3 +305,54 @@ Resources:
           FRONTEND_URL: dummy-url
     Metadata:
       BuildMethod: python3.12
+  twoFactorGenerator:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.12
+      CodeUri: ./src/2fa_generator
+      Timeout: 10
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - rds-data:ExecuteStatement
+                - rds-data:BatchExecuteStatement
+              Resource: '*'
+      Environment:
+        Variables:
+          DB_ENDPOINT: dummy-endpoint
+          DB_NAME: dummy-db
+          DB_USER: dummy-user
+          DB_PASSWORD: dummy-password
+          FRONTEND_URL: dummy-url
+    Metadata:
+      BuildMethod: python3.12
+  dbConnector:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.12
+      CodeUri: ./src/db_connector
+      Timeout: 10
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - rds-data:ExecuteStatement
+                - rds-data:BatchExecuteStatement
+              Resource: '*'
+      Environment:
+        Variables:
+          DB_ENDPOINT: dummy-endpoint
+          DB_NAME: dummy-db
+          DB_USER: dummy-user
+          DB_PASSWORD: dummy-password
+          FRONTEND_URL: dummy-url
+    Metadata:
+      BuildMethod: python3.12
+

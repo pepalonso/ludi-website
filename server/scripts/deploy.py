@@ -32,16 +32,26 @@ LAMBDA_FUNCTIONS = [
     #     "sam_build_dir": ".aws-sam/build/n8nReader",
     #     "zip_filename": "n8nReader.zip",
     # },
+    # {
+    #    "function_name": "admin_authorizer",
+    #    "sam_build_dir": ".aws-sam/build/adminAuthorizer",
+    #    "zip_filename": "adminAuthorization.zip",
+    # },
+    # {
+    #    "function_name": "global_reader",
+    #    "sam_build_dir": ".aws-sam/build/globalData",
+    #    "zip_filename": "globalDataReader.zip",
+    # },
+    # {
+    #     "function_name": "twofa_generator",
+    #     "sam_build_dir": ".aws-sam/build/twoFactorGenerator",
+    #     "zip_filename": "2fa_generator.zip",
+    # }
     {
-        "function_name": "admin_authorizer",
-        "sam_build_dir": ".aws-sam/build/adminAuthorizer",
-        "zip_filename": "adminAuthorization.zip",
-    },
-    {
-        "function_name": "global_reader",
-        "sam_build_dir": ".aws-sam/build/globalData",
-        "zip_filename": "globalDataReader.zip",
-    },
+        "function_name": "db_cli",
+        "sam_build_dir": ".aws-sam/build/dbConnector",
+        "zip_filename": "db_cli.zip",
+    }
 ]
 
 lambda_client = boto3.client("lambda")

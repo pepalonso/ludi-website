@@ -83,10 +83,24 @@ CREATE TABLE fitxes_documents (
 -- Create the centralized changes log table
 CREATE TABLE changes_log (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    entity_type VARCHAR(50) NOT NULL, -- e.g. 'jugador', 'entrenador', 'intolerancia'
+    entity_type VARCHAR(50) NOT NULL,
     entity_id INT NOT NULL,
     action ENUM('INSERT', 'UPDATE', 'DELETE') NOT NULL,
     changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     old_data LONGTEXT,
     new_data LONGTEXT
+);
+
+CREATE TABLE edit_sessions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    team_id INT NOT NULL,
+    pin_hash VARCHAR(255) NOT NULL,
+    session_token VARCHAR(255) NOT NULL,
+    contact_method ENUM('email', 'whatsapp') NOT NULL,
+    contact_address VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    expires_at DATETIME NOT NULL,
+    is_used BOOLEAN DEFAULT FALSE,
+    used_at DATETIME DEFAULT NULL,
+    FOREIGN KEY (team_id) REFERENCES equips(id)
 );
