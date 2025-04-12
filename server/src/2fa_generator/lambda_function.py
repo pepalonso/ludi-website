@@ -5,7 +5,8 @@ import random
 import hashlib
 import secrets
 from datetime import datetime, timedelta
-from utils import get_db_connection, create_success_response, create_error_response
+from utils.database import get_db_connection
+from utils.response import create_success_response, create_error_response
 
 
 def hash_pin(pin):
@@ -43,7 +44,13 @@ def lambda_handler(event, context):
     """
     try:
         # Parse the incoming JSON payload.
-        body = json.loads(event.get("body", "{}"))
+        if isinstance(event, str):
+            body = json.loads(event)
+        elif "body" in event:
+            body = json.loads(event["body"])
+        else:
+            body = event
+
         team_token = body.get("team_token")
         method = body.get("method")  # expect either "whatsapp" or "email"
 
@@ -73,7 +80,6 @@ def lambda_handler(event, context):
             if not team:
                 return create_error_response(404, "Team not found or token expired.")
 
-            # Generate a new 4-digit PIN, its hash and a session token.
             pin = generate_pin()
             hashed_pin = hash_pin(pin)
             session_token = generate_token()
@@ -81,7 +87,6 @@ def lambda_handler(event, context):
                 "%Y-%m-%d %H:%M:%S"
             )
 
-            # Pick the contact detail based on the chosen method.
             contact_address = team["telefon"] if method == "whatsapp" else team["email"]
 
             # Insert the new session into edit_sessions.
@@ -103,13 +108,7 @@ def lambda_handler(event, context):
             )
             conn.commit()
 
-        # For demonstration purposes, print the PIN.
-        # Replace this with logic to send the PIN (email/WhatsApp) to the user.
-        print(f"Generated PIN for {method}: {pin}")
-
-        # Return the generated PIN in the response.
-        return create_success_response({"pin": pin, "method": method})
+        return create_success_response({"pin": pin, "method": method, "contact_address": contact_address})
 
     except Exception as e:
-        # Log the exception details as needed.
         return create_error_response(500, f"Internal server error: {str(e)}")

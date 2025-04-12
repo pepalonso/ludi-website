@@ -48,10 +48,20 @@ LAMBDA_FUNCTIONS = [
     #     "zip_filename": "2fa_generator.zip",
     # }
     {
-        "function_name": "db_cli",
-        "sam_build_dir": ".aws-sam/build/dbConnector",
-        "zip_filename": "db_cli.zip",
+        "function_name": "twofa_validator",
+        "sam_build_dir": ".aws-sam/build/twoFactorValidator",
+        "zip_filename": "2fa_validator.zip",
     }
+    # {
+    #     "function_name": "db_cli",
+    #     "sam_build_dir": ".aws-sam/build/dbConnector",
+    #     "zip_filename": "db_cli.zip",
+    # }
+    # {
+    #     "function_name": "send_wa_two_fa",
+    #     "sam_build_dir": ".aws-sam/build/SendWATwoFA",
+    #     "zip_filename": "send_wa_two_fa.zip",
+    # }
 ]
 
 lambda_client = boto3.client("lambda")
