@@ -4,9 +4,15 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { type Subscription, interval } from 'rxjs';
-import { browserLocalPersistence, getAuth, setPersistence, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  browserLocalPersistence,
+  getAuth,
+  setPersistence,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 import { firebaseApp } from '../app.config';
 import { AuthService } from '../serveis/auth.service';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-editar-equip-auth',
@@ -18,28 +24,43 @@ import { AuthService } from '../serveis/auth.service';
 export class EditarEquipAuthComponent implements OnDestroy, OnInit {
   private token: string | null = null;
   private fb = inject(FormBuilder);
-  private http = inject(HttpClient);
+
+  public url = environment.production
+    ? `https://${environment.apiUrl}`
+    : `http://${environment.apiUrl}`;
+
+  public headers = {
+    Authorization: `Bearer ${this.token}`,
+    'Content-Type': 'application/json',
+  };
 
   showPinInput = false;
   showAdminLogin = false;
   selectedMethod: 'email' | 'whatsapp' | null = null;
   auth = getAuth(firebaseApp);
+  isLoading = false;
 
   resendCountdown = 0;
   private countdownSubscription?: Subscription;
 
-  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.route.queryParams.subscribe((params) => {
       this.token = params['token'] || null;
     });
-
+    this.headers = {
+      Authorization: `Bearer ${this.token}`,
+      'Content-Type': 'application/json',
+    };
   }
 
   ngOnInit(): void {
     setTimeout(() => {
       const isAuthed = this.authService.isAuthenticated();
-      if (!isAuthed) {
-
+      if (isAuthed) {
         this.router.navigate(['/editar-inscripcio'], {
           queryParams: { token: this.token },
         });
@@ -68,22 +89,28 @@ export class EditarEquipAuthComponent implements OnDestroy, OnInit {
 
   sendCode(): void {
     if (!this.selectedMethod) return;
-    /*
-    this.http
-      .post('/api/send-2fa-code', { method: this.selectedMethod })
-      .subscribe({
-        next: () => {
-          this.showPinInput = true;
-          this.startResendCountdown();
-        },
-        error: (error) => {
-          console.error('Error sending code:', error);
-        },
+    this.isLoading = true;
+    fetch(this.url + '/auth/generate', {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({ method: this.selectedMethod }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        this.showPinInput = true;
+        this.startResendCountdown();
+      })
+      .catch((error) => {
+        console.error('Error sending code:', error);
+      })
+      .finally(() => {
+        this.isLoading = false;
       });
-      */
-    // Simulate sending code
-    this.showPinInput = true;
-    this.startResendCountdown();
   }
 
   startResendCountdown(): void {
@@ -109,22 +136,28 @@ export class EditarEquipAuthComponent implements OnDestroy, OnInit {
   resendCode(): void {
     if (this.resendCountdown > 0 || !this.selectedMethod) return;
 
-    // Implement the resend logic here
-    /*
-    this.http
-      .post('/api/resend-2fa-code', { method: this.selectedMethod })
-      .subscribe({
-        next: () => {
-          this.startResendCountdown();
-        },
-        error: (error) => {
-          console.error('Error resending code:', error);
-        },
+    this.isLoading = true;
+    fetch(this.url + '/auth/generate', {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({ method: this.selectedMethod }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        this.showPinInput = true;
+        this.startResendCountdown();
+      })
+      .catch((error) => {
+        console.error('Error sending code:', error);
+      })
+      .finally(() => {
+        this.isLoading = false;
       });
-    */
-
-    // Simulate resending code
-    this.startResendCountdown();
   }
 
   onDigitInput(event: Event, nextInput?: HTMLInputElement): void {
@@ -150,15 +183,28 @@ export class EditarEquipAuthComponent implements OnDestroy, OnInit {
 
     const pin = Object.values(this.pinForm.value).join('');
 
-    // Replace with your actual API endpoint
-    this.http.post('/api/verify-2fa', { pin }).subscribe({
-      next: (response) => {
-        console.log('Verification successful', response);
-      },
-      error: (error) => {
-        console.error('Verification failed:', error);
-      },
-    });
+    this.isLoading = true;
+    fetch(this.url + '/auth/validator', {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify({ pin }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        this.showPinInput = true;
+        this.startResendCountdown();
+      })
+      .catch((error) => {
+        console.error('Error sending code:', error);
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
   }
 
   toggleAdminLogin(): void {
