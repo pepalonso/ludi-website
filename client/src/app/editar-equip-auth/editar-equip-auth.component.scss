@@ -236,3 +236,26 @@ p {
 .back-button:hover {
   color: white;
 }
+
+
+.spinner {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border: 5px solid rgba(74, 222, 128, 0.3);
+  border-radius: 50%;
+  border-top-color: transparent;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

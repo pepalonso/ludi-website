@@ -616,3 +616,51 @@ h2::after {
     font-size: 16px;
   }
 }
+
+
+// Add this to your existing SCSS file
+
+// Session timer
+.session-timer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  z-index: 100;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.timer-critical {
+  background-color: rgba(220, 38, 38, 0.9);
+  color: white;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.timer-icon {
+  display: flex;
+  align-items: center;
+}
+
+.timer-text {
+  font-weight: 500;
+}
