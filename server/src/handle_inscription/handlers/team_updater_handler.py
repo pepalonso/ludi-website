@@ -19,11 +19,12 @@ def handle_team_updater(event, method):
 
         connection = get_db_connection()
         with connection.cursor() as cursor:
+            # Check the token against the edit_sessions table.
             cursor.execute(
                 """
-                SELECT team_id 
-                FROM registration_tokens
-                WHERE token = %s AND is_revoked = FALSE AND expires_at > NOW()
+                SELECT team_id
+                FROM edit_sessions
+                WHERE session_token = %s AND expires_at > NOW()
                 """,
                 (token,),
             )
@@ -32,12 +33,11 @@ def handle_team_updater(event, method):
                 return create_error_response(401, "Invalid or expired token")
             team_id = token_record["team_id"]
 
-            # Update the last_used_at for the token
             cursor.execute(
                 """
-                UPDATE registration_tokens 
-                SET last_used_at = NOW() 
-                WHERE token = %s
+                UPDATE edit_sessions
+                SET is_used = TRUE, used_at = NOW()
+                WHERE session_token = %s
                 """,
                 (token,),
             )
