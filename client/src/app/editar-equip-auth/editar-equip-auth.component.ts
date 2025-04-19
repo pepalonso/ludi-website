@@ -225,9 +225,13 @@ export class EditarEquipAuthComponent implements OnInit, OnDestroy {
       });
   }
 
-  toggleAdminLogin(): void {
+  async toggleAdminLogin(): Promise<void> {
     const isAuthed = this.authService.isAuthenticated();
     if (isAuthed) {
+      const expiry = new Date().getTime() + 20 * 60 * 1000;
+      const sessionToken = await this.authService.getToken();
+      sessionStorage.setItem('session_token', sessionToken);
+      sessionStorage.setItem('token_expiry', expiry.toString());
       this.router.navigate(['/editar-inscripcio'], {
         queryParams: { token: this.teamToken },
       });
@@ -245,6 +249,10 @@ export class EditarEquipAuthComponent implements OnInit, OnDestroy {
     try {
       await setPersistence(this.auth, browserLocalPersistence);
       await signInWithEmailAndPassword(this.auth, email ?? '', password ?? '');
+      const expiry = new Date().getTime() + 20 * 60 * 1000;
+      const sessionToken = await this.authService.getToken();
+      sessionStorage.setItem('session_token', sessionToken);
+      sessionStorage.setItem('token_expiry', expiry.toString());
       this.router.navigate(['/editar-inscripcio'], {
         queryParams: { token: this.teamToken },
       });
