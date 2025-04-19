@@ -207,9 +207,8 @@ export class EditarEquipAuthComponent implements OnInit, OnDestroy {
       })
       .then((data) => {
         //Guardar el token en la sessio per 20 minuts
-        console.log('Token:', data.token);
         const expiry = new Date().getTime() + 20 * 60 * 1000;
-        sessionStorage.setItem('session_token', data.token);
+        sessionStorage.setItem('session_token', data.session_token);
         sessionStorage.setItem('token_expiry', expiry.toString());
         this.pinForm.reset();
         this.showPinInput = false;

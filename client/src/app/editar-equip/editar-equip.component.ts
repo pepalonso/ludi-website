@@ -133,14 +133,11 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
   }
 
   private handleTokenExpiration() {
-    // Clear session storage
     sessionStorage.removeItem('session_token');
     sessionStorage.removeItem('token_expiry');
     
-    // Show notification
     this.showToastNotification("La sessió ha expirat. Redirigint...", 'error');
     
-    // Redirect after a short delay
     setTimeout(() => {
       this.router.navigate(['/equip'], { 
         queryParams: { token: this.teamToken } 
