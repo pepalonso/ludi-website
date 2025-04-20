@@ -229,12 +229,29 @@ export class EditarEquipAuthComponent implements OnInit, OnDestroy {
     const isAuthed = this.authService.isAuthenticated();
     if (isAuthed) {
       const expiry = new Date().getTime() + 20 * 60 * 1000;
-      const sessionToken = await this.authService.getToken();
-      sessionStorage.setItem('session_token', sessionToken);
-      sessionStorage.setItem('token_expiry', expiry.toString());
-      this.router.navigate(['/editar-inscripcio'], {
-        queryParams: { token: this.teamToken },
-      });
+      const firebaseToken = await this.authService.getToken();
+      const headers = {
+        Authorization: `Bearer ${firebaseToken}`,
+        'Content-Type': 'application/json',
+      };
+      fetch(this.url + '/auth/generate-admin-session-token', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({ team_token: this.teamToken }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          sessionStorage.setItem('session_token', data.session_token);
+          sessionStorage.setItem('token_expiry', expiry.toString());
+          this.router.navigate(['/editar-inscripcio'], {
+            queryParams: { token: this.teamToken },
+          });
+        })
     }
     this.showAdminLogin = !this.showAdminLogin;
     this.showPinInput = false;
@@ -250,13 +267,28 @@ export class EditarEquipAuthComponent implements OnInit, OnDestroy {
       await setPersistence(this.auth, browserLocalPersistence);
       await signInWithEmailAndPassword(this.auth, email ?? '', password ?? '');
       const expiry = new Date().getTime() + 20 * 60 * 1000;
-      const sessionToken = await this.authService.getToken();
-      sessionStorage.setItem('session_token', sessionToken);
-      sessionStorage.setItem('token_expiry', expiry.toString());
-      this.router.navigate(['/editar-inscripcio'], {
-        queryParams: { token: this.teamToken },
-      });
-      
+      const firebaseToken = await this.authService.getToken();
+      fetch(this.url + '/auth/generate-admin-session-token', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${firebaseToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ team_token: this.teamToken }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          sessionStorage.setItem('session_token', data.session_token);
+          sessionStorage.setItem('token_expiry', expiry.toString());
+          this.router.navigate(['/editar-inscripcio'], {
+            queryParams: { token: this.teamToken },
+          });
+        });
     } catch (error: any) {
       this.errorMessage = error.message || 'Identificació incorrecta';
     }
