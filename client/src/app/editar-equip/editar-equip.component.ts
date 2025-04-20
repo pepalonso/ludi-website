@@ -247,7 +247,12 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
         }
 
         // Refresh team data
-        await this.fetchTeamDetails(this.teamToken!);
+        if (!this.teamToken) {
+          console.error('Error: teamToken is null or undefined.');
+          this.showToastNotification('Error: No es pot actualitzar l\'equip', 'error');
+          return;
+        }
+        await this.fetchTeamDetails(this.teamToken);
         this.resetNewPlayerForm();
         this.showToastNotification('Jugador afegit correctament', 'success');
       } catch (error) {
