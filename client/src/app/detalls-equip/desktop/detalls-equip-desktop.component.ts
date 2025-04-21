@@ -64,7 +64,7 @@ export class TeamDesktopComponent {
   }
   navigateToEdit() {
     if (this.token) {
-      this.router.navigate(['/editar-inscripcio'], {
+      this.router.navigate(['/editar-inscripcio-autentificacio'], {
         queryParams: { token: this.token },
       });
     }

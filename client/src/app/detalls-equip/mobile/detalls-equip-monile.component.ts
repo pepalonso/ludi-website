@@ -65,7 +65,7 @@ export class TeamMobileComponent {
 
   navigateToEdit() {
     if (this.token && this.team) {
-      this.router.navigate(['/editar-inscripcio'], {
+      this.router.navigate(['/editar-inscripcio-autentificacio'], {
         queryParams: { token: this.token },
         state: { team: this.team },
       });

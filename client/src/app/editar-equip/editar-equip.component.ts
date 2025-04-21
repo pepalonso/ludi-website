@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Entrenador, Jugador, TallaSamarreta, Team } from '../interfaces/ludi.interface';
 import { mapTeamResponse } from '../detalls-equip/data-mapper';
 import { environment } from '../../environments/environment.prod';
+import { interval, Subscription } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 
 type EditOption =
   | 'player-add'
@@ -24,12 +26,20 @@ type EditOption =
   templateUrl: './editar-equip.component.html',
   styleUrls: ['./editar-equip.component.scss'],
 })
-export class EditRegistrationComponent implements OnInit {
-  public token?: string;
+export class EditRegistrationComponent implements OnInit, OnDestroy {
+  public teamToken?: string;
   public team?: Team;
   public error: boolean = false;
   public isLoading: boolean = true;
   public isDesktop: boolean = false;
+
+  // Session token properties
+  public sessionToken: string | null = null;
+  public tokenExpiryTime: number = 0;
+  public timeRemaining: number = 0;
+  public timerSubscription?: Subscription;
+  public showTimer: boolean = true;
+  public isTimerCritical: boolean = false;
 
   public selectedOption: EditOption = 'none';
   public selectedPlayerId: number = -1;
@@ -65,15 +75,82 @@ export class EditRegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      this.token = params['token'] || null;
-      if (this.token) {
-        this.fetchTeamDetails(this.token);
+      this.teamToken = params['token'] || null;
+      if (this.teamToken) {
+        this.fetchTeamDetails(this.teamToken);
+        this.initializeSessionToken();
       } else {
         this.error = true;
         this.isLoading = false;
         this.showToastNotification("No s'ha trobat el token de l'equip", 'error');
       }
     });
+  }
+
+  ngOnDestroy() {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+  }
+
+  private initializeSessionToken() {
+    // Get session token from sessionStorage
+    this.sessionToken = sessionStorage.getItem('session_token');
+    const expiryString = sessionStorage.getItem('token_expiry');
+    
+    if (this.sessionToken && expiryString) {
+      this.tokenExpiryTime = parseInt(expiryString, 10);
+      this.startExpiryTimer();
+    } else {
+      // If no session token is found, we'll continue using teamToken
+      this.showToastNotification("No s'ha trobat un token de sessió vàlid", 'error');
+    }
+  }
+
+  private startExpiryTimer() {
+    // Calculate initial time remaining
+    this.updateTimeRemaining();
+    
+    // Start a timer that updates every second
+    this.timerSubscription = interval(1000)
+      .pipe(takeWhile(() => this.timeRemaining > 0))
+      .subscribe(() => {
+        this.updateTimeRemaining();
+        
+        // Check if time is critical (less than 5 minutes)
+        this.isTimerCritical = this.timeRemaining < 5 * 60 * 1000;
+        
+        // Handle expiration
+        if (this.timeRemaining <= 0) {
+          this.handleTokenExpiration();
+        }
+      });
+  }
+
+  private updateTimeRemaining() {
+    const now = new Date().getTime();
+    this.timeRemaining = Math.max(0, this.tokenExpiryTime - now);
+  }
+
+  private handleTokenExpiration() {
+    sessionStorage.removeItem('session_token');
+    sessionStorage.removeItem('token_expiry');
+    
+    this.showToastNotification("La sessió ha expirat. Redirigint...", 'error');
+    
+    setTimeout(() => {
+      this.router.navigate(['/equip'], { 
+        queryParams: { token: this.teamToken } 
+      });
+    }, 2000);
+  }
+
+  // Format the remaining time as mm:ss
+  public formatTimeRemaining(): string {
+    const totalSeconds = Math.floor(this.timeRemaining / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }
 
   private async fetchTeamDetails(token: string): Promise<void> {
@@ -112,6 +189,12 @@ export class EditRegistrationComponent implements OnInit {
     }
   }
 
+  // Helper method to get the appropriate token for requests
+  private getAuthToken(): string {
+    // Use session token for data-modifying operations if available
+    return this.sessionToken || this.teamToken || '';
+  }
+
   onOptionChange() {
     // Reset form state when changing options
     this.selectedPlayerId = -1;
@@ -137,7 +220,7 @@ export class EditRegistrationComponent implements OnInit {
   }
 
   async addPlayer() {
-    if (!this.token || !this.team) return;
+    if (!this.team) return;
     if (this.newPlayer.nom && this.newPlayer.cognoms) {
       try {
         const url = environment.production
@@ -147,7 +230,7 @@ export class EditRegistrationComponent implements OnInit {
         const response = await fetch(url, {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${this.token}`,
+            Authorization: `Bearer ${this.getAuthToken()}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -164,7 +247,12 @@ export class EditRegistrationComponent implements OnInit {
         }
 
         // Refresh team data
-        await this.fetchTeamDetails(this.token);
+        if (!this.teamToken) {
+          console.error('Error: teamToken is null or undefined.');
+          this.showToastNotification('Error: No es pot actualitzar l\'equip', 'error');
+          return;
+        }
+        await this.fetchTeamDetails(this.teamToken);
         this.resetNewPlayerForm();
         this.showToastNotification('Jugador afegit correctament', 'success');
       } catch (error) {
@@ -175,7 +263,7 @@ export class EditRegistrationComponent implements OnInit {
   }
 
   async updatePlayer() {
-    if (!this.token || !this.team) return;
+    if (!this.team) return;
     if (this.selectedPlayerId >= 0 && this.newPlayer.nom && this.newPlayer.cognoms) {
       try {
         const url = environment.production
@@ -188,7 +276,7 @@ export class EditRegistrationComponent implements OnInit {
         const response = await fetch(url, {
           method: 'PUT',
           headers: {
-            Authorization: `Bearer ${this.token}`,
+            Authorization: `Bearer ${this.getAuthToken()}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -208,7 +296,7 @@ export class EditRegistrationComponent implements OnInit {
         }
 
         // Refresh team data
-        await this.fetchTeamDetails(this.token);
+        await this.fetchTeamDetails(this.teamToken!);
         this.resetNewPlayerForm();
         this.selectedPlayerId = -1;
         this.showToastNotification('Jugador actualitzat correctament', 'success');
@@ -220,7 +308,7 @@ export class EditRegistrationComponent implements OnInit {
   }
 
   async deletePlayer(index: number) {
-    if (!this.token || !this.team) return;
+    if (!this.team) return;
     try {
       const url = environment.production
         ? `https://${environment.apiUrl}/jugador`
@@ -232,7 +320,7 @@ export class EditRegistrationComponent implements OnInit {
       const response = await fetch(url, {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.getAuthToken()}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -247,7 +335,7 @@ export class EditRegistrationComponent implements OnInit {
       }
 
       // Refresh team data
-      await this.fetchTeamDetails(this.token);
+      await this.fetchTeamDetails(this.teamToken!);
       this.showToastNotification('Jugador eliminat correctament', 'success');
     } catch (error) {
       console.error('Error deleting player:', error);
@@ -275,7 +363,7 @@ export class EditRegistrationComponent implements OnInit {
   }
 
   async addCoach() {
-    if (!this.token || !this.team) return;
+    if (!this.team) return;
     if (this.newCoach.nom && this.newCoach.cognoms) {
       if (this.newCoach.esPrincipal === 1 && this.team.entrenadors.some(e => e.esPrincipal === 1)) {
         this.showToastNotification('Ja existeix un entrenador principal', 'error');
@@ -290,7 +378,7 @@ export class EditRegistrationComponent implements OnInit {
         const response = await fetch(url, {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${this.token}`,
+            Authorization: `Bearer ${this.getAuthToken()}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -308,7 +396,7 @@ export class EditRegistrationComponent implements OnInit {
         }
 
         // Refresh team data
-        await this.fetchTeamDetails(this.token);
+        await this.fetchTeamDetails(this.teamToken!);
         this.resetNewCoachForm();
         this.showToastNotification('Entrenador afegit correctament', 'success');
       } catch (error) {
@@ -319,7 +407,7 @@ export class EditRegistrationComponent implements OnInit {
   }
 
   async updateCoach() {
-    if (!this.token || !this.team) return;
+    if (!this.team) return;
     if (this.selectedCoachId >= 0 && this.newCoach.nom && this.newCoach.cognoms) {
       // Check if we're making a new principal coach when another one already exists
       const isPrincipalChange = this.newCoach.esPrincipal === 1 && 
@@ -341,7 +429,7 @@ export class EditRegistrationComponent implements OnInit {
         const response = await fetch(url, {
           method: 'PUT',
           headers: {
-            Authorization: `Bearer ${this.token}`,
+            Authorization: `Bearer ${this.getAuthToken()}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -362,7 +450,7 @@ export class EditRegistrationComponent implements OnInit {
         }
 
         // Refresh team data
-        await this.fetchTeamDetails(this.token);
+        await this.fetchTeamDetails(this.teamToken!);
         this.resetNewCoachForm();
         this.selectedCoachId = -1;
         this.showToastNotification('Entrenador actualitzat correctament', 'success');
@@ -374,7 +462,7 @@ export class EditRegistrationComponent implements OnInit {
   }
 
   async deleteCoach(index: number) {
-    if (!this.token || !this.team) return;
+    if (!this.team) return;
     const coach = this.team.entrenadors[index];
     
     if (coach.esPrincipal === 1) {
@@ -392,7 +480,7 @@ export class EditRegistrationComponent implements OnInit {
       const response = await fetch(url, {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.getAuthToken()}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -407,7 +495,7 @@ export class EditRegistrationComponent implements OnInit {
       }
 
       // Refresh team data
-      await this.fetchTeamDetails(this.token);
+      await this.fetchTeamDetails(this.teamToken!);
       this.showToastNotification('Entrenador eliminat correctament', 'success');
     } catch (error) {
       console.error('Error deleting coach:', error);
@@ -417,7 +505,7 @@ export class EditRegistrationComponent implements OnInit {
 
   // Intolerances methods
   async addIntolerance() {
-    if (!this.token || !this.team) return;
+    if (!this.team) return;
     if (!this.newIntoleranceText.trim()) return;
 
     try {
@@ -465,7 +553,7 @@ export class EditRegistrationComponent implements OnInit {
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
-          Authorization: `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.getAuthToken()}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -478,7 +566,7 @@ export class EditRegistrationComponent implements OnInit {
       }
 
       // Refresh team data
-      await this.fetchTeamDetails(this.token);
+      await this.fetchTeamDetails(this.teamToken!);
       this.newIntoleranceText = '';
       this.showToastNotification('Intolerància afegida correctament', 'success');
     } catch (error) {
@@ -488,7 +576,7 @@ export class EditRegistrationComponent implements OnInit {
   }
 
   async decrementIntolerance(index: number) {
-    if (!this.token || !this.team || !this.team.intolerancies) return;
+    if (!this.team || !this.team.intolerancies) return;
     
     try {
       const currentIntolerances = [...this.team.intolerancies];
@@ -522,7 +610,7 @@ export class EditRegistrationComponent implements OnInit {
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
-          Authorization: `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.getAuthToken()}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -535,7 +623,7 @@ export class EditRegistrationComponent implements OnInit {
       }
 
       // Refresh team data
-      await this.fetchTeamDetails(this.token);
+      await this.fetchTeamDetails(this.teamToken!);
       this.showToastNotification('Intolerància actualitzada correctament', 'success');
     } catch (error) {
       console.error('Error updating intolerances:', error);
@@ -544,7 +632,7 @@ export class EditRegistrationComponent implements OnInit {
   }
 
   async deleteIntolerance(index: number) {
-    if (!this.token || !this.team || !this.team.intolerancies) return;
+    if (!this.team || !this.team.intolerancies) return;
     
     try {
       const currentIntolerances = [...this.team.intolerancies];
@@ -566,7 +654,7 @@ export class EditRegistrationComponent implements OnInit {
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
-          Authorization: `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.getAuthToken()}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -579,7 +667,7 @@ export class EditRegistrationComponent implements OnInit {
       }
 
       // Refresh team data
-      await this.fetchTeamDetails(this.token);
+      await this.fetchTeamDetails(this.teamToken!);
       this.showToastNotification('Intolerància eliminada correctament', 'success');
     } catch (error) {
       console.error('Error updating intolerances:', error);
@@ -589,7 +677,7 @@ export class EditRegistrationComponent implements OnInit {
 
   // Observations methods
   async saveObservations() {
-    if (!this.token || !this.team) return;
+    if (!this.team) return;
     
     try {
       const url = environment.production
@@ -599,7 +687,7 @@ export class EditRegistrationComponent implements OnInit {
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
-          Authorization: `Bearer ${this.token}`,
+          Authorization: `Bearer ${this.getAuthToken()}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -619,7 +707,7 @@ export class EditRegistrationComponent implements OnInit {
       }
 
       // Refresh team data
-      await this.fetchTeamDetails(this.token);
+      await this.fetchTeamDetails(this.teamToken!);
       this.showToastNotification('Observacions desades correctament', 'success');
     } catch (error) {
       console.error('Error updating observations:', error);
@@ -653,7 +741,7 @@ export class EditRegistrationComponent implements OnInit {
 
   navigateBack() {
     this.router.navigate(['/equip'], { 
-      queryParams: { token: this.token } 
+      queryParams: { token: this.teamToken } 
     });
   }
 
@@ -662,7 +750,6 @@ export class EditRegistrationComponent implements OnInit {
     this.toastType = type;
     this.showToast = true;
     
-    // Auto-hide toast after 3 seconds
     setTimeout(() => {
       this.hideToast();
     }, 3000);

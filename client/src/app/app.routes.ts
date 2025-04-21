@@ -12,6 +12,7 @@ import { InformacioInscripcioComponent } from './informacio-inscripcio/informaci
 import { EditRegistrationComponent } from './editar-equip/editar-equip.component';
 import { LoginComponent } from './login/login.component';
 import { PanellAdminComponent } from './panell-admin/panell-admin.component';
+import { EditarEquipAuthComponent } from './editar-equip-auth/editar-equip-auth.component';
 
 export const routes: Routes = [
   { path: 'administrador-login', component: LoginComponent},
@@ -26,5 +27,6 @@ export const routes: Routes = [
   { path: 'inscripcio-completa', component: RegistrationSuccessComponent },
   { path: '404', component: NotFoundComponent},
   { path: 'editar-inscripcio', component: EditRegistrationComponent},
+  { path: 'editar-inscripcio-autentificacio', component: EditarEquipAuthComponent},
   { path: '**', redirectTo: '/countdown', pathMatch: 'full' },
 ];

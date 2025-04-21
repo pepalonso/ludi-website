@@ -1,0 +1,261 @@
+/* Admin button */
+.admin-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: transparent;
+  color: #a0a0a0;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-button:hover {
+  background-color: rgba(var(--primary, 211, 102, 0), 0.1);
+  color: white;
+  border-color: var(--primary);
+}
+
+.auth-card {
+  position: relative;
+}
+
+/* Resend code button */
+.action-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.resend-button {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.resend-button:disabled {
+  color: #666;
+  cursor: not-allowed;
+}
+
+.resend-button:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+/* Admin login styles */
+.login-container {
+  color: white;
+}
+
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #333;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb, 211, 102, 0), 0.2);
+}
+
+.form-group input::placeholder {
+  color: #777;
+}
+
+.error {
+  color: #ff5757;
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #121212;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.auth-card {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+p {
+  color: #a0a0a0;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.method-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.method-button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: #2a2a2a;
+  border: 2px solid #2a2a2a;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.method-button:hover {
+  background-color: #333333;
+}
+
+.method-button.selected {
+  border-color: var(--primary);
+  background-color: rgba(var(--primary-rgb, 0, 0, 0), 0.1);
+}
+
+.method-button .icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.send-button,
+.verify-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.send-button:disabled,
+.verify-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pin-inputs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.pin-inputs input {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #333333;
+  border-radius: 8px;
+  background-color: #2a2a2a;
+  color: white;
+  font-size: 1.5rem;
+  text-align: center;
+  transition: border-color 0.2s ease;
+}
+
+.pin-inputs input:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: #a0a0a0;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  text-decoration: underline;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.back-button:hover {
+  color: white;
+}
+
+
+.spinner {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border: 5px solid rgba(74, 222, 128, 0.3);
+  border-radius: 50%;
+  border-top-color: transparent;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
