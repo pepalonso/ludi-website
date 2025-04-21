@@ -377,7 +377,7 @@ export class PanellAdminComponent implements OnInit {
         {
           label: 'Inscripcions per dia',
           data: data,
-          fill: false,
+          fill: true,
           borderColor: '#D36701',
           tension: 0.4,
         },
