@@ -1,4 +1,5 @@
 import datetime
+from decimal import Decimal
 from utils.response import create_error_response, create_success_response
 from utils.database import get_db_connection
 
@@ -176,13 +177,12 @@ def lambda_handler(event, context):
                 """)
                 inscripcions = cursor.fetchall()
 
-                # Format dates and return accumulated count
                 stats["inscripcionsPorDia"] = {
                     (
                         row["dia"].strftime("%Y-%m-%d")
                         if isinstance(row["dia"], (datetime.date, datetime.datetime))
                         else row["dia"]
-                    ): row["accumulated_count"]
+                    ): int(row["accumulated_count"]) if isinstance(row["accumulated_count"], Decimal) else row["accumulated_count"]
                     for row in inscripcions
                 }
 
