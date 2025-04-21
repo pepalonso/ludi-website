@@ -80,4 +80,4 @@ and inside the container run:
 .\db-cli
 ```
 
-Do don`t have to activate the python environment to run this
+Do don't have to activate the python environment to run this
