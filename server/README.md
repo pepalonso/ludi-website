@@ -72,3 +72,12 @@ and inside the container run:
     #If not, run withouit admin
     mariadb -u root -p
 ```
+
+## Connecting to the Production DB:
+- You will need to go to the `server`fodler and run:
+
+```bash
+.\db-cli
+```
+
+Do don't have to activate the python environment to run this

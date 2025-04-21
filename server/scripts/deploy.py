@@ -7,26 +7,66 @@ import zipfile
 
 # --------- CONFIGURATION ---------
 LAMBDA_FUNCTIONS = [
-    {
-      "function_name": "write-to-db",
-      "sam_build_dir": ".aws-sam/build/HandleTeamInscription",
-      "zip_filename": "lambda.zip",
-    },
-    #{
+    # {
+    #  "function_name": "write-to-db",
+    #  "sam_build_dir": ".aws-sam/build/HandleTeamInscription",
+    #  "zip_filename": "lambda.zip",
+    # },
+    # {
     #    "function_name": "send-WA",
     #    "sam_build_dir": ".aws-sam/build/SendWA",
     #    "zip_filename": "lambda2.zip",
-    #},
-    #{
+    # },
+    # {
     #    "function_name": "authorizer",
     #    "sam_build_dir": ".aws-sam/build/AuthorizeWA",
     #    "zip_filename": "lambda3.zip",
-    #},
-    #{
+    # },
+    # {
     #    "function_name": "fitxes_uploader",
     #    "sam_build_dir": ".aws-sam/build/FitxesUploader",
     #    "zip_filename": "fitxes_uploader.zip",
-    #},
+    # },
+    # {
+    #     "function_name": "n8n_reader",
+    #     "sam_build_dir": ".aws-sam/build/n8nReader",
+    #     "zip_filename": "n8nReader.zip",
+    # },
+    # {
+    #    "function_name": "admin_authorizer",
+    #    "sam_build_dir": ".aws-sam/build/adminAuthorizer",
+    #    "zip_filename": "adminAuthorization.zip",
+    # },
+    # {
+    #    "function_name": "global_reader",
+    #    "sam_build_dir": ".aws-sam/build/globalData",
+    #    "zip_filename": "globalDataReader.zip",
+    # },
+    # {
+    #     "function_name": "twofa_generator",
+    #     "sam_build_dir": ".aws-sam/build/twoFactorGenerator",
+    #     "zip_filename": "2fa_generator.zip",
+    # }
+    # {
+    #     "function_name": "twofa_validator",
+    #     "sam_build_dir": ".aws-sam/build/twoFactorValidator",
+    #     "zip_filename": "2fa_validator.zip",
+    # }
+    # {
+    #     "function_name": "db_cli",
+    #     "sam_build_dir": ".aws-sam/build/dbConnector",
+    #     "zip_filename": "db_cli.zip",
+    # }
+    # {
+    #     "function_name": "send_wa_two_fa",
+    #     "sam_build_dir": ".aws-sam/build/SendWATwoFA",
+    #     "zip_filename": "send_wa_two_fa.zip",
+    # }
+    {
+        "function_name": "get_admin_session_token",
+        "sam_build_dir": ".aws-sam/build/GetSessionToken",
+        "zip_filename": "get_admin_session_token.zip",
+    }
 ]
 
 lambda_client = boto3.client("lambda")

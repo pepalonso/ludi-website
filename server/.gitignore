@@ -20,3 +20,6 @@ env/
 # Ignore packaged.yml
 
 packaged.yml
+
+# firebase json
+src/admin/serviceAccountKey.json
