@@ -61,6 +61,7 @@ def lambda_handler(event, context):
                         (SELECT COUNT(*) FROM entrenadors WHERE id_equip = e.id) as entrenadors
                     FROM equips e
                     JOIN clubs c ON e.club_id = c.id
+                    ORDER BY e.id ASC;
                 """
 
                 filters = []
