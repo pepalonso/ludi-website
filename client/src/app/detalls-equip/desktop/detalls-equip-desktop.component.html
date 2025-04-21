@@ -27,7 +27,7 @@
         <span class="label">Club</span>
         <span class="value">{{ team.club }}</span>
       </div>
-      <div class="info-item" *ngIff="team.nomEquip">
+      <div class="info-item" *ngIf="team.nomEquip">
         <span class="label">Nom Equip</span>
         <span class="value">{{ team.nomEquip }}</span>
       </div>
@@ -46,7 +46,7 @@
   <div class="payment-info">
   <section class="payment-section">
     <h2>Informació pagament</h2>
-    <div class="info-card">
+    <div class="info-card-pagament">
       <div class="info-row">
         <span class="info-label">Compte Bancari</span>
         <div class="copy-value">
@@ -78,7 +78,7 @@
 
 
 
- 
+
 
   <!-- Div 2: Coaches Information -->
   <div class="coaches-info">
@@ -122,6 +122,7 @@
         </div>
       </div>
     </section>
+    <button class="edit-button" (click)="navigateToEdit()">Editar Inscripció</button>
   </div>
 
   <!-- Div 4: Allergies Information -->

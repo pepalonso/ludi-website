@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Sexe, TallaSamarreta, Team } from '../interfaces/ludi.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { environment } from '../../environments/environment';
 import { mapTeamResponse } from './data-mapper';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TeamMobileComponent } from './mobile/detalls-equip-monile.component';
 import { TeamDesktopComponent } from './desktop/detalls-equip-desktop.component';
+import { environment } from '../../environments/environment.prod';
 
 
 @Component({
@@ -23,7 +23,7 @@ import { TeamDesktopComponent } from './desktop/detalls-equip-desktop.component'
   styleUrl: './detalls-equip.component.css',
 })
 export class DetallsEquipComponent implements OnInit {
-  private token?: string;
+  public token?: string;
   public team?: Team;
   public error: boolean = false;
   public isDesktop: boolean = false;
@@ -53,7 +53,9 @@ export class DetallsEquipComponent implements OnInit {
   }
 
   private async fetchTeamDetails(token: string): Promise<void> {
-    const url = `https://${environment.apiUrl}/inscripcio`;
+    const url = environment.production
+      ? `https://${environment.apiUrl}/inscripcio`
+      : `http://${environment.apiUrl}/inscripcio`;
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',

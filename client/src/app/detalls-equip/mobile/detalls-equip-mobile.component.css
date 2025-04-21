@@ -244,7 +244,7 @@ h3 {
 /* Principal badge */
 .principal-badge {
   background-color: var(--primary);
-  color: #fff;
+  color: black;
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 12px;
@@ -375,4 +375,23 @@ h3 {
 
 .toast-close:hover {
   opacity: 1;
+}
+
+.edit-button {
+  display: block;
+  width: 100%;
+  background-color: var(--primary);
+  color: black;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 20px 0;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
 }
