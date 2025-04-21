@@ -166,9 +166,14 @@ def lambda_handler(event, context):
                 }
 
                 # Inscripcions per Dia (using the data_incripcio timestamp)
-                cursor.execute(
-                    "SELECT DATE(data_incripcio) as dia, COUNT(*) as count FROM equips GROUP BY dia;"
-                )
+                cursor.execute("""
+                    SELECT dia, SUM(count) OVER (ORDER BY dia) as accumulated_count
+                    FROM (
+                        SELECT DATE(data_incripcio) as dia, COUNT(*) as count 
+                        FROM equips 
+                        GROUP BY dia
+                    ) as daily_counts;
+                """)
                 inscripcions = cursor.fetchall()
                 # Convert date objects to string formatted as YYYY-MM-DD
                 stats["inscripcionsPorDia"] = {
