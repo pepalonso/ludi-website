@@ -188,10 +188,13 @@ export class PanellAdminComponent implements OnInit {
     try {
       await Promise.all([
         this.loadClubs(),
-        this.loadEquips(filters),
         this.loadJugadors(),
         this.loadEntrenadors(),
         this.loadStatistics(),
+        setTimeout(() => {
+          this.loadEquips(filters)
+        }, 200), // Await for clubs to load before loading equips
+        ,
       ]);
 
       this.prepareFilters();
