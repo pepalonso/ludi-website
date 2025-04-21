@@ -165,7 +165,7 @@ def lambda_handler(event, context):
                     row["sexe"]: row["count"] for row in equips_sexe
                 }
 
-                # Inscripcions per Dia (using the data_incripcio timestamp)
+                # Accumulated inscriptions per day
                 cursor.execute("""
                     SELECT dia, SUM(count) OVER (ORDER BY dia) as accumulated_count
                     FROM (
@@ -175,13 +175,14 @@ def lambda_handler(event, context):
                     ) as daily_counts;
                 """)
                 inscripcions = cursor.fetchall()
-                # Convert date objects to string formatted as YYYY-MM-DD
+
+                # Format dates and return accumulated count
                 stats["inscripcionsPorDia"] = {
                     (
                         row["dia"].strftime("%Y-%m-%d")
                         if isinstance(row["dia"], (datetime.date, datetime.datetime))
                         else row["dia"]
-                    ): row["count"]
+                    ): row["accumulated_count"]
                     for row in inscripcions
                 }
 
