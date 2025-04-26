@@ -1,0 +1,36 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #1e1e1e;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  padding: 1.5rem;
+  gap: 1.5rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 300px;
+    flex-shrink: 0;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .content {
+    flex: 1;
+  }
+}

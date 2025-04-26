@@ -1,0 +1,23 @@
+<div class="filters">
+  <div class="filter-group">
+    <h3 class="filter-title">Filter by Court</h3>
+    <div class="court-filters">
+      <button
+        class="btn-court"
+        [class.active]="selectedCourt === null"
+        (click)="selectCourt(null)"
+      >
+        All Courts
+      </button>
+
+      <button
+        *ngFor="let court of courts$ | async"
+        class="btn-court"
+        [class.active]="selectedCourt === court"
+        (click)="selectCourt(court)"
+      >
+        {{ court }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="tournament-grid">
+  <ng-container *ngFor="let date of uniqueDates$ | async">
+    <div class="date-section">
+      <h2 class="date-header">{{ formatDate(date) }}</h2>
+
+      <div class="courts-grid">
+        <ng-container *ngFor="let court of uniqueCourts$ | async">
+          <div class="court-column">
+            <div class="court-header">{{ court }}</div>
+
+            <div class="court-slots">
+              <ng-container
+                *ngFor="let slot of getSlotsByDateAndCourt(date, court) | async"
+              >
+                <div class="slot-container" [class.empty]="!slot.match">
+                  <ng-container *ngIf="slot.match; else emptySlot">
+                    <app-match-card [match]="slot.match"></app-match-card>
+                  </ng-container>
+                  <ng-template #emptySlot>
+                    <div class="empty-slot">
+                      <div class="slot-time">{{ slot.time }}</div>
+                      <div class="slot-message">No match scheduled</div>
+                    </div>
+                  </ng-template>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,616 @@
+{
+  "teams": [
+    {
+      "name": "BÀSQUET CAT",
+      "category": "CADET",
+      "gender": "M",
+      "id": 1
+    },
+    {
+      "name": "BÀSQUET CAT",
+      "category": "JÚNIOR",
+      "gender": "M",
+      "id": 2
+    },
+    {
+      "name": "BÀSQUET CAT",
+      "category": "MINI",
+      "gender": "F",
+      "id": 3
+    },
+    {
+      "name": "BÀSQUET CAT",
+      "category": "MINI",
+      "gender": "M",
+      "id": 4
+    },
+    {
+      "name": "BÀSQUET GIRONA",
+      "category": "MINI",
+      "gender": "M",
+      "id": 5
+    },
+    {
+      "name": "BÀSQUET GIRONA",
+      "category": "MINI",
+      "gender": "M",
+      "id": 6
+    },
+    {
+      "name": "BC MAÇANET",
+      "category": "CADET",
+      "gender": "M",
+      "id": 7
+    },
+    {
+      "name": "BC MAÇANET",
+      "category": "JÚNIOR",
+      "gender": "F",
+      "id": 8
+    },
+    {
+      "name": "BC MAÇANET",
+      "category": "MINI",
+      "gender": "M",
+      "id": 9
+    },
+    {
+      "name": "BC MAÇANET",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 10
+    },
+    {
+      "name": "CB ANGLÈS",
+      "category": "MINI",
+      "gender": "M",
+      "id": 11
+    },
+    {
+      "name": "CB ANGLÈS",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 12
+    },
+    {
+      "name": "CB ARGENTONA",
+      "category": "PRE-MINI",
+      "gender": "M",
+      "id": 13
+    },
+    {
+      "name": "CB CANOVELLES",
+      "category": "CADET",
+      "gender": "F",
+      "id": 14
+    },
+    {
+      "name": "CB CANOVELLES",
+      "category": "CADET",
+      "gender": "M",
+      "id": 15
+    },
+    {
+      "name": "CB CANOVELLES",
+      "category": "CADET",
+      "gender": "M",
+      "id": 16
+    },
+    {
+      "name": "CB CANOVELLES",
+      "category": "JÚNIOR",
+      "gender": "M",
+      "id": 17
+    },
+    {
+      "name": "CB CANOVELLES",
+      "category": "JÚNIOR",
+      "gender": "F",
+      "id": 18
+    },
+    {
+      "name": "CB CANOVELLES",
+      "category": "MINI",
+      "gender": "F",
+      "id": 19
+    },
+    {
+      "name": "CB CANOVELLES",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "F",
+      "id": 20
+    },
+    {
+      "name": "CB CANOVELLES",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 21
+    },
+    {
+      "name": "CB FARNERS",
+      "category": "MINI",
+      "gender": "F",
+      "id": 22
+    },
+    {
+      "name": "CB FARNERS",
+      "category": "PRE-MINI",
+      "gender": "M",
+      "id": 23
+    },
+    {
+      "name": "CB FRANQUESES",
+      "category": "CADET",
+      "gender": "F",
+      "id": 24
+    },
+    {
+      "name": "CB FRANQUESES",
+      "category": "MINI",
+      "gender": "F",
+      "id": 25
+    },
+    {
+      "name": "CB FRANQUESES",
+      "category": "MINI",
+      "gender": "M",
+      "id": 26
+    },
+    {
+      "name": "CB FRANQUESES",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "F",
+      "id": 27
+    },
+    {
+      "name": "CB GRAMENET",
+      "category": "JÚNIOR",
+      "gender": "F",
+      "id": 28
+    },
+    {
+      "name": "CB GRAMENET",
+      "category": "JÚNIOR",
+      "gender": "M",
+      "id": 29
+    },
+    {
+      "name": "CB GRAMENET",
+      "category": "PRE-MINI",
+      "gender": "M",
+      "id": 30
+    },
+    {
+      "name": "CB GRAMENET",
+      "category": "PRE-MINI",
+      "gender": "M",
+      "id": 31
+    },
+    {
+      "name": "CB GRAMENET",
+      "category": "CADET",
+      "gender": "M",
+      "id": 32
+    },
+    {
+      "name": "CB GRAMENET",
+      "category": "CADET",
+      "gender": "F",
+      "id": 33
+    },
+    {
+      "name": "CB GRAMENET",
+      "category": "MINI",
+      "gender": "F",
+      "id": 34
+    },
+    {
+      "name": "CB GRAMENET",
+      "category": "MINI",
+      "gender": "M",
+      "id": 35
+    },
+    {
+      "name": "CB GRAMENET",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 36
+    },
+    {
+      "name": "CB GRAMENET",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "F",
+      "id": 37
+    },
+    {
+      "name": "CB GRAMENET",
+      "category": "CADET",
+      "gender": "F",
+      "id": 38
+    },
+    {
+      "name": "CB GRAMENET",
+      "category": "MINI",
+      "gender": "F",
+      "id": 39
+    },
+    {
+      "name": "CB GRAMENET",
+      "category": "MINI",
+      "gender": "M",
+      "id": 40
+    },
+    {
+      "name": "CB HOSTALRIC",
+      "category": "MINI",
+      "gender": "F",
+      "id": 41
+    },
+    {
+      "name": "CB HOSTALRIC",
+      "category": "MINI",
+      "gender": "M",
+      "id": 42
+    },
+    {
+      "name": "CB HOSTALRIC",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 43
+    },
+    {
+      "name": "CB NOU CAULÈS",
+      "category": "MINI",
+      "gender": "M",
+      "id": 44
+    },
+    {
+      "name": "CB NOU CAULÈS",
+      "category": "CADET",
+      "gender": "M",
+      "id": 45
+    },
+    {
+      "name": "CB NOU CAULÈS",
+      "category": "JÚNIOR",
+      "gender": "M",
+      "id": 46
+    },
+    {
+      "name": "CB NOU CAULÈS",
+      "category": "MINI",
+      "gender": "F",
+      "id": 47
+    },
+    {
+      "name": "CB NOU CAULÈS",
+      "category": "PRE-MINI",
+      "gender": "M",
+      "id": 48
+    },
+    {
+      "name": "CB NOU CAULÈS",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 49
+    },
+    {
+      "name": "CB NOU CAULÈS",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 50
+    },
+    {
+      "name": "CB PALAFRUGELL",
+      "category": "CADET",
+      "gender": "F",
+      "id": 51
+    },
+    {
+      "name": "CB QUART",
+      "category": "CADET",
+      "gender": "F",
+      "id": 52
+    },
+    {
+      "name": "CB SALT",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 53
+    },
+    {
+      "name": "CB SANT CLIMENT",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "F",
+      "id": 54
+    },
+    {
+      "name": "CB SANTA PERPETUA",
+      "category": "JÚNIOR",
+      "gender": "M",
+      "id": 55
+    },
+    {
+      "name": "CB SANTA PERPETUA",
+      "category": "MINI",
+      "gender": "F",
+      "id": 56
+    },
+    {
+      "name": "CB SANTA PERPETUA",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 57
+    },
+    {
+      "name": "CB SANTA PERPETUA",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 58
+    },
+    {
+      "name": "CB UESA",
+      "category": "JÚNIOR",
+      "gender": "M",
+      "id": 59
+    },
+    {
+      "name": "CB VILANOVA",
+      "category": "CADET",
+      "gender": "F",
+      "id": 60
+    },
+    {
+      "name": "CB VILANOVA",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 61
+    },
+    {
+      "name": "CB VILANOVA",
+      "category": "CADET",
+      "gender": "M",
+      "id": 62
+    },
+    {
+      "name": "CB VILANOVA",
+      "category": "CADET",
+      "gender": "M",
+      "id": 63
+    },
+    {
+      "name": "CB VILANOVA",
+      "category": "CADET",
+      "gender": "M",
+      "id": 64
+    },
+    {
+      "name": "CBU LLORET",
+      "category": "CADET",
+      "gender": "M",
+      "id": 65
+    },
+    {
+      "name": "CBU LLORET",
+      "category": "JÚNIOR",
+      "gender": "F",
+      "id": 66
+    },
+    {
+      "name": "CBU LLORET",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "F",
+      "id": 67
+    },
+    {
+      "name": "CE JOVENTUT CELRÀ",
+      "category": "MINI",
+      "gender": "M",
+      "id": 68
+    },
+    {
+      "name": "CE ONYAR",
+      "category": "JÚNIOR",
+      "gender": "F",
+      "id": 69
+    },
+    {
+      "name": "CE PALAMÓS",
+      "category": "CADET",
+      "gender": "F",
+      "id": 70
+    },
+    {
+      "name": "CE PALAMÓS",
+      "category": "CADET",
+      "gender": "M",
+      "id": 71
+    },
+    {
+      "name": "CEEB TORDERA",
+      "category": "MINI",
+      "gender": "M",
+      "id": 72
+    },
+    {
+      "name": "CEISSA",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 73
+    },
+    {
+      "name": "EEM CALDES",
+      "category": "MINI",
+      "gender": "M",
+      "id": 74
+    },
+    {
+      "name": "EEM CALDES",
+      "category": "MINI",
+      "gender": "F",
+      "id": 75
+    },
+    {
+      "name": "ESCOLA PIA OLOT",
+      "category": "MINI",
+      "gender": "F",
+      "id": 76
+    },
+    {
+      "name": "ESCOLA PIA OLOT",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "F",
+      "id": 77
+    },
+    {
+      "name": "ESCOLA PIA OLOT",
+      "category": "PRE-MINI",
+      "gender": "M",
+      "id": 78
+    },
+    {
+      "name": "FD CASSANENC",
+      "category": "CADET",
+      "gender": "F",
+      "id": 79
+    },
+    {
+      "name": "FD CASSANENC",
+      "category": "MINI",
+      "gender": "F",
+      "id": 80
+    },
+    {
+      "name": "SANT JOAN DE MATA",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "F",
+      "id": 81
+    },
+    {
+      "name": "SANT JOAN DE MATA",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "F",
+      "id": 82
+    },
+    {
+      "name": "SANT JOAN DE MATA",
+      "category": "MINI",
+      "gender": "M",
+      "id": 83
+    },
+    {
+      "name": "SANT JOAN DE MATA",
+      "category": "MINI",
+      "gender": "M",
+      "id": 84
+    },
+    {
+      "name": "SANT JOAN DE MATA",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 85
+    },
+    {
+      "name": "SANT JOAN DE MATA",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 86
+    },
+    {
+      "name": "SANT JOAN DE MATA",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "F",
+      "id": 87
+    },
+    {
+      "name": "SANT JOAN DE MATA",
+      "category": "MINI",
+      "gender": "F",
+      "id": 88
+    },
+    {
+      "name": "SERRIÀ DE TER",
+      "category": "CADET",
+      "gender": "F",
+      "id": 89
+    },
+    {
+      "name": "SERRIÀ DE TER",
+      "category": "JÚNIOR",
+      "gender": "F",
+      "id": 90
+    },
+    {
+      "name": "SERRIÀ DE TER",
+      "category": "MINI",
+      "gender": "M",
+      "id": 91
+    },
+    {
+      "name": "SERRIÀ DE TER",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "F",
+      "id": 92
+    },
+    {
+      "name": "SERRIÀ DE TER",
+      "category": "PRE-MINI",
+      "gender": "M",
+      "id": 93
+    },
+    {
+      "name": "UA TOSSA",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "F",
+      "id": 94
+    },
+    {
+      "name": "UE CELLERA AMER",
+      "category": "CADET",
+      "gender": "M",
+      "id": 95
+    },
+    {
+      "name": "UE CELLERA AMER",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 96
+    },
+    {
+      "name": "UE CELLERA AMER",
+      "category": "PRE-MINI",
+      "gender": "M",
+      "id": 97
+    },
+    {
+      "name": "UE CELLERA AMER",
+      "category": "JÚNIOR",
+      "gender": "F",
+      "id": 98
+    },
+    {
+      "name": "VEDRUNA GIRONA",
+      "category": "CADET",
+      "gender": "F",
+      "id": 99
+    },
+    {
+      "name": "VEDRUNA GIRONA",
+      "category": "MINI",
+      "gender": "F",
+      "id": 100
+    },
+    {
+      "name": "VEDRUNA GIRONA",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "F",
+      "id": 101
+    },
+    {
+      "name": "VEDRUNA PALAMÓS",
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "id": 102
+    }
+  ]
+}

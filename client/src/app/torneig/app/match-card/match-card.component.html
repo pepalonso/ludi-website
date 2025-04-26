@@ -1,0 +1,33 @@
+<div class="match-card" [class.elimination]="isEliminationMatch">
+  <div class="match-header">
+    <div class="match-time">{{ matchTime }}</div>
+    <div class="match-court">{{ matchCourt }}</div>
+    <div *ngIf="isEliminationMatch" class="match-round">{{ matchRound }}</div>
+  </div>
+
+  <div class="match-teams">
+    <div class="team team-a">
+      <ng-container *ngIf="team1$ | async as team1; else pendingTeamA">
+        <div class="team-name">{{ team1.name }}</div>
+        <div class="team-details">{{ team1.category }} {{ team1.gender }}</div>
+      </ng-container>
+      <ng-template #pendingTeamA>
+        <div class="team-name pending">TBD</div>
+        <div class="team-details">Pending</div>
+      </ng-template>
+    </div>
+
+    <div class="match-vs">vs</div>
+
+    <div class="team team-b">
+      <ng-container *ngIf="team2$ | async as team2; else pendingTeamB">
+        <div class="team-name">{{ team2.name }}</div>
+        <div class="team-details">{{ team2.category }} {{ team2.gender }}</div>
+      </ng-container>
+      <ng-template #pendingTeamB>
+        <div class="team-name pending">TBD</div>
+        <div class="team-details">Pending</div>
+      </ng-template>
+    </div>
+  </div>
+</div>

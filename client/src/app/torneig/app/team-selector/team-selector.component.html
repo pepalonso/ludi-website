@@ -1,0 +1,53 @@
+<div class="team-selector">
+  <div class="selector-header">
+    <h2 class="selector-title">Select Team</h2>
+    <button *ngIf="selectedTeamId" class="btn-clear" (click)="clearSelection()">
+      Clear
+    </button>
+  </div>
+
+  <div class="selector-content">
+    <div class="hierarchy-tree">
+      <ng-container *ngFor="let group of teamHierarchy$ | async">
+        <div class="tree-group">
+          <div class="tree-group-header" (click)="toggleGroup(group.id)">
+            <span class="tree-icon">{{
+              isGroupExpanded(group.id) ? "▼" : "►"
+            }}</span>
+            <span class="tree-label">{{ group.name }}</span>
+          </div>
+
+          <div class="tree-group-content" *ngIf="isGroupExpanded(group.id)">
+            <ng-container *ngFor="let subgroup of group.subgroups">
+              <div class="tree-subgroup">
+                <div
+                  class="tree-subgroup-header"
+                  (click)="toggleSubgroup(group.id, subgroup.id)"
+                >
+                  <span class="tree-icon">{{
+                    isSubgroupExpanded(group.id, subgroup.id) ? "▼" : "►"
+                  }}</span>
+                  <span class="tree-label">Group {{ subgroup.name }}</span>
+                </div>
+
+                <div
+                  class="tree-subgroup-content"
+                  *ngIf="isSubgroupExpanded(group.id, subgroup.id)"
+                >
+                  <div
+                    *ngFor="let team of subgroup.teams"
+                    class="tree-team"
+                    [class.selected]="selectedTeamId === team.id"
+                    (click)="selectTeam(team.id)"
+                  >
+                    <span class="tree-team-name">{{ team.name }}</span>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,210 @@
+{
+  "groups": [
+    {
+      "id": 0,
+      "category": "CADET",
+      "gender": "M",
+      "team_count": 12,
+      "schema_key": "12_team_groups",
+      "subgroups": [
+        {
+          "id": 0,
+          "name": "A",
+          "teams": [7, 1, 95, 71]
+        },
+        {
+          "id": 1,
+          "name": "B",
+          "teams": [15, 62, 45, 32]
+        },
+        {
+          "id": 2,
+          "name": "C",
+          "teams": [64, 65, 63, 16]
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "category": "J\u00c3\u0161NIOR",
+      "gender": "M",
+      "team_count": 6,
+      "schema_key": "6_team_groups",
+      "subgroups": [
+        {
+          "id": 0,
+          "name": "A",
+          "teams": [29, 2, 55]
+        },
+        {
+          "id": 1,
+          "name": "B",
+          "teams": [17, 59, 46]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "category": "MINI",
+      "gender": "F",
+      "team_count": 14,
+      "schema_key": "14_team_groups",
+      "subgroups": [
+        {
+          "id": 0,
+          "name": "A",
+          "teams": [47, 41, 25, 22, 88]
+        },
+        {
+          "id": 1,
+          "name": "B",
+          "teams": [39, 80, 100, 19, 34]
+        },
+        {
+          "id": 2,
+          "name": "C",
+          "teams": [75, 76, 3, 56]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "category": "MINI",
+      "gender": "M",
+      "team_count": 16,
+      "schema_key": "16_team_groups",
+      "subgroups": [
+        {
+          "id": 0,
+          "name": "A",
+          "teams": [74, 40, 9, 5]
+        },
+        {
+          "id": 1,
+          "name": "B",
+          "teams": [84, 11, 44, 6]
+        },
+        {
+          "id": 2,
+          "name": "C",
+          "teams": [68, 83, 42, 72]
+        },
+        {
+          "id": 3,
+          "name": "D",
+          "teams": [91, 4, 26, 35]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "category": "J\u00c3\u0161NIOR",
+      "gender": "F",
+      "team_count": 7,
+      "schema_key": "7_team_groups",
+      "subgroups": [
+        {
+          "id": 0,
+          "name": "A",
+          "teams": [28, 98, 69, 66]
+        },
+        {
+          "id": 1,
+          "name": "B",
+          "teams": [8, 18, 90]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "M",
+      "team_count": 16,
+      "schema_key": "16_team_groups",
+      "subgroups": [
+        {
+          "id": 0,
+          "name": "A",
+          "teams": [57, 21, 85, 102]
+        },
+        {
+          "id": 1,
+          "name": "B",
+          "teams": [43, 50, 36, 10]
+        },
+        {
+          "id": 2,
+          "name": "C",
+          "teams": [58, 96, 53, 12]
+        },
+        {
+          "id": 3,
+          "name": "D",
+          "teams": [73, 86, 61, 49]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "category": "PRE-MINI",
+      "gender": "M",
+      "team_count": 8,
+      "schema_key": "8_team_groups",
+      "subgroups": [
+        {
+          "id": 0,
+          "name": "A",
+          "teams": [23, 13, 93, 78]
+        },
+        {
+          "id": 1,
+          "name": "B",
+          "teams": [97, 30, 48, 31]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "category": "CADET",
+      "gender": "F",
+      "team_count": 11,
+      "schema_key": "11_team_groups",
+      "subgroups": [
+        {
+          "id": 0,
+          "name": "A",
+          "teams": [14, 33, 52, 79, 24, 99]
+        },
+        {
+          "id": 1,
+          "name": "B",
+          "teams": [60, 51, 70, 89, 38]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "category": "PRE-INFANTIL / INFANTIL",
+      "gender": "F",
+      "team_count": 12,
+      "schema_key": "12_team_groups",
+      "subgroups": [
+        {
+          "id": 0,
+          "name": "A",
+          "teams": [101, 81, 82, 77]
+        },
+        {
+          "id": 1,
+          "name": "B",
+          "teams": [37, 87, 92, 67]
+        },
+        {
+          "id": 2,
+          "name": "C",
+          "teams": [54, 20, 94, 27]
+        }
+      ]
+    }
+  ]
+}

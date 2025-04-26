@@ -13,20 +13,25 @@ import { EditRegistrationComponent } from './editar-equip/editar-equip.component
 import { LoginComponent } from './login/login.component';
 import { PanellAdminComponent } from './panell-admin/panell-admin.component';
 import { EditarEquipAuthComponent } from './editar-equip-auth/editar-equip-auth.component';
+import { ScherulerComponent } from './torneig/app/scheruler.component';
 
 export const routes: Routes = [
-  { path: 'administrador-login', component: LoginComponent},
-  { path: 'administrador', component: PanellAdminComponent},
+  { path: 'administrador-login', component: LoginComponent },
+  { path: 'administrador', component: PanellAdminComponent },
   { path: 'equip', component: DetallsEquipComponent },
   { path: 'countdown', component: LudiCountdown },
   { path: 'ludi3x3', component: Ludi3x3Component },
-  { path: 'info-inscripcions', component: InformacioInscripcioComponent},
+  { path: 'info-inscripcions', component: InformacioInscripcioComponent },
   { path: 'inscripcions', component: TeamFormComponent },
   { path: 'stepper', component: SteperComponent },
   { path: 'contactawha', component: RedirectorComponent },
   { path: 'inscripcio-completa', component: RegistrationSuccessComponent },
-  { path: '404', component: NotFoundComponent},
-  { path: 'editar-inscripcio', component: EditRegistrationComponent},
-  { path: 'editar-inscripcio-autentificacio', component: EditarEquipAuthComponent},
+  { path: '404', component: NotFoundComponent },
+  { path: 'editar-inscripcio', component: EditRegistrationComponent },
+  {
+    path: 'editar-inscripcio-autentificacio',
+    component: EditarEquipAuthComponent,
+  },
+  { path: 'quadrant-builder', component: ScherulerComponent },
   { path: '**', redirectTo: '/countdown', pathMatch: 'full' },
 ];

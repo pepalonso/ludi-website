@@ -1,0 +1,73 @@
+.match-card {
+  background-color: #2d2d2d;
+  border-radius: 6px;
+  overflow: hidden;
+  color: #ffffff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &.elimination {
+    background-color: #3d3d3d;
+    border: 1px dashed #e67e22;
+  }
+
+  .match-header {
+    background-color: #333;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .match-time {
+      font-weight: bold;
+    }
+
+    .match-court {
+      background-color: #444;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
+    .match-round {
+      color: #e67e22;
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+
+  .match-teams {
+    padding: 0.75rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .team {
+      margin-bottom: 0.5rem;
+
+      &-name {
+        font-weight: bold;
+        font-size: 1.1rem;
+
+        &.pending {
+          color: #888;
+          font-style: italic;
+        }
+      }
+
+      &-details {
+        font-size: 0.8rem;
+        color: #aaa;
+      }
+    }
+
+    .match-vs {
+      text-align: center;
+      color: #888;
+      margin: 0.5rem 0;
+    }
+  }
+}
