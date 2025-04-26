@@ -1,0 +1,1512 @@
+{
+  "matches": [
+    {
+      "id": 0,
+      "group_id": 0,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 7,
+      "team_b_id": 1
+    },
+    {
+      "id": 1,
+      "group_id": 0,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 7,
+      "team_b_id": 95
+    },
+    {
+      "id": 2,
+      "group_id": 0,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 7,
+      "team_b_id": 71
+    },
+    {
+      "id": 3,
+      "group_id": 0,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 1,
+      "team_b_id": 95
+    },
+    {
+      "id": 4,
+      "group_id": 0,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 1,
+      "team_b_id": 71
+    },
+    {
+      "id": 5,
+      "group_id": 0,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 95,
+      "team_b_id": 71
+    },
+    {
+      "id": 6,
+      "group_id": 0,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 15,
+      "team_b_id": 62
+    },
+    {
+      "id": 7,
+      "group_id": 0,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 15,
+      "team_b_id": 45
+    },
+    {
+      "id": 8,
+      "group_id": 0,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 15,
+      "team_b_id": 32
+    },
+    {
+      "id": 9,
+      "group_id": 0,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 62,
+      "team_b_id": 45
+    },
+    {
+      "id": 10,
+      "group_id": 0,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 62,
+      "team_b_id": 32
+    },
+    {
+      "id": 11,
+      "group_id": 0,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 45,
+      "team_b_id": 32
+    },
+    {
+      "id": 12,
+      "group_id": 0,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 64,
+      "team_b_id": 65
+    },
+    {
+      "id": 13,
+      "group_id": 0,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 64,
+      "team_b_id": 63
+    },
+    {
+      "id": 14,
+      "group_id": 0,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 64,
+      "team_b_id": 16
+    },
+    {
+      "id": 15,
+      "group_id": 0,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 65,
+      "team_b_id": 63
+    },
+    {
+      "id": 16,
+      "group_id": 0,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 65,
+      "team_b_id": 16
+    },
+    {
+      "id": 17,
+      "group_id": 0,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 63,
+      "team_b_id": 16
+    },
+    {
+      "id": 18,
+      "group_id": 0,
+      "phase": "semifinals",
+      "match_index": 0,
+      "possible_a_teams": [7, 1, 95, 71],
+      "possible_b_teams": [15, 62, 45, 32]
+    },
+    {
+      "id": 19,
+      "group_id": 0,
+      "phase": "semifinals",
+      "match_index": 1,
+      "possible_a_teams": [64, 65, 63, 16],
+      "possible_b_teams": [7, 1, 95, 71, 15, 62, 45, 32, 64, 65, 63, 16]
+    },
+    {
+      "id": 20,
+      "group_id": 0,
+      "phase": "final",
+      "match_index": 0,
+      "possible_a_teams": [7, 1, 95, 71, 15, 62, 45, 32],
+      "possible_b_teams": [
+        64, 65, 63, 16, 7, 1, 95, 71, 15, 62, 45, 32, 64, 65, 63, 16
+      ]
+    },
+    {
+      "id": 21,
+      "group_id": 1,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 29,
+      "team_b_id": 2
+    },
+    {
+      "id": 22,
+      "group_id": 1,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 29,
+      "team_b_id": 55
+    },
+    {
+      "id": 23,
+      "group_id": 1,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 2,
+      "team_b_id": 55
+    },
+    {
+      "id": 24,
+      "group_id": 1,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 17,
+      "team_b_id": 59
+    },
+    {
+      "id": 25,
+      "group_id": 1,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 17,
+      "team_b_id": 46
+    },
+    {
+      "id": 26,
+      "group_id": 1,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 59,
+      "team_b_id": 46
+    },
+    {
+      "id": 27,
+      "group_id": 1,
+      "phase": "quarterfinals",
+      "match_index": 0,
+      "possible_a_teams": [29, 2, 55],
+      "possible_b_teams": [17, 59, 46]
+    },
+    {
+      "id": 28,
+      "group_id": 1,
+      "phase": "quarterfinals",
+      "match_index": 1,
+      "possible_a_teams": [29, 2, 55],
+      "possible_b_teams": [17, 59, 46]
+    },
+    {
+      "id": 29,
+      "group_id": 1,
+      "phase": "semifinals",
+      "match_index": 0,
+      "possible_a_teams": [29, 2, 55],
+      "possible_b_teams": [29, 2, 55, 17, 59, 46]
+    },
+    {
+      "id": 30,
+      "group_id": 1,
+      "phase": "semifinals",
+      "match_index": 1,
+      "possible_a_teams": [17, 59, 46],
+      "possible_b_teams": [29, 2, 55, 17, 59, 46]
+    },
+    {
+      "id": 31,
+      "group_id": 1,
+      "phase": "final",
+      "match_index": 0,
+      "possible_a_teams": [29, 2, 55, 29, 2, 55, 17, 59, 46],
+      "possible_b_teams": [17, 59, 46, 29, 2, 55, 17, 59, 46]
+    },
+    {
+      "id": 32,
+      "group_id": 2,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 47,
+      "team_b_id": 41
+    },
+    {
+      "id": 33,
+      "group_id": 2,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 47,
+      "team_b_id": 25
+    },
+    {
+      "id": 34,
+      "group_id": 2,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 47,
+      "team_b_id": 22
+    },
+    {
+      "id": 35,
+      "group_id": 2,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 47,
+      "team_b_id": 88
+    },
+    {
+      "id": 36,
+      "group_id": 2,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 41,
+      "team_b_id": 25
+    },
+    {
+      "id": 37,
+      "group_id": 2,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 41,
+      "team_b_id": 22
+    },
+    {
+      "id": 38,
+      "group_id": 2,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 41,
+      "team_b_id": 88
+    },
+    {
+      "id": 39,
+      "group_id": 2,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 25,
+      "team_b_id": 22
+    },
+    {
+      "id": 40,
+      "group_id": 2,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 25,
+      "team_b_id": 88
+    },
+    {
+      "id": 41,
+      "group_id": 2,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 22,
+      "team_b_id": 88
+    },
+    {
+      "id": 42,
+      "group_id": 2,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 39,
+      "team_b_id": 80
+    },
+    {
+      "id": 43,
+      "group_id": 2,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 39,
+      "team_b_id": 100
+    },
+    {
+      "id": 44,
+      "group_id": 2,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 39,
+      "team_b_id": 19
+    },
+    {
+      "id": 45,
+      "group_id": 2,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 39,
+      "team_b_id": 34
+    },
+    {
+      "id": 46,
+      "group_id": 2,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 80,
+      "team_b_id": 100
+    },
+    {
+      "id": 47,
+      "group_id": 2,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 80,
+      "team_b_id": 19
+    },
+    {
+      "id": 48,
+      "group_id": 2,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 80,
+      "team_b_id": 34
+    },
+    {
+      "id": 49,
+      "group_id": 2,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 100,
+      "team_b_id": 19
+    },
+    {
+      "id": 50,
+      "group_id": 2,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 100,
+      "team_b_id": 34
+    },
+    {
+      "id": 51,
+      "group_id": 2,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 19,
+      "team_b_id": 34
+    },
+    {
+      "id": 52,
+      "group_id": 2,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 75,
+      "team_b_id": 76
+    },
+    {
+      "id": 53,
+      "group_id": 2,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 75,
+      "team_b_id": 3
+    },
+    {
+      "id": 54,
+      "group_id": 2,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 75,
+      "team_b_id": 56
+    },
+    {
+      "id": 55,
+      "group_id": 2,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 76,
+      "team_b_id": 3
+    },
+    {
+      "id": 56,
+      "group_id": 2,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 76,
+      "team_b_id": 56
+    },
+    {
+      "id": 57,
+      "group_id": 2,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 3,
+      "team_b_id": 56
+    },
+    {
+      "id": 58,
+      "group_id": 2,
+      "phase": "semifinals",
+      "match_index": 0,
+      "possible_a_teams": [47, 41, 25, 22, 88],
+      "possible_b_teams": [39, 80, 100, 19, 34]
+    },
+    {
+      "id": 59,
+      "group_id": 2,
+      "phase": "final",
+      "match_index": 0,
+      "possible_a_teams": [47, 41, 25, 22, 88],
+      "possible_b_teams": [47, 41, 25, 22, 88, 39, 80, 100, 19, 34]
+    },
+    {
+      "id": 60,
+      "group_id": 3,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 74,
+      "team_b_id": 40
+    },
+    {
+      "id": 61,
+      "group_id": 3,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 74,
+      "team_b_id": 9
+    },
+    {
+      "id": 62,
+      "group_id": 3,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 74,
+      "team_b_id": 5
+    },
+    {
+      "id": 63,
+      "group_id": 3,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 40,
+      "team_b_id": 9
+    },
+    {
+      "id": 64,
+      "group_id": 3,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 40,
+      "team_b_id": 5
+    },
+    {
+      "id": 65,
+      "group_id": 3,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 9,
+      "team_b_id": 5
+    },
+    {
+      "id": 66,
+      "group_id": 3,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 84,
+      "team_b_id": 11
+    },
+    {
+      "id": 67,
+      "group_id": 3,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 84,
+      "team_b_id": 44
+    },
+    {
+      "id": 68,
+      "group_id": 3,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 84,
+      "team_b_id": 6
+    },
+    {
+      "id": 69,
+      "group_id": 3,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 11,
+      "team_b_id": 44
+    },
+    {
+      "id": 70,
+      "group_id": 3,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 11,
+      "team_b_id": 6
+    },
+    {
+      "id": 71,
+      "group_id": 3,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 44,
+      "team_b_id": 6
+    },
+    {
+      "id": 72,
+      "group_id": 3,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 68,
+      "team_b_id": 83
+    },
+    {
+      "id": 73,
+      "group_id": 3,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 68,
+      "team_b_id": 42
+    },
+    {
+      "id": 74,
+      "group_id": 3,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 68,
+      "team_b_id": 72
+    },
+    {
+      "id": 75,
+      "group_id": 3,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 83,
+      "team_b_id": 42
+    },
+    {
+      "id": 76,
+      "group_id": 3,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 83,
+      "team_b_id": 72
+    },
+    {
+      "id": 77,
+      "group_id": 3,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 42,
+      "team_b_id": 72
+    },
+    {
+      "id": 78,
+      "group_id": 3,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 91,
+      "team_b_id": 4
+    },
+    {
+      "id": 79,
+      "group_id": 3,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 91,
+      "team_b_id": 26
+    },
+    {
+      "id": 80,
+      "group_id": 3,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 91,
+      "team_b_id": 35
+    },
+    {
+      "id": 81,
+      "group_id": 3,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 4,
+      "team_b_id": 26
+    },
+    {
+      "id": 82,
+      "group_id": 3,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 4,
+      "team_b_id": 35
+    },
+    {
+      "id": 83,
+      "group_id": 3,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 26,
+      "team_b_id": 35
+    },
+    {
+      "id": 84,
+      "group_id": 3,
+      "phase": "semifinals",
+      "match_index": 0,
+      "possible_a_teams": [74, 40, 9, 5],
+      "possible_b_teams": [84, 11, 44, 6]
+    },
+    {
+      "id": 85,
+      "group_id": 3,
+      "phase": "semifinals",
+      "match_index": 1,
+      "possible_a_teams": [68, 83, 42, 72],
+      "possible_b_teams": [91, 4, 26, 35]
+    },
+    {
+      "id": 86,
+      "group_id": 3,
+      "phase": "final",
+      "match_index": 0,
+      "possible_a_teams": [74, 40, 9, 5, 84, 11, 44, 6],
+      "possible_b_teams": [68, 83, 42, 72, 91, 4, 26, 35]
+    },
+    {
+      "id": 87,
+      "group_id": 4,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 28,
+      "team_b_id": 98
+    },
+    {
+      "id": 88,
+      "group_id": 4,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 28,
+      "team_b_id": 69
+    },
+    {
+      "id": 89,
+      "group_id": 4,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 28,
+      "team_b_id": 66
+    },
+    {
+      "id": 90,
+      "group_id": 4,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 98,
+      "team_b_id": 69
+    },
+    {
+      "id": 91,
+      "group_id": 4,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 98,
+      "team_b_id": 66
+    },
+    {
+      "id": 92,
+      "group_id": 4,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 69,
+      "team_b_id": 66
+    },
+    {
+      "id": 93,
+      "group_id": 4,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 8,
+      "team_b_id": 18
+    },
+    {
+      "id": 94,
+      "group_id": 4,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 8,
+      "team_b_id": 90
+    },
+    {
+      "id": 95,
+      "group_id": 4,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 18,
+      "team_b_id": 90
+    },
+    {
+      "id": 96,
+      "group_id": 4,
+      "phase": "quarterfinals",
+      "match_index": 0,
+      "possible_a_teams": [28, 98, 69, 66],
+      "possible_b_teams": [8, 18, 90]
+    },
+    {
+      "id": 97,
+      "group_id": 4,
+      "phase": "quarterfinals",
+      "match_index": 1,
+      "possible_a_teams": [28, 98, 69, 66],
+      "possible_b_teams": [8, 18, 90]
+    },
+    {
+      "id": 98,
+      "group_id": 4,
+      "phase": "semifinals",
+      "match_index": 0,
+      "possible_a_teams": [28, 98, 69, 66],
+      "possible_b_teams": [28, 98, 69, 66, 8, 18, 90]
+    },
+    {
+      "id": 99,
+      "group_id": 4,
+      "phase": "semifinals",
+      "match_index": 1,
+      "possible_a_teams": [8, 18, 90],
+      "possible_b_teams": [28, 98, 69, 66, 8, 18, 90]
+    },
+    {
+      "id": 100,
+      "group_id": 4,
+      "phase": "final",
+      "match_index": 0,
+      "possible_a_teams": [28, 98, 69, 66, 28, 98, 69, 66, 8, 18, 90],
+      "possible_b_teams": [8, 18, 90, 28, 98, 69, 66, 8, 18, 90]
+    },
+    {
+      "id": 101,
+      "group_id": 5,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 57,
+      "team_b_id": 21
+    },
+    {
+      "id": 102,
+      "group_id": 5,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 57,
+      "team_b_id": 85
+    },
+    {
+      "id": 103,
+      "group_id": 5,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 57,
+      "team_b_id": 102
+    },
+    {
+      "id": 104,
+      "group_id": 5,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 21,
+      "team_b_id": 85
+    },
+    {
+      "id": 105,
+      "group_id": 5,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 21,
+      "team_b_id": 102
+    },
+    {
+      "id": 106,
+      "group_id": 5,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 85,
+      "team_b_id": 102
+    },
+    {
+      "id": 107,
+      "group_id": 5,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 43,
+      "team_b_id": 50
+    },
+    {
+      "id": 108,
+      "group_id": 5,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 43,
+      "team_b_id": 36
+    },
+    {
+      "id": 109,
+      "group_id": 5,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 43,
+      "team_b_id": 10
+    },
+    {
+      "id": 110,
+      "group_id": 5,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 50,
+      "team_b_id": 36
+    },
+    {
+      "id": 111,
+      "group_id": 5,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 50,
+      "team_b_id": 10
+    },
+    {
+      "id": 112,
+      "group_id": 5,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 36,
+      "team_b_id": 10
+    },
+    {
+      "id": 113,
+      "group_id": 5,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 58,
+      "team_b_id": 96
+    },
+    {
+      "id": 114,
+      "group_id": 5,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 58,
+      "team_b_id": 53
+    },
+    {
+      "id": 115,
+      "group_id": 5,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 58,
+      "team_b_id": 12
+    },
+    {
+      "id": 116,
+      "group_id": 5,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 96,
+      "team_b_id": 53
+    },
+    {
+      "id": 117,
+      "group_id": 5,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 96,
+      "team_b_id": 12
+    },
+    {
+      "id": 118,
+      "group_id": 5,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 53,
+      "team_b_id": 12
+    },
+    {
+      "id": 119,
+      "group_id": 5,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 73,
+      "team_b_id": 86
+    },
+    {
+      "id": 120,
+      "group_id": 5,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 73,
+      "team_b_id": 61
+    },
+    {
+      "id": 121,
+      "group_id": 5,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 73,
+      "team_b_id": 49
+    },
+    {
+      "id": 122,
+      "group_id": 5,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 86,
+      "team_b_id": 61
+    },
+    {
+      "id": 123,
+      "group_id": 5,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 86,
+      "team_b_id": 49
+    },
+    {
+      "id": 124,
+      "group_id": 5,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 61,
+      "team_b_id": 49
+    },
+    {
+      "id": 125,
+      "group_id": 5,
+      "phase": "semifinals",
+      "match_index": 0,
+      "possible_a_teams": [57, 21, 85, 102],
+      "possible_b_teams": [43, 50, 36, 10]
+    },
+    {
+      "id": 126,
+      "group_id": 5,
+      "phase": "semifinals",
+      "match_index": 1,
+      "possible_a_teams": [58, 96, 53, 12],
+      "possible_b_teams": [73, 86, 61, 49]
+    },
+    {
+      "id": 127,
+      "group_id": 5,
+      "phase": "final",
+      "match_index": 0,
+      "possible_a_teams": [57, 21, 85, 102, 43, 50, 36, 10],
+      "possible_b_teams": [58, 96, 53, 12, 73, 86, 61, 49]
+    },
+    {
+      "id": 128,
+      "group_id": 6,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 23,
+      "team_b_id": 13
+    },
+    {
+      "id": 129,
+      "group_id": 6,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 23,
+      "team_b_id": 93
+    },
+    {
+      "id": 130,
+      "group_id": 6,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 23,
+      "team_b_id": 78
+    },
+    {
+      "id": 131,
+      "group_id": 6,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 13,
+      "team_b_id": 93
+    },
+    {
+      "id": 132,
+      "group_id": 6,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 13,
+      "team_b_id": 78
+    },
+    {
+      "id": 133,
+      "group_id": 6,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 93,
+      "team_b_id": 78
+    },
+    {
+      "id": 134,
+      "group_id": 6,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 97,
+      "team_b_id": 30
+    },
+    {
+      "id": 135,
+      "group_id": 6,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 97,
+      "team_b_id": 48
+    },
+    {
+      "id": 136,
+      "group_id": 6,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 97,
+      "team_b_id": 31
+    },
+    {
+      "id": 137,
+      "group_id": 6,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 30,
+      "team_b_id": 48
+    },
+    {
+      "id": 138,
+      "group_id": 6,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 30,
+      "team_b_id": 31
+    },
+    {
+      "id": 139,
+      "group_id": 6,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 48,
+      "team_b_id": 31
+    },
+    {
+      "id": 140,
+      "group_id": 6,
+      "phase": "final",
+      "match_index": 0,
+      "possible_a_teams": [23, 13, 93, 78],
+      "possible_b_teams": [97, 30, 48, 31]
+    },
+    {
+      "id": 141,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 14,
+      "team_b_id": 33
+    },
+    {
+      "id": 142,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 14,
+      "team_b_id": 52
+    },
+    {
+      "id": 143,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 14,
+      "team_b_id": 79
+    },
+    {
+      "id": 144,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 14,
+      "team_b_id": 24
+    },
+    {
+      "id": 145,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 14,
+      "team_b_id": 99
+    },
+    {
+      "id": 146,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 33,
+      "team_b_id": 52
+    },
+    {
+      "id": 147,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 33,
+      "team_b_id": 79
+    },
+    {
+      "id": 148,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 33,
+      "team_b_id": 24
+    },
+    {
+      "id": 149,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 33,
+      "team_b_id": 99
+    },
+    {
+      "id": 150,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 52,
+      "team_b_id": 79
+    },
+    {
+      "id": 151,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 52,
+      "team_b_id": 24
+    },
+    {
+      "id": 152,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 52,
+      "team_b_id": 99
+    },
+    {
+      "id": 153,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 79,
+      "team_b_id": 24
+    },
+    {
+      "id": 154,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 79,
+      "team_b_id": 99
+    },
+    {
+      "id": 155,
+      "group_id": 7,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 24,
+      "team_b_id": 99
+    },
+    {
+      "id": 156,
+      "group_id": 7,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 60,
+      "team_b_id": 51
+    },
+    {
+      "id": 157,
+      "group_id": 7,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 60,
+      "team_b_id": 70
+    },
+    {
+      "id": 158,
+      "group_id": 7,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 60,
+      "team_b_id": 89
+    },
+    {
+      "id": 159,
+      "group_id": 7,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 60,
+      "team_b_id": 38
+    },
+    {
+      "id": 160,
+      "group_id": 7,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 51,
+      "team_b_id": 70
+    },
+    {
+      "id": 161,
+      "group_id": 7,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 51,
+      "team_b_id": 89
+    },
+    {
+      "id": 162,
+      "group_id": 7,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 51,
+      "team_b_id": 38
+    },
+    {
+      "id": 163,
+      "group_id": 7,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 70,
+      "team_b_id": 89
+    },
+    {
+      "id": 164,
+      "group_id": 7,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 70,
+      "team_b_id": 38
+    },
+    {
+      "id": 165,
+      "group_id": 7,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 89,
+      "team_b_id": 38
+    },
+    {
+      "id": 166,
+      "group_id": 7,
+      "phase": "final",
+      "match_index": 0,
+      "possible_a_teams": [14, 33, 52, 79, 24, 99],
+      "possible_b_teams": [60, 51, 70, 89, 38]
+    },
+    {
+      "id": 167,
+      "group_id": 8,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 101,
+      "team_b_id": 81
+    },
+    {
+      "id": 168,
+      "group_id": 8,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 101,
+      "team_b_id": 82
+    },
+    {
+      "id": 169,
+      "group_id": 8,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 101,
+      "team_b_id": 77
+    },
+    {
+      "id": 170,
+      "group_id": 8,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 81,
+      "team_b_id": 82
+    },
+    {
+      "id": 171,
+      "group_id": 8,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 81,
+      "team_b_id": 77
+    },
+    {
+      "id": 172,
+      "group_id": 8,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 82,
+      "team_b_id": 77
+    },
+    {
+      "id": 173,
+      "group_id": 8,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 37,
+      "team_b_id": 87
+    },
+    {
+      "id": 174,
+      "group_id": 8,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 37,
+      "team_b_id": 92
+    },
+    {
+      "id": 175,
+      "group_id": 8,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 37,
+      "team_b_id": 67
+    },
+    {
+      "id": 176,
+      "group_id": 8,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 87,
+      "team_b_id": 92
+    },
+    {
+      "id": 177,
+      "group_id": 8,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 87,
+      "team_b_id": 67
+    },
+    {
+      "id": 178,
+      "group_id": 8,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 92,
+      "team_b_id": 67
+    },
+    {
+      "id": 179,
+      "group_id": 8,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 54,
+      "team_b_id": 20
+    },
+    {
+      "id": 180,
+      "group_id": 8,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 54,
+      "team_b_id": 94
+    },
+    {
+      "id": 181,
+      "group_id": 8,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 54,
+      "team_b_id": 27
+    },
+    {
+      "id": 182,
+      "group_id": 8,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 20,
+      "team_b_id": 94
+    },
+    {
+      "id": 183,
+      "group_id": 8,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 20,
+      "team_b_id": 27
+    },
+    {
+      "id": 184,
+      "group_id": 8,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 94,
+      "team_b_id": 27
+    },
+    {
+      "id": 185,
+      "group_id": 8,
+      "phase": "semifinals",
+      "match_index": 0,
+      "possible_a_teams": [101, 81, 82, 77],
+      "possible_b_teams": [37, 87, 92, 67]
+    },
+    {
+      "id": 186,
+      "group_id": 8,
+      "phase": "semifinals",
+      "match_index": 1,
+      "possible_a_teams": [54, 20, 94, 27],
+      "possible_b_teams": [101, 81, 82, 77, 37, 87, 92, 67, 54, 20, 94, 27]
+    },
+    {
+      "id": 187,
+      "group_id": 8,
+      "phase": "final",
+      "match_index": 0,
+      "possible_a_teams": [101, 81, 82, 77, 37, 87, 92, 67],
+      "possible_b_teams": [
+        54, 20, 94, 27, 101, 81, 82, 77, 37, 87, 92, 67, 54, 20, 94, 27
+      ]
+    }
+  ]
+}

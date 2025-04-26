@@ -1,0 +1,469 @@
+{
+  "competition": {
+    "name": "Torneig d'Estiu 2025",
+    "start_date": "2025-06-12T00:00:00",
+    "end_date": "2025-06-13T23:59:59",
+    "two_way_matches": false,
+    "two_way_elimination_matches": false
+  },
+  "match_slots": {
+    "slots_duration_in_minutes": 45,
+    "courts": [
+      {
+        "name": "A1",
+        "location": "Pavelló 1",
+        "available_times": [
+          {
+            "date": "2025-06-12",
+            "start_time": "10:00",
+            "duration_in_slots": 11
+          },
+          {
+            "date": "2025-06-13",
+            "start_time": "00:00",
+            "duration_in_slots": 19
+          }
+        ]
+      },
+      {
+        "name": "A2",
+        "location": "Pavelló 2",
+        "available_times": [
+          {
+            "date": "2025-06-12",
+            "start_time": "10:00",
+            "duration_in_slots": 11
+          },
+          {
+            "date": "2025-06-13",
+            "start_time": "00:00",
+            "duration_in_slots": 19
+          }
+        ]
+      },
+      {
+        "name": "A3",
+        "location": "Pavelló 3",
+        "available_times": [
+          {
+            "date": "2025-06-12",
+            "start_time": "10:00",
+            "duration_in_slots": 11
+          },
+          {
+            "date": "2025-06-13",
+            "start_time": "00:00",
+            "duration_in_slots": 19
+          }
+        ]
+      },
+      {
+        "name": "B4",
+        "location": "Polivalent 1",
+        "available_times": [
+          {
+            "date": "2025-06-12",
+            "start_time": "13:00",
+            "duration_in_slots": 12
+          },
+          {
+            "date": "2025-06-13",
+            "start_time": "8:15",
+            "duration_in_slots": 7
+          }
+        ]
+      },
+      {
+        "name": "B5",
+        "location": "Polivalent 2",
+        "available_times": [
+          {
+            "date": "2025-06-12",
+            "start_time": "13:00",
+            "duration_in_slots": 12
+          },
+          {
+            "date": "2025-06-13",
+            "start_time": "8:15",
+            "duration_in_slots": 7
+          }
+        ]
+      },
+      {
+        "name": "B6",
+        "location": "Polivalent 3",
+        "available_times": [
+          {
+            "date": "2025-06-12",
+            "start_time": "13:00",
+            "duration_in_slots": 12
+          },
+          {
+            "date": "2025-06-13",
+            "start_time": "8:15",
+            "duration_in_slots": 7
+          }
+        ]
+      },
+      {
+        "name": "C7",
+        "location": "Institut 1",
+        "available_times": [
+          {
+            "date": "2025-06-12",
+            "start_time": "13:00",
+            "duration_in_slots": 12
+          },
+          {
+            "date": "2025-06-13",
+            "start_time": "8:15",
+            "duration_in_slots": 7
+          }
+        ]
+      },
+      {
+        "name": "C8",
+        "location": "Institut 2",
+        "available_times": [
+          {
+            "date": "2025-06-12",
+            "start_time": "13:00",
+            "duration_in_slots": 12
+          },
+          {
+            "date": "2025-06-13",
+            "start_time": "8:15",
+            "duration_in_slots": 7
+          }
+        ]
+      },
+      {
+        "name": "C9",
+        "location": "Institut 3",
+        "available_times": [
+          {
+            "date": "2025-06-12",
+            "start_time": "13:00",
+            "duration_in_slots": 12
+          },
+          {
+            "date": "2025-06-13",
+            "start_time": "8:15",
+            "duration_in_slots": 7
+          }
+        ]
+      },
+      {
+        "name": "C10",
+        "location": "Institut 4",
+        "available_times": [
+          {
+            "date": "2025-06-12",
+            "start_time": "13:00",
+            "duration_in_slots": 12
+          },
+          {
+            "date": "2025-06-13",
+            "start_time": "8:15",
+            "duration_in_slots": 7
+          }
+        ]
+      }
+    ]
+  },
+  "competition_schema": {
+    "4_team_groups": {
+      "subgroups": [{ "id": 0, "name": "A", "team_number": 4 }],
+      "final": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "subgroup": 0, "position": 2 }
+          }
+        ]
+      }
+    },
+    "5_team_groups": {
+      "subgroups": [{ "id": 0, "name": "A", "team_number": 5 }],
+      "final": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "subgroup": 0, "position": 2 }
+          }
+        ]
+      }
+    },
+    "6_team_groups": {
+      "subgroups": [
+        { "id": 0, "name": "A", "team_number": 3 },
+        { "id": 1, "name": "B", "team_number": 3 }
+      ],
+      "quarterfinals": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 2 },
+            "team_b": { "subgroup": 1, "position": 3 }
+          },
+          {
+            "team_a": { "subgroup": 0, "position": 3 },
+            "team_b": { "subgroup": 1, "position": 2 }
+          }
+        ]
+      },
+      "semifinals": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "quarterfinals_match": 0 }
+          },
+          {
+            "team_a": { "subgroup": 1, "position": 1 },
+            "team_b": { "quarterfinals_match": 1 }
+          }
+        ]
+      },
+      "final": {
+        "matches": [
+          {
+            "team_a": { "semifinals_match": 0 },
+            "team_b": { "semifinals_match": 1 }
+          }
+        ]
+      }
+    },
+    "7_team_groups": {
+      "subgroups": [
+        { "id": 0, "name": "A", "team_number": 4 },
+        { "id": 1, "name": "B", "team_number": 3 }
+      ],
+      "quarterfinals": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 2 },
+            "team_b": { "subgroup": 1, "position": 3 }
+          },
+          {
+            "team_a": { "subgroup": 0, "position": 3 },
+            "team_b": { "subgroup": 1, "position": 2 }
+          }
+        ]
+      },
+      "semifinals": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "quarterfinals_match": 0 }
+          },
+          {
+            "team_a": { "subgroup": 1, "position": 1 },
+            "team_b": { "quarterfinals_match": 1 }
+          }
+        ]
+      },
+      "final": {
+        "matches": [
+          {
+            "team_a": { "semifinals_match": 0 },
+            "team_b": { "semifinals_match": 1 }
+          }
+        ]
+      }
+    },
+    "8_team_groups": {
+      "subgroups": [
+        { "id": 0, "name": "A", "team_number": 4 },
+        { "id": 1, "name": "B", "team_number": 4 }
+      ],
+      "final": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "subgroup": 1, "position": 1 }
+          }
+        ]
+      }
+    },
+    "9_team_groups": {
+      "subgroups": [
+        { "id": 0, "name": "A", "team_number": 5 },
+        { "id": 1, "name": "B", "team_number": 4 }
+      ],
+      "final": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "subgroup": 1, "position": 1 }
+          }
+        ]
+      }
+    },
+    "10_team_groups": {
+      "subgroups": [
+        { "id": 0, "name": "A", "team_number": 5 },
+        { "id": 1, "name": "B", "team_number": 5 }
+      ],
+      "final": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "subgroup": 1, "position": 1 }
+          }
+        ]
+      }
+    },
+    "11_team_groups": {
+      "subgroups": [
+        { "id": 0, "name": "A", "team_number": 6 },
+        { "id": 1, "name": "B", "team_number": 5 }
+      ],
+      "final": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "subgroup": 1, "position": 1 }
+          }
+        ]
+      }
+    },
+    "12_team_groups": {
+      "subgroups": [
+        { "id": 0, "name": "A", "team_number": 4 },
+        { "id": 1, "name": "B", "team_number": 4 },
+        { "id": 2, "name": "C", "team_number": 4 }
+      ],
+      "semifinals": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "subgroup": 1, "position": 1 }
+          },
+          {
+            "team_a": { "subgroup": 2, "position": 1 },
+            "team_b": { "subgroup": null, "position": 2 }
+          }
+        ]
+      },
+      "final": {
+        "matches": [
+          {
+            "team_a": { "semifinals_match": 0 },
+            "team_b": { "semifinals_match": 1 }
+          }
+        ]
+      }
+    },
+    "13_team_groups": {
+      "subgroups": [
+        { "id": 0, "name": "A", "team_number": 5 },
+        { "id": 1, "name": "B", "team_number": 4 },
+        { "id": 2, "name": "C", "team_number": 4 }
+      ],
+      "semifinals": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 1, "position": 1 },
+            "team_b": { "subgroup": 2, "position": 1 }
+          }
+        ]
+      },
+      "final": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "semifinals_match": 0 }
+          }
+        ]
+      }
+    },
+    "14_team_groups": {
+      "subgroups": [
+        { "id": 0, "name": "A", "team_number": 5 },
+        { "id": 1, "name": "B", "team_number": 5 },
+        { "id": 2, "name": "C", "team_number": 4 }
+      ],
+      "semifinals": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "subgroup": 1, "position": 1 }
+          }
+        ]
+      },
+      "final": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "semifinals_match": 0 }
+          }
+        ]
+      }
+    },
+    "15_team_groups": {
+      "subgroups": [
+        { "id": 0, "name": "A", "team_number": 5 },
+        { "id": 1, "name": "B", "team_number": 5 },
+        { "id": 2, "name": "C", "team_number": 5 }
+      ],
+      "semifinals": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "subgroup": 1, "position": 1 }
+          },
+          {
+            "team_a": { "subgroup": 2, "position": 1 },
+            "team_b": { "subgroup": null, "position": 2 }
+          }
+        ]
+      },
+      "final": {
+        "matches": [
+          {
+            "team_a": { "semifinals_match": 0 },
+            "team_b": { "semifinals_match": 1 }
+          }
+        ]
+      }
+    },
+    "16_team_groups": {
+      "subgroups": [
+        { "id": 0, "name": "A", "team_number": 4 },
+        { "id": 1, "name": "B", "team_number": 4 },
+        { "id": 2, "name": "C", "team_number": 4 },
+        { "id": 3, "name": "D", "team_number": 4 }
+      ],
+      "semifinals": {
+        "matches": [
+          {
+            "team_a": { "subgroup": 0, "position": 1 },
+            "team_b": { "subgroup": 1, "position": 1 }
+          },
+          {
+            "team_a": { "subgroup": 2, "position": 1 },
+            "team_b": { "subgroup": 3, "position": 1 }
+          }
+        ]
+      },
+      "final": {
+        "matches": [
+          {
+            "team_a": { "semifinals_match": 0 },
+            "team_b": { "semifinals_match": 1 }
+          }
+        ]
+      }
+    }
+  },
+  "scheduler": {
+    "minRestSlots": 2,
+    "allowedCourtsForMini": ["A1", "A2", "A3", "B4", "B5", "B6"],
+    "preMiniDeadline": "2025-06-13T00:45:00",
+    "nightGameStart": "2025-06-13T00:00:00",
+    "nightGameEnd": "2025-06-13T08:15:00",
+    "courtVarietyWeight": 100,
+    "nightGameWeight": 50,
+    "timeSpreadWeight": 200,
+    "maxSolveTimeSeconds": 600
+  }
+}

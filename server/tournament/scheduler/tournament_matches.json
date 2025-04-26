@@ -1,0 +1,1835 @@
+{
+  "matches": [
+    {
+      "id": 0,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 7,
+      "team_b_id": 1,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 1,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 7,
+      "team_b_id": 95,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 2,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 7,
+      "team_b_id": 71,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 3,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 1,
+      "team_b_id": 95,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 4,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 1,
+      "team_b_id": 71,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 5,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 95,
+      "team_b_id": 71,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 6,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 15,
+      "team_b_id": 62,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 7,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 15,
+      "team_b_id": 45,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 8,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 15,
+      "team_b_id": 32,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 9,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 62,
+      "team_b_id": 45,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 10,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 62,
+      "team_b_id": 32,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 11,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 45,
+      "team_b_id": 32,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 12,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 64,
+      "team_b_id": 65,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 13,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 64,
+      "team_b_id": 63,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 14,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 64,
+      "team_b_id": 16,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 15,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 65,
+      "team_b_id": 63,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 16,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 65,
+      "team_b_id": 16,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 17,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 63,
+      "team_b_id": 16,
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 18,
+      "phase": "semifinals",
+      "match_index": 0,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 1
+      },
+      "team_b_source": {
+        "subgroup": 1,
+        "position": 1
+      },
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 19,
+      "phase": "semifinals",
+      "match_index": 1,
+      "team_a_source": {
+        "subgroup": 2,
+        "position": 1
+      },
+      "team_b_source": {
+        "subgroup": null,
+        "position": 2
+      },
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 20,
+      "phase": "final",
+      "match_index": 0,
+      "team_a_source": {
+        "semifinals_match": 0
+      },
+      "team_b_source": {
+        "semifinals_match": 1
+      },
+      "status": "pending",
+      "group_id": 0
+    },
+    {
+      "id": 21,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 29,
+      "team_b_id": 2,
+      "status": "pending",
+      "group_id": 1
+    },
+    {
+      "id": 22,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 29,
+      "team_b_id": 55,
+      "status": "pending",
+      "group_id": 1
+    },
+    {
+      "id": 23,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 2,
+      "team_b_id": 55,
+      "status": "pending",
+      "group_id": 1
+    },
+    {
+      "id": 24,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 17,
+      "team_b_id": 59,
+      "status": "pending",
+      "group_id": 1
+    },
+    {
+      "id": 25,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 17,
+      "team_b_id": 46,
+      "status": "pending",
+      "group_id": 1
+    },
+    {
+      "id": 26,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 59,
+      "team_b_id": 46,
+      "status": "pending",
+      "group_id": 1
+    },
+    {
+      "id": 27,
+      "phase": "quarterfinals",
+      "match_index": 0,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 2
+      },
+      "team_b_source": {
+        "subgroup": 1,
+        "position": 3
+      },
+      "status": "pending",
+      "group_id": 1
+    },
+    {
+      "id": 28,
+      "phase": "quarterfinals",
+      "match_index": 1,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 3
+      },
+      "team_b_source": {
+        "subgroup": 1,
+        "position": 2
+      },
+      "status": "pending",
+      "group_id": 1
+    },
+    {
+      "id": 29,
+      "phase": "semifinals",
+      "match_index": 0,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 1
+      },
+      "team_b_source": {
+        "quarterfinals_match": 0
+      },
+      "status": "pending",
+      "group_id": 1
+    },
+    {
+      "id": 30,
+      "phase": "semifinals",
+      "match_index": 1,
+      "team_a_source": {
+        "subgroup": 1,
+        "position": 1
+      },
+      "team_b_source": {
+        "quarterfinals_match": 1
+      },
+      "status": "pending",
+      "group_id": 1
+    },
+    {
+      "id": 31,
+      "phase": "final",
+      "match_index": 0,
+      "team_a_source": {
+        "semifinals_match": 0
+      },
+      "team_b_source": {
+        "semifinals_match": 1
+      },
+      "status": "pending",
+      "group_id": 1
+    },
+    {
+      "id": 32,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 47,
+      "team_b_id": 41,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 33,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 47,
+      "team_b_id": 25,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 34,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 47,
+      "team_b_id": 22,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 35,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 47,
+      "team_b_id": 88,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 36,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 41,
+      "team_b_id": 25,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 37,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 41,
+      "team_b_id": 22,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 38,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 41,
+      "team_b_id": 88,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 39,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 25,
+      "team_b_id": 22,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 40,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 25,
+      "team_b_id": 88,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 41,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 22,
+      "team_b_id": 88,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 42,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 39,
+      "team_b_id": 80,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 43,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 39,
+      "team_b_id": 100,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 44,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 39,
+      "team_b_id": 19,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 45,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 39,
+      "team_b_id": 34,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 46,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 80,
+      "team_b_id": 100,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 47,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 80,
+      "team_b_id": 19,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 48,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 80,
+      "team_b_id": 34,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 49,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 100,
+      "team_b_id": 19,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 50,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 100,
+      "team_b_id": 34,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 51,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 19,
+      "team_b_id": 34,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 52,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 75,
+      "team_b_id": 76,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 53,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 75,
+      "team_b_id": 3,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 54,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 75,
+      "team_b_id": 56,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 55,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 76,
+      "team_b_id": 3,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 56,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 76,
+      "team_b_id": 56,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 57,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 3,
+      "team_b_id": 56,
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 58,
+      "phase": "semifinals",
+      "match_index": 0,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 1
+      },
+      "team_b_source": {
+        "subgroup": 1,
+        "position": 1
+      },
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 59,
+      "phase": "final",
+      "match_index": 0,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 1
+      },
+      "team_b_source": {
+        "semifinals_match": 0
+      },
+      "status": "pending",
+      "group_id": 2
+    },
+    {
+      "id": 60,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 74,
+      "team_b_id": 40,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 61,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 74,
+      "team_b_id": 9,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 62,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 74,
+      "team_b_id": 5,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 63,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 40,
+      "team_b_id": 9,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 64,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 40,
+      "team_b_id": 5,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 65,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 9,
+      "team_b_id": 5,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 66,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 84,
+      "team_b_id": 11,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 67,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 84,
+      "team_b_id": 44,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 68,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 84,
+      "team_b_id": 6,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 69,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 11,
+      "team_b_id": 44,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 70,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 11,
+      "team_b_id": 6,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 71,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 44,
+      "team_b_id": 6,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 72,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 68,
+      "team_b_id": 83,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 73,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 68,
+      "team_b_id": 42,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 74,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 68,
+      "team_b_id": 72,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 75,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 83,
+      "team_b_id": 42,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 76,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 83,
+      "team_b_id": 72,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 77,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 42,
+      "team_b_id": 72,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 78,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 91,
+      "team_b_id": 4,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 79,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 91,
+      "team_b_id": 26,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 80,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 91,
+      "team_b_id": 35,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 81,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 4,
+      "team_b_id": 26,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 82,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 4,
+      "team_b_id": 35,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 83,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 26,
+      "team_b_id": 35,
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 84,
+      "phase": "semifinals",
+      "match_index": 0,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 1
+      },
+      "team_b_source": {
+        "subgroup": 1,
+        "position": 1
+      },
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 85,
+      "phase": "semifinals",
+      "match_index": 1,
+      "team_a_source": {
+        "subgroup": 2,
+        "position": 1
+      },
+      "team_b_source": {
+        "subgroup": 3,
+        "position": 1
+      },
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 86,
+      "phase": "final",
+      "match_index": 0,
+      "team_a_source": {
+        "semifinals_match": 0
+      },
+      "team_b_source": {
+        "semifinals_match": 1
+      },
+      "status": "pending",
+      "group_id": 3
+    },
+    {
+      "id": 87,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 28,
+      "team_b_id": 98,
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 88,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 28,
+      "team_b_id": 69,
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 89,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 28,
+      "team_b_id": 66,
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 90,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 98,
+      "team_b_id": 69,
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 91,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 98,
+      "team_b_id": 66,
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 92,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 69,
+      "team_b_id": 66,
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 93,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 8,
+      "team_b_id": 18,
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 94,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 8,
+      "team_b_id": 90,
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 95,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 18,
+      "team_b_id": 90,
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 96,
+      "phase": "quarterfinals",
+      "match_index": 0,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 2
+      },
+      "team_b_source": {
+        "subgroup": 1,
+        "position": 3
+      },
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 97,
+      "phase": "quarterfinals",
+      "match_index": 1,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 3
+      },
+      "team_b_source": {
+        "subgroup": 1,
+        "position": 2
+      },
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 98,
+      "phase": "semifinals",
+      "match_index": 0,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 1
+      },
+      "team_b_source": {
+        "quarterfinals_match": 0
+      },
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 99,
+      "phase": "semifinals",
+      "match_index": 1,
+      "team_a_source": {
+        "subgroup": 1,
+        "position": 1
+      },
+      "team_b_source": {
+        "quarterfinals_match": 1
+      },
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 100,
+      "phase": "final",
+      "match_index": 0,
+      "team_a_source": {
+        "semifinals_match": 0
+      },
+      "team_b_source": {
+        "semifinals_match": 1
+      },
+      "status": "pending",
+      "group_id": 4
+    },
+    {
+      "id": 101,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 57,
+      "team_b_id": 21,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 102,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 57,
+      "team_b_id": 85,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 103,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 57,
+      "team_b_id": 102,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 104,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 21,
+      "team_b_id": 85,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 105,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 21,
+      "team_b_id": 102,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 106,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 85,
+      "team_b_id": 102,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 107,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 43,
+      "team_b_id": 50,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 108,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 43,
+      "team_b_id": 36,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 109,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 43,
+      "team_b_id": 10,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 110,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 50,
+      "team_b_id": 36,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 111,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 50,
+      "team_b_id": 10,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 112,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 36,
+      "team_b_id": 10,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 113,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 58,
+      "team_b_id": 96,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 114,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 58,
+      "team_b_id": 53,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 115,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 58,
+      "team_b_id": 12,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 116,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 96,
+      "team_b_id": 53,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 117,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 96,
+      "team_b_id": 12,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 118,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 53,
+      "team_b_id": 12,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 119,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 73,
+      "team_b_id": 86,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 120,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 73,
+      "team_b_id": 61,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 121,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 73,
+      "team_b_id": 49,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 122,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 86,
+      "team_b_id": 61,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 123,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 86,
+      "team_b_id": 49,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 124,
+      "subgroup_id": 3,
+      "phase": "regular",
+      "team_a_id": 61,
+      "team_b_id": 49,
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 125,
+      "phase": "semifinals",
+      "match_index": 0,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 1
+      },
+      "team_b_source": {
+        "subgroup": 1,
+        "position": 1
+      },
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 126,
+      "phase": "semifinals",
+      "match_index": 1,
+      "team_a_source": {
+        "subgroup": 2,
+        "position": 1
+      },
+      "team_b_source": {
+        "subgroup": 3,
+        "position": 1
+      },
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 127,
+      "phase": "final",
+      "match_index": 0,
+      "team_a_source": {
+        "semifinals_match": 0
+      },
+      "team_b_source": {
+        "semifinals_match": 1
+      },
+      "status": "pending",
+      "group_id": 5
+    },
+    {
+      "id": 128,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 23,
+      "team_b_id": 13,
+      "status": "pending",
+      "group_id": 6
+    },
+    {
+      "id": 129,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 23,
+      "team_b_id": 93,
+      "status": "pending",
+      "group_id": 6
+    },
+    {
+      "id": 130,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 23,
+      "team_b_id": 78,
+      "status": "pending",
+      "group_id": 6
+    },
+    {
+      "id": 131,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 13,
+      "team_b_id": 93,
+      "status": "pending",
+      "group_id": 6
+    },
+    {
+      "id": 132,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 13,
+      "team_b_id": 78,
+      "status": "pending",
+      "group_id": 6
+    },
+    {
+      "id": 133,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 93,
+      "team_b_id": 78,
+      "status": "pending",
+      "group_id": 6
+    },
+    {
+      "id": 134,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 97,
+      "team_b_id": 30,
+      "status": "pending",
+      "group_id": 6
+    },
+    {
+      "id": 135,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 97,
+      "team_b_id": 48,
+      "status": "pending",
+      "group_id": 6
+    },
+    {
+      "id": 136,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 97,
+      "team_b_id": 31,
+      "status": "pending",
+      "group_id": 6
+    },
+    {
+      "id": 137,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 30,
+      "team_b_id": 48,
+      "status": "pending",
+      "group_id": 6
+    },
+    {
+      "id": 138,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 30,
+      "team_b_id": 31,
+      "status": "pending",
+      "group_id": 6
+    },
+    {
+      "id": 139,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 48,
+      "team_b_id": 31,
+      "status": "pending",
+      "group_id": 6
+    },
+    {
+      "id": 140,
+      "phase": "final",
+      "match_index": 0,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 1
+      },
+      "team_b_source": {
+        "subgroup": 1,
+        "position": 1
+      },
+      "status": "pending",
+      "group_id": 6
+    },
+    {
+      "id": 141,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 14,
+      "team_b_id": 33,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 142,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 14,
+      "team_b_id": 52,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 143,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 14,
+      "team_b_id": 79,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 144,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 14,
+      "team_b_id": 24,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 145,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 14,
+      "team_b_id": 99,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 146,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 33,
+      "team_b_id": 52,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 147,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 33,
+      "team_b_id": 79,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 148,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 33,
+      "team_b_id": 24,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 149,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 33,
+      "team_b_id": 99,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 150,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 52,
+      "team_b_id": 79,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 151,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 52,
+      "team_b_id": 24,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 152,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 52,
+      "team_b_id": 99,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 153,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 79,
+      "team_b_id": 24,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 154,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 79,
+      "team_b_id": 99,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 155,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 24,
+      "team_b_id": 99,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 156,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 60,
+      "team_b_id": 51,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 157,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 60,
+      "team_b_id": 70,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 158,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 60,
+      "team_b_id": 89,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 159,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 60,
+      "team_b_id": 38,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 160,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 51,
+      "team_b_id": 70,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 161,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 51,
+      "team_b_id": 89,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 162,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 51,
+      "team_b_id": 38,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 163,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 70,
+      "team_b_id": 89,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 164,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 70,
+      "team_b_id": 38,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 165,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 89,
+      "team_b_id": 38,
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 166,
+      "phase": "final",
+      "match_index": 0,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 1
+      },
+      "team_b_source": {
+        "subgroup": 1,
+        "position": 1
+      },
+      "status": "pending",
+      "group_id": 7
+    },
+    {
+      "id": 167,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 101,
+      "team_b_id": 81,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 168,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 101,
+      "team_b_id": 82,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 169,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 101,
+      "team_b_id": 77,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 170,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 81,
+      "team_b_id": 82,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 171,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 81,
+      "team_b_id": 77,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 172,
+      "subgroup_id": 0,
+      "phase": "regular",
+      "team_a_id": 82,
+      "team_b_id": 77,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 173,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 37,
+      "team_b_id": 87,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 174,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 37,
+      "team_b_id": 92,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 175,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 37,
+      "team_b_id": 67,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 176,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 87,
+      "team_b_id": 92,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 177,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 87,
+      "team_b_id": 67,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 178,
+      "subgroup_id": 1,
+      "phase": "regular",
+      "team_a_id": 92,
+      "team_b_id": 67,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 179,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 54,
+      "team_b_id": 20,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 180,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 54,
+      "team_b_id": 94,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 181,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 54,
+      "team_b_id": 27,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 182,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 20,
+      "team_b_id": 94,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 183,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 20,
+      "team_b_id": 27,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 184,
+      "subgroup_id": 2,
+      "phase": "regular",
+      "team_a_id": 94,
+      "team_b_id": 27,
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 185,
+      "phase": "semifinals",
+      "match_index": 0,
+      "team_a_source": {
+        "subgroup": 0,
+        "position": 1
+      },
+      "team_b_source": {
+        "subgroup": 1,
+        "position": 1
+      },
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 186,
+      "phase": "semifinals",
+      "match_index": 1,
+      "team_a_source": {
+        "subgroup": 2,
+        "position": 1
+      },
+      "team_b_source": {
+        "subgroup": null,
+        "position": 2
+      },
+      "status": "pending",
+      "group_id": 8
+    },
+    {
+      "id": 187,
+      "phase": "final",
+      "match_index": 0,
+      "team_a_source": {
+        "semifinals_match": 0
+      },
+      "team_b_source": {
+        "semifinals_match": 1
+      },
+      "status": "pending",
+      "group_id": 8
+    }
+  ]
+}
