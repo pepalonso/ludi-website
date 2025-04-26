@@ -1,0 +1,83 @@
+<div class="tournament-container">
+    <h1 class="title">Tournament Schedule</h1>
+
+    
+    
+    <div class="filters">
+        <div class="filter-group">
+        <label for="team-filter">Filter by Team:</label>
+        <select id="team-filter" [ngModel]="selectedTeamId" (ngModelChange)="onTeamChange($event)">
+            <option [ngValue]="null">All Teams</option>
+            @for (team of teams; track team) {
+            <option [ngValue]="team">Team {{ team }}</option>
+            }
+        </select>
+        </div>
+
+      <div class="filter-group">
+        <label for="group-filter">Filter by Group:</label>
+        <select id="group-filter" [ngModel]="selectedGroup" (ngModelChange)="onGroupChange($event)">
+            <option [ngValue]="null">All Groups</option>
+            @for (group of groups; track group) {
+              <option [ngValue]="group">Group {{ group }}</option>
+            }
+        </select>
+      </div>
+      
+      <div class="filter-group" *ngIf="subgroups.length > 0">
+        <label for="subgroup-filter">Filter by Subgroup:</label>
+        <select id="subgroup-filter" [ngModel]="selectedSubgroup" (ngModelChange)="onSubgroupChange($event)">
+            <option [ngValue]="null">All Subgroups</option>
+            @for (subgroup of subgroups; track subgroup) {
+              <option [ngValue]="subgroup">Subgroup {{ subgroup }}</option>
+            }
+        </select>
+          
+      </div>
+      
+      <div class="filter-group">
+        <label for="phase-filter">Filter by Phase:</label>
+        <select id="phase-filter" [ngModel]="selectedPhase" (ngModelChange)="onPhaseChange($event)">
+            <option [ngValue]="null">All Phases</option>
+            @for (phase of phases; track phase) {
+              <option [ngValue]="phase">{{ phase | titlecase }}</option>
+            }
+        </select>
+          
+      </div>
+    </div>
+    
+    <div class="schedule-table-container">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>Date & Time</th>
+            <th>Court</th>
+            <th>Group</th>
+            <th>Phase</th>
+            <th>Teams</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (match of filteredMatches; track match.id) {
+            <tr [ngClass]="{'elimination-match': match.phase !== 'regular'}">
+              <td>{{ formatDate(match.date) }}</td>
+              <td>{{ match.court_name }} ({{ match.court_location }})</td>
+              <td>
+                Group {{ match.group_id }}
+                <span *ngIf="match.subgroup_id !== undefined">, Subgroup {{ match.subgroup_id }}</span>
+              </td>
+              <td>{{ match.phase | titlecase }}</td>
+              <td>
+                @if (match.team_a_id && match.team_b_id) {
+                  Team {{ match.team_a_id }} vs Team {{ match.team_b_id }}
+                } @else {
+                  <span class="tbd">TBD (Elimination Match)</span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>

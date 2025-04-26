@@ -1,0 +1,86 @@
+
+  
+  .tournament-container {
+    background-color: #121212;
+    color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  
+  .title {
+    color: #ff6b00;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    text-align: center;
+  }
+  
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+  }
+  
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+  }
+  
+  label {
+    margin-bottom: 0.5rem;
+    color: #ff6b00;
+    font-size: 0.9rem;
+  }
+  
+  select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    background-color: #1e1e1e;
+    color: white;
+    border: 1px solid #333;
+  }
+  
+  select:focus {
+    outline: 1px solid #ff6b00;
+    border-color: #ff6b00;
+  }
+  
+  .schedule-table-container {
+    overflow-x: auto;
+  }
+  
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+  }
+  
+  .schedule-table th {
+    background-color: #1e1e1e;
+    color: #ff6b00;
+    text-align: left;
+    padding: 1rem;
+    font-weight: 500;
+  }
+  
+  .schedule-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #333;
+  }
+  
+  .schedule-table tr:hover {
+    background-color: #1a1a1a;
+  }
+  
+  .elimination-match {
+    background-color: rgba(255, 107, 0, 0.1);
+  }
+  
+  .tbd {
+    color: #ff6b00;
+    font-style: italic;
+  }
