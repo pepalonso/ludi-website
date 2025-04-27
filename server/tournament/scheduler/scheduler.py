@@ -32,6 +32,8 @@ def schedule_regular_matches(
     add_basic_constraints(model, regular_matches, slots, match_slot)
     add_team_constraints(model, regular_matches, slots, sorted_slots, match_slot, team_to_matches)
     add_category_constraints(model, regular_matches, slots, match_slot, team_categories)
+    # Add phase order constraints
+    add_phase_order_constraints(model, regular_matches, slots, sorted_slots, match_slot)
     
     # Add optimization objectives
     objective_vars = add_optimization_objectives(
@@ -88,25 +90,41 @@ def schedule_elimination_matches(
     """Schedule elimination matches using a greedy approach"""
     remaining_slots = [slot for slot in slots if slot["id"] not in used_slot_ids]
     
+    # Sort remaining slots by date/time
+    sorted_slots = sorted(remaining_slots, key=lambda s: parse_datetime(s["date"]))
+    
     # Sort elimination matches by phase
     phase_order = {"quarterfinals": 0, "semifinals": 1, "final": 2}
     sorted_elimination = sorted(elimination_matches, 
                                 key=lambda m: phase_order.get(m["phase"], 0))
     
-    schedule = []
+    # Group matches by subgroup to enforce phase order
+    matches_by_subgroup = {}
     for match in sorted_elimination:
-        if not remaining_slots:
-            print(f"Warning: No slots left for match {match['id']}")
-            continue
+        subgroup_id = match.get("subgroup_id", match.get("group_id", 0))
+        if subgroup_id not in matches_by_subgroup:
+            matches_by_subgroup[subgroup_id] = []
+        matches_by_subgroup[subgroup_id].append(match)
+    
+    schedule = []
+    current_slot_index = 0
+    
+    # Process each subgroup separately to maintain phase order
+    for subgroup_id, subgroup_matches in matches_by_subgroup.items():
+        for match in subgroup_matches:
+            if current_slot_index >= len(sorted_slots):
+                print(f"Warning: No slots left for match {match['id']}")
+                continue
+                
+            # Pick the next available slot
+            slot = sorted_slots[current_slot_index]
+            current_slot_index += 1
             
-        # Pick the first available slot
-        slot = remaining_slots.pop(0)
-        
-        match_info = match.copy()
-        match_info["slot_id"] = slot["id"]
-        match_info["date"] = slot["date"]
-        match_info["court_name"] = slot["court_name"]
-        match_info["court_location"] = slot["court_location"]
-        schedule.append(match_info)
+            match_info = match.copy()
+            match_info["slot_id"] = slot["id"]
+            match_info["date"] = slot["date"]
+            match_info["court_name"] = slot["court_name"]
+            match_info["court_location"] = slot["court_location"]
+            schedule.append(match_info)
     
     return schedule

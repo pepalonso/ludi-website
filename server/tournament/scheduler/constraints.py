@@ -96,3 +96,68 @@ def add_category_constraints(
                 slot_time = parse_datetime(slot["date"])
                 if slot_time > deadline_time:
                     model.Add(match_slot[match["id"]][slot["id"]] == 0)
+
+def add_phase_order_constraints(
+    model: cp_model.CpModel,
+    matches: List[Dict],
+    slots: List[Dict],
+    sorted_slots: List[Dict],
+    match_slot: Dict[int, Dict[int, cp_model.BoolVarT]]
+):
+    """
+    Add constraints to enforce the competition phase order:
+    regular -> quarterfinals -> semifinals -> finals
+    
+    This ensures that for each subgroup, all regular matches are scheduled before
+    quarterfinals, all quarterfinals before semifinals, and all semifinals before finals.
+    """
+    # CONSTRAINT 7: Match phases must follow the correct order
+    
+    # Define the order of phases
+    phase_order = {
+        "regular": 0,
+        "quarterfinals": 1,
+        "semifinals": 2,
+        "final": 3
+    }
+    
+    # Group matches by subgroup
+    matches_by_subgroup = {}
+    for match in matches:
+        subgroup_id = match.get("subgroup_id")
+        if subgroup_id is not None:
+            if subgroup_id not in matches_by_subgroup:
+                matches_by_subgroup[subgroup_id] = []
+            matches_by_subgroup[subgroup_id].append(match)
+    
+    # For each subgroup, enforce phase order
+    for subgroup_id, subgroup_matches in matches_by_subgroup.items():
+        # Group matches by phase
+        matches_by_phase = {}
+        for match in subgroup_matches:
+            phase = match.get("phase", "regular")
+            if phase not in matches_by_phase:
+                matches_by_phase[phase] = []
+            matches_by_phase[phase].append(match)
+        
+        # For each pair of phases in order
+        for phase1, phase2 in [("regular", "quarterfinals"), 
+                              ("quarterfinals", "semifinals"), 
+                              ("semifinals", "final")]:
+            
+            # Skip if either phase doesn't have matches
+            if phase1 not in matches_by_phase or phase2 not in matches_by_phase:
+                continue
+            
+            # All matches of phase1 must be scheduled before any match of phase2
+            for match1 in matches_by_phase[phase1]:
+                for match2 in matches_by_phase[phase2]:
+                    for i, slot1 in enumerate(sorted_slots):
+                        # For each later slot
+                        for j in range(i+1, len(sorted_slots)):
+                            slot2 = sorted_slots[j]
+                            
+                            # match1 can't be scheduled after match2
+                            # If match1 is in slot2 and match2 is in slot1, this is invalid
+                            model.Add(match_slot[match1["id"]][slot2["id"]] + 
+                                     match_slot[match2["id"]][slot1["id"]] <= 1)
