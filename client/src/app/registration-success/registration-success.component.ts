@@ -5,7 +5,7 @@ import { FooterComponent } from '../utils/footer/footer.component';
 import { Sexe, Team } from '../interfaces/ludi.interface';
 import { RegistrationStateService } from '../serveis/registration-data.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.prod';
 
 export interface RegistrationProps {
   message: string;

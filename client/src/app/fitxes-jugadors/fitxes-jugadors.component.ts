@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {  HttpClient, HttpEventType } from '@angular/common/http';
 import { finalize } from 'rxjs/operators';
 import { CdkStepper } from '@angular/cdk/stepper';
-import { environment } from '../../environments/environment';
 import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
 import { Team } from '../interfaces/ludi.interface';
+import { environment } from '../../environments/environment.prod';
 
 interface FileItem {
   file: File;

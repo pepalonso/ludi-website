@@ -1,0 +1,278 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <!-- Admin Login Button -->
+    <button class="admin-button" (click)="toggleAdminLogin()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+        <circle cx="9" cy="7" r="4"></circle>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+      </svg>
+      <span>Admin</span>
+    </button>
+
+    <!-- Method Selection View -->
+    <div *ngIf="!showPinInput && !showAdminLogin" class="method-selection">
+      <h2>Autenticació en dos passos</h2>
+      <p>Selecciona com vols rebre el teu codi de verificació</p>
+
+      <div class="method-buttons">
+        <button
+          [class.selected]="selectedMethod === 'email'"
+          (click)="selectMethod('email')"
+          class="method-button"
+        >
+          <svg
+            width="25"
+            height="20"
+            viewBox="0 0 25 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19.3764 1.79167L12.5729 7.28864L5.61377 1.79167V1.79316L5.62218 1.80059V9.49782L12.4944 15.1136L19.3764 9.71473V1.79167Z"
+              fill="#d36600"
+            />
+            <path
+              d="M21.1631 0.454571L19.3764 1.79167V9.71473L24.9986 5.24584V2.55382C24.9986 2.55382 24.3161 -1.29109 21.1631 0.454571Z"
+              fill="#d36600"
+            />
+            <path
+              d="M19.3764 9.71473V19.9911H23.6855C23.6855 19.9911 24.9117 19.8603 25 18.4133V5.24584L19.3764 9.71473Z"
+              fill="#d36600"
+            />
+            <path
+              d="M5.62218 20V9.49782L5.61377 9.49039L5.62218 20Z"
+              fill="#d36600"
+            />
+            <path
+              d="M5.61379 1.79316L3.83688 0.463484C0.683856 -1.28217 0 2.56125 0 2.56125V5.25327L5.61379 9.49039V1.79316Z"
+              fill="#d36600"
+            />
+            <path
+              d="M5.61377 1.79316V9.49039L5.62218 9.49782V1.80058L5.61377 1.79316Z"
+              fill="#d36600"
+            />
+            <path
+              d="M0 5.25476V18.4222C0.0868834 19.8707 1.31446 20 1.31446 20H5.6236L5.61379 9.4904L0 5.25476Z"
+              fill="#d36600"
+            />
+          </svg>
+          <span class="method-label">Email</span>
+        </button>
+
+        <button
+          [class.selected]="selectedMethod === 'whatsapp'"
+          (click)="selectMethod('whatsapp')"
+          class="method-button"
+        >
+          <svg
+            width="25"
+            height="25"
+            viewBox="0 0 50 50"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g clip-path="url(#clip0_3_4)">
+              <path
+                d="M1.16156 48.9359L4.52765 36.6439C2.45131 33.0462 1.35916 28.9653 1.36069 24.7844C1.36603 11.705 12.0098 1.0639 25.0889 1.0639C31.4358 1.06657 37.3932 3.53697 41.8732 8.02075C46.3528 12.5045 48.819 18.4646 48.8167 24.8035C48.811 37.8825 38.1657 48.5251 25.0889 48.5251C25.0881 48.5251 25.0893 48.5251 25.0889 48.5251H25.0786C21.1075 48.5236 17.2058 47.5276 13.7402 45.6374L1.16156 48.9359ZM14.3227 41.3432L15.0433 41.7701C18.0706 43.5668 21.5416 44.517 25.0813 44.5189H25.0889C35.9585 44.5189 44.8056 35.6734 44.8102 24.8019C44.8121 19.5335 42.7628 14.5793 39.0393 10.8528C35.3154 7.12621 30.3643 5.07276 25.0961 5.07047C14.2178 5.07047 5.37108 13.9148 5.36689 24.7859C5.36536 28.5113 6.40754 32.1391 8.38203 35.2786L8.85124 36.0248L6.85844 43.3001L14.3227 41.3432Z"
+                fill="#d36600"
+              />
+              <g filter="url(#filter0_d_3_4)">
+                <path
+                  d="M2.69771 47.4045L5.71868 36.3728L5.7738 36.1715L5.66945 35.9907C3.70854 32.5942 2.67745 28.7403 2.67857 24.7922C2.68342 12.4417 12.7352 2.39294 25.0844 2.39282L2.69771 47.4045ZM2.69771 47.4045L14.0028 44.4401L14.1947 44.3898L14.3689 44.4847C17.6409 46.2681 21.3256 47.2092 25.0755 47.2108C25.0756 47.2108 25.0756 47.2108 25.0757 47.2108L2.69771 47.4045ZM25.0859 47.7108H25.0858H25.0859Z"
+                  stroke="black"
+                  shape-rendering="crispEdges"
+                />
+              </g>
+              <path
+                d="M1.16156 48.9359L4.52765 36.6439C2.45131 33.0462 1.35916 28.9653 1.36069 24.7844C1.36603 11.705 12.0098 1.0639 25.0889 1.0639C31.4358 1.06657 37.3932 3.53697 41.8732 8.02075C46.3528 12.5045 48.819 18.4646 48.8167 24.8035C48.811 37.8825 38.1657 48.5251 25.0889 48.5251C25.0881 48.5251 25.0893 48.5251 25.0889 48.5251H25.0786C21.1075 48.5236 17.2058 47.5276 13.7402 45.6374L1.16156 48.9359ZM14.3227 41.3432L15.0433 41.7701C18.0706 43.5668 21.5416 44.517 25.0813 44.5189H25.0889C35.9585 44.5189 44.8056 35.6734 44.8102 24.8019C44.8121 19.5335 42.7628 14.5793 39.0393 10.8528C35.3154 7.12621 30.3643 5.07276 25.0961 5.07047C14.2178 5.07047 5.37108 13.9148 5.36689 24.7859C5.36536 28.5113 6.40754 32.1391 8.38203 35.2786L8.85124 36.0248L6.85844 43.3001L14.3227 41.3432Z"
+                fill="#d36600"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M19.1585 14.8678C18.7145 13.8805 18.2468 13.8607 17.8241 13.8435C17.4785 13.8287 17.0829 13.8294 16.6881 13.8294C16.2929 13.8294 15.6505 13.9782 15.1073 14.5714C14.5637 15.1646 13.0317 16.5989 13.0317 19.516C13.0317 22.4335 15.1565 25.2522 15.4529 25.6482C15.7493 26.0438 19.5545 32.2213 25.5805 34.5979C30.5888 36.5731 31.6077 36.1802 32.6949 36.0814C33.7821 35.9826 36.2025 34.6471 36.6965 33.2627C37.1909 31.8784 37.1909 30.692 37.0425 30.4436C36.8941 30.1968 36.4989 30.0484 35.9061 29.752C35.3133 29.4556 32.3985 28.0209 31.8549 27.8233C31.3113 27.6253 30.9161 27.5269 30.5209 28.1205C30.1254 28.7133 28.9901 30.0484 28.6441 30.4436C28.2981 30.84 27.9521 30.8896 27.3593 30.5928C26.7665 30.2956 24.8569 29.67 22.5917 27.6501C20.8293 26.0788 19.6392 24.1379 19.2932 23.5444C18.9476 22.9515 19.2874 22.6586 19.5537 22.3347C20.0332 21.7514 20.8377 20.7028 21.0353 20.3076C21.2329 19.9116 21.1341 19.5656 20.9861 19.2688C20.8377 18.9724 19.6853 16.0404 19.1585 14.8678Z"
+                fill="#d36600"
+              />
+            </g>
+            <defs>
+              <filter
+                id="filter0_d_3_4"
+                x="-2.01331"
+                y="1.89282"
+                width="54.0045"
+                height="54.2151"
+                filterUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB"
+              >
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feColorMatrix
+                  in="SourceAlpha"
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                  result="hardAlpha"
+                />
+                <feOffset dy="4" />
+                <feGaussianBlur stdDeviation="2" />
+                <feComposite in2="hardAlpha" operator="out" />
+                <feColorMatrix
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                />
+                <feBlend
+                  mode="normal"
+                  in2="BackgroundImageFix"
+                  result="effect1_dropShadow_3_4"
+                />
+                <feBlend
+                  mode="normal"
+                  in="SourceGraphic"
+                  in2="effect1_dropShadow_3_4"
+                  result="shape"
+                />
+              </filter>
+              <clipPath id="clip0_3_4">
+                <rect width="50" height="50" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+          <span class="method-label">WhatsApp</span>
+        </button>
+      </div>
+
+      <button
+        [disabled]="!selectedMethod || isLoading"
+        (click)="sendCode()"
+        class="send-button"
+      >
+        <span *ngIf="!isLoading">Enviar codi</span>
+        <span *ngIf="isLoading" class="spinner"></span>
+      </button>
+    </div>
+
+    <!-- PIN Input View -->
+    <div *ngIf="showPinInput && !showAdminLogin" class="pin-input-container">
+      <h2>Introdueix el codi de verificació</h2>
+      <p>Introdueix el codi de 4 dígits enviat al teu {{ selectedMethod }}</p>
+
+      <form [formGroup]="pinForm" (ngSubmit)="verifyPin()">
+        <div class="pin-inputs">
+          <input
+            type="text"
+            formControlName="digit1"
+            maxlength="1"
+            inputmode="numeric"
+            #digit1
+            (input)="onDigitInput($event, digit2)"
+            autocomplete="off"
+          />
+
+          <input
+            placeholder=""
+            type="text"
+            formControlName="digit2"
+            maxlength="1"
+            inputmode="numeric"
+            #digit2
+            (input)="onDigitInput($event, digit3)"
+            (keydown)="onBackspace($event, digit1)"
+            autocomplete="off"
+          />
+
+          <input
+            type="text"
+            formControlName="digit3"
+            maxlength="1"
+            inputmode="numeric"
+            #digit3
+            (input)="onDigitInput($event, digit4)"
+            (keydown)="onBackspace($event, digit2)"
+            autocomplete="off"
+          />
+
+          <input
+            type="text"
+            formControlName="digit4"
+            maxlength="1"
+            inputmode="numeric"
+            #digit4
+            (keydown)="onBackspace($event, digit3)"
+            autocomplete="off"
+          />
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="pinForm.invalid || isLoading"
+          class="verify-button"
+        >
+          <span *ngIf="!isLoading">Verificar</span>
+          <span *ngIf="isLoading" class="spinner"></span>
+        </button>
+      </form>
+
+      <div class="action-links">
+        <button class="back-button" (click)="showPinInput = false">
+          Tornar
+        </button>
+
+        <button
+          class="resend-button"
+          [disabled]="resendCountdown > 0"
+          (click)="resendCode()"
+        >
+          {{
+            resendCountdown > 0
+              ? "Reenviar codi (" + resendCountdown + "s)"
+              : "Reenviar codi"
+          }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Admin Login View -->
+    <div *ngIf="showAdminLogin" class="login-container">
+      <div class="logo">
+      </div>
+      <h2>Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onAdminSubmit()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="Entra el teu email"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contrasenya</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            placeholder="Entra la teva contrasenya"
+          />
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid">Login</button>
+
+        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </form>
+
+      <button class="back-button" (click)="toggleAdminLogin()">Tornar</button>
+    </div>
+  </div>
+</div>
