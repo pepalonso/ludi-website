@@ -8,7 +8,7 @@ import { NavMenuComponent } from "../pagina-web/nav-menu/nav-menu.component";
   standalone: true,
   imports: [RouterLink, FooterComponent, NavMenuComponent],
   templateUrl: './informacio-inscripcio.component.html',
-  styleUrl: './informacio-inscripcio.component.css'
+  styleUrl: './informacio-inscripcio.component.scss'
 })
 export class InformacioInscripcioComponent {
 

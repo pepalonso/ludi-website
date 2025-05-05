@@ -30,7 +30,6 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
-  background-color: #1a1a1a;
 }
 
 /* Card Styles */
@@ -40,6 +39,8 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   padding: 2rem;
   margin-bottom: 2rem;
+  margin-top: 30px;
+  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.351)
 }
 
 /* Form Title */
@@ -121,4 +122,18 @@ button {
 
 .menu {
   height: 30px;
+}
+
+.background-container {
+  background-color: rgba(0, 0, 0, 0.626);
+  background-blend-mode: darken;
+  background-image: url('/assets/images/carrusel-2.JPG');
+  background-size: cover;
+  background-position: center;
+  margin-top: -40px;
+}
+
+.footer {
+  background-color: black;
+  padding-bottom: 1px;
 }
