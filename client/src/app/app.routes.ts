@@ -13,8 +13,14 @@ import { MainPageComponent } from './pagina-web/main-page/main-page.component';
 import { QuiSomComponent } from './pagina-web/qui-som/qui-som.component';
 import { GalleryListComponent } from './pagina-web/galeria/gallery-list/gallery-list.component';
 import { GalleryDetailComponent } from './pagina-web/galeria/gallery-detail/gallery-detail.component';
+import { EditRegistrationComponent } from './editar-equip/editar-equip.component';
+import { LoginComponent } from './login/login.component';
+import { PanellAdminComponent } from './panell-admin/panell-admin.component';
+import { EditarEquipAuthComponent } from './editar-equip-auth/editar-equip-auth.component';
 
 export const routes: Routes = [
+  { path: 'administrador-login', component: LoginComponent},
+  { path: 'administrador', component: PanellAdminComponent},
   { path: 'equip', component: DetallsEquipComponent },
   { path: 'countdown', component: LudiCountdown },
   { path: 'ludi3x3', component: Ludi3x3Component },
@@ -28,5 +34,7 @@ export const routes: Routes = [
   { path: 'qui-som', component: QuiSomComponent},
   { path: 'galeria', component: GalleryListComponent}, 
   { path: 'galeria/:year', component: GalleryDetailComponent },
+  { path: 'editar-inscripcio', component: EditRegistrationComponent},
+  { path: 'editar-inscripcio-autentificacio', component: EditarEquipAuthComponent},
   { path: '**', redirectTo: '/pagina-principal', pathMatch: 'full' },
 ];

@@ -8,8 +8,8 @@
   </div>
 
   <div class="header">
-    <h1 class="title">Onyar</h1>
-    <img *ngIf="imageUrl" [attr.src]="imageUrl" alt="Onyar Basketball Logo" class="logo">
+    <h1 class="title">{{ teamName ?? '' }}</h1>
+    <img *ngIf="imageUrl" [attr.src]="imageUrl" alt="logo equip" class="logo">
   </div>
 
   <div class="success-message">
