@@ -1,163 +1,188 @@
 <div class="basketball-site">
   <app-nav-menu></app-nav-menu>
-  
-    <!-- Hero Section -->
-    <div class="hero-section">
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <h1>QUI SOM</h1>
-        <p class="hero-subtitle">Coneix la nostra història, valors i equip</p>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>QUI SOM</h1>
+      <p class="hero-subtitle">Coneix la nostra història, valors i equip</p>
+    </div>
+
+    <!-- Scrolling Text Banner -->
+    <div class="scrolling-banner">
+      <div class="scrolling-text">
+        <span *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">PASSIÓ PEL BÀSQUET&nbsp;&nbsp;</span>
       </div>
-      
-      <!-- Scrolling Text Banner -->
-      <div class="scrolling-banner">
-        <div class="scrolling-text">
-          <span *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">PASSIÓ PEL BÀSQUET&nbsp;&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- About Us Section -->
+  <section class="about-section">
+    <div class="section-container">
+      <div class="about-content">
+        <h2 class="section-title">LA NOSTRA HISTÒRIA</h2>
+        <p>El Torneig del LUDIBÀSQUET va néixer l’any 2000 amb la voluntat de crear una cita esportiva única i oberta a
+          tothom, on el bàsquet fos el gran protagonista durant tot un dia sencer.
+        </p>
+        <p>Des de la seva primera edició, el torneig s’ha consolidat com un esdeveniment emblemàtic dins la nostra
+          comunitat, reunint jugadors i jugadores de totes les edats i nivells, fomentant la convivència, l’esportivitat
+          i la passió pel bàsquet.
+        </p>
+        <p>Amb més de dues dècades d’història, el 24 h de LUDIBÀSQUET ha esdevingut una festa anual imprescindible, que
+          combina competició, diversió i valors compartits en un ambient familiar i inclusiu.</p>
+      </div>
+      <div class="about-image">
+        <img src="assets/images/foto-1.jpeg" alt="Història del club">
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <!-- <section class="timeline-section">
+    <h2 class="section-title">LA NOSTRA TRAJECTÒRIA</h2>
+    <div class="timeline">
+      <div class="timeline-container" *ngFor="let milestone of milestones; let i = index" [class.right]="i % 2 !== 0">
+        <div class="timeline-content">
+          <h3>{{milestone.year}}</h3>
+          <p>{{milestone.event}}</p>
         </div>
       </div>
     </div>
-  
-    <!-- About Us Section -->
-    <section class="about-section">
-      <div class="section-container">
-        <div class="about-content">
-          <h2 class="section-title">LA NOSTRA HISTÒRIA</h2>
-          <p>LUDIBÀSQUET va néixer l'any 2010 amb l'objectiu de promoure el bàsquet a la nostra comunitat i oferir un espai on els joves poguessin desenvolupar les seves habilitats esportives mentre aprenen valors fonamentals per a la vida.</p>
-          <p>Des dels nostres inicis, hem crescut fins a convertir-nos en un referent del bàsquet formatiu, amb més de 500 jugadors i jugadores de totes les edats que participen en les nostres activitats i competicions.</p>
-        </div>
-        <div class="about-image">
-          <img src="assets/images/foto-1.jpeg" alt="Història del club">
+  </section> -->
+
+  <!-- Mission Section -->
+  <section class="mission-section">
+    <div class="section-container">
+      <div class="mission-image">
+        <img src="assets/images/carrusel-1.JPG" alt="La nostra missió">
+      </div>
+      <div class="mission-content">
+        <h2 class="section-title">LA NOSTRA MISSIÓ</h2>
+        <p>A LUDIBÀSQUET treballem per promoure el bàsquet com a eina educativa i de creixement personal. La nostra
+          missió és oferir un entorn segur, inclusiu i motivador on infants i joves puguin desenvolupar-se tant
+          esportivament com en valors humans com el respecte, el treball en equip, l’esforç i la responsabilitat.
+        </p>
+        <div class="mission-highlight">
+          <h3>OBJECTIUS PRINCIPALS</h3>
+          <ul>
+            <li>Fomentar la pràctica esportiva com a hàbit saludable i font de diversió.</li>
+            <li>Formar persones abans que esportistes, promovent valors fonamentals per a la vida.
+            </li>
+            <li>Donar accés al bàsquet a tothom, independentment del nivell o condició.
+            </li>
+            <li>Potenciar el talent local amb programes de tecnificació i competició.
+            </li>
+            <li>Crear comunitat a través d’esdeveniments com el torneig de 24 hores, campus i activitats socials.</li>
+          </ul>
         </div>
       </div>
-    </section>
-  
-    <!-- Timeline Section -->
-    <section class="timeline-section">
-      <h2 class="section-title">LA NOSTRA TRAJECTÒRIA</h2>
-      <div class="timeline">
-        <div class="timeline-container" *ngFor="let milestone of milestones; let i = index" [class.right]="i % 2 !== 0">
-          <div class="timeline-content">
-            <h3>{{milestone.year}}</h3>
-            <p>{{milestone.event}}</p>
-          </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="values-section">
+    <h2 class="section-title">ELS NOSTRES VALORS</h2>
+    <div class="values-container">
+      <div class="value-card" *ngFor="let value of values">
+        <div class="value-icon">
+          <svg *ngIf="value.icon === 'users'" xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <svg *ngIf="value.icon === 'heart'" xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+            </path>
+          </svg>
+          <svg *ngIf="value.icon === 'award'" xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="8" r="7"></circle>
+            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+          </svg>
+          <svg *ngIf="value.icon === 'smile'" xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+            <line x1="9" y1="9" x2="9.01" y2="9"></line>
+            <line x1="15" y1="9" x2="15.01" y2="9"></line>
+          </svg>
+        </div>
+        <h3>{{value.title}}</h3>
+        <p>{{value.description}}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="team-section">
+    <h2 class="section-title">ELS NOSTRES PATROCINADORS</h2>
+    <div class="team-container">
+      <div class="team-card" *ngFor="let member of teamMembers">
+        <div class="team-image">
+          <img [src]="member.image" [alt]="member.name">
+        </div>
+        <div class="team-info">
+          <h3>{{member.name}}</h3>
+          <h4>{{member.position}}</h4>
         </div>
       </div>
-    </section>
-  
-    <!-- Mission Section -->
-    <section class="mission-section">
-      <div class="section-container">
-        <div class="mission-image">
-          <img src="assets/images/foto-2.PNG" alt="La nostra missió">
-        </div>
-        <div class="mission-content">
-          <h2 class="section-title">LA NOSTRA MISSIÓ</h2>
-          <p>A LUDIBÀSQUET, la nostra missió és fomentar la pràctica del bàsquet com a eina educativa i formativa, promovent valors com el respecte, l'esforç, la disciplina i el treball en equip.</p>
-          <p>Volem que tots els nostres jugadors i jugadores gaudeixin del bàsquet en un entorn segur i inclusiu, on puguin desenvolupar-se tant a nivell esportiu com personal.</p>
-          <div class="mission-highlight">
-            <h3>OBJECTIUS PRINCIPALS</h3>
-            <ul>
-              <li>Promoure la pràctica del bàsquet entre els joves</li>
-              <li>Oferir una formació esportiva de qualitat</li>
-              <li>Fomentar valors positius a través de l'esport</li>
-              <li>Crear un entorn inclusiu i respectuós</li>
-              <li>Organitzar competicions i esdeveniments esportius</li>
-            </ul>
+    </div>
+  </section>
+
+  <!-- Activities Section -->
+  <section class="activities-section">
+    <div class="section-container">
+      <div class="activities-content">
+        <h2 class="section-title">QUÈ FEM</h2>
+        <div class="activities-grid">
+          <div class="activity-item">
+            <h3>Torneig</h3>
+            <p>A LUDIBÀSQUET organitzem molt més que bàsquet: creem experiències per a tota la comunitat. El nostre esdeveniment principal és el torneig de 24 hores, una jornada plena d’energia, esport i diversió que va molt més enllà de la competició.
+            </p>
           </div>
-        </div>
-      </div>
-    </section>
-  
-    <!-- Values Section -->
-    <section class="values-section">
-      <h2 class="section-title">ELS NOSTRES VALORS</h2>
-      <div class="values-container">
-        <div class="value-card" *ngFor="let value of values">
-          <div class="value-icon">
-            <svg *ngIf="value.icon === 'users'" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="9" cy="7" r="4"></circle>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-            </svg>
-            <svg *ngIf="value.icon === 'heart'" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
-            <svg *ngIf="value.icon === 'award'" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="8" r="7"></circle>
-              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-            </svg>
-            <svg *ngIf="value.icon === 'smile'" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-              <line x1="9" y1="9" x2="9.01" y2="9"></line>
-              <line x1="15" y1="9" x2="15.01" y2="9"></line>
-            </svg>
+          <div class="activity-item">
+            <h3>Activitats</h3>
+            <p>Durant el torneig, oferim tallers per a nens, espais educatius i creatius pensats perquè els més petits s’ho passin bé mentre aprenen. També comptem amb inflables i activitats lúdiques per a totes les edats, i una programació d’espectacles i animació que fan de l’esdeveniment una festa oberta a tothom.
+              .</p>
           </div>
-          <h3>{{value.title}}</h3>
-          <p>{{value.description}}</p>
+          <div class="activity-item">
+            <h3>Valors</h3>
+            <p>LUDIBÀSQUET és bàsquet, però també és convivència, diversió i valors compartits.</p>
+          </div>
+          <!-- <div class="activity-item">
+            <h3>Tornejos</h3>
+            <p>Organització de tornejos propis, com el LUDIBÀSQUET 24 HORES, que reuneix equips de tota la regió.</p>
+          </div> -->
         </div>
       </div>
-    </section>
-  
-    <!-- Team Section -->
-    <section class="team-section">
-      <h2 class="section-title">EL NOSTRE EQUIP</h2>
-      <div class="team-container">
-        <div class="team-card" *ngFor="let member of teamMembers">
-          <div class="team-image">
-            <img [src]="member.image" [alt]="member.name">
-          </div>
-          <div class="team-info">
-            <h3>{{member.name}}</h3>
-            <h4>{{member.position}}</h4>
-            <p>{{member.description}}</p>
-          </div>
+      <div class="activities-images">
+        <h2 class="section-title ocultar-text">texto oculto</h2>
+        <div class="activities-image-grid">
+          <img src="assets/images/foto-3.jpeg" alt="Entrenaments">
+          <img src="assets/images/foto-4.JPG" alt="Competicions">
+          <img src="assets/images/foto-5.JPG" alt="Campus">
+          <img src="assets/images/carrusel-1.JPG" alt="Tornejos">
         </div>
       </div>
-    </section>
-  
-    <!-- Activities Section -->
-    <section class="activities-section">
-      <div class="section-container">
-        <div class="activities-content">
-          <h2 class="section-title">QUÈ FEM</h2>
-          <div class="activities-grid">
-            <div class="activity-item">
-              <h3>Entrenaments</h3>
-              <p>Sessions d'entrenament adaptades a cada edat i nivell, dirigides per entrenadors qualificats.</p>
-            </div>
-            <div class="activity-item">
-              <h3>Competicions</h3>
-              <p>Participació en lligues locals i regionals, així com en tornejos nacionals i internacionals.</p>
-            </div>
-            <div class="activity-item">
-              <h3>Campus</h3>
-              <p>Campus d'estiu i d'hivern per a joves de totes les edats, amb activitats esportives i lúdiques.</p>
-            </div>
-            <div class="activity-item">
-              <h3>Tornejos</h3>
-              <p>Organització de tornejos propis, com el LUDIBÀSQUET 24 HORES, que reuneix equips de tota la regió.</p>
-            </div>
-          </div>
-        </div>
-        <div class="activities-images">
-          <div class="activities-image-grid">
-            <img src="assets/images/foto-3.jpeg" alt="Entrenaments">
-            <img src="assets/images/foto-4.JPG" alt="Competicions">
-            <img src="assets/images/foto-5.JPG" alt="Campus">
-            <img src="assets/images/carrusel-1.JPG" alt="Tornejos">
-          </div>
-        </div>
-      </div>
-    </section>
-  
-    <!-- Call to Action -->
-    <section class="cta-section">
-      <div class="cta-container">
-        <h2>FORMA PART DE LA NOSTRA FAMÍLIA</h2>
-        <p>T'agradaria unir-te a LUDIBÀSQUET? Tenim opcions per a totes les edats i nivells.</p>
-        <a href="#" class="cta-button">INSCRIU-TE ARA</a>
-      </div>
-    </section>
-  </div>  
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section">
+    <div class="cta-container">
+      <h2>INSCRIPCIONS OBERTES</h2>
+      <p>T'agradaria unir-te a LUDIBÀSQUET? Fes click al botó.</p>
+      <a href="#" class="cta-button">INSCRIU-TE ARA</a>
+    </div>
+  </section>
+  <app-footer></app-footer>
+</div>

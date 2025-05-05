@@ -1,17 +1,9 @@
 <div class="basketball-site">
-    <!-- Navigation Menu -->
-    <!-- <nav [class.main-nav]="true" [class.scrolled]="isScrolled">
-      <div class="nav-container">
-        <a routerLink="/pagina-principal" class="nav-item">INICI</a>
-        <a routerLink="/qui-som" class="nav-item">QUI SOM</a>
-        <a href="#" class="nav-item">ENTITATS</a>
-        <a href="#" class="nav-item">INSCRIPCIONS</a>
-        <a href="#" class="nav-item">CONTACTE</a>
-      </div>
-    </nav> -->
-    <app-nav-menu></app-nav-menu>
-  
-    <!-- Hero Carousel Section -->
+  <!-- Navigation Menu -->
+  <app-nav-menu></app-nav-menu>
+
+  <!-- Hero Carousel Section -->
+  <section class="carrusel-section">
     <div class="hero-carousel">
       <div class="carousel-container">
         <div class="carousel-images" [style.transform]="'translateX(-' + (currentImageIndex * 100) + '%)'">
@@ -26,47 +18,57 @@
         <button class="carousel-control prev" (click)="prevImage()">❮</button>
         <button class="carousel-control next" (click)="nextImage()">❯</button>
       </div>
-  
+
       <!-- Scrolling Text Banner -->
       <div class="scrolling-banner">
         <div class="scrolling-text">
-          <span *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">BÀSQUET 24 HORES&nbsp;&nbsp;</span>
+          <span *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]"> BÀSQUET 24 HORES&nbsp;&nbsp; </span>
+        </div>
+      </div>
+
+      <!-- Carousel Indicators -->
+      <div class="carousel-indicators">
+        <div class="indicator-container">
+          <span *ngFor="let image of carouselImages; let i = index" [class.active]="i === currentImageIndex"
+            (click)="currentImageIndex = i"></span>
         </div>
       </div>
     </div>
-  
-    <!-- Carousel Indicators -->
-    <div class="carousel-indicators">
-      <div class="indicator-container">
-        <span *ngFor="let image of carouselImages; let i = index" 
-              [class.active]="i === currentImageIndex"
-              (click)="currentImageIndex = i"></span>
-      </div>
+  </section>
+
+
+  <!-- Section Labels -->
+  <section class="countdown">
+    <div class="countdown-item">
+      <span class="countdown-time">{{ days }}</span>
+      <span class="countdown-label">Dies</span>
     </div>
-  
-    <!-- Section Labels -->
-    <!-- <div class="section-labels"> -->
-        <section class="countdown">
-            <div class="countdown-item">
-                <span class="countdown-time">{{ days }}</span>
-                <span class="countdown-label">Dies</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-time">{{ hours }}</span>
-                <span class="countdown-label">Hores</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-time">{{ minutes }}</span>
-                <span class="countdown-label">Minuts</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-time">{{ seconds }}</span>
-                <span class="countdown-label">Segons</span>
-            </div>
-        </section>
-    <!-- </div> -->
-  
-    <!-- Photo Gallery -->
+    <div class="countdown-item">
+      <span class="countdown-time">{{ hours }}</span>
+      <span class="countdown-label">Hores</span>
+    </div>
+    <div class="countdown-item">
+      <span class="countdown-time">{{ minutes }}</span>
+      <span class="countdown-label">Minuts</span>
+    </div>
+    <div class="countdown-item">
+      <span class="countdown-time">{{ seconds }}</span>
+      <span class="countdown-label">Segons</span>
+    </div>
+  </section>
+
+  <!-- Inscripcions -->
+  <section class="boton">
+    <div class="section-labels">
+      <button [routerLink]="'/info-inscripcions'" class='inscripcions-button'>Fes una Inscripció</button>
+    </div>
+  </section>
+
+
+
+
+  <!-- Photo Gallery -->
+  <section class="fotos-section">
     <div class="photo-gallery">
       <div class="gallery-container">
         <div class="gallery-item" *ngFor="let image of galleryImages">
@@ -74,18 +76,29 @@
         </div>
       </div>
     </div>
-  
+
     <!-- Text Content -->
     <div class="text-content">
       <div class="content-container">
         <div class="content-column">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla.</p>
+          <p>A LUDIBÀSQUET vivim el bàsquet amb passió, compromís i il·lusió. Des de l’any 2000 treballem per fer
+            créixer aquest esport dins la nostra comunitat, oferint espais on tothom —grans i petits— pugui gaudir,
+            aprendre i compartir moments inoblidables.</p>
+          <p>Som molt més que un club. Som una entitat que aposta per l’educació a través de l’esport, pel foment de
+            valors com el respecte, l’esforç, la convivència i el treball en equip. El nostre objectiu és crear
+            experiències que deixin empremta, tant dins com fora de la pista.</p>
         </div>
         <div class="content-column">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla.</p>
+          <p>El nostre esdeveniment més emblemàtic és el torneig de 24 hores de LUDIBÀSQUET, una gran festa oberta a
+            tothom, on el bàsquet es combina amb tallers infantils, inflables, espectacles i activitats per a tota la
+            família. Un cap de setmana ple d’energia, diversió i passió per l’esport.</p>
+          <p>A més, durant l’any impulsem tallers educatius per a nens i nenes, campus, activitats socials i propostes
+            inclusives perquè el bàsquet arribi a tothom, independentment del nivell o la condició.</p>
+          <p>Si estàs buscant molt més que un club esportiu, has arribat al lloc ideal.<br>
+            Vine a viure l’experiència LUDIBÀSQUET!</p>
         </div>
       </div>
     </div>
-  </div>
-  
-  
+  </section>
+  <app-footer></app-footer>
+</div>

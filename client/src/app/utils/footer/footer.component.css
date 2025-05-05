@@ -1,5 +1,6 @@
 .footer {
-  margin-top: 5%;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .footer p {
@@ -21,4 +22,8 @@
   font-weight: bold;
   transition: all 0.3s ease;
   font-size: 0.875rem;
+}
+
+hr{
+  margin-top: 0px;
 }

@@ -2,11 +2,12 @@ import { Component, HostListener, OnDestroy, type OnInit } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { RouterModule } from "@angular/router"
 import { NavMenuComponent } from "../nav-menu/nav-menu.component";
+import { FooterComponent } from "../../utils/footer/footer.component";
 
 @Component({
   selector: "app-main-page",
   standalone: true,
-  imports: [CommonModule, RouterModule, NavMenuComponent],
+  imports: [CommonModule, RouterModule, NavMenuComponent, FooterComponent],
   templateUrl: "./main-page.component.html",
   styleUrls: ["./main-page.component.scss"],
 })

@@ -3,11 +3,12 @@ import { CommonModule } from "@angular/common"
 import { RouterModule, ActivatedRoute, Router } from "@angular/router"
 import { GalleryService } from "../../shared/service/gallery.service"
 import type { GalleryYear, GalleryImage } from "../../shared/models/gallery.model"
+import { NavMenuComponent } from "../../nav-menu/nav-menu.component";
 
 @Component({
   selector: "app-gallery-detail",
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NavMenuComponent],
   templateUrl: "./gallery-detail.component.html",
   styleUrls: ["./gallery-detail.component.scss"],
 })

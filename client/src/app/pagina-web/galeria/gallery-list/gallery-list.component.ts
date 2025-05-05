@@ -4,11 +4,12 @@ import { RouterModule } from "@angular/router"
 import { GalleryService } from "../../shared/service/gallery.service"
 import type { GalleryYear } from "../../shared/models/gallery.model"
 import { NavMenuComponent } from "../../nav-menu/nav-menu.component";
+import { FooterComponent } from "../../../utils/footer/footer.component";
 
 @Component({
   selector: "app-gallery-list",
   standalone: true,
-  imports: [CommonModule, RouterModule, NavMenuComponent],
+  imports: [CommonModule, RouterModule, NavMenuComponent, FooterComponent],
   templateUrl: "./gallery-list.component.html",
   styleUrls: ["./gallery-list.component.scss"],
 })

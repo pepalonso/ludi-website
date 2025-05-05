@@ -2,12 +2,12 @@ import { Component } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { RouterModule } from "@angular/router"
 import { NavMenuComponent } from "../nav-menu/nav-menu.component";
+import { FooterComponent } from "../../utils/footer/footer.component";
 
 interface TeamMember {
   name: string
   position: string
   image: string
-  description: string
 }
 
 interface ValueItem {
@@ -19,42 +19,36 @@ interface ValueItem {
 @Component({
   selector: "app-qui-som",
   standalone: true,
-  imports: [CommonModule, RouterModule, NavMenuComponent],
+  imports: [CommonModule, RouterModule, NavMenuComponent, FooterComponent],
   templateUrl: "./qui-som.component.html",
   styleUrls: ["./qui-som.component.scss"],
 })
 export class QuiSomComponent {
   teamMembers: TeamMember[] = [
     {
-      name: "Aram Mateos",
-      position: "Director Esportiu",
-      image: "assets/images/carrusel-2.JPG",
-      description:
-        "Amb més de 15 anys d'experiència en el món del bàsquet, lidera el nostre equip amb passió i dedicació.",
+      name: "InfoJobs",
+      position: "Empresa de treball",
+      image: "assets/images/infojobs.jpg",
     },
     {
-      name: "Pep Alonso",
-      position: "Coordinadora",
-      image: "assets/images/pep.jpg",
-      description: "Responsable de coordinar totes les activitats i assegurar que tot funcioni perfectament.",
+      name: "Emirates",
+      position: "Empresa de millonaris",
+      image: "assets/images/emirates.png",
     },
     {
-      name: "Pau Gracia",
-      position: "Entrenador Principal",
-      image: "assets/images/pau.jpg",
-      description: "Entrenador amb experiència internacional que porta el millor del bàsquet als nostres jugadors.",
+      name: "Nike",
+      position: "Empresa de esport",
+      image: "assets/images/nike.png",
     },
     {
-      name: "Mariona Martin",
-      position: "Preparadora Física",
-      image: "assets/images/martin.jpg",
-      description: "Especialista en preparació física per a esportistes de totes les edats.",
+      name: "Addidas",
+      position: "Empresa de esport",
+      image: "assets/images/adidas.png",
     },
     {
-      name: "Gerard Valldosera",
-      position: "Preparadora Física",
-      image: "assets/images/valldu.jpg",
-      description: "Especialista en preparació física per a esportistes de totes les edats.",
+      name: "Pepsi",
+      position: "Empresa de begudes",
+      image: "assets/images/pepsi.jpg",
     },
   ]
 

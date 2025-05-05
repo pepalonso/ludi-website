@@ -1,277 +1,320 @@
 .basketball-site {
-    font-family: Arial, sans-serif;
-    color: white;
-    background-color: black;
-    width: 100%;
-    overflow-x: hidden;
-  }
+  font-family: Arial, sans-serif;
+  color: white;
+  background-color: black;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Hero Carousel */
+.hero-carousel {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  overflow: hidden;
+}
+
+.carousel-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.carousel-images {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-image {
+  min-width: 100%;
+  height: 100%;
+  position: relative;
   
-  /* Hero Carousel */
-  .hero-carousel {
-    position: relative;
-    width: 100%;
-    height: 700px;
-    overflow: hidden;
-  }
-  
-  .carousel-container {
+  img {
     width: 100%;
     height: 100%;
-    position: relative;
+    object-fit: cover;
+    filter: brightness(0.7);
+  }
+}
+
+.hero-text {
+  position: absolute;
+  bottom: 80px;
+  right: 50px;
+  text-align: right;
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
   }
   
-  .carousel-images {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.5s ease-in-out;
+  h1 {
+    font-size: 60px;
+    font-weight: bold;
+    margin: 0;
+  }
+}
+
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0);
+  color: white;
+  border: none;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  font-size: 40px;
+  cursor: pointer;
+  transition: 0.5s;
+  
+  &.prev {
+    left: 20px;
   }
   
-  .carousel-image {
-    min-width: 100%;
-    height: 100%;
-    position: relative;
-    
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.7);
-    }
+  &.next {
+    right: 20px;
   }
   
-  .hero-text {
-    position: absolute;
-    bottom: 80px;
-    right: 50px;
-    text-align: right;
-    
-    h2 {
-      font-size: 24px;
-      margin-bottom: 5px;
-    }
-    
-    h1 {
-      font-size: 60px;
-      font-weight: bold;
-      margin: 0;
-    }
+  &:hover {
+    transition: 0.5s;
+    color: #ff6600;
+    background-color: #0000002d;
   }
+}
+
+/* Scrolling Banner */
+.scrolling-banner {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #ff6600;
+  overflow: hidden;
+  height: 40px;
+}
+
+.scrolling-text {
+  display: flex;
+  white-space: nowrap;
+  animation: scroll-left 30s linear infinite;
   
-  .carousel-control {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    font-size: 18px;
-    cursor: pointer;
-    
-    &.prev {
-      left: 20px;
-    }
-    
-    &.next {
-      right: 20px;
-    }
-    
-    &:hover {
-      background: rgba(0, 0, 0, 0.8);
-    }
-  }
-  
-  /* Scrolling Banner */
-  .scrolling-banner {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: #ff6600;
-    overflow: hidden;
-    height: 40px;
-  }
-  
-  .scrolling-text {
-    display: flex;
-    white-space: nowrap;
-    animation: scroll-left 30s linear infinite;
-    
-    span {
-      color: black;
-      font-weight: bold;
-      font-size: 18px;
-      line-height: 40px;
-    }
-  }
-  
-  @keyframes scroll-left {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-  
-  /* Carousel Indicators */
-  .carousel-indicators {
-    display: flex;
-    justify-content: center;
-    padding: 20px 0;
-  }
-  
-  .indicator-container {
-    display: flex;
-    gap: 10px;
-    
-    span {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background-color: #333;
-      cursor: pointer;
-      
-      &.active {
-        background-color: white;
-      }
-    }
-  }
-  
-  /* Section Labels */
-  .section-labels {
-    display: flex;
-    justify-content: space-around;
-    padding: 20px 0;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .label {
+  span {
+    color: black;
     font-weight: bold;
     font-size: 18px;
+    line-height: 40px;
   }
-  
-  /* Photo Gallery */
-  .photo-gallery {
-    padding: 20px 0;
-  }
-  
-  .gallery-container {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 15px;
-    padding: 0 20px;
-    
-    &::-webkit-scrollbar {
-      height: 5px;
-    }
-    
-    &::-webkit-scrollbar-thumb {
-      background: #555;
-      border-radius: 10px;
-    }
-  }
-  
-  .gallery-item {
-    flex: 0 0 auto;
-    width: 220px;
-    height: 150px;
-    
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-  
-  /* Text Content */
-  .text-content {
-    padding: 40px 0;
-  }
-  
-  .content-container {
-    display: flex;
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 40px;
-    padding: 0 20px;
-  }
-  
-  .content-column {
-    flex: 1;
-    
-    p {
-      line-height: 1.6;
-      color: #ccc;
-    }
-  }
-  
-  /* Responsive Styles */
-  @media (max-width: 768px) {
-    .nav-container {
-      flex-wrap: wrap;
-    }
-    
-    .nav-item {
-      margin: 5px 10px;
-    }
-    
-    .hero-text {
-      right: 20px;
-      bottom: 60px;
-      
-      h1 {
-        font-size: 40px;
-      }
-      
-      h2 {
-        font-size: 18px;
-      }
-    }
-    
-    .content-container {
-      flex-direction: column;
-    }
-  }  
+}
 
-  .countdown {
-    display: flex;
-    justify-content: center;
-    gap: 6%;
-    row-gap: 2rem;
-    padding: 40px 0;
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Carousel Indicators */
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.indicator-container {
+  display: flex;
+  gap: 10px;
+  
+  span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #333;
+    cursor: pointer;
+    
+    &.active {
+      background-color: white;
+    }
+  }
+}
+
+/* Section Labels */
+.section-labels {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.label {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Photo Gallery */
+.photo-gallery {
+  padding: 20px 0;
+}
+
+.gallery-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 15px;
+  padding: 0 20px;
+  
+  &::-webkit-scrollbar {
+    height: 5px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 10px;
+  }
+}
+
+.gallery-item {
+  flex: 0 0 auto;
+  width: 220px;
+  height: 150px;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Text Content */
+.text-content {
+  padding: 40px 0;
+}
+
+.content-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px;
+  padding: 0 20px;
+}
+
+.content-column {
+  flex: 1;
+  
+  p {
+    line-height: 1.6;
+    color: #ccc;
+    text-align: justify;
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .nav-container {
     flex-wrap: wrap;
   }
   
-  .countdown-item {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center; /* Esto centra horizontalmente los elementos hijos */
-    text-align: center;
-    background: #000000;
-    padding: 1rem;
-    border: 2px solid var(--primary);
-    flex: 1 1 calc(25% - 2rem);
-    max-width: 200px;
-    box-sizing: border-box;
-    border-radius: 20px;
+  .nav-item {
+    margin: 5px 10px;
   }
   
-  .countdown-time {
-    font-size: 2rem;
-    color: var(--primary);
-    font-weight: bold;
+  .hero-text {
+    right: 20px;
+    bottom: 60px;
+    
+    h1 {
+      font-size: 40px;
+    }
+    
+    h2 {
+      font-size: 18px;
+    }
   }
   
-  .countdown-label {
-    font-size: 0.75rem;
-    margin-left: 5px;
-    text-transform: uppercase;
-    color: #cccccc;
+  .content-container {
+    flex-direction: column;
   }
+}  
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 6%;
+  row-gap: 2rem;
+  padding: 40px 0;
+  flex-wrap: wrap;
+}
+
+.countdown-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; /* Esto centra horizontalmente los elementos hijos */
+  text-align: center;
+  background: #000000;
+  padding: 1rem;
+  border: 2px solid var(--primary);
+  flex: 1 1 calc(25% - 2rem);
+  max-width: 200px;
+  box-sizing: border-box;
+  border-radius: 20px;
+}
+
+.countdown-time {
+  font-size: 2rem;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.countdown-label {
+  font-size: 0.75rem;
+  margin-left: 5px;
+  text-transform: uppercase;
+  color: #cccccc;
+}
+
+.inscripcions-button {
+  background-color: #d36600;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 300px;
+  height: 60px;
+  transition: 0.5s;
+  font-weight: bold;
+  margin: 5%;
+
+  &:hover{
+    background-color: #a34f00;
+    transition: 0.5s;
+    transform: translateY(-5%);
+  }
+}
+
+.carrusel-section {
+  background-color: #111;
+}
+
+.countdown {
+  background-color: #0a0a0a;
+}
+
+.boton {
+  background-color: #0a0a0a
+}
+
+.fotos-section {
+  background-color: #111;
+}
+

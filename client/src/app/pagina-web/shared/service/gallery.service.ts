@@ -20,31 +20,31 @@ export class GalleryService {
         },
         {
           id: "2023-2",
-          url: "/assets/images/gallery/2023/image-2.jpg",
+          url: "/assets/images/gallery/2023/image-2.jpeg",
           title: "Campus d'Estiu",
           description: "Activitats del campus d'estiu amb els més petits",
         },
         {
           id: "2023-3",
-          url: "/assets/images/gallery/2023/image-3.jpg",
+          url: "/assets/images/gallery/2023/image-3.jpeg",
           title: "Partit de Lliga",
           description: "Equip sènior durant un partit de lliga",
         },
         {
           id: "2023-4",
-          url: "/assets/images/gallery/2023/image-4.jpg",
+          url: "/assets/images/gallery/2023/image-4.JPG",
           title: "Entrenament Especial",
           description: "Sessió d'entrenament amb un jugador professional convidat",
         },
         {
           id: "2023-5",
-          url: "/assets/images/gallery/2023/image-5.jpg",
+          url: "/assets/images/gallery/2023/image-5.JPG",
           title: "Celebració Final de Temporada",
           description: "Festa de final de temporada amb tots els equips",
         },
         {
           id: "2023-6",
-          url: "/assets/images/gallery/2023/image-6.jpg",
+          url: "/assets/images/gallery/2023/image-2.PNG",
           title: "Torneig LUDIBÀSQUET 24h",
           description: "Imatges del torneig anual de 24 hores",
         },
@@ -54,7 +54,7 @@ export class GalleryService {
       year: "2022",
       title: "Temporada 2022",
       description: "Recull fotogràfic dels millors moments de la temporada 2022",
-      coverImage: "/assets/images/gallery/2022/cover.jpg",
+      coverImage: "/assets/images/soon.jpg",
       images: [
         {
           id: "2022-1",
@@ -92,7 +92,7 @@ export class GalleryService {
       year: "2021",
       title: "Temporada 2021",
       description: "Galeria d'imatges de la temporada 2021",
-      coverImage: "/assets/images/gallery/2021/cover.jpg",
+      coverImage: "/assets/images/soon.jpg",
       images: [
         {
           id: "2021-1",
@@ -124,7 +124,7 @@ export class GalleryService {
       year: "2020",
       title: "Temporada 2020",
       description: "Imatges de la temporada 2020",
-      coverImage: "/assets/images/gallery/2020/cover.jpg",
+      coverImage: "/assets/images/soon.jpg",
       images: [
         {
           id: "2020-1",

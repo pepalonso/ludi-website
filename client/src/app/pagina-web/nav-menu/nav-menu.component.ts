@@ -14,6 +14,6 @@ export class NavMenuComponent {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    this.isScrolled = window.scrollY > 50;
+    this.isScrolled = window.scrollY > 20;
   }
 }
