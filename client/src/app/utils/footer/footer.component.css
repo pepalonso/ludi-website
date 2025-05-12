@@ -1,7 +1,7 @@
-.footer {
+/* .footer {
   margin-top: 20px;
   margin-bottom: 20px;
-}
+} */
 
 .footer p {
   font-size: 1rem;
@@ -9,12 +9,30 @@
   margin-bottom: 1rem;
 }
 
+.footer {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Esta clase centra el div de iconos de forma absoluta */
 .social-icons {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 15px;
+}
+
+
+/* .social-icons {
   display: flex;
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
-}
+} */
 
 .social-link {
   color: var(--primary);
