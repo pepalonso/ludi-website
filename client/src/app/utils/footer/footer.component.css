@@ -17,22 +17,12 @@
   padding: 20px;
 }
 
-/* Esta clase centra el div de iconos de forma absoluta */
 .social-icons {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
-  gap: 15px;
-}
-
-
-/* .social-icons {
-  display: flex;
+  flex: auto;
   justify-content: center;
   gap: 1rem;
-  flex-wrap: wrap;
-} */
+}
 
 .social-link {
   color: var(--primary);
@@ -44,4 +34,26 @@
 
 hr{
   margin-top: 0px;
+}
+
+.email {
+  flex-grow: 1;
+  width: 10%;
+  text-align: end;
+  align-items: center;
+}
+
+.phone {
+  flex-grow: 1;
+  width: 10%;
+  align-items: center;
+}
+
+.icones {
+  flex-grow: 0.5;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
 }

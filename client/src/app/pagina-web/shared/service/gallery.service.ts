@@ -1,5 +1,8 @@
 import { Injectable } from "@angular/core"
 import type { GalleryYear } from "../models/gallery.model"
+import { HttpClient } from "@angular/common/http"
+import { Observable } from "rxjs"
+import { environment } from "../../../../environments/environment.prod"
 
 @Injectable({
   providedIn: "root",
@@ -154,7 +157,9 @@ export class GalleryService {
     },
   ]
 
-  constructor() {}
+  constructor(
+    private http: HttpClient
+  ) {}
 
   getAllGalleries(): GalleryYear[] {
     return this.galleries
@@ -163,5 +168,9 @@ export class GalleryService {
   getGalleryByYear(year: string): GalleryYear | undefined {
     return this.galleries.find((gallery) => gallery.year === year)
   }
-}
 
+  carregarImatgesS3(year: string): Observable<string[]> {
+    const url = `https://${environment.apiUrl}/galeria-web?year=${year}`;
+    return this.http.get<string[]>(url);
+  }
+}

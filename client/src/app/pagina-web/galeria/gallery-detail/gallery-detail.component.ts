@@ -16,17 +16,18 @@ export class GalleryDetailComponent implements OnInit {
   gallery: GalleryYear | undefined
   selectedImage: GalleryImage | null = null
   year = ""
+  fotos: any;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private galleryService: GalleryService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.year = params["year"]
-      this.loadGallery()
+      this.loadGallery();
     })
   }
 
@@ -35,6 +36,10 @@ export class GalleryDetailComponent implements OnInit {
     if (!this.gallery) {
       this.router.navigate(["/galeria"])
     }
+
+    this.galleryService.carregarImatgesS3(this.year).subscribe(data => {
+      this.fotos = data;
+    })
   }
 
   openLightbox(image: GalleryImage): void {
