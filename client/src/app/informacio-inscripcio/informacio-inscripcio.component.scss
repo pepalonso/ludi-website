@@ -1,0 +1,139 @@
+.drets-text {
+  color: white;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.btn-download {
+  background-color: #D36701;
+  font-size: 20px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.btn-download:hover {
+  background-color: #f07b1c;
+}
+
+.btn-icon {
+  display: inline-flex;
+  margin-right: 8px;
+}
+
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Card Styles */
+.form-card {
+  background-color: #252525;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  margin-top: 30px;
+  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.351)
+}
+
+/* Form Title */
+.form-title {
+  color: #D36701;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+button {
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: 8px;
+}
+
+
+.navigation-controls {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.esquerra {
+  display: flex;
+  width: 50%;
+  justify-content: left;
+}
+
+.dreta {
+  display: flex;
+  width: 50%;
+  justify-content: right;
+}
+
+.btn-next {
+  background-color: #D36701;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.btn-next:hover {
+  background-color: #f07b1c;
+  transform: translateY(-2px);
+}
+
+.btn-next:disabled {
+  background-color: #555555;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-prev {
+  background-color: #D36701;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.btn-prev:hover {
+  background-color: #f07b1c;
+  transform: translateY(-2px);
+}
+
+.menu {
+  height: 30px;
+}
+
+.background-container {
+  background-color: rgba(0, 0, 0, 0.626);
+  background-blend-mode: darken;
+  background-image: url('/assets/images/carrusel-2.JPG');
+  background-size: cover;
+  background-position: center;
+  margin-top: -40px;
+}
+
+.footer {
+  background-color: black;
+  padding-bottom: 1px;
+}

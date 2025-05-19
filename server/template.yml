@@ -142,3 +142,24 @@ Resources:
           BUCKET_NAME: dummy-bucket
     Metadata:
       BuildMethod: python3.12
+  ListS3PhotosFunction:
+      Type: AWS::Serverless::Function
+      Properties:
+        CodeUri: src/list_s3_photos/
+        Handler: lambda_function.lambda_handler
+        Runtime: python3.9
+        Timeout: 10
+        MemorySize: 128
+        Environment:
+          Variables:
+            BUCKET_NAME: tu-nombre-del-bucket
+            BUCKET_PREFIX: 2024/
+        Policies:
+          - S3ReadPolicy:
+              BucketName: tu-nombre-del-bucket
+        Events:
+          ListPhotos:
+            Type: Api
+            Properties:
+              Path: /fotos
+              Method: get
