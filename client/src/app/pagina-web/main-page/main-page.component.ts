@@ -22,18 +22,18 @@ export class MainPageComponent implements OnInit, OnDestroy {
   public seconds: number = 0;
   
   carouselImages: string[] = [
-    "assets/images/carrusel-1.JPG",
-    "assets/images/carrusel-2.JPG",
     "assets/images/carrusel-3.JPG",
+    "assets/images/carrusel-5.JPG",
+    "assets/images/carrusel-4.JPG",
   ]
 
   currentImageIndex = 0
   galleryImages: string[] = [
-    "assets/images/foto-1.jpeg",
-    "assets/images/foto-2.PNG",
-    "assets/images/foto-3.jpeg",
-    "assets/images/foto-4.JPG",
-    "assets/images/foto-5.JPG",
+    "assets/images/main/img1.JPG",
+    "assets/images/main/img2.JPG",
+    "assets/images/main/img3.JPG",
+    "assets/images/main/img4.JPG",
+    "assets/images/main/img5.JPG",
   ]
 
   constructor() {}

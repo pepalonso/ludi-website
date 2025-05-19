@@ -41,12 +41,14 @@ hr{
   width: 10%;
   text-align: end;
   align-items: center;
+  color: #d36600;
 }
 
 .phone {
   flex-grow: 1;
   width: 10%;
   align-items: center;
+  color: #d36600;
 }
 
 .icones {
