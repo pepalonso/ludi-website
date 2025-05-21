@@ -1,5 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { Sexe, TallaSamarreta, Team } from '../../interfaces/ludi.interface';
+import {
+  Categories,
+  Sexe,
+  TallaSamarreta,
+  Team,
+} from '../../interfaces/ludi.interface';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -39,11 +44,13 @@ export class TeamDesktopComponent {
 
   public paymentInfo() {
     if (!this.team) return { account: '', import: 0, concepte: '' };
+    const pricePerPlayer = this.team.categoria === Categories.PREMINI ? 40 : 50;
 
     return {
       account: 'ES70 2100 8118 8023 0004 2564',
       import: `${
-        50 * this.team.jugadors.length + 10 * this.team.entrenadors.length
+        pricePerPlayer * this.team.jugadors.length +
+        10 * this.team.entrenadors.length
       } €`,
       concepte: `LUDIBÀSQUET 2025 - ${this.team.club || 'Equip'} - ${
         this.team.categoria
