@@ -88,9 +88,8 @@ export class PanellAdminComponent implements OnInit {
   private token: string = '';
   public loading: boolean = true;
   private host = environment.production
-          ? `https://${environment.apiUrl}`
-          : `http://${environment.apiUrl}`;
-
+    ? `https://${environment.apiUrl}`
+    : `http://${environment.apiUrl}`;
 
   // Data
   clubs: Club[] = [];
@@ -117,7 +116,7 @@ export class PanellAdminComponent implements OnInit {
     private fb: FormBuilder,
     private messageService: MessageService,
     private router: Router,
-    private authService: AuthService,
+    private authService: AuthService
   ) {
     this.filterForm = this.fb.group({
       club: [''],
@@ -131,25 +130,15 @@ export class PanellAdminComponent implements OnInit {
     this.setupChartOptions();
   }
 
-  setupAuthentication(): void {
-    onAuthStateChanged(this.auth, async (user) => {
+  async setupAuthentication(): Promise<void> {
+    this.authService.user$.subscribe(async (user) => {
       if (user) {
         this.token = await user.getIdToken();
         this.loadData();
       } else {
-        window.location.href = '/administrador-login';
+        this.router.navigate(['/administrador-login']);
       }
     });
-
-    this.authService.getToken()
-      .then((token: string) => {
-        this.token = token;
-        this.loadData();
-      })
-      .catch(error => {
-        console.error('Authentication error:', error);
-        this.router.navigate(['/administrador-login']);
-      });
   }
 
   setupChartOptions(): void {
@@ -182,7 +171,11 @@ export class PanellAdminComponent implements OnInit {
     };
   }
 
-  async loadData(filters?: { club?: string; categoria?: string; sexe?: string }): Promise<void> {
+  async loadData(filters?: {
+    club?: string;
+    categoria?: string;
+    sexe?: string;
+  }): Promise<void> {
     this.loading = true;
 
     try {
@@ -192,7 +185,7 @@ export class PanellAdminComponent implements OnInit {
         this.loadEntrenadors(),
         this.loadStatistics(),
         setTimeout(() => {
-          this.loadEquips(filters)
+          this.loadEquips(filters);
         }, 200), // Await for clubs to load before loading equips
         ,
       ]);
@@ -211,7 +204,6 @@ export class PanellAdminComponent implements OnInit {
     }
   }
 
-
   async loadClubs(): Promise<void> {
     const enpoint = `${this.host}/clubs`;
 
@@ -224,11 +216,14 @@ export class PanellAdminComponent implements OnInit {
     });
 
     const data = await response.json();
-    this.clubs = data
-
+    this.clubs = data;
   }
 
-  async loadEquips(filters?: { club?: string; categoria?: string; sexe?: string }): Promise<void> {
+  async loadEquips(filters?: {
+    club?: string;
+    categoria?: string;
+    sexe?: string;
+  }): Promise<void> {
     let endpoint = `${this.host}/equips`;
 
     const queryParams: string[] = [];
@@ -260,9 +255,7 @@ export class PanellAdminComponent implements OnInit {
     });
   }
 
-
   async loadJugadors(): Promise<void> {
-
     const enpoint = `${this.host}/jugadors`;
 
     const response = await fetch(enpoint, {
@@ -274,14 +267,13 @@ export class PanellAdminComponent implements OnInit {
     });
 
     const data = await response.json();
-    this.jugadors = data
-
+    this.jugadors = data;
 
     // Add team name to each player
     this.jugadors.forEach((jugador) => {
       const equip = this.equips.find((e) => e.id === jugador.id_equip);
       const club = this.clubs.find((c) => c.id === equip?.club_id);
-      jugador.equip_nom = equip?.nom ?? club?.nom
+      jugador.equip_nom = equip?.nom ?? club?.nom;
     });
   }
 
@@ -297,14 +289,13 @@ export class PanellAdminComponent implements OnInit {
     });
 
     const data = await response.json();
-    this.entrenadors = data
-
+    this.entrenadors = data;
 
     // Add team name to each coach
     this.entrenadors.forEach((entrenador) => {
       const equip = this.equips.find((e) => e.id === entrenador.id_equip);
       const club = this.clubs.find((c) => c.id === equip?.club_id);
-      entrenador.equip_nom = equip?.nom ?? club?.nom
+      entrenador.equip_nom = equip?.nom ?? club?.nom;
     });
   }
 
@@ -320,13 +311,12 @@ export class PanellAdminComponent implements OnInit {
     });
 
     const data = await response.json();
-    this.statistics = data
-
+    this.statistics = data;
   }
 
   prepareFilters(): void {
-    this.categories = Object.values(Categories)
-    this.sexes = Object.values(Sexe)
+    this.categories = Object.values(Categories);
+    this.sexes = Object.values(Sexe);
   }
 
   prepareCharts(): void {
@@ -357,10 +347,7 @@ export class PanellAdminComponent implements OnInit {
         {
           label: 'Teams by Gender',
           data: Object.values(this.statistics.equipsBySexe),
-          backgroundColor: [
-            'rgba(0, 0, 0, 0.6)',
-            'rgba(211, 103, 1, 0.6 )',
-          ],
+          backgroundColor: ['rgba(0, 0, 0, 0.6)', 'rgba(211, 103, 1, 0.6 )'],
         },
       ],
     };
@@ -390,7 +377,6 @@ export class PanellAdminComponent implements OnInit {
     this.loadData(filters);
   }
 
-
   resetFilters(): void {
     this.filterForm.reset();
     this.loadData();
@@ -409,28 +395,32 @@ export class PanellAdminComponent implements OnInit {
         data = this.equips;
         headers = [
           'ID',
-          'Name',
-          'Category',
-          'Gender',
+          'Nom',
+          'Categoria',
+          'Sexe',
           'Club',
           'Email',
-          'Phone',
-          'Registration Date',
+          'Telefon',
+          'nº de jugadors',
+          "nº d'entrenadors",
+          'nº de dietes',
+          'Intoleràncies',
+          "Data d'inscripció",
         ];
         break;
       case 'players':
         data = this.jugadors;
-        headers = ['ID', 'Name', 'Surname', 'Team', 'Jersey Size'];
+        headers = ['ID', 'Nom', 'Cognoms', 'Equip', 'Talla de samarreta'];
         break;
       case 'coaches':
         data = this.entrenadors;
         headers = [
           'ID',
-          'Name',
-          'Surname',
-          'Team',
-          'Main Coach',
-          'Jersey Size',
+          'Nom',
+          'Cognoms',
+          'Equip',
+          'Entrenador principal',
+          'Talla de samarreta',
         ];
         break;
     }
@@ -464,38 +454,50 @@ export class PanellAdminComponent implements OnInit {
           case 'ID':
             value = item.id;
             break;
-          case 'Name':
+          case 'Nom':
             value = item.nom;
             break;
-          case 'Surname':
-            value = item.cognoms || '';
+          case 'Cognoms':
+            value = item.cognoms;
             break;
-          case 'Team':
-            value = item.equip_nom || '';
+          case 'Equip':
+            value = item.equip_nom;
             break;
-          case 'Category':
-            value = item.categoria || '';
+          case 'Categoria':
+            value = item.categoria;
             break;
-          case 'Gender':
-            value = item.sexe || '';
+          case 'Sexe':
+            value = item.sexe;
             break;
           case 'Club':
-            value = item.club_nom || '';
+            value = item.club_nom;
             break;
           case 'Email':
-            value = item.email || '';
+            value = item.email;
             break;
-          case 'Phone':
-            value = item.telefon || '';
+          case 'Telefon':
+            value = item.telefon;
             break;
-          case 'Registration Date':
-            value = item.data_incripcio || '';
+          case "Data d'inscripció":
+            value = item.data_incripcio;
             break;
-          case 'Jersey Size':
+          case 'nº de jugadors':
+            value = item.jugadors.toString() || '';
+            break;
+          case "nº d'entrenadors":
+            value = item.entrenadors.toString() || '';
+            break;
+          case 'nº de dietes':
+            value = (item.jugadors + item.entrenadors).toString() || '';
+            break;
+          case 'Intoleràncies':
+            value = item.intolerancies.join(' | ');
+            break;
+          case 'Talla de samarreta':
             value = item.talla_samarreta || '';
             break;
-          case 'Main Coach':
-            value = item.es_principal ? 'Yes' : 'No';
+          case 'Entrenador principal':
+            value = item.es_principal ? 'Si' : 'No';
             break;
           default:
             value = '';
