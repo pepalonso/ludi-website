@@ -59,9 +59,11 @@ def lambda_handler(event, context):
                         AND expires_at > NOW()
                         ORDER BY created_at DESC LIMIT 1) as token,
                         (SELECT COUNT(*) FROM jugadors WHERE id_equip = e.id) as jugadors,
-                        (SELECT COUNT(*) FROM entrenadors WHERE id_equip = e.id) as entrenadors
+                        (SELECT COUNT(*) FROM entrenadors WHERE id_equip = e.id) as entrenadors,
+                        GROUP_CONCAT(i.nom) as intolerancies
                     FROM equips e
                     JOIN clubs c ON e.club_id = c.id
+                    LEFT JOIN intolerancies i ON e.id = i.id_equip
                 """
 
                 filters = []
@@ -81,7 +83,10 @@ def lambda_handler(event, context):
                 if filters:
                     query += " WHERE " + " AND ".join(filters)
 
-                query += " ORDER BY e.id ASC;" 
+                query += """ 
+                    GROUP BY e.id, e.nom, e.email, e.categoria, e.telefon, e.sexe, e.club_id, e.data_incripcio, c.nom
+                    ORDER BY e.id ASC;
+                """
 
                 # Execute query with parameters
                 cursor.execute(query, values)
@@ -93,6 +98,11 @@ def lambda_handler(event, context):
                         equip["data_incripcio"] = (
                             equip["data_incripcio"].isoformat() + "Z"
                         )
+                    # Convert intolerances string to array
+                    if equip.get("intolerancies"):
+                        equip["intolerancies"] = equip["intolerancies"].split(",")
+                    else:
+                        equip["intolerancies"] = []
 
                 return create_success_response(equips)
 
