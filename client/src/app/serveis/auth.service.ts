@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import {
+  getAuth,
+  onAuthStateChanged,
+  User,
+  browserLocalPersistence,
+  setPersistence,
+} from 'firebase/auth';
 import { firebaseApp } from '../app.config';
 
 @Injectable({
@@ -11,10 +17,21 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
 
   constructor() {
+    // Initialize persistence
+    this.initializePersistence();
+
     // Keep track of auth state changes
     onAuthStateChanged(this.auth, (user) => {
       this.currentUserSubject.next(user);
     });
+  }
+
+  private async initializePersistence() {
+    try {
+      await setPersistence(this.auth, browserLocalPersistence);
+    } catch (error) {
+      console.error('Error setting auth persistence:', error);
+    }
   }
 
   getCurrentUser(): User | null {
