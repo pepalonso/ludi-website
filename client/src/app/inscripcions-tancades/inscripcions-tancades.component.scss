@@ -1,0 +1,62 @@
+.inscripcions-tancades-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background);
+  padding: 20px;
+}
+
+.message-box {
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 2px solid var(--primary);
+  animation: fadeIn 0.5s ease-in-out;
+
+  h1 {
+    color: var(--primary);
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+
+  p {
+    color: var(--text);
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    opacity: 0.9;
+  }
+
+  .icon {
+    font-size: 4rem;
+    margin-top: 30px;
+    animation: bounce 2s infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}

@@ -7,6 +7,7 @@ import {
 } from '../../interfaces/ludi.interface';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../serveis/auth.service';
 
 @Component({
   selector: 'app-team-desktop',
@@ -18,6 +19,7 @@ import { Router } from '@angular/router';
 export class TeamDesktopComponent {
   public TallaSamarreta = TallaSamarreta;
   public Sexe = Sexe;
+  public isAdmin = false;
 
   public showToast: boolean = false;
   public toastMessage: string = '';
@@ -26,7 +28,11 @@ export class TeamDesktopComponent {
   @Input() team!: Team;
   @Input() token?: string;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {
+    this.authService.user$.subscribe((user) => {
+      this.isAdmin = user !== null;
+    });
+  }
 
   public showToastMessage(message: string, type: 'success' | 'error') {
     this.toastMessage = message;

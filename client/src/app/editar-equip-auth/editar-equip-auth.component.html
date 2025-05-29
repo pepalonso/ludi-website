@@ -21,16 +21,20 @@
       <span>Admin</span>
     </button>
 
-    <!-- Method Selection View -->
+    <!-- Edició tancada 29/05/2025 -->
     <div *ngIf="!showPinInput && !showAdminLogin" class="method-selection">
       <h2>Autenticació en dos passos</h2>
-      <p>Selecciona com vols rebre el teu codi de verificació</p>
+      <p>
+        La inscripció està tancada. Si necessites contactar amb nosaltres,
+        escriu al +34659173158
+      </p>
 
       <div class="method-buttons">
         <button
           [class.selected]="selectedMethod === 'email'"
           (click)="selectMethod('email')"
           class="method-button"
+          disabled
         >
           <svg
             width="25"
@@ -71,10 +75,12 @@
           <span class="method-label">Email</span>
         </button>
 
+        <!-- Edició tancada 29/05/2025 -->
         <button
           [class.selected]="selectedMethod === 'whatsapp'"
           (click)="selectMethod('whatsapp')"
           class="method-button"
+          disabled
         >
           <svg
             width="25"
@@ -243,8 +249,7 @@
 
     <!-- Admin Login View -->
     <div *ngIf="showAdminLogin" class="login-container">
-      <div class="logo">
-      </div>
+      <div class="logo"></div>
       <h2>Login</h2>
       <form [formGroup]="loginForm" (ngSubmit)="onAdminSubmit()">
         <div class="form-group">
