@@ -405,6 +405,7 @@ export class PanellAdminComponent implements OnInit {
           "nº d'entrenadors",
           'nº de dietes',
           'Intoleràncies',
+          'Observacions',
           "Data d'inscripció",
         ];
         break;
@@ -477,6 +478,9 @@ export class PanellAdminComponent implements OnInit {
             break;
           case 'Telefon':
             value = item.telefon;
+            break;
+          case 'Observacions':
+            value = item.observacions || '';
             break;
           case "Data d'inscripció":
             value = item.data_incripcio;
