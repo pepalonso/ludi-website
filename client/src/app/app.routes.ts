@@ -17,24 +17,31 @@ import { EditRegistrationComponent } from './editar-equip/editar-equip.component
 import { LoginComponent } from './login/login.component';
 import { PanellAdminComponent } from './panell-admin/panell-admin.component';
 import { EditarEquipAuthComponent } from './editar-equip-auth/editar-equip-auth.component';
+import { InscripcionsTancadesComponent } from './inscripcions-tancades/inscripcions-tancades.component';
 
 export const routes: Routes = [
-  { path: 'administrador-login', component: LoginComponent},
-  { path: 'administrador', component: PanellAdminComponent},
+  { path: 'administrador-login', component: LoginComponent },
+  { path: 'administrador', component: PanellAdminComponent },
+  { path: 'admin', component: PanellAdminComponent },
   { path: 'equip', component: DetallsEquipComponent },
   { path: 'countdown', component: LudiCountdown },
   { path: 'ludi3x3', component: Ludi3x3Component },
-  { path: 'info-inscripcions', component: InformacioInscripcioComponent},
-  { path: 'inscripcions', component: TeamFormComponent },
+  { path: 'info-inscripcions', component: InformacioInscripcioComponent },
+  // Inscripcions tancades 29/05/2025
+  { path: 'inscripcions', component: InscripcionsTancadesComponent },
+  // Inscripcions tancades 29/05/2025
   { path: 'stepper', component: SteperComponent },
   { path: 'contactawha', component: RedirectorComponent },
   { path: 'inscripcio-completa', component: RegistrationSuccessComponent },
-  { path: '404', component: NotFoundComponent},
-  { path: 'pagina-principal', component: MainPageComponent},
-  { path: 'qui-som', component: QuiSomComponent},
-  { path: 'galeria', component: GalleryListComponent}, 
+  { path: '404', component: NotFoundComponent },
+  { path: 'pagina-principal', component: MainPageComponent },
+  { path: 'qui-som', component: QuiSomComponent },
+  { path: 'galeria', component: GalleryListComponent },
   { path: 'galeria/:year', component: GalleryDetailComponent },
-  { path: 'editar-inscripcio', component: EditRegistrationComponent},
-  { path: 'editar-inscripcio-autentificacio', component: EditarEquipAuthComponent},
+  { path: 'editar-inscripcio', component: EditRegistrationComponent },
+  {
+    path: 'editar-inscripcio-autentificacio',
+    component: EditarEquipAuthComponent,
+  },
   { path: '**', redirectTo: '/pagina-principal', pathMatch: 'full' },
 ];
