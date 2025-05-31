@@ -33,7 +33,7 @@ export class QrCodeInfoComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.pipe(take(1)).subscribe(params => {
       this.token = params['token'] || null
       if (this.token) {
         this.fetchTeamDetails(this.token)
