@@ -138,6 +138,13 @@ Resources:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${globalData.Arn}/invocations
                 httpMethod: GET
                 type: aws_proxy
+          /qr-details:
+            get:
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${GetQRDetails.Arn}/invocations
+                httpMethod: GET
+                type: aws_proxy
   HandleTeamInscription:
     Type: AWS::Serverless::Function
     Properties:
@@ -414,5 +421,29 @@ Resources:
           AUTH_TOKEN: dummy-token
           SENDER_PHONE: dummy-phone
           CONTENT_SID: dummy-content
+    Metadata:
+      BuildMethod: python3.12
+  GetQRDetails:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.12
+      CodeUri: ./src/get_qr_details
+      Timeout: 10
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - rds-data:ExecuteStatement
+                - rds-data:BatchExecuteStatement
+              Resource: "*"
+      Environment:
+        Variables:
+          DB_ENDPOINT: dummy-endpoint
+          DB_NAME: dummy-db
+          DB_USER: dummy-user
+          DB_PASSWORD: dummy-password
     Metadata:
       BuildMethod: python3.12

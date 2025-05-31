@@ -23,3 +23,8 @@ packaged.yml
 
 # firebase json
 src/admin/serviceAccountKey.json
+
+# QR codes
+QR/QR/*
+QR/qr-tokens.csv
+
