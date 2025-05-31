@@ -27,7 +27,6 @@ interface QRTeamDetails {
 export class QrCodeInfoComponent implements OnInit {
   public token?: string
   public teamDetails?: QRTeamDetails
-  public error: boolean = false
   public orderedShirtSizes: { key: string; value: number }[] = []
 
   constructor(private router: Router, private route: ActivatedRoute) {}
