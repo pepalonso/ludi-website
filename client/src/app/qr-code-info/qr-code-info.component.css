@@ -1,0 +1,135 @@
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  text-align: center;
+}
+
+.team-details-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--primary, #d36600);
+}
+
+.team-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.team-header h1 {
+  font-size: 24px;
+  margin: 0;
+  color: var(--primary, #d36600);
+}
+
+.team-header h2 {
+  font-size: 18px;
+  margin: 5px 0 0;
+  color: var(--dark, #d36600);
+  opacity: 0.8;
+}
+
+.section {
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #444;
+}
+
+.section h3 {
+  margin: 0 0 15px;
+  color: var(--primary, #d36600);
+  font-size: 18px;
+}
+
+.stats-section {
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: #444;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: var(--primary, #d36600);
+}
+
+.stat-breakdown {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  color: var(--dark, #000000);
+  opacity: 0.8;
+}
+
+.shirt-sizes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+}
+
+.size-item {
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.size-label {
+  font-weight: bold;
+  color: var(--primary, #d36600);
+}
+
+.size-count {
+  display: block;
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+.allergies-list {
+  display: grid;
+  gap: 10px;
+}
+
+.allergy-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f5f5f5;
+  padding: 12px 15px;
+  border-radius: 8px;
+}
+
+.allergy-name {
+  font-weight: 500;
+  color: var(--dark, #000000);
+}
+
+.allergy-count {
+  background: var(--primary, #d36600);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 14px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.observations {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--dark, #000000);
+  opacity: 0.8;
+}
