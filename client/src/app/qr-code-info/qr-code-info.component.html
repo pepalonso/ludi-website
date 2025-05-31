@@ -1,0 +1,54 @@
+<!-- Loading state -->
+<div *ngIf="!teamDetails" class="loading-container">
+  <mat-spinner diameter="40"></mat-spinner>
+  <p>Carregant els detalls de l'equip...</p>
+</div>
+
+<!-- Team details display -->
+<div *ngIf="teamDetails" class="team-details-container">
+  <!-- Team header -->
+  <div class="team-header">
+    <h1>{{ teamDetails.team_name }}</h1>
+    <h2>{{ teamDetails.club_name }}</h2>
+  </div>
+
+  <!-- Team stats -->
+  <div class="stats-section">
+    <div class="stat-card">
+      <h3>Total Membres</h3>
+      <p class="stat-number">{{ teamDetails.total_members }}</p>
+      <div class="stat-breakdown">
+        <span>{{ teamDetails.players_count }} Jugadors</span>
+        <span>{{ teamDetails.coaches_count }} Entrenadors</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shirt sizes -->
+  <div class="section">
+    <h3>Tallas de Samarretes</h3>
+    <div class="shirt-sizes">
+      <div *ngFor="let size of orderedShirtSizes" class="size-item">
+        <span class="size-label">{{ size.key }}</span>
+        <span class="size-count">{{ size.value }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Allergies -->
+  <div class="section">
+    <h3>Al·lèrgies</h3>
+    <div class="allergies-list">
+      <div *ngFor="let allergy of teamDetails.allergies | keyvalue" class="allergy-item">
+        <span class="allergy-name">{{ allergy.key }}</span>
+        <span class="allergy-count">{{ allergy.value }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Observations -->
+  <div *ngIf="teamDetails.observations" class="section">
+    <h3>Observacions</h3>
+    <p class="observations">{{ teamDetails.observations }}</p>
+  </div>
+</div>
