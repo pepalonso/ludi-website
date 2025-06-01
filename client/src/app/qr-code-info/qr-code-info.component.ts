@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { environment } from '../../environments/environment.prod'
 import { TallaSamarreta } from '../interfaces/ludi.interface'
+import { take } from 'rxjs'
 
 interface QRTeamDetails {
   team_id: number
@@ -32,10 +33,11 @@ export class QrCodeInfoComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.route.queryParams.pipe(take(1)).subscribe(params => {
-      this.token = params['token'] || null
-      if (this.token) {
-        this.fetchTeamDetails(this.token)
+    this.route.queryParams.pipe(take(1)).subscribe((params: { [key: string]: string }) => {
+      const token = params['token']
+      if (token) {
+        this.token = token
+        this.fetchTeamDetails(token)
       } else {
         this.router.navigate(['/404'])
       }
