@@ -20,3 +20,7 @@ env/
 # Ignore packaged.yml
 
 packaged.yml
+
+
+QR/QR/*
+QR/qr-tokens.csv
