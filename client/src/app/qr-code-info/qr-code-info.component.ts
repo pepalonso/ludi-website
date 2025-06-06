@@ -10,6 +10,7 @@ interface QRTeamDetails {
   team_id: number
   team_name: string
   club_name: string
+  dormitori: string
   total_members: number
   players_count: number
   coaches_count: number
