@@ -51,4 +51,11 @@
     <h3>Observacions</h3>
     <p class="observations">{{ teamDetails.observations }}</p>
   </div>
+
+  <div *ngIf="teamDetails.dormitori" class="section">
+    <h3>Dormitori</h3>
+    <div class="size-item">
+      <p class="observations">{{ teamDetails.dormitori }}</p>
+    </div>
+  </div>
 </div>
