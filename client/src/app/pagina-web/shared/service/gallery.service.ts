@@ -10,7 +10,7 @@ import { environment } from "../../../../environments/environment.prod"
 export class GalleryService {
   private galleries: GalleryYear[] = [
     {
-      year: "2023",
+      year: "2024",
       title: "Temporada 2023",
       description: "Imatges dels esdeveniments i competicions de la temporada 2023",
       coverImage: "/assets/images/gallery/2023/cover.jpg",

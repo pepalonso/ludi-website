@@ -17,9 +17,9 @@
     <section class="gallery-images-section" *ngIf="gallery">
       <div class="container">
         <div class="gallery-images-grid">
-          <div class="gallery-image-card" *ngFor="let image of gallery.images">
+          <div class="gallery-image-card" *ngFor="let image of fotos.urls">
             <div class="gallery-image-wrapper" (click)="openLightbox(image)">
-              <img [src]="image.url" [alt]="image.title">
+              <img [src]="image">
               <div class="gallery-image-overlay">
                 <span class="view-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -30,10 +30,6 @@
                   </svg>
                 </span>
               </div>
-            </div>
-            <div class="gallery-image-info">
-              <h3>{{image.title}}</h3>
-              <p *ngIf="image.description">{{image.description}}</p>
             </div>
           </div>
         </div>
@@ -77,7 +73,6 @@
         </button>
         <div class="lightbox-caption">
           <h3>{{selectedImage.title}}</h3>
-          <p *ngIf="selectedImage.description">{{selectedImage.description}}</p>
         </div>
       </div>
     </div>
