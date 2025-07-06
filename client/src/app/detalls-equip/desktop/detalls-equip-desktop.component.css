@@ -8,23 +8,30 @@
   padding: 30px;
   background-color: #1A1A1A;
   color: #CCC;
-  height: 100%;
+  height: 100vh;
   box-sizing: border-box;
   max-width: 100vw;
   overflow-y: auto;
+  overflow: hidden;
 }
 
 .team-info {
   box-sizing: border-box;
-  grid-area: 1 / 1 / 4 / 4;
+  grid-area: 1 / 1 / 4 / 3;
   background-color: #2B2B2B;
   padding: 16px;
   border-radius: 8px;
 }
 
+.payment-info {
+  grid-area: 1 / 3 / 3 / 6;
+  background-color: #2B2B2B;
+  padding: 20px;
+  border-radius: 8px;
+}
+
 .coaches-info {
-  box-sizing: border-box;
-  grid-area: 1 / 4 / 4 / 6;
+  grid-area: 3 / 3 / 6 / 6;
   background-color: #2B2B2B;
   padding: 20px;
   border-radius: 8px;
@@ -43,8 +50,7 @@
 
 
 .allergies-info {
-  box-sizing: border-box;
-  grid-area: 4 / 2 / 6 / 5;
+  grid-area: 4 / 1 / 6 / 3;
   background-color: #2B2B2B;
   padding: 20px;
   border-radius: 8px;
@@ -52,8 +58,9 @@
 
 .team-header,
 .info-section,
-.entrenadors-section,
 .jugadors-section,
+.entrenadors-section,
+.payment-section,
 .intolerancies-section {
   margin-bottom: 16px;
   color: var(--primary)
@@ -88,6 +95,7 @@
   margin-bottom: 16px;
 }
 
+
 .info-item {
   display: flex;
   margin-bottom: 12px;
@@ -95,6 +103,12 @@
 
 .info-item:last-child {
   margin-bottom: 0;
+}
+
+.info-value {
+  flex: 1;
+  text-align: left;
+  font-weight: 500;
 }
 
 .label {
@@ -149,11 +163,23 @@
 }
 
 /* Jugadors and Entrenadors */
-.jugadors-list,
-.entrenadors-list {
+.jugadors-list{
   display: flex;
   flex-direction: column;
   gap: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 60vh;
+}
+
+
+
+.entrenadors-list {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 35vh;
 }
 
 .jugador-card,
@@ -223,10 +249,9 @@ h3 {
     );
 }
 
-/* Principal badge */
 .principal-badge {
   background-color: var(--primary);
-  color: #fff;
+  color: black;
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 12px;
@@ -256,7 +281,130 @@ h3 {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  /* or cover, depending on your desired effect */
   border-radius: 8px;
-  /* Optional: for rounded corners */
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.contact-row {
+  display: flex;
+  padding: 10px 0;
+}
+
+.contact-label {
+  width: 120px;
+  color: #aaaaaa;
+}
+
+.info-label {
+  flex: 0 0 40%;
+  font-weight: 600;
+  color: #ddd;
+  font-size: 14px;
+}
+
+.edit-button {
+  display: block;
+  width: 100%;
+  background-color: var(--primary);
+  color: black;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 20px 0;
+  font-size: 16px;
+  margin-top: 60px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+/* Toast notification styles */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  min-width: 250px;
+  max-width: 350px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+.toast-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.toast-error {
+  background-color: #f44336;
+  color: white;
+}
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+  opacity: 0.8;
+}
+
+.toast-close:hover {
+  opacity: 1;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.copy-value {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  margin-left: auto;
+}
+
+.copy-btn:hover {
+  color: var(--default);
+}
+
+.copy-icon {
+  width: 20px;
+  height: 20px;
 }

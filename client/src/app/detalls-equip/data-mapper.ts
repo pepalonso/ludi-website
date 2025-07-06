@@ -47,9 +47,9 @@ export async function mapTeamResponse(response: any): Promise<Team> {
 
 function mapSexe(sexeValue: string): Sexe {
   switch (sexeValue) {
-    case 'Masc':
+    case 'Masculí':
       return Sexe.MASC;
-    case 'Fem':
+    case 'Femení':
       return Sexe.FEM;
     default:
       console.warn(`Unknown sexe value: ${sexeValue}, defaulting to Masc`);
@@ -91,6 +91,7 @@ export function getUrlImage(clubName: string): string {
 
 function mapJugador(jugadorData: any): Jugador {
   return {
+    id: jugadorData.id,
     nom: jugadorData.nom,
     cognoms: jugadorData.cognoms,
     tallaSamarreta: mapTallaSamarreta(jugadorData.tallaSamarreta),
@@ -99,6 +100,7 @@ function mapJugador(jugadorData: any): Jugador {
 
 function mapEntrenador(entrenadorData: any): Entrenador {
   return {
+    id: entrenadorData.id,
     nom: entrenadorData.nom,
     cognoms: entrenadorData.cognoms,
     tallaSamarreta: mapTallaSamarreta(entrenadorData.tallaSamarreta),

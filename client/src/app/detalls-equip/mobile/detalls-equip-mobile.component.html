@@ -1,17 +1,35 @@
 <div class="container">
+  <!-- Toast notification -->
+  <div
+    *ngIf="showToast"
+    class="toast"
+    [ngClass]="{
+      'toast-success': toastType === 'success',
+      'toast-error': toastType === 'error'
+    }"
+  >
+    <div class="toast-content">
+      <span>{{ toastMessage }}</span>
+    </div>
+    <button class="toast-close" (click)="hideToast()">×</button>
+  </div>
 
   <!-- Team details -->
   <div *ngIf="team" class="team-details">
     <div class="team-header-container">
-    <div class="team-header-content">
-      <h1 class="team-name">{{ team.club }}</h1>
-      <div class="team-category">{{ team.categoria }}</div>
-      <div class="team-gender">{{ team.sexe }}</div>
+      <div class="team-header-content">
+        <h1 class="team-name">{{ team.club }}</h1>
+        <div class="team-category">{{ team.categoria }}</div>
+        <div class="team-gender">{{ team.sexe }}</div>
+      </div>
+      <div class="team-logo-container" *ngIf="team?.logoUrl">
+        <img
+          src="{{ team.logoUrl }}"
+          alt="{{ team.nomEquip }} Logo"
+          class="team-logo"
+        />
+      </div>
     </div>
-    <div class="team-logo-container" *ngIf="team?.logoUrl">
-      <img src="{{ team.logoUrl }}" alt="{{ team.nomEquip }} Logo" class="team-logo">
-    </div>
-  </div>
 
     <section class="info-section">
       <h2>Informació de l'equip</h2>
@@ -30,10 +48,14 @@
         </div>
         <div class="info-item">
           <span class="label">Sexe</span>
-          <span class="value" [ngClass]="{
-            'sexe-masc': team.sexe === Sexe.MASC,
-            'sexe-fem': team.sexe === Sexe.FEM
-          }">{{ team.sexe }}</span>
+          <span
+            class="value"
+            [ngClass]="{
+              'sexe-masc': team.sexe === Sexe.MASC,
+              'sexe-fem': team.sexe === Sexe.FEM
+            }"
+            >{{ team.sexe }}</span
+          >
         </div>
         <div class="info-item">
           <span class="label">Email</span>
@@ -46,19 +68,69 @@
       </div>
     </section>
 
+    <section class="jugadors-section">
+      <h2>Informació Pagament</h2>
+      <div class="info-card">
+        <div class="info-row">
+          <span class="info-label">Compte Bancari</span>
+          <div class="copy-value">
+            <span class="info-value">{{ paymentInfo().account }}</span>
+            <button
+              class="copy-btn"
+              (click)="copyToClipboard(paymentInfo().account)"
+            >
+              <img
+                src="../../assets/copy.png"
+                alt="Copy Icon"
+                class="copy-icon"
+              />
+            </button>
+          </div>
+        </div>
 
+        <div class="info-row">
+          <span class="info-label">Import</span>
+          <span class="info-value">{{ paymentInfo().import }}</span>
+        </div>
 
-    <section class="jugadors-section" *ngIf="team.jugadors && team.jugadors.length > 0">
+        <div class="info-row">
+          <span class="info-label">Concepte</span>
+          <div class="copy-value">
+            <span class="info-value">{{ paymentInfo().concepte }}</span>
+            <button
+              class="copy-btn"
+              (click)="copyToClipboard(paymentInfo().concepte)"
+            >
+              <img
+                src="../../assets/copy.png"
+                alt="Copy Icon"
+                class="copy-icon"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="jugadors-section"
+      *ngIf="team.jugadors && team.jugadors.length > 0"
+    >
       <h2>Jugadors ({{ team.jugadors.length }})</h2>
       <div class="jugadors-list">
-        <div class="jugador-card" *ngFor="let jugador of team.jugadors; let i = index">
+        <div
+          class="jugador-card"
+          *ngFor="let jugador of team.jugadors; let i = index"
+        >
           <div class="jugador-number">{{ i + 1 }}</div>
           <div class="jugador-details">
             <h3>{{ jugador.nom }} {{ jugador.cognoms }}</h3>
             <div class="jugador-info">
               <div class="info-item">
                 <span class="label-samarreta">Talla samarreta</span>
-                <span class="value talla-badge">{{ jugador.tallaSamarreta }}</span>
+                <span class="value talla-badge">{{
+                  jugador.tallaSamarreta
+                }}</span>
               </div>
             </div>
           </div>
@@ -66,19 +138,29 @@
       </div>
     </section>
 
-    <section class="entrenadors-section" *ngIf="team.entrenadors && team.entrenadors.length > 0">
+    <section
+      class="entrenadors-section"
+      *ngIf="team.entrenadors && team.entrenadors.length > 0"
+    >
       <h2>Entrenadors</h2>
       <div class="entrenadors-list">
-        <div class="entrenador-card" *ngFor="let entrenador of team.entrenadors">
+        <div
+          class="entrenador-card"
+          *ngFor="let entrenador of team.entrenadors"
+        >
           <div class="entrenador-details">
             <h3>
               {{ entrenador.nom }} {{ entrenador.cognoms }}
-              <span class="principal-badge" *ngIf="entrenador.esPrincipal === 1">Principal</span>
+              <span class="principal-badge" *ngIf="entrenador.esPrincipal === 1"
+                >Principal</span
+              >
             </h3>
             <div class="entrenador-info">
               <div class="info-item">
                 <span class="label-samarreta">Talla samarreta</span>
-                <span class="value talla-badge">{{ entrenador.tallaSamarreta }}</span>
+                <span class="value talla-badge">{{
+                  entrenador.tallaSamarreta
+                }}</span>
               </div>
             </div>
           </div>
@@ -86,7 +168,10 @@
       </div>
     </section>
 
-    <section class="intolerancies-section" *ngIf="team.intolerancies && team.intolerancies.length > 0">
+    <section
+      class="intolerancies-section"
+      *ngIf="team.intolerancies && team.intolerancies.length > 0"
+    >
       <h2>Intoleràncies</h2>
       <div class="intolerancies-container">
         <span class="intolerancia-tag" *ngFor="let i of team.intolerancies">
@@ -98,4 +183,7 @@
       </div>
     </section>
   </div>
+  <button class="edit-button" (click)="navigateToEdit()">
+    Editar Inscripció
+  </button>
 </div>

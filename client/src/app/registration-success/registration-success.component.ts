@@ -2,10 +2,10 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FooterComponent } from '../utils/footer/footer.component';
-import { Sexe, Team } from '../interfaces/ludi.interface';
+import { Categories, Sexe, Team } from '../interfaces/ludi.interface';
 import { RegistrationStateService } from '../serveis/registration-data.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.prod';
 
 export interface RegistrationProps {
   message: string;
@@ -53,12 +53,11 @@ export class RegistrationSuccessComponent {
   public toastMessage: string = '';
   public toastType: 'success' | 'error' = 'success';
 
-  private inscriptionPriceJugadors = 50;
   private inscriptionPriceEntrenadors = 10;
   private priceErrorMessage = `Per saber l'import posat en contacte amb nosaltres`;
 
   paymentInfo = {
-    accountNumber: 'ES12 3456 7890 1234 5678 9012',
+    accountNumber: 'ES70 2100 8118 8023 0004 2564',
     amount: '0€',
     concept: '',
   };
@@ -116,14 +115,14 @@ export class RegistrationSuccessComponent {
       );
       this.router.navigate(['/inscripcions']);
     }
-
   }
 
   private updatePaymentConcept() {
+    const pricePerPlayer = this.categoria === Categories.PREMINI ? 40 : 50;
     this.paymentInfo.amount =
       this.numPlayers && this.numEntrenadors
         ? (
-            this.numPlayers * this.inscriptionPriceJugadors +
+            this.numPlayers * pricePerPlayer +
             this.numEntrenadors * this.inscriptionPriceEntrenadors
           ).toString() + '€'
         : this.priceErrorMessage;
@@ -161,7 +160,7 @@ export class RegistrationSuccessComponent {
     const url = `https://${environment.apiUrl}/enviar-notificacio`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this._waToken}`,
+      Authorization: `Bearer ${this._waToken}`,
     });
 
     this.http.post(url, payload, { headers }).subscribe({
@@ -193,8 +192,6 @@ export class RegistrationSuccessComponent {
   public navigateTeamDetails() {
     if (this.registration.registrationPath) {
       this.router.navigateByUrl(this.registration.registrationPath);
-
-
     }
   }
 
