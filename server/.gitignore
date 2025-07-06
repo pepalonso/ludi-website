@@ -21,6 +21,10 @@ env/
 
 packaged.yml
 
+# firebase json
+src/admin/serviceAccountKey.json
 
+# QR codes
 QR/QR/*
+QR/PDF/*
 QR/qr-tokens.csv

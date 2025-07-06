@@ -7,26 +7,71 @@ import zipfile
 
 # --------- CONFIGURATION ---------
 LAMBDA_FUNCTIONS = [
-    {
-      "function_name": "write-to-db",
-      "sam_build_dir": ".aws-sam/build/HandleTeamInscription",
-      "zip_filename": "lambda.zip",
-    },
-    #{
+    # {
+    #  "function_name": "write-to-db",
+    #  "sam_build_dir": ".aws-sam/build/HandleTeamInscription",
+    #  "zip_filename": "lambda.zip",
+    # },
+    # {
     #    "function_name": "send-WA",
     #    "sam_build_dir": ".aws-sam/build/SendWA",
     #    "zip_filename": "lambda2.zip",
-    #},
-    #{
+    # },
+    # {
     #    "function_name": "authorizer",
     #    "sam_build_dir": ".aws-sam/build/AuthorizeWA",
     #    "zip_filename": "lambda3.zip",
-    #},
-    #{
+    # },
+    # {
     #    "function_name": "fitxes_uploader",
     #    "sam_build_dir": ".aws-sam/build/FitxesUploader",
     #    "zip_filename": "fitxes_uploader.zip",
-    #},
+    # },
+    # {
+    #     "function_name": "n8n_reader",
+    #     "sam_build_dir": ".aws-sam/build/n8nReader",
+    #     "zip_filename": "n8nReader.zip",
+    # },
+    # {
+    #    "function_name": "admin_authorizer",
+    #    "sam_build_dir": ".aws-sam/build/adminAuthorizer",
+    #    "zip_filename": "adminAuthorization.zip",
+    # },
+    # {
+    #    "function_name": "global_reader",
+    #    "sam_build_dir": ".aws-sam/build/globalData",
+    #    "zip_filename": "globalDataReader.zip",
+    # },
+    # {
+    #     "function_name": "twofa_generator",
+    #     "sam_build_dir": ".aws-sam/build/twoFactorGenerator",
+    #     "zip_filename": "2fa_generator.zip",
+    # }
+    # {
+    #     "function_name": "twofa_validator",
+    #     "sam_build_dir": ".aws-sam/build/twoFactorValidator",
+    #     "zip_filename": "2fa_validator.zip",
+    # }
+    # {
+    #     "function_name": "db_cli",
+    #     "sam_build_dir": ".aws-sam/build/dbConnector",
+    #     "zip_filename": "db_cli.zip",
+    # }
+    # {
+    #     "function_name": "send_wa_two_fa",
+    #     "sam_build_dir": ".aws-sam/build/SendWATwoFA",
+    #     "zip_filename": "send_wa_two_fa.zip",
+    # }
+    # {
+    #     "function_name": "get_admin_session_token",
+    #     "sam_build_dir": ".aws-sam/build/GetSessionToken",
+    #     "zip_filename": "get_admin_session_token.zip",
+    # },
+    {
+        "function_name": "get_qr_details",
+        "sam_build_dir": ".aws-sam/build/GetQRDetails",
+        "zip_filename": "get_qr_details.zip",
+    }
 ]
 
 lambda_client = boto3.client("lambda")
@@ -69,9 +114,18 @@ def run_command(command, task_name):
 
 def build_sam():
     """
-    Build the SAM application for all functions.
+    Build only the active SAM functions.
     """
-    run_command("sam build", "Building SAM application...")
+    active_functions = get_active_functions()
+    if not active_functions:
+        print("❌ No active functions to build!")
+        sys.exit(1)
+        
+    # Build each active function
+    for fn in active_functions:
+        # The function name in the template is the resource name (e.g., GetQRDetails)
+        template_function_name = fn["sam_build_dir"].split("/")[-1]
+        run_command(f"sam build {template_function_name}", f"Building {template_function_name}...")
 
 
 def zip_directory(source_dir, output_zip):
@@ -111,6 +165,10 @@ def upload_zip_to_lambda(zip_path, lambda_name):
     except Exception as e:
         print(f"❌ Failed to upload Lambda function '{lambda_name}'!\nError: {e}")
         sys.exit(1)
+
+
+def get_active_functions():
+    return [fn for fn in LAMBDA_FUNCTIONS if not fn.get("function_name", "").startswith("#")]
 
 
 # --------- MAIN DEPLOYMENT ---------
