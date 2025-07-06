@@ -1,7 +1,11 @@
-<div class="basketball-site">
+<div *ngIf="isLoading" class="spinner-overlay">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="basketball-site" [class.blur]="isLoading">
     <!-- Navigation Menu -->
     <app-nav-menu></app-nav-menu>
-  
+
     <!-- Gallery Header -->
     <div class="gallery-header" *ngIf="gallery">
       <div class="container">
@@ -12,14 +16,14 @@
         <p class="gallery-description">{{gallery.description}}</p>
       </div>
     </div>
-  
+
     <!-- Gallery Images -->
-    <section class="gallery-images-section" *ngIf="gallery">
+    <section class="gallery-images-section" *ngIf="gallery" (window:scroll)="onScroll()">
       <div class="container">
         <div class="gallery-images-grid">
-          <div class="gallery-image-card" *ngFor="let image of gallery.images">
+          <div class="gallery-image-card" *ngFor="let image of displayedImages">
             <div class="gallery-image-wrapper" (click)="openLightbox(image)">
-              <img [src]="image.url" [alt]="image.title">
+              <img [src]="image">
               <div class="gallery-image-overlay">
                 <span class="view-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -31,15 +35,11 @@
                 </span>
               </div>
             </div>
-            <div class="gallery-image-info">
-              <h3>{{image.title}}</h3>
-              <p *ngIf="image.description">{{image.description}}</p>
-            </div>
           </div>
         </div>
       </div>
     </section>
-  
+
     <!-- Back to Gallery -->
     <section class="back-section">
       <div class="container">
@@ -52,7 +52,7 @@
         </a>
       </div>
     </section>
-  
+
     <!-- Lightbox -->
     <div class="lightbox" *ngIf="selectedImage" (click)="closeLightbox()">
       <div class="lightbox-content" (click)="$event.stopPropagation()">
@@ -68,19 +68,14 @@
           </svg>
         </button>
         <div class="lightbox-image-container">
-          <img [src]="selectedImage.url" [alt]="selectedImage.title">
+          <img [src]="selectedImage">
         </div>
         <button class="lightbox-nav next" (click)="nextImage()">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </button>
-        <div class="lightbox-caption">
-          <h3>{{selectedImage.title}}</h3>
-          <p *ngIf="selectedImage.description">{{selectedImage.description}}</p>
-        </div>
       </div>
     </div>
   </div>
-  
-  
+
