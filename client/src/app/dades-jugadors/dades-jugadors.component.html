@@ -9,7 +9,10 @@
         <div class="form-group">
           <label for="nom">Nom</label>
           <input type="text" id="nom" formControlName="nom" required />
-          <div class="error-message" *ngIf="jugadorForm.get('nom')?.invalid && jugadorForm.get('nom')?.touched">
+          <div
+            class="error-message"
+            *ngIf="jugadorForm.get('nom')?.invalid && jugadorForm.get('nom')?.touched"
+          >
             EL nom es requerit
           </div>
         </div>
@@ -17,7 +20,10 @@
         <div class="form-group">
           <label for="cognoms">Primer Cognom</label>
           <input type="text" id="cognoms" formControlName="cognoms" required />
-          <div class="error-message" *ngIf="jugadorForm.get('cognoms')?.invalid && jugadorForm.get('cognoms')?.touched">
+          <div
+            class="error-message"
+            *ngIf="jugadorForm.get('cognoms')?.invalid && jugadorForm.get('cognoms')?.touched"
+          >
             Primer Cognom es requerit
           </div>
         </div>
@@ -28,7 +34,13 @@
             <option value="" disabled selected>Seleccionar talla</option>
             <option *ngFor="let talla of tallas" [value]="talla">{{ talla }}</option>
           </select>
-          <div class="error-message" *ngIf="jugadorForm.get('tallaSamarreta')?.invalid && jugadorForm.get('tallaSamarreta')?.touched">
+          <div
+            class="error-message"
+            *ngIf="
+              jugadorForm.get('tallaSamarreta')?.invalid &&
+              jugadorForm.get('tallaSamarreta')?.touched
+            "
+          >
             La Talla es requerida
           </div>
         </div>
@@ -58,7 +70,11 @@
               <td>{{ jugador.cognoms }}</td>
               <td>{{ jugador.tallaSamarreta }}</td>
               <td class="center-trash">
-                <button class="btn-delete" (click)="eliminarJugador(i)" aria-label="Eliminar jugador">
+                <button
+                  class="btn-delete"
+                  (click)="eliminarJugador(i)"
+                  aria-label="Eliminar jugador"
+                >
                   <span class="material-icons">delete</span>
                 </button>
               </td>
@@ -67,7 +83,6 @@
         </table>
       </div>
     </div>
-    
 
     <div class="navigation-controls">
       <div class="esquerra">
@@ -77,7 +92,11 @@
         </button>
       </div>
       <div class="dreta">
-        <button class="btn-next" (click)="nextStep()" [disabled]="jugadores.length < 8 || jugadores.length > 15">
+        <button
+          class="btn-next"
+          (click)="nextStep()"
+          [disabled]="jugadores.length < 8 || jugadores.length > 15"
+        >
           <span>Següent</span>
           <span class="material-icons">arrow_forward</span>
         </button>

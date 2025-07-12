@@ -44,55 +44,56 @@
 
     <!-- File list -->
     @if (files.length > 0) {
-    <div class="file-list">
-      <h3 class="file-list-title">Documents Selecionats</h3>
+      <div class="file-list">
+        <h3 class="file-list-title">Documents Selecionats</h3>
 
-      <div class="file-items">
-        @for (file of files; track file.id; let i = $index) {
-        <div class="file-item" [class.error]="file.error">
-          <div class="file-icon">
-            <span class="material-icons">{{ getFileIconClass(file.type) }}</span>
-          </div>
+        <div class="file-items">
+          @for (file of files; track file.id; let i = $index) {
+            <div class="file-item" [class.error]="file.error">
+              <div class="file-icon">
+                <span class="material-icons">{{ getFileIconClass(file.type) }}</span>
+              </div>
 
-          <div class="file-details">
-            <div class="file-name">{{ file.name }}</div>
-            <div class="file-size">{{ file.size }}</div>
+              <div class="file-details">
+                <div class="file-name">{{ file.name }}</div>
+                <div class="file-size">{{ file.size }}</div>
 
-            @if (file.progress > 0 && !file.uploaded && !file.error) {
-            <div class="progress-bar">
-              <div class="progress" [style.width.%]="file.progress"></div>
+                @if (file.progress > 0 && !file.uploaded && !file.error) {
+                  <div class="progress-bar">
+                    <div class="progress" [style.width.%]="file.progress"></div>
+                  </div>
+                }
+                @if (file.uploaded) {
+                  <div class="file-status success">
+                    <span class="material-icons">check_circle</span>
+                    <span>Pujats Correctament</span>
+                  </div>
+                } @else if (file.error) {
+                  <div class="file-status error">
+                    <span class="material-icons">error</span>
+                    <span>Error al pujar els documents</span>
+                  </div>
+                }
+              </div>
+
+              <button class="file-remove" (click)="removeFile(i)" [disabled]="isUploading">
+                <span class="material-icons">close</span>
+              </button>
             </div>
-            } @if (file.uploaded) {
-            <div class="file-status success">
-              <span class="material-icons">check_circle</span>
-              <span>Pujats Correctament</span>
-            </div>
-            } @else if (file.error) {
-            <div class="file-status error">
-              <span class="material-icons">error</span>
-              <span>Error al pujar els documents</span>
-            </div>
-            }
-          </div>
+          }
+        </div>
 
-          <button class="file-remove" (click)="removeFile(i)" [disabled]="isUploading">
-            <span class="material-icons">close</span>
+        <div class="upload-actions">
+          <button
+            class="upload-submit"
+            (click)="uploadFiles()"
+            [disabled]="isUploading || files.length === 0"
+          >
+            <span class="material-icons">upload</span>
+            <span>{{ isUploading ? 'Pujant...' : 'Pujar els archius' }}</span>
           </button>
         </div>
-        }
       </div>
-
-      <div class="upload-actions">
-        <button
-          class="upload-submit"
-          (click)="uploadFiles()"
-          [disabled]="isUploading || files.length === 0"
-        >
-          <span class="material-icons">upload</span>
-          <span>{{ isUploading ? 'Pujant...' : 'Pujar els archius' }}</span>
-        </button>
-      </div>
-    </div>
     }
   </div>
   <div class="navigation-controls">

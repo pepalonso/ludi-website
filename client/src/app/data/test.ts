@@ -1,4 +1,3 @@
-
 export const testResponse = {
   nomEquip: 'Nou Caules Blau',
   email: 'pepalonsocosta@gmail.com',
@@ -79,4 +78,4 @@ export const testResponse = {
       esPrincipal: 0,
     },
   ],
-};
+}

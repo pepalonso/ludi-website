@@ -16,7 +16,7 @@
 
 /* Title */
 .upload-title {
-  color: #D36701;
+  color: #d36701;
   margin-top: 0;
   margin-bottom: 1.5rem;
   font-weight: 500;
@@ -37,7 +37,7 @@
 
 .upload-area:hover,
 .upload-area.dragging {
-  border-color: #D36701;
+  border-color: #d36701;
   background-color: #3a3a3a;
 }
 
@@ -47,7 +47,7 @@
 
 .upload-icon .material-icons {
   font-size: 3rem;
-  color: #D36701;
+  color: #d36701;
 }
 
 .upload-text {
@@ -60,7 +60,7 @@
 }
 
 .upload-button {
-  background-color: #D36701;
+  background-color: #d36701;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -123,7 +123,7 @@
 
 .file-icon .material-icons {
   font-size: 2rem;
-  color: #D36701;
+  color: #d36701;
 }
 
 .file-details {
@@ -177,7 +177,7 @@
 
 .progress {
   height: 100%;
-  background-color: #D36701;
+  background-color: #d36701;
   transition: width 0.3s ease;
 }
 
@@ -206,7 +206,7 @@
 }
 
 .upload-submit {
-  background-color: #D36701;
+  background-color: #d36701;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -261,7 +261,7 @@
 }
 
 .btn-next {
-  background-color: #D36701;
+  background-color: #d36701;
   color: #ffffff;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -280,7 +280,7 @@
 }
 
 .btn-prev {
-  background-color: #D36701;
+  background-color: #d36701;
   color: #ffffff;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;

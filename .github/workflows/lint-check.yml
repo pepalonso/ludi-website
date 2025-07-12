@@ -38,3 +38,7 @@ jobs:
       - name: Run TypeScript check
         working-directory: ./client
         run: npx tsc --noEmit
+
+      - name: Check Prettier formatting
+        working-directory: ./client
+        run: npx prettier --check .

@@ -227,8 +227,7 @@ export const CLUBS_DATA = [
     club_name: 'CLUB BASQUET ATENEU MONTSERRAT',
     phone: '629946871',
     mail: 'areatecnica@basquetbam.cat',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080125.png',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080125.png',
   },
   {
     club_name: 'CLUB BASQUET BANYOLES',
@@ -450,8 +449,7 @@ export const CLUBS_DATA = [
     club_name: 'CLUB NATACIO CALDES',
     phone: '617460921',
     mail: 'cncaldes@cncaldes.cat',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080211.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080211.jpg',
   },
   {
     club_name: 'CLUB ESPORTIU CALDES DE MALAVELLA',
@@ -488,8 +486,7 @@ export const CLUBS_DATA = [
       'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/MzEZYKiXkhOJ4Vy8.png',
   },
   {
-    club_name:
-      'SECCIO ESPORTIVA FEC VALL DEL TER DE LA FUNDACIO ESPORTIVA CAMPRODON',
+    club_name: 'SECCIO ESPORTIVA FEC VALL DEL TER DE LA FUNDACIO ESPORTIVA CAMPRODON',
     phone: '699315119',
     mail: 'fundacio@fundescam.cat',
     logo_url:
@@ -555,8 +552,7 @@ export const CLUBS_DATA = [
     club_name: 'SOCIETAT D\'ESBARJO I CULTURA "LA PRINCIPAL"',
     phone: '667073975',
     mail: 'tecnicabasquet@casal.org',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080050.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080050.jpg',
   },
   {
     club_name: 'ASSOCIACIO ESPORTIVA CASP',
@@ -590,8 +586,7 @@ export const CLUBS_DATA = [
     club_name: 'CLUB BASQUET CASTELLDEFELS',
     phone: '622643549',
     mail: 'administracio@cbcastelldefels.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080364.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080364.jpg',
   },
   {
     club_name: 'CENTRE CULTURAL I RECREATIU DE CASTELLDEFELS',
@@ -736,8 +731,7 @@ export const CLUBS_DATA = [
     club_name: 'CLUB BASQUET COLL',
     phone: '637099133',
     mail: 'gestioesportiva@cbcoll.cat',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080582.png',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080582.png',
   },
   {
     club_name: 'CENTRE CULTURAL I RECREATIU COLLBLANC-TORRASSA',
@@ -778,8 +772,7 @@ export const CLUBS_DATA = [
     club_name: 'BASQUET FEMENI CORNELLA',
     phone: '654385344',
     mail: 'federacio@basquetfemenicornella.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080589.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080589.jpg',
   },
   {
     club_name: 'CLUB BASQUETBOL CORNELLA',
@@ -946,8 +939,7 @@ export const CLUBS_DATA = [
     club_name: 'CLUB BASQUET ESPARREGUERA',
     phone: '647774811',
     mail: 'info@cbesparreguera.cat',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080131.png',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080131.png',
   },
   {
     club_name: 'CLUB BASQUET NOU ESPLUGUES',
@@ -981,8 +973,7 @@ export const CLUBS_DATA = [
     club_name: 'CLUB DE BASQUET FENIX ANDREUENC',
     phone: '611482740',
     mail: 'info@uesabasket.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081563.png',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081563.png',
   },
   {
     club_name: 'BASQUET CLUB FONTAJAU',
@@ -1023,8 +1014,7 @@ export const CLUBS_DATA = [
     club_name: 'ASSOCIACIO DEPORTIVA ESCOLAR FUSTER',
     phone: '933917954',
     mail: 'basketfuster@gmail.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080313.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080313.jpg',
   },
   {
     club_name: 'CLUB BASQUET LA GARRIGA',
@@ -1072,8 +1062,7 @@ export const CLUBS_DATA = [
     club_name: 'GRAMENET BASQUET CLUB',
     phone: '634413022',
     mail: 'gramenetbc@basquetcatala.org',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081448.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081448.jpg',
   },
   {
     club_name: 'CLUB BASQUET GRANOLLERS',
@@ -1240,8 +1229,7 @@ export const CLUBS_DATA = [
     club_name: "CLUB ESPORTIU JOVENTUT L'HOSPITALET",
     phone: '669305636',
     mail: 'cejlhbasquet@hotmail.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081496.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081496.jpg',
   },
   {
     club_name: 'CLUB JOVENTUT LES CORTS',
@@ -1274,8 +1262,7 @@ export const CLUBS_DATA = [
     club_name: "CLUB BASQUET L'ESCALA",
     phone: '660643478',
     mail: 'administracio@cblescala.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/170048.png',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/170048.png',
   },
   {
     club_name: 'CLUB ESPORTIU LA MARINA DE BARCELONA',
@@ -1344,8 +1331,7 @@ export const CLUBS_DATA = [
     club_name: 'CLUB BASQUET LLAGOSTERA',
     phone: '620866077',
     mail: 'infocbllagostera@gmail.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/170039.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/170039.jpg',
   },
   {
     club_name: "CLUB BASQUET LLIÇA D'AMUNT",
@@ -1490,8 +1476,7 @@ export const CLUBS_DATA = [
     club_name: 'F.C. MARTINENC',
     phone: '934364746',
     mail: 'bq@fcmartinenc.cat',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080184.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080184.jpg',
   },
   {
     club_name: 'CLUB BASQUET MARTORELL',
@@ -1508,8 +1493,7 @@ export const CLUBS_DATA = [
       'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/9d1601a5098593b5.JPG',
   },
   {
-    club_name:
-      "ASSOCIACIO DE MARES, PARES I TUTORS D'ALUMNES DEL COL·LEGI DR. MASMITJA",
+    club_name: "ASSOCIACIO DE MARES, PARES I TUTORS D'ALUMNES DEL COL·LEGI DR. MASMITJA",
     phone: '610916942',
     mail: 'basquet@ampamasmitja.org',
     logo_url:
@@ -1533,8 +1517,7 @@ export const CLUBS_DATA = [
     club_name: 'CLUB BASQUET MATADEPERA',
     phone: '647464928',
     mail: 'basquetmatadepera@hotmail.es',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081523.png',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081523.png',
   },
   {
     club_name: 'ASSOCIACIO ESPORTIVA CENTRE CATOLIC DE MATARO',
@@ -1594,8 +1577,7 @@ export const CLUBS_DATA = [
     club_name: 'ELS MONJOS BASQUET CLUB',
     phone: '640890920',
     mail: 'elsmonjosbc.junta@gmail.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080103.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080103.jpg',
   },
   {
     club_name: 'CLUB BASQUET MONTBLANC',
@@ -1685,8 +1667,7 @@ export const CLUBS_DATA = [
     club_name: 'ASSOCIACIO ESPORTIVA NOU BASQUET OLESA 2013',
     phone: '609813274',
     mail: 'direcciotecnica@nbolesa.cat',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081544.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081544.jpg',
   },
   {
     club_name: 'ASSOCIACIÓ ESPORTIVA NOU BÀSQUET SANT SADURNI 2020',
@@ -1874,8 +1855,7 @@ export const CLUBS_DATA = [
     club_name: 'ESPORTIU CLUB PIERA',
     phone: '620188786',
     mail: 'dt.pierabasquet@gmail.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081441.png',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081441.png',
   },
   {
     club_name: 'UNIO DEPORTIVA I RECREATIVA PINEDA DE MAR',
@@ -1937,8 +1917,7 @@ export const CLUBS_DATA = [
     club_name: 'Q BASQUET CLUB',
     phone: '609861847',
     mail: 'q.areaesportiva@gmail.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081547.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081547.jpg',
   },
   {
     club_name: 'CLUB BASQUET QUART',
@@ -2042,8 +2021,7 @@ export const CLUBS_DATA = [
     club_name: 'CLUB BASQUET ROSER',
     phone: '639143010',
     mail: 'tecnicroser@hotmail.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080063.png',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080063.png',
   },
   {
     club_name: 'CLUB DE BASQUET ROSES',
@@ -2074,8 +2052,7 @@ export const CLUBS_DATA = [
       'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/YLo7e1aI3XMwhyMR.jpg',
   },
   {
-    club_name:
-      "ASSOCIACIO DE MARES I PARES D'ALUMNES DEL COL·LEGI SAGRAT COR SARRIA",
+    club_name: "ASSOCIACIO DE MARES I PARES D'ALUMNES DEL COL·LEGI SAGRAT COR SARRIA",
     phone: '672095511',
     mail: 'esports@sagratcorsarria.com',
     logo_url:
@@ -2112,8 +2089,7 @@ export const CLUBS_DATA = [
     club_name: 'ASSOCIACIO ESPORTIVA LA SALLE MANRESA',
     phone: '938771355',
     mail: 'secretaria@sallebasquet.cat',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080019.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080019.jpg',
   },
   {
     club_name: 'CLUB BASQUETBOL LA SALLE REUS',
@@ -2196,8 +2172,7 @@ export const CLUBS_DATA = [
     club_name: 'CLUB BASQUETBOL SANT ANDREU',
     phone: '630 273 689',
     mail: 'info@cbsantandreu.cat',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080194.png',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080194.png',
   },
   {
     club_name: 'CLUB ESPORTIU I SOCIAL DE SANT ANDREU',
@@ -2364,8 +2339,7 @@ export const CLUBS_DATA = [
     club_name: 'ASSOCIACIO SANT MARTI ESPORT',
     phone: '667752464',
     mail: 'luisa@asme.es',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080209.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080209.jpg',
   },
   {
     club_name: 'SECCIO ESPORTIVA SANT MEDIR',
@@ -2658,15 +2632,13 @@ export const CLUBS_DATA = [
     club_name: 'CLUB BASQUET TONA',
     phone: '670353084',
     mail: 'cbtona@gmail.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080354.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080354.jpg',
   },
   {
     club_name: 'CLUB BASQUET TORA',
     phone: '699687603',
     mail: 'basquetora@gmail.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/250117.JPG',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/250117.JPG',
   },
   {
     club_name: 'CLUB ESPORTIU ESCOLA DE BASQUET TORDERA 2013',
@@ -2819,16 +2791,13 @@ export const CLUBS_DATA = [
     club_name: 'ASSOCIACIO DE BASQUET EL VENDRELL',
     phone: '658145083',
     mail: 'dt.abvendrell@gmail.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/430269.png',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/430269.png',
   },
   {
-    club_name:
-      'ASSOCIACIO ESPORTIVA ESCOLAR VERGE LES NEUS SANTA COLOMA DE GRAMENET',
+    club_name: 'ASSOCIACIO ESPORTIVA ESCOLAR VERGE LES NEUS SANTA COLOMA DE GRAMENET',
     phone: '647085580',
     mail: 'basquetneus@gmail.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081334.JPG',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081334.JPG',
   },
   {
     club_name: 'CLUB DE BASQUET VERGES',
@@ -2848,8 +2817,7 @@ export const CLUBS_DATA = [
     club_name: 'CLUB ESPORTIU VILA OLIMPICA',
     phone: '933909215',
     mail: 'diana.diaz@cevilaolimpica.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081478.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081478.jpg',
   },
   {
     club_name: 'CLUB BASQUET VILA-SECA',
@@ -2869,8 +2837,7 @@ export const CLUBS_DATA = [
     club_name: 'CLUB BASQUETBOL VILADECANS',
     phone: '620662726',
     mail: 'secretaria@cbviladecans.cat',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080049.jpg',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/080049.jpg',
   },
   {
     club_name: 'CLUB BASQUET FEMENI VILADECANS SPORTS',
@@ -2883,8 +2850,7 @@ export const CLUBS_DATA = [
     club_name: 'CLUB BASQUET VILADECAVALLS',
     phone: '646646565',
     mail: 'cbviladecavalls1989@gmail.com',
-    logo_url:
-      'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081065.png',
+    logo_url: 'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/081065.png',
   },
   {
     club_name: 'CLUB ESPORTIU VILAFANT',
@@ -2956,4 +2922,4 @@ export const CLUBS_DATA = [
     logo_url:
       'https:/d3ah0nqesr6vwc.cloudfront.net/recursos/imatges/multimedia/MbZYvGaOn4ekxsp6.jpg',
   },
-];
+]

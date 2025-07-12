@@ -25,8 +25,7 @@
     <div *ngIf="!showPinInput && !showAdminLogin" class="method-selection">
       <h2>Autenticació en dos passos</h2>
       <p>
-        La inscripció està tancada. Si necessites contactar amb nosaltres,
-        escriu al +34659173158
+        La inscripció està tancada. Si necessites contactar amb nosaltres, escriu al +34659173158
       </p>
 
       <div class="method-buttons">
@@ -55,10 +54,7 @@
               d="M19.3764 9.71473V19.9911H23.6855C23.6855 19.9911 24.9117 19.8603 25 18.4133V5.24584L19.3764 9.71473Z"
               fill="#d36600"
             />
-            <path
-              d="M5.62218 20V9.49782L5.61377 9.49039L5.62218 20Z"
-              fill="#d36600"
-            />
+            <path d="M5.62218 20V9.49782L5.61377 9.49039L5.62218 20Z" fill="#d36600" />
             <path
               d="M5.61379 1.79316L3.83688 0.463484C0.683856 -1.28217 0 2.56125 0 2.56125V5.25327L5.61379 9.49039V1.79316Z"
               fill="#d36600"
@@ -132,15 +128,8 @@
                 <feOffset dy="4" />
                 <feGaussianBlur stdDeviation="2" />
                 <feComposite in2="hardAlpha" operator="out" />
-                <feColorMatrix
-                  type="matrix"
-                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-                />
-                <feBlend
-                  mode="normal"
-                  in2="BackgroundImageFix"
-                  result="effect1_dropShadow_3_4"
-                />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_3_4" />
                 <feBlend
                   mode="normal"
                   in="SourceGraphic"
@@ -157,11 +146,7 @@
         </button>
       </div>
 
-      <button
-        [disabled]="!selectedMethod || isLoading"
-        (click)="sendCode()"
-        class="send-button"
-      >
+      <button [disabled]="!selectedMethod || isLoading" (click)="sendCode()" class="send-button">
         <span *ngIf="!isLoading">Enviar codi</span>
         <span *ngIf="isLoading" class="spinner"></span>
       </button>
@@ -218,31 +203,17 @@
           />
         </div>
 
-        <button
-          type="submit"
-          [disabled]="pinForm.invalid || isLoading"
-          class="verify-button"
-        >
+        <button type="submit" [disabled]="pinForm.invalid || isLoading" class="verify-button">
           <span *ngIf="!isLoading">Verificar</span>
           <span *ngIf="isLoading" class="spinner"></span>
         </button>
       </form>
 
       <div class="action-links">
-        <button class="back-button" (click)="showPinInput = false">
-          Tornar
-        </button>
+        <button class="back-button" (click)="showPinInput = false">Tornar</button>
 
-        <button
-          class="resend-button"
-          [disabled]="resendCountdown > 0"
-          (click)="resendCode()"
-        >
-          {{
-            resendCountdown > 0
-              ? "Reenviar codi (" + resendCountdown + "s)"
-              : "Reenviar codi"
-          }}
+        <button class="resend-button" [disabled]="resendCountdown > 0" (click)="resendCode()">
+          {{ resendCountdown > 0 ? 'Reenviar codi (' + resendCountdown + 's)' : 'Reenviar codi' }}
         </button>
       </div>
     </div>
@@ -254,12 +225,7 @@
       <form [formGroup]="loginForm" (ngSubmit)="onAdminSubmit()">
         <div class="form-group">
           <label for="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            formControlName="email"
-            placeholder="Entra el teu email"
-          />
+          <input id="email" type="email" formControlName="email" placeholder="Entra el teu email" />
         </div>
 
         <div class="form-group">

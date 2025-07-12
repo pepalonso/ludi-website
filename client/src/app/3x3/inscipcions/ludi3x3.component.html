@@ -1,10 +1,9 @@
 <div class="toast" id="toast">
   <button class="close-btn" (click)="closeToast()">✖</button>
   <p>
-    Felicitats 🥳🥳 La vostra incripció provisional s'ha realitzat correctament!
-    En breus moments rebreu la confirmació en el vostre telèfon mòbil. Per
-    qualsevol dubte contacteu al nostre correu <a>ludi3x3&#64;gmail.com</a>, o
-    bé al nostre Instagram &#64;ludi3x3 Gràcies!🏀🏀
+    Felicitats 🥳🥳 La vostra incripció provisional s'ha realitzat correctament! En breus moments
+    rebreu la confirmació en el vostre telèfon mòbil. Per qualsevol dubte contacteu al nostre correu
+    <a>ludi3x3&#64;gmail.com</a>, o bé al nostre Instagram &#64;ludi3x3 Gràcies!🏀🏀
   </p>
 </div>
 <div class="toast2" id="toast2">
@@ -106,15 +105,11 @@
   <div class="container2">
     <h1>I n f o r m a c i ó</h1>
 
+    <p>Amics, amigues i amants del bàsquet, ha arribat l'hora d'anunciar el Ludi 3x3</p>
     <p>
-      Amics, amigues i amants del bàsquet, ha arribat l'hora d'anunciar el Ludi
-      3x3
-    </p>
-    <p>
-      Es tracta d'un nou projecte del Ludibàsquet del Nou Caulès, pensat per
-      tots aquells jugadors que ja no poden gaudir d'aquest gran torneig.
-      Consisteix en una competició de categoria "sènior" 3x3 on hi haurà molt de
-      bàsquet, passió, diversió i festa!
+      Es tracta d'un nou projecte del Ludibàsquet del Nou Caulès, pensat per tots aquells jugadors
+      que ja no poden gaudir d'aquest gran torneig. Consisteix en una competició de categoria
+      "sènior" 3x3 on hi haurà molt de bàsquet, passió, diversió i festa!
     </p>
     <div class="informacion">
       <div class="izquierda">
@@ -133,38 +128,27 @@
         masculina i femenina. <br />
         15 anys. <br />
         Servei de bar durant tot el torneig. <br />
-        15€ per jugador en els equips de 3-4 jugadors, i 12€ en equips de 5
-        jugadors. <br />
+        15€ per jugador en els equips de 3-4 jugadors, i 12€ en equips de 5 jugadors. <br />
       </div>
     </div>
     <p>
-      <span class="remarcat2">IMPORTANT:</span> la inscripció no estarà
-      realitzada correctament fins que no es faci el pagament.
+      <span class="remarcat2">IMPORTANT:</span> la inscripció no estarà realitzada correctament fins
+      que no es faci el pagament.
     </p>
     <p>
       El pagament es pot fer a la següent conta
-      <span class="remarcat"> ES70 2100 8118 8023 0004 2564 </span> o bé via
-      Bizum al número <br />
-      <span class="remarcat"> +34 699 97 35 91 </span>, al concepte heu de posar
-      el nom de l'equip.
+      <span class="remarcat"> ES70 2100 8118 8023 0004 2564 </span> o bé via Bizum al número <br />
+      <span class="remarcat"> +34 699 97 35 91 </span>, al concepte heu de posar el nom de l'equip.
     </p>
     <p>
       Els guanyadors de cada categoria seran premiats amb
-      <span class="remarcat">100 € per equip</span>, i els segons classificats
-      de cada categoria, <span class="remarcat">un lot sorpresa</span>.
+      <span class="remarcat">100 € per equip</span>, i els segons classificats de cada categoria,
+      <span class="remarcat">un lot sorpresa</span>.
     </p>
-    <p>
-      S'admetran equips mixtos, però aquests competiran a la categoria
-      masculina.
-    </p>
+    <p>S'admetran equips mixtos, però aquests competiran a la categoria masculina.</p>
     <p>No és necessari que els participats estiguin federats!</p>
-    <p>
-      Amb el preu de la inscripció entreguem un lot de benvinguda (peça de
-      roba+menjar).
-    </p>
-    <p>
-      Podreu trobar l’enllaç a la biografia del perfil d'Instagram &#64;ludi3x3
-    </p>
+    <p>Amb el preu de la inscripció entreguem un lot de benvinguda (peça de roba+menjar).</p>
+    <p>Podreu trobar l’enllaç a la biografia del perfil d'Instagram &#64;ludi3x3</p>
     <p>Més endevant més informació d’horaris i de partits!</p>
     <p>T’ho perdràs?</p>
   </div>
@@ -175,19 +159,10 @@
     <form [formGroup]="teamForm" (ngSubmit)="onSubmit()">
       <div class="primerGrup">
         <div class="form-group">
-          <input
-            type="text"
-            id="teamName"
-            formControlName="teamName"
-            placeholder=" "
-            required
-          />
+          <input type="text" id="teamName" formControlName="teamName" placeholder=" " required />
           <label for="teamName">Nom de l'equip</label>
           <div
-            *ngIf="
-              teamForm.get('teamName')?.invalid &&
-              teamForm.get('teamName')?.touched
-            "
+            *ngIf="teamForm.get('teamName')?.invalid && teamForm.get('teamName')?.touched"
             class="error-message"
           >
             Es obligatori el nom de l'equip.
@@ -195,17 +170,10 @@
         </div>
 
         <div class="form-group">
-          <input
-            id="contactPhone"
-            formControlName="contactPhone"
-            placeholder=" "
-          />
+          <input id="contactPhone" formControlName="contactPhone" placeholder=" " />
           <label for="contactPhone">Numero de telefon</label>
           <div
-            *ngIf="
-              teamForm.get('contactPhone')?.invalid &&
-              teamForm.get('contactPhone')?.touched
-            "
+            *ngIf="teamForm.get('contactPhone')?.invalid && teamForm.get('contactPhone')?.touched"
             class="error-message"
           >
             Es obligatori el numero de telefon.
@@ -213,17 +181,10 @@
         </div>
 
         <div class="form-group">
-          <input
-            id="contactEmail"
-            formControlName="contactEmail"
-            placeholder=" "
-          />
+          <input id="contactEmail" formControlName="contactEmail" placeholder=" " />
           <label for="contactEmail">Email de contacte</label>
           <div
-            *ngIf="
-              teamForm.get('contactEmail')?.invalid &&
-              teamForm.get('contactEmail')?.touched
-            "
+            *ngIf="teamForm.get('contactEmail')?.invalid && teamForm.get('contactEmail')?.touched"
             class="error-message"
           >
             Es obligatori l'email de contacte.
@@ -247,11 +208,7 @@
               <td role="cell">{{ player.birthDate }}</td>
               <td role="cell">{{ player.pantsSize }}</td>
               <td role="cell">
-                <button
-                  class="action-btn edit-btn"
-                  title="Edit"
-                  (click)="editPlayer(player)"
-                >
+                <button class="action-btn edit-btn" title="Edit" (click)="editPlayer(player)">
                   <mat-icon>edit</mat-icon>
                 </button>
                 <button
@@ -269,18 +226,10 @@
 
       <div [formGroup]="jugadorForm" class="form-group">
         <div class="form-group2">
-          <input
-            id="playerName"
-            formControlName="playerName"
-            placeholder=" "
-            required
-          />
+          <input id="playerName" formControlName="playerName" placeholder=" " required />
           <label class="label2" for="playerName">Nom jugador/a</label>
           <div
-            *ngIf="
-              jugadorForm.get('playerName')?.invalid &&
-              jugadorForm.get('playerName')?.touched
-            "
+            *ngIf="jugadorForm.get('playerName')?.invalid && jugadorForm.get('playerName')?.touched"
             class="error-message"
           >
             Es obligatori el nom del jugador/a.
@@ -288,18 +237,10 @@
         </div>
 
         <div class="form-group2">
-          <input
-            type="date"
-            id="birthDate"
-            formControlName="birthDate"
-            required
-          />
+          <input type="date" id="birthDate" formControlName="birthDate" required />
           <label class="label2" for="birthDate">Data Naixement</label>
           <div
-            *ngIf="
-              jugadorForm.get('birthDate')?.invalid &&
-              jugadorForm.get('birthDate')?.touched
-            "
+            *ngIf="jugadorForm.get('birthDate')?.invalid && jugadorForm.get('birthDate')?.touched"
             class="error-message"
           >
             {{ getDateError() }}
@@ -308,9 +249,7 @@
 
         <div class="form-group2">
           <select id="pantsSize" formControlName="pantsSize" required>
-            <option value="" disabled selected hidden>
-              Seleccioni una talla
-            </option>
+            <option value="" disabled selected hidden>Seleccioni una talla</option>
             <option value="XS">XS</option>
             <option value="S">S</option>
             <option value="M">M</option>
@@ -321,10 +260,7 @@
           </select>
           <label class="label2" for="pantsSize">Talla samarreta</label>
           <div
-            *ngIf="
-              jugadorForm.get('pantsSize')?.invalid &&
-              jugadorForm.get('pantsSize')?.touched
-            "
+            *ngIf="jugadorForm.get('pantsSize')?.invalid && jugadorForm.get('pantsSize')?.touched"
             class="error-message"
           >
             Es obligatori la talla de la samarreta
@@ -339,14 +275,14 @@
             (click)="addPlayerToList()"
             [disabled]="jugadorForm.invalid || playersList.length >= 5"
           >
-            Guardar jugador - {{numeroJugadors +" / 5"}}
+            Guardar jugador - {{ numeroJugadors + ' / 5' }}
           </button>
         </div>
       </div>
 
       <div class="submit-button">
         <button type="submit" [ngClass]="{ active: loading }">
-          {{ loading ? "Enviant..." : "Enviar Formulari" }}
+          {{ loading ? 'Enviant...' : 'Enviar Formulari' }}
         </button>
       </div>
     </form>
@@ -355,12 +291,5 @@
 
 <!-- <div *ngIf="loading" class="spinner"></div> -->
 <svg *ngIf="loading" class="spinner" viewBox="0 0 50 50">
-  <circle
-    class="path"
-    cx="25"
-    cy="25"
-    r="20"
-    fill="none"
-    stroke-width="5"
-  ></circle>
+  <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
 </svg>

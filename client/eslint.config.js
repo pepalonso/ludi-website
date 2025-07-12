@@ -43,4 +43,3 @@ module.exports = tseslint.config(
     rules: {},
   }
 )
-

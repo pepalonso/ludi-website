@@ -6,12 +6,7 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="email">Email</label>
-      <input
-        id="email"
-        type="email"
-        formControlName="email"
-        placeholder="Entra el teu email"
-      />
+      <input id="email" type="email" formControlName="email" placeholder="Entra el teu email" />
     </div>
 
     <div class="form-group">
@@ -24,11 +19,8 @@
       />
     </div>
 
-    <button type="submit" [disabled]="loginForm.invalid">
-      Login
-    </button>
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
 
     <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
   </form>
 </div>
-

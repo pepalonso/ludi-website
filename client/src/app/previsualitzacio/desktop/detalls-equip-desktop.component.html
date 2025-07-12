@@ -1,39 +1,38 @@
 <div *ngIf="team" class="parent">
   <div class="team-info">
-  <div class="team-header-container">
-  <div class="team-header-content">
-    <h1 class="team-name">{{ team.nomEquip }}</h1>
-    <div class="team-category">{{ team.categoria }}</div>
-    <div class="team-gender">{{ team.sexe }}</div>
-  </div>
-  <div class="team-logo-container" *ngIf="team?.logoUrl">
-    <img src="{{ team.logoUrl }}" alt="{{ team.club }} Logo" class="team-logo">
-  </div>
-</div>
-
-  <section class="info-section">
-    <h2>Informació de l'equip</h2>
-    <div class="info-card">
-      <div class="info-item">
-        <span class="label">Club</span>
-        <span class="value">{{ team.club }}</span>
+    <div class="team-header-container">
+      <div class="team-header-content">
+        <h1 class="team-name">{{ team.nomEquip }}</h1>
+        <div class="team-category">{{ team.categoria }}</div>
+        <div class="team-gender">{{ team.sexe }}</div>
       </div>
-      <div class="info-item" *ngIf="team.nomEquip">
-        <span class="label">Nom Equip</span>
-        <span class="value">{{ team.nomEquip }}</span>
-      </div>
-      <div class="info-item">
-        <span class="label">Email</span>
-        <span class="value">{{ team.email }}</span>
-      </div>
-      <div class="info-item">
-        <span class="label">Telèfon</span>
-        <span class="value">{{ team.telefon }}</span>
+      <div class="team-logo-container" *ngIf="team?.logoUrl">
+        <img src="{{ team.logoUrl }}" alt="{{ team.club }} Logo" class="team-logo" />
       </div>
     </div>
-  </section>
-</div>
 
+    <section class="info-section">
+      <h2>Informació de l'equip</h2>
+      <div class="info-card">
+        <div class="info-item">
+          <span class="label">Club</span>
+          <span class="value">{{ team.club }}</span>
+        </div>
+        <div class="info-item" *ngIf="team.nomEquip">
+          <span class="label">Nom Equip</span>
+          <span class="value">{{ team.nomEquip }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Email</span>
+          <span class="value">{{ team.email }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Telèfon</span>
+          <span class="value">{{ team.telefon }}</span>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <!-- Div 2: Coaches Information -->
   <div class="coaches-info">
@@ -81,7 +80,10 @@
 
   <!-- Div 4: Allergies Information -->
   <div class="allergies-info">
-    <section class="intolerancies-section" *ngIf="team.intolerancies && team.intolerancies.length> 0">
+    <section
+      class="intolerancies-section"
+      *ngIf="team.intolerancies && team.intolerancies.length > 0"
+    >
       <h2>Intoleràncies</h2>
       <div class="intolerancies-container">
         <span class="intolerancia-tag" *ngFor="let i of team.intolerancies">
@@ -94,4 +96,4 @@
       </div>
     </section>
   </div>
-
+</div>

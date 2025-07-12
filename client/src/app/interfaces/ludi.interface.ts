@@ -1,36 +1,35 @@
 export interface Jugador {
-  id?: string;
-  nom: string;
-  cognoms: string;
-  tallaSamarreta: TallaSamarreta;
+  id?: string
+  nom: string
+  cognoms: string
+  tallaSamarreta: TallaSamarreta
 }
 
 export interface Entrenador {
-  id?: string;
-  nom: string;
-  cognoms: string;
-  tallaSamarreta: TallaSamarreta;
-  esPrincipal: number;
+  id?: string
+  nom: string
+  cognoms: string
+  tallaSamarreta: TallaSamarreta
+  esPrincipal: number
 }
 
 export interface Team {
-  nomEquip: string;
-  email: string;
-  telefon: string;
-  categoria: Categories;
-  sexe: Sexe;
-  club: string;
-  intolerancies?: { name: string; count: number }[];
-  jugadors: Jugador[];
-  entrenadors: Entrenador[];
-  observacions?: string;
-  fitxes?: string[];
-  logoUrl?: string;
-  primaryColor?: string;
-  secondaryColor?: string;
-  darkColor?: string;
+  nomEquip: string
+  email: string
+  telefon: string
+  categoria: Categories
+  sexe: Sexe
+  club: string
+  intolerancies?: { name: string; count: number }[]
+  jugadors: Jugador[]
+  entrenadors: Entrenador[]
+  observacions?: string
+  fitxes?: string[]
+  logoUrl?: string
+  primaryColor?: string
+  secondaryColor?: string
+  darkColor?: string
 }
-
 
 export enum TallaSamarreta {
   vuit = '8',
