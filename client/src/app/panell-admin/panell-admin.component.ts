@@ -1,69 +1,69 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { firebaseApp } from '../app.config';
-import { ChartModule } from 'primeng/chart';
-import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
-import { CardModule } from 'primeng/card';
-import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
-import { Categories, Sexe } from '../interfaces/ludi.interface';
-import { environment } from '../../environments/environment.prod';
-import { Router } from '@angular/router';
-import { AuthService } from '../serveis/auth.service';
+import { Component, OnInit } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms'
+import { getAuth } from 'firebase/auth'
+import { firebaseApp } from '../app.config'
+import { ChartModule } from 'primeng/chart'
+import { TableModule } from 'primeng/table'
+import { ButtonModule } from 'primeng/button'
+import { DropdownModule } from 'primeng/dropdown'
+import { CardModule } from 'primeng/card'
+import { ToastModule } from 'primeng/toast'
+import { MessageService } from 'primeng/api'
+import { Categories, Sexe } from '../interfaces/ludi.interface'
+import { environment } from '../../environments/environment.prod'
+import { Router } from '@angular/router'
+import { AuthService } from '../serveis/auth.service'
 
 interface Club {
-  id: number;
-  nom: string;
-  equipCount?: number;
+  id: number
+  nom: string
+  equipCount?: number
 }
 
 interface Equip {
-  id: number;
-  nom: string;
-  email: string;
-  categoria: string;
-  telefon: string;
-  sexe: string;
-  club_id: number;
-  data_incripcio: string;
-  club_nom?: string;
-  jugadors?: number;
-  entrenadors?: number;
-  token?: string;
+  id: number
+  nom: string
+  email: string
+  categoria: string
+  telefon: string
+  sexe: string
+  club_id: number
+  data_incripcio: string
+  club_nom?: string
+  jugadors?: number
+  entrenadors?: number
+  token?: string
 }
 
 interface Jugador {
-  id: number;
-  nom: string;
-  cognoms: string;
-  talla_samarreta: string;
-  id_equip: number;
-  equip_nom?: string;
+  id: number
+  nom: string
+  cognoms: string
+  talla_samarreta: string
+  id_equip: number
+  equip_nom?: string
 }
 
 interface Entrenador {
-  id: number;
-  nom: string;
-  cognoms: string;
-  talla_samarreta: string;
-  es_principal: boolean;
-  id_equip: number;
-  equip_nom?: string;
+  id: number
+  nom: string
+  cognoms: string
+  talla_samarreta: string
+  es_principal: boolean
+  id_equip: number
+  equip_nom?: string
 }
 
 interface Statistics {
-  totalClubs: number;
-  totalEquips: number;
-  totalJugadors: number;
-  totalEntrenadors: number;
-  equipsByCategoria: { [key: string]: number };
-  equipsBySexe: { [key: string]: number };
-  inscripcionsPorDia: { [key: string]: number };
-  clubsWithMostTeams: Club[];
+  totalClubs: number
+  totalEquips: number
+  totalJugadors: number
+  totalEntrenadors: number
+  equipsByCategoria: { [key: string]: number }
+  equipsBySexe: { [key: string]: number }
+  inscripcionsPorDia: { [key: string]: number }
+  clubsWithMostTeams: Club[]
 }
 
 @Component({
@@ -84,33 +84,33 @@ interface Statistics {
   providers: [MessageService],
 })
 export class PanellAdminComponent implements OnInit {
-  private auth = getAuth(firebaseApp);
-  private token: string = '';
-  public loading: boolean = true;
+  private auth = getAuth(firebaseApp)
+  private token: string = ''
+  public loading: boolean = true
   private host = environment.production
     ? `https://${environment.apiUrl}`
-    : `http://${environment.apiUrl}`;
+    : `http://${environment.apiUrl}`
 
   // Data
-  clubs: Club[] = [];
-  public equips: Equip[] = [];
-  public jugadors: Jugador[] = [];
-  public entrenadors: Entrenador[] = [];
-  public statistics: Statistics | null = null;
+  clubs: Club[] = []
+  public equips: Equip[] = []
+  public jugadors: Jugador[] = []
+  public entrenadors: Entrenador[] = []
+  public statistics: Statistics | null = null
 
   // Charts
-  public categoriaChartData: any;
-  public sexeChartData: any;
-  public inscripcionesChartData: any;
-  public chartOptions: any;
+  public categoriaChartData: any
+  public sexeChartData: any
+  public inscripcionesChartData: any
+  public chartOptions: any
 
   // Filters
-  public filterForm: FormGroup;
-  public categories: string[] = [];
-  public sexes: string[] = [];
+  public filterForm: FormGroup
+  public categories: string[] = []
+  public sexes: string[] = []
 
   // Active tab
-  public activeTab: 'dashboard' | 'teams' | 'players' | 'coaches' = 'dashboard';
+  public activeTab: 'dashboard' | 'teams' | 'players' | 'coaches' = 'dashboard'
 
   constructor(
     private fb: FormBuilder,
@@ -122,23 +122,23 @@ export class PanellAdminComponent implements OnInit {
       club: [''],
       categoria: [''],
       sexe: [''],
-    });
+    })
   }
 
   ngOnInit(): void {
-    this.setupAuthentication();
-    this.setupChartOptions();
+    this.setupAuthentication()
+    this.setupChartOptions()
   }
 
   async setupAuthentication(): Promise<void> {
-    this.authService.user$.subscribe(async (user) => {
+    this.authService.user$.subscribe(async user => {
       if (user) {
-        this.token = await user.getIdToken();
-        this.loadData();
+        this.token = await user.getIdToken()
+        this.loadData()
       } else {
-        this.router.navigate(['/administrador-login']);
+        this.router.navigate(['/administrador-login'])
       }
-    });
+    })
   }
 
   setupChartOptions(): void {
@@ -168,15 +168,11 @@ export class PanellAdminComponent implements OnInit {
           },
         },
       },
-    };
+    }
   }
 
-  async loadData(filters?: {
-    club?: string;
-    categoria?: string;
-    sexe?: string;
-  }): Promise<void> {
-    this.loading = true;
+  async loadData(filters?: { club?: string; categoria?: string; sexe?: string }): Promise<void> {
+    this.loading = true
 
     try {
       await Promise.all([
@@ -185,27 +181,26 @@ export class PanellAdminComponent implements OnInit {
         this.loadEntrenadors(),
         this.loadStatistics(),
         setTimeout(() => {
-          this.loadEquips(filters);
+          this.loadEquips(filters)
         }, 200), // Await for clubs to load before loading equips
-        ,
-      ]);
+      ])
 
-      this.prepareFilters();
-      this.prepareCharts();
-      this.loading = false;
+      this.prepareFilters()
+      this.prepareCharts()
+      this.loading = false
     } catch (error) {
-      console.error('Error loading data:', error);
+      console.error('Error loading data:', error)
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
         detail: 'Failed to load data. Please try again.',
-      });
-      this.loading = false;
+      })
+      this.loading = false
     }
   }
 
   async loadClubs(): Promise<void> {
-    const enpoint = `${this.host}/clubs`;
+    const enpoint = `${this.host}/clubs`
 
     const response = await fetch(enpoint, {
       method: 'GET',
@@ -213,28 +208,24 @@ export class PanellAdminComponent implements OnInit {
         Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
       },
-    });
+    })
 
-    const data = await response.json();
-    this.clubs = data;
+    const data = await response.json()
+    this.clubs = data
   }
 
-  async loadEquips(filters?: {
-    club?: string;
-    categoria?: string;
-    sexe?: string;
-  }): Promise<void> {
-    let endpoint = `${this.host}/equips`;
+  async loadEquips(filters?: { club?: string; categoria?: string; sexe?: string }): Promise<void> {
+    let endpoint = `${this.host}/equips`
 
-    const queryParams: string[] = [];
+    const queryParams: string[] = []
     if (filters) {
-      if (filters.club) queryParams.push(`club_id=${filters.club}`);
-      if (filters.categoria) queryParams.push(`categoria=${filters.categoria}`);
-      if (filters.sexe) queryParams.push(`sexe=${filters.sexe}`);
+      if (filters.club) queryParams.push(`club_id=${filters.club}`)
+      if (filters.categoria) queryParams.push(`categoria=${filters.categoria}`)
+      if (filters.sexe) queryParams.push(`sexe=${filters.sexe}`)
     }
 
     if (queryParams.length > 0) {
-      endpoint += `?${queryParams.join('&')}`;
+      endpoint += `?${queryParams.join('&')}`
     }
 
     const response = await fetch(endpoint, {
@@ -243,20 +234,20 @@ export class PanellAdminComponent implements OnInit {
         Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
       },
-    });
+    })
 
-    const data = await response.json();
-    this.equips = data;
+    const data = await response.json()
+    this.equips = data
 
     // Add club name to each team
-    this.equips.forEach((equip) => {
-      const club = this.clubs.find((c) => c.id === equip.club_id);
-      equip.club_nom = club ? club.nom : 'Unknown';
-    });
+    this.equips.forEach(equip => {
+      const club = this.clubs.find(c => c.id === equip.club_id)
+      equip.club_nom = club ? club.nom : 'Unknown'
+    })
   }
 
   async loadJugadors(): Promise<void> {
-    const enpoint = `${this.host}/jugadors`;
+    const enpoint = `${this.host}/jugadors`
 
     const response = await fetch(enpoint, {
       method: 'GET',
@@ -264,21 +255,21 @@ export class PanellAdminComponent implements OnInit {
         Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
       },
-    });
+    })
 
-    const data = await response.json();
-    this.jugadors = data;
+    const data = await response.json()
+    this.jugadors = data
 
     // Add team name to each player
-    this.jugadors.forEach((jugador) => {
-      const equip = this.equips.find((e) => e.id === jugador.id_equip);
-      const club = this.clubs.find((c) => c.id === equip?.club_id);
-      jugador.equip_nom = equip?.nom ?? club?.nom;
-    });
+    this.jugadors.forEach(jugador => {
+      const equip = this.equips.find(e => e.id === jugador.id_equip)
+      const club = this.clubs.find(c => c.id === equip?.club_id)
+      jugador.equip_nom = equip?.nom ?? club?.nom
+    })
   }
 
   async loadEntrenadors(): Promise<void> {
-    const enpoint = `${this.host}/entrenadors`;
+    const enpoint = `${this.host}/entrenadors`
 
     const response = await fetch(enpoint, {
       method: 'GET',
@@ -286,21 +277,21 @@ export class PanellAdminComponent implements OnInit {
         Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
       },
-    });
+    })
 
-    const data = await response.json();
-    this.entrenadors = data;
+    const data = await response.json()
+    this.entrenadors = data
 
     // Add team name to each coach
-    this.entrenadors.forEach((entrenador) => {
-      const equip = this.equips.find((e) => e.id === entrenador.id_equip);
-      const club = this.clubs.find((c) => c.id === equip?.club_id);
-      entrenador.equip_nom = equip?.nom ?? club?.nom;
-    });
+    this.entrenadors.forEach(entrenador => {
+      const equip = this.equips.find(e => e.id === entrenador.id_equip)
+      const club = this.clubs.find(c => c.id === equip?.club_id)
+      entrenador.equip_nom = equip?.nom ?? club?.nom
+    })
   }
 
   async loadStatistics(): Promise<void> {
-    const enpoint = `${this.host}/estadistiques`;
+    const enpoint = `${this.host}/estadistiques`
 
     const response = await fetch(enpoint, {
       method: 'GET',
@@ -308,19 +299,19 @@ export class PanellAdminComponent implements OnInit {
         Authorization: `Bearer ${this.token}`,
         'Content-Type': 'application/json',
       },
-    });
+    })
 
-    const data = await response.json();
-    this.statistics = data;
+    const data = await response.json()
+    this.statistics = data
   }
 
   prepareFilters(): void {
-    this.categories = Object.values(Categories);
-    this.sexes = Object.values(Sexe);
+    this.categories = Object.values(Categories)
+    this.sexes = Object.values(Sexe)
   }
 
   prepareCharts(): void {
-    if (!this.statistics) return;
+    if (!this.statistics) return
 
     this.categoriaChartData = {
       labels: Object.keys(this.statistics.equipsByCategoria),
@@ -338,7 +329,7 @@ export class PanellAdminComponent implements OnInit {
           ],
         },
       ],
-    };
+    }
 
     // Sexe chart
     this.sexeChartData = {
@@ -350,13 +341,11 @@ export class PanellAdminComponent implements OnInit {
           backgroundColor: ['rgba(0, 0, 0, 0.6)', 'rgba(211, 103, 1, 0.6 )'],
         },
       ],
-    };
+    }
 
     // Daily registrations chart
-    const labels = Object.keys(this.statistics.inscripcionsPorDia).sort();
-    const data = labels.map(
-      (date) => this.statistics?.inscripcionsPorDia[date] || 0
-    );
+    const labels = Object.keys(this.statistics.inscripcionsPorDia).sort()
+    const data = labels.map(date => this.statistics?.inscripcionsPorDia[date] || 0)
 
     this.inscripcionesChartData = {
       labels: labels,
@@ -369,30 +358,30 @@ export class PanellAdminComponent implements OnInit {
           tension: 0.4,
         },
       ],
-    };
+    }
   }
 
   applyFilters(): void {
-    const filters = this.filterForm.value;
-    this.loadData(filters);
+    const filters = this.filterForm.value
+    this.loadData(filters)
   }
 
   resetFilters(): void {
-    this.filterForm.reset();
-    this.loadData();
+    this.filterForm.reset()
+    this.loadData()
   }
 
   setActiveTab(tab: 'dashboard' | 'teams' | 'players' | 'coaches'): void {
-    this.activeTab = tab;
+    this.activeTab = tab
   }
 
   exportToCSV(dataType: string): void {
-    let data: any[] = [];
-    let headers: string[] = [];
+    let data: any[] = []
+    let headers: string[] = []
 
     switch (dataType) {
       case 'teams':
-        data = this.equips;
+        data = this.equips
         headers = [
           'ID',
           'Nom',
@@ -407,124 +396,111 @@ export class PanellAdminComponent implements OnInit {
           'Intoleràncies',
           'Observacions',
           "Data d'inscripció",
-        ];
-        break;
+        ]
+        break
       case 'players':
-        data = this.jugadors;
-        headers = ['ID', 'Nom', 'Cognoms', 'Equip', 'Talla de samarreta'];
-        break;
+        data = this.jugadors
+        headers = ['ID', 'Nom', 'Cognoms', 'Equip', 'Talla de samarreta']
+        break
       case 'coaches':
-        data = this.entrenadors;
-        headers = [
-          'ID',
-          'Nom',
-          'Cognoms',
-          'Equip',
-          'Entrenador principal',
-          'Talla de samarreta',
-        ];
-        break;
+        data = this.entrenadors
+        headers = ['ID', 'Nom', 'Cognoms', 'Equip', 'Entrenador principal', 'Talla de samarreta']
+        break
     }
 
     // Generate CSV
-    const csvContent = this.generateCSV(headers, data);
+    const csvContent = this.generateCSV(headers, data)
 
     // Download
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute(
-      'download',
-      `${dataType}_${new Date().toISOString().split('T')[0]}.csv`
-    );
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const link = document.createElement('a')
+    const url = URL.createObjectURL(blob)
+    link.setAttribute('href', url)
+    link.setAttribute('download', `${dataType}_${new Date().toISOString().split('T')[0]}.csv`)
+    link.style.visibility = 'hidden'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
   }
 
   generateCSV(headers: string[], data: any[]): string {
-    let result = headers.join(',') + '\n';
+    let result = headers.join(',') + '\n'
 
-    data.forEach((item) => {
-      const values = headers.map((header) => {
+    data.forEach(item => {
+      const values = headers.map(header => {
         // Map header to corresponding property
-        let value = '';
+        let value = ''
         switch (header) {
           case 'ID':
-            value = item.id;
-            break;
+            value = item.id
+            break
           case 'Nom':
-            value = item.nom;
-            break;
+            value = item.nom
+            break
           case 'Cognoms':
-            value = item.cognoms;
-            break;
+            value = item.cognoms
+            break
           case 'Equip':
-            value = item.equip_nom;
-            break;
+            value = item.equip_nom
+            break
           case 'Categoria':
-            value = item.categoria;
-            break;
+            value = item.categoria
+            break
           case 'Sexe':
-            value = item.sexe;
-            break;
+            value = item.sexe
+            break
           case 'Club':
-            value = item.club_nom;
-            break;
+            value = item.club_nom
+            break
           case 'Email':
-            value = item.email;
-            break;
+            value = item.email
+            break
           case 'Telefon':
-            value = item.telefon;
-            break;
+            value = item.telefon
+            break
           case 'Observacions':
-            value = item.observacions || '';
-            break;
+            value = item.observacions || ''
+            break
           case "Data d'inscripció":
-            value = item.data_incripcio;
-            break;
+            value = item.data_incripcio
+            break
           case 'nº de jugadors':
-            value = item.jugadors.toString() || '';
-            break;
+            value = item.jugadors.toString() || ''
+            break
           case "nº d'entrenadors":
-            value = item.entrenadors.toString() || '';
-            break;
+            value = item.entrenadors.toString() || ''
+            break
           case 'nº de dietes':
-            value = (item.jugadors + item.entrenadors).toString() || '';
-            break;
+            value = (item.jugadors + item.entrenadors).toString() || ''
+            break
           case 'Intoleràncies':
-            value = item.intolerancies.join(' | ');
-            break;
+            value = item.intolerancies.join(' | ')
+            break
           case 'Talla de samarreta':
-            value = item.talla_samarreta || '';
-            break;
+            value = item.talla_samarreta || ''
+            break
           case 'Entrenador principal':
-            value = item.es_principal ? 'Si' : 'No';
-            break;
+            value = item.es_principal ? 'Si' : 'No'
+            break
           default:
-            value = '';
+            value = ''
         }
 
         // Escape quotes and wrap in quotes if contains comma
-        if (
-          typeof value === 'string' &&
-          (value.includes(',') || value.includes('"'))
-        ) {
-          value = `"${value.replace(/"/g, '""')}"`;
+        if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+          value = `"${value.replace(/"/g, '""')}"`
         }
 
-        return value;
-      });
+        return value
+      })
 
-      result += values.join(',') + '\n';
-    });
+      result += values.join(',') + '\n'
+    })
 
-    return result;
+    return result
   }
 
   public navigateToTeamLink(token?: string): void {
-    this.router.navigate(['/equip'], { queryParams: { token } });
+    this.router.navigate(['/equip'], { queryParams: { token } })
   }
 }
