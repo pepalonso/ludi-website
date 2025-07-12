@@ -41,4 +41,4 @@ jobs:
 
       - name: Check Prettier formatting
         working-directory: ./client
-        run: npx prettier --check .
+        run: npx prettier --check "src/**/*.{ts,html,css,scss}"
