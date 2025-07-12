@@ -16,7 +16,7 @@ p {
 
 button {
   padding: 10px 20px;
-  background-color:  var(--primary);
+  background-color: var(--primary);
   color: white;
   border: none;
   cursor: pointer;

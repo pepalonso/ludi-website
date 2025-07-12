@@ -1,6 +1,5 @@
 .background-container {
   background-color: #1a1a1a;
-
 }
 
 /* Global Styles */
@@ -31,7 +30,7 @@ body {
 
 /* Form Title */
 .form-title {
-  color: #D36701;
+  color: #d36701;
   margin-top: 0;
   margin-bottom: 1.5rem;
   font-weight: 500;
@@ -70,8 +69,7 @@ label {
 }
 
 input,
-select
-{
+select {
   background-color: #333333;
   border: 1px solid transparent;
   border-radius: 8px;
@@ -88,7 +86,7 @@ input::placeholder {
 input:focus,
 select:focus {
   outline: none;
-  border-color: #D36701;
+  border-color: #d36701;
   box-shadow: 0 0 0 2px rgba(211, 103, 1, 0.2);
   background-color: #333333;
 }
@@ -107,7 +105,7 @@ button {
 }
 
 .btn-next {
-  background-color: #D36701;
+  background-color: #d36701;
   color: #ffffff;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -165,6 +163,6 @@ select:has(option:disabled:checked) {
 }
 
 ::ng-deep app-input-dropdown .dropdown-container:focus-within {
-  border-color: #D36701;
+  border-color: #d36701;
   box-shadow: 0 0 0 2px rgba(211, 103, 1, 0.2);
 }

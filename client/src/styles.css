@@ -1,19 +1,26 @@
 :root {
-    --primary: #d36600;
-    --default: #d36600;
-    --background: #131313;
-    --text: #ffffff;
-    --resaltes: #dd5100;
-    --gris: #4d4d4d;
-    --disabled: rgb(156, 156, 156);
-  }
+  --primary: #d36600;
+  --default: #d36600;
+  --background: #131313;
+  --text: #ffffff;
+  --resaltes: #dd5100;
+  --gris: #4d4d4d;
+  --disabled: rgb(156, 156, 156);
+}
 
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background-color: #1a1a1a;
+}
 
-html, body { height: 100%; width: 100%;}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #1a1a1a;}
-
-
-input, select {
+input,
+select {
   padding: 5px;
   border-radius: 5px;
   border: 1px solid #ccc;

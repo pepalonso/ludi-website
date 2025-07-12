@@ -7,7 +7,10 @@
         <div class="form-group-custom">
           <label for="club">Club</label>
           <app-input-dropdown formControlName="club"></app-input-dropdown>
-          <div class="error-message" *ngIf="dadesForm.get('club')?.invalid && dadesForm.get('club')?.touched">
+          <div
+            class="error-message"
+            *ngIf="dadesForm.get('club')?.invalid && dadesForm.get('club')?.touched"
+          >
             El camp Club és requerit.
           </div>
         </div>
@@ -16,9 +19,14 @@
           <label for="categoria">Categoria</label>
           <select id="categoria" formControlName="categoria">
             <option value="" disabled selected>Seleccionar categoria</option>
-            <option *ngFor="let categoria of categories" [value]="categoria">{{ categoria }}</option>
+            <option *ngFor="let categoria of categories" [value]="categoria">
+              {{ categoria }}
+            </option>
           </select>
-          <div class="error-message" *ngIf="dadesForm.get('categoria')?.invalid && dadesForm.get('categoria')?.touched">
+          <div
+            class="error-message"
+            *ngIf="dadesForm.get('categoria')?.invalid && dadesForm.get('categoria')?.touched"
+          >
             La categoria és requerida.
           </div>
         </div>
@@ -29,21 +37,34 @@
             <option value="" disabled selected>Seleccionar sexe</option>
             <option *ngFor="let sexe of sexes" [value]="sexe">{{ sexe }}</option>
           </select>
-          <div class="error-message" *ngIf="dadesForm.get('sexe')?.invalid && dadesForm.get('sexe')?.touched">
+          <div
+            class="error-message"
+            *ngIf="dadesForm.get('sexe')?.invalid && dadesForm.get('sexe')?.touched"
+          >
             El sexe és requerit.
           </div>
         </div>
 
         <div class="form-group">
           <label for="teamName">Nom de l'equip (Opcional)</label>
-          <input type="text" id="teamName" formControlName="nomEquip" placeholder="vermell, Taronja, B..." />
+          <input
+            type="text"
+            id="teamName"
+            formControlName="nomEquip"
+            placeholder="vermell, Taronja, B..."
+          />
         </div>
 
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" id="email" formControlName="email" placeholder="exemple@gmail.com" />
-          <div class="error-message" *ngIf="dadesForm.get('email')?.invalid && dadesForm.get('email')?.touched">
-            <span *ngIf="dadesForm.get('email')?.errors?.['required']">El camp Email és requerit.</span>
+          <div
+            class="error-message"
+            *ngIf="dadesForm.get('email')?.invalid && dadesForm.get('email')?.touched"
+          >
+            <span *ngIf="dadesForm.get('email')?.errors?.['required']"
+              >El camp Email és requerit.</span
+            >
             <span *ngIf="dadesForm.get('email')?.errors?.['email']">L'Email ha de ser vàlid.</span>
           </div>
         </div>
@@ -51,9 +72,16 @@
         <div class="form-group">
           <label for="telefon">Telèfon</label>
           <input type="tel" id="telefon" formControlName="telefon" placeholder="666555444" />
-          <div class="error-message" *ngIf="dadesForm.get('telefon')?.invalid && dadesForm.get('telefon')?.touched">
-            <span *ngIf="dadesForm.get('telefon')?.errors?.['required']">El camp Telèfon és requerit.</span>
-            <span *ngIf="dadesForm.get('telefon')?.errors?.['pattern']">El telèfon ha de tindre 9 dígits.</span>
+          <div
+            class="error-message"
+            *ngIf="dadesForm.get('telefon')?.invalid && dadesForm.get('telefon')?.touched"
+          >
+            <span *ngIf="dadesForm.get('telefon')?.errors?.['required']"
+              >El camp Telèfon és requerit.</span
+            >
+            <span *ngIf="dadesForm.get('telefon')?.errors?.['pattern']"
+              >El telèfon ha de tindre 9 dígits.</span
+            >
           </div>
         </div>
       </form>

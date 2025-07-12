@@ -1,18 +1,18 @@
 :host {
   display: block;
-  background-color: #1A1A1A;
+  background-color: #1a1a1a;
   min-height: 100vh;
   padding: 16px;
 }
 
 .edit-registration-container {
   font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
-  background-color: #1A1A1A;
+  background-color: #1a1a1a;
   border-radius: 16px;
   margin: 0 auto;
   max-width: 600px;
   padding: 16px;
-  color: #CCC;
+  color: #ccc;
   animation: slideUp 0.3s ease-out;
 }
 
@@ -35,10 +35,10 @@
   align-items: center;
   justify-content: center;
   min-height: 300px;
-  color: #CCC;
+  color: #ccc;
 }
 
-.observacions-descripcio{
+.observacions-descripcio {
   margin: 0;
   font-size: 12px;
   margin-bottom: 8px;
@@ -55,12 +55,14 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-text {
   margin-top: 16px;
-  color: #CCC;
+  color: #ccc;
 }
 
 // Error container
@@ -98,14 +100,15 @@
   gap: 8px;
 }
 
-.team-category, .team-gender {
+.team-category,
+.team-gender {
   display: inline-block;
   padding: 4px 12px;
   border-radius: 16px;
   font-size: 14px;
   font-weight: 500;
   background-color: white;
-  color: #1A1A1A;
+  color: #1a1a1a;
 }
 
 .edit-header {
@@ -125,7 +128,7 @@
   .close-button {
     background: none;
     border: none;
-    color: #CCC;
+    color: #ccc;
     font-size: 24px;
     cursor: pointer;
     transition: color 0.2s;
@@ -152,7 +155,7 @@
     border-radius: 8px;
     border: 1px solid #444;
     background-color: #333;
-    color: #FFF;
+    color: #fff;
     font-size: 16px;
     appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cccccc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -184,7 +187,7 @@
   h4 {
     font-size: 16px;
     margin: 16px 0 8px;
-    color: #EEE;
+    color: #eee;
   }
 }
 
@@ -198,7 +201,7 @@
     color: #ddd;
   }
 
-  input[type="text"],
+  input[type='text'],
   textarea,
   select {
     width: 100%;
@@ -206,7 +209,7 @@
     border-radius: 8px;
     border: 1px solid #444;
     background-color: #222;
-    color: #FFF;
+    color: #fff;
     font-size: 16px;
 
     &:focus {
@@ -232,7 +235,7 @@
     margin: 0;
   }
 
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     margin-right: 10px;
     width: 20px;
     height: 20px;
@@ -252,7 +255,7 @@
     padding: 0 20px;
     border-radius: 8px;
     background-color: var(--primary);
-    color: #1A1A1A;
+    color: #1a1a1a;
     border: none;
     cursor: pointer;
     font-weight: 600;
@@ -276,7 +279,9 @@
     font-weight: 600;
     cursor: pointer;
     border: none;
-    transition: background-color 0.2s, opacity 0.2s;
+    transition:
+      background-color 0.2s,
+      opacity 0.2s;
 
     &:disabled {
       opacity: 0.5;
@@ -295,7 +300,7 @@
 
   .save-button {
     background-color: var(--primary);
-    color: #1A1A1A;
+    color: #1a1a1a;
 
     &:hover:not(:disabled) {
       opacity: 0.9;
@@ -331,7 +336,7 @@
     width: 32px;
     height: 32px;
     background-color: var(--secondary);
-    color: #1A1A1A;
+    color: #1a1a1a;
     border-radius: 50%;
     font-weight: 600;
     font-size: 14px;
@@ -359,7 +364,7 @@
 
 .principal-badge {
   background-color: var(--primary);
-  color: #1A1A1A;
+  color: #1a1a1a;
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 12px;
@@ -453,7 +458,7 @@
 
 .add-button {
   background-color: var(--primary);
-  color: #1A1A1A;
+  color: #1a1a1a;
   border: none;
   padding: 8px 16px;
   border-radius: 8px;
@@ -478,23 +483,25 @@
   width: 40px;
   height: 40px;
   background-color: var(--secondary);
-  color: #1A1A1A;
+  color: #1a1a1a;
   font-weight: 600;
-  clip-path: polygon(20% 0%,
-      35% 0%,
-      45% 8%,
-      50% 12%,
-      55% 8%,
-      65% 0%,
-      80% 0%,
-      95% 20%,
-      95% 30%,
-      90% 40%,
-      90% 100%,
-      10% 100%,
-      10% 40%,
-      5% 30%,
-      5% 20%);
+  clip-path: polygon(
+    20% 0%,
+    35% 0%,
+    45% 8%,
+    50% 12%,
+    55% 8%,
+    65% 0%,
+    80% 0%,
+    95% 20%,
+    95% 30%,
+    90% 40%,
+    90% 100%,
+    10% 100%,
+    10% 40%,
+    5% 30%,
+    5% 20%
+  );
 }
 
 h2::after {
@@ -513,7 +520,7 @@ h2::after {
 
 .back-button {
   background-color: #333;
-  color: #CCC;
+  color: #ccc;
   border: 1px solid #444;
   padding: 12px 24px;
   border-radius: 8px;
@@ -617,7 +624,6 @@ h2::after {
   }
 }
 
-
 // Add this to your existing SCSS file
 
 // Session timer
@@ -635,7 +641,9 @@ h2::after {
   gap: 10px;
   font-size: 14px;
   z-index: 100;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 .timer-critical {

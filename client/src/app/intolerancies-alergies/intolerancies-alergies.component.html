@@ -1,95 +1,100 @@
 <div class="background-container">
-    <div class="coach-form-container">
-      <div class="form-card">
-        <h2 class="form-title">Observacions</h2>
+  <div class="coach-form-container">
+    <div class="form-card">
+      <h2 class="form-title">Observacions</h2>
 
-        <form [formGroup]="observacions">
-          <div class="form-group">
-            <label for="observacio">Observacions:</label>
-            <textarea
-                type="text"
-                id="observacio"
-                formControlName="observacio"
-            > </textarea>
-          </div>
-        </form>
-      </div>
-      <div class="form-card">
-        <h2 class="form-title">Alergies / Intolerancies</h2>
+      <form [formGroup]="observacions">
+        <div class="form-group">
+          <label for="observacio">Observacions:</label>
+          <textarea type="text" id="observacio" formControlName="observacio"> </textarea>
+        </div>
+      </form>
+    </div>
+    <div class="form-card">
+      <h2 class="form-title">Alergies / Intolerancies</h2>
 
-        <form [formGroup]="intoleranceForm" (ngSubmit)="addIntolerance()">
-          <div class="form-group">
-            <label for="name">Tipus Intolerancia/Alergia:</label>
-            <input
-                type="text"
-                id="name"
-                formControlName="name"
-                placeholder="exemple: Lactosa, Gluten, Alegia Peix"
+      <form [formGroup]="intoleranceForm" (ngSubmit)="addIntolerance()">
+        <div class="form-group">
+          <label for="name">Tipus Intolerancia/Alergia:</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            placeholder="exemple: Lactosa, Gluten, Alegia Peix"
+          />
+          <div
+            *ngIf="intoleranceForm.get('name')?.invalid && intoleranceForm.get('name')?.touched"
+            class="error-message"
+          >
+            <span *ngIf="intoleranceForm.get('name')?.errors?.['required']">Nom obligatori</span>
+            <span *ngIf="intoleranceForm.get('name')?.errors?.['minlength']"
+              >Escriu minim dos caracters</span
             >
-            <div *ngIf="intoleranceForm.get('name')?.invalid && intoleranceForm.get('name')?.touched" class="error-message">
-                <span *ngIf="intoleranceForm.get('name')?.errors?.['required']">Nom obligatori</span>
-                <span *ngIf="intoleranceForm.get('name')?.errors?.['minlength']">Escriu minim dos caracters</span>
-            </div>
           </div>
+        </div>
 
-          <div class="form-group">
-                <label for="count">Numero de persones:</label>
-                <input
-                    type="number"
-                    id="count"
-                    formControlName="count"
-                    min="1"
+        <div class="form-group">
+          <label for="count">Numero de persones:</label>
+          <input type="number" id="count" formControlName="count" min="1" />
+          <div
+            *ngIf="intoleranceForm.get('count')?.invalid && intoleranceForm.get('count')?.touched"
+            class="error-message"
+          >
+            <span *ngIf="intoleranceForm.get('count')?.errors?.['required']"
+              >Numero de personas es obligatori</span
+            >
+            <span *ngIf="intoleranceForm.get('count')?.errors?.['min']">Minim una persona</span>
+          </div>
+        </div>
+        <button [disabled]="intoleranceForm.invalid" type="submit" class="btn-add">
+          <span class="btn-icon">+</span>
+          <span>Afegir</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="table-card" *ngIf="intolerancesList.length > 0">
+      <h2 class="table-title">Intolerances/Alergies</h2>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Intolerància o Al·lergia</th>
+              <th>Número de persones</th>
+              <th>Accions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of intolerancesList; index as i">
+              <td>{{ item.name }}</td>
+              <td>{{ item.count }}</td>
+              <td class="center-actions">
+                <button
+                  class="btn-delete"
+                  (click)="removeIntolerance(i)"
+                  aria-label="Eliminar intolerancia/alergia"
                 >
-                <div *ngIf="intoleranceForm.get('count')?.invalid && intoleranceForm.get('count')?.touched" class="error-message">
-                    <span *ngIf="intoleranceForm.get('count')?.errors?.['required']">Numero de personas es obligatori</span>
-                    <span *ngIf="intoleranceForm.get('count')?.errors?.['min']">Minim una persona</span>
-                </div>
-          </div>
-            <button [disabled]="intoleranceForm.invalid" type="submit" class="btn-add">
-                <span class="btn-icon">+</span>
-                <span>Afegir</span>
-            </button>
-        </form>
+                  <span class="material-icons">delete</span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
-      <div class="table-card" *ngIf="intolerancesList.length > 0">
-        <h2 class="table-title">Intolerances/Alergies</h2>
-        <div class="table-responsive">
-          <table>
-            <thead>
-              <tr>
-                <th>Intolerància o Al·lergia</th>
-                <th>Número de persones</th>
-                <th>Accions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of intolerancesList; index as i">
-                <td>{{ item.name }}</td>
-                <td>{{ item.count }}</td>
-                <td class="center-actions">
-                  <button class="btn-delete" (click)="removeIntolerance(i)" aria-label="Eliminar intolerancia/alergia">
-                    <span class="material-icons">delete</span>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    </div>
+    <div class="navigation-controls">
+      <div class="esquerra">
+        <button class="btn-prev" (click)="previStep()">
+          <span class="material-icons">arrow_back</span>
+          <span>Anterior</span>
+        </button>
       </div>
-      <div class="navigation-controls">
-        <div class="esquerra">
-          <button class="btn-prev" (click)="previStep()">
-            <span class="material-icons">arrow_back</span>
-            <span>Anterior</span>
-          </button>
-        </div>
-        <div class="dreta">
-          <button class="btn-next" (click)="nextStep()">
-            <span>Següent</span>
-            <span class="material-icons">arrow_forward</span>
-          </button>
-        </div>
+      <div class="dreta">
+        <button class="btn-next" (click)="nextStep()">
+          <span>Següent</span>
+          <span class="material-icons">arrow_forward</span>
+        </button>
       </div>
     </div>
   </div>
+</div>

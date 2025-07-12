@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { Sexe, TallaSamarreta, Team } from '../../interfaces/ludi.interface';
-import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core'
+import { Sexe, TallaSamarreta, Team } from '../../interfaces/ludi.interface'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'app-previsualitzacio-mobile',
@@ -10,8 +10,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
 })
 export class PrevisualitzacioMobileComponent {
-  public TallaSamarreta = TallaSamarreta;
-  public Sexe = Sexe;
-  @Input() team!: Team;
-
+  public TallaSamarreta = TallaSamarreta
+  public Sexe = Sexe
+  @Input() team!: Team
 }

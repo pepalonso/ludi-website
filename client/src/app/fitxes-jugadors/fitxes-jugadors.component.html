@@ -10,6 +10,9 @@
       (dragleave)="onDragLeave($event)"
       (drop)="onDrop($event)"
       (click)="fileInput.click()"
+      (keydown.enter)="fileInput.click()"
+      tabindex="0"
+      role="button"
     >
       <input
         #fileInput
@@ -25,7 +28,10 @@
       </div>
 
       <div class="upload-text">
-        <p>Fes una captura o fotografia de les fitxes digitals o fisiques i arrosegar-la o afegir-la aquí:</p>
+        <p>
+          Fes una captura o fotografia de les fitxes digitals o fisiques i arrosegar-la o afegir-la
+          aquí:
+        </p>
         <button class="upload-button" (click)="$event.stopPropagation(); fileInput.click()">
           Seleccionar Documents
         </button>
@@ -57,7 +63,6 @@
                     <div class="progress" [style.width.%]="file.progress"></div>
                   </div>
                 }
-
                 @if (file.uploaded) {
                   <div class="file-status success">
                     <span class="material-icons">check_circle</span>

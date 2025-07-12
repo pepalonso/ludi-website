@@ -5,7 +5,7 @@
     class="toast"
     [ngClass]="{
       'toast-success': toastType === 'success',
-      'toast-error': toastType === 'error'
+      'toast-error': toastType === 'error',
     }"
   >
     <div class="toast-content">
@@ -22,11 +22,7 @@
         <div class="team-gender">{{ team.sexe }}</div>
       </div>
       <div class="team-logo-container" *ngIf="team?.logoUrl">
-        <img
-          src="{{ team.logoUrl }}"
-          alt="{{ team.club }} Logo"
-          class="team-logo"
-        />
+        <img src="{{ team.logoUrl }}" alt="{{ team.club }} Logo" class="team-logo" />
       </div>
     </div>
 
@@ -61,15 +57,8 @@
           <span class="info-label">Compte Bancari</span>
           <div class="copy-value">
             <span class="info-value">{{ paymentInfo().account }}</span>
-            <button
-              class="copy-btn"
-              (click)="copyToClipboard(paymentInfo().account)"
-            >
-              <img
-                src="../../assets/copy.png"
-                alt="Copy Icon"
-                class="copy-icon"
-              />
+            <button class="copy-btn" (click)="copyToClipboard(paymentInfo().account)">
+              <img src="../../assets/copy.png" alt="Copy Icon" class="copy-icon" />
             </button>
           </div>
         </div>
@@ -83,15 +72,8 @@
           <span class="info-label">Concepte</span>
           <div class="copy-value">
             <span class="info-value">{{ paymentInfo().concepte }}</span>
-            <button
-              class="copy-btn"
-              (click)="copyToClipboard(paymentInfo().concepte)"
-            >
-              <img
-                src="../../assets/copy.png"
-                alt="Copy Icon"
-                class="copy-icon"
-              />
+            <button class="copy-btn" (click)="copyToClipboard(paymentInfo().concepte)">
+              <img src="../../assets/copy.png" alt="Copy Icon" class="copy-icon" />
             </button>
           </div>
         </div>
@@ -101,29 +83,19 @@
 
   <!-- Div 2: Coaches Information -->
   <div class="coaches-info">
-    <section
-      class="entrenadors-section"
-      *ngIf="team.entrenadors && team.entrenadors.length > 0"
-    >
+    <section class="entrenadors-section" *ngIf="team.entrenadors && team.entrenadors.length > 0">
       <h2>Entrenadors</h2>
       <div class="entrenadors-list">
-        <div
-          class="entrenador-card"
-          *ngFor="let entrenador of team.entrenadors"
-        >
+        <div class="entrenador-card" *ngFor="let entrenador of team.entrenadors">
           <div class="entrenador-details">
             <h3>
               {{ entrenador.nom }} {{ entrenador.cognoms }}
-              <span class="principal-badge" *ngIf="entrenador.esPrincipal === 1"
-                >Principal</span
-              >
+              <span class="principal-badge" *ngIf="entrenador.esPrincipal === 1">Principal</span>
             </h3>
             <div class="entrenador-info">
               <div class="info-item">
                 <span class="label-samarreta">Talla samarreta</span>
-                <span class="value talla-badge">{{
-                  entrenador.tallaSamarreta
-                }}</span>
+                <span class="value talla-badge">{{ entrenador.tallaSamarreta }}</span>
               </div>
             </div>
           </div>
@@ -134,34 +106,24 @@
 
   <!-- Div 3: Players Information -->
   <div class="players-info">
-    <section
-      class="jugadors-section"
-      *ngIf="team.jugadors && team.jugadors.length > 0"
-    >
+    <section class="jugadors-section" *ngIf="team.jugadors && team.jugadors.length > 0">
       <h2>Jugadors ({{ team.jugadors.length }})</h2>
       <div class="jugadors-list">
-        <div
-          class="jugador-card"
-          *ngFor="let jugador of team.jugadors; let i = index"
-        >
+        <div class="jugador-card" *ngFor="let jugador of team.jugadors; let i = index">
           <div class="jugador-number">{{ i + 1 }}</div>
           <div class="jugador-details">
             <h3>{{ jugador.nom }} {{ jugador.cognoms }}</h3>
             <div class="jugador-info">
               <div class="info-item">
                 <span class="label-samarreta">Talla samarreta</span>
-                <span class="value talla-badge">{{
-                  jugador.tallaSamarreta
-                }}</span>
+                <span class="value talla-badge">{{ jugador.tallaSamarreta }}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <button class="edit-button" (click)="navigateToEdit()">
-      Editar Inscripció
-    </button>
+    <button class="edit-button" (click)="navigateToEdit()">Editar Inscripció</button>
   </div>
 
   <!-- Div 4: Allergies Information -->

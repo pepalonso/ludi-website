@@ -1,20 +1,20 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { SteperComponent } from '../steper/steper.component';
-import { CdkStepperModule } from '@angular/cdk/stepper';
-import { DadesGeneralsComponent } from "../dades-generals/dades-generals.component";
-import { DadesJugadorsComponent } from "../dades-jugadors/dades-jugadors.component";
-import { DadesEntrenadorsComponent } from "../dades-entrenadors/dades-entrenadors.component";
-import { PrevisualitzacioComponent } from '../previsualitzacio/previsualitzacio.component';
-import { FooterComponent } from "../utils/footer/footer.component";
-import { FitxesJugadorsComponent } from '../fitxes-jugadors/fitxes-jugadors.component';
-import { DretsImatgeComponent } from "../drets-imatge/drets-imatge.component";
-import { IntoleranciesAlergiesComponent } from "../intolerancies-alergies/intolerancies-alergies.component";
+import { Component, forwardRef, OnInit } from '@angular/core'
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms'
+import { CommonModule } from '@angular/common'
+import { SteperComponent } from '../steper/steper.component'
+import { CdkStepperModule } from '@angular/cdk/stepper'
+import { DadesGeneralsComponent } from '../dades-generals/dades-generals.component'
+import { DadesJugadorsComponent } from '../dades-jugadors/dades-jugadors.component'
+import { DadesEntrenadorsComponent } from '../dades-entrenadors/dades-entrenadors.component'
+import { PrevisualitzacioComponent } from '../previsualitzacio/previsualitzacio.component'
+import { FooterComponent } from '../utils/footer/footer.component'
+import { FitxesJugadorsComponent } from '../fitxes-jugadors/fitxes-jugadors.component'
+import { DretsImatgeComponent } from '../drets-imatge/drets-imatge.component'
+import { IntoleranciesAlergiesComponent } from '../intolerancies-alergies/intolerancies-alergies.component'
 
 export interface StepInterface {
-  id: number,
+  id: number
   name: string
 }
 
@@ -23,12 +23,25 @@ export interface StepInterface {
   templateUrl: './team-form.component.html',
   styleUrls: ['./team-form.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, forwardRef(() => SteperComponent), FitxesJugadorsComponent, CdkStepperModule, DadesGeneralsComponent, DadesJugadorsComponent, DadesEntrenadorsComponent, PrevisualitzacioComponent, FooterComponent, DretsImatgeComponent, IntoleranciesAlergiesComponent],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    forwardRef(() => SteperComponent),
+    FitxesJugadorsComponent,
+    CdkStepperModule,
+    DadesGeneralsComponent,
+    DadesJugadorsComponent,
+    DadesEntrenadorsComponent,
+    PrevisualitzacioComponent,
+    FooterComponent,
+    DretsImatgeComponent,
+    IntoleranciesAlergiesComponent,
+  ],
 })
 export class TeamFormComponent implements OnInit {
-  teamForm: FormGroup;
+  teamForm: FormGroup
 
-  public steps!: Array<StepInterface>;
+  public steps!: Array<StepInterface>
 
   constructor(private fb: FormBuilder) {
     this.teamForm = this.fb.group({
@@ -40,21 +53,21 @@ export class TeamFormComponent implements OnInit {
       intolerancies: [''],
       jugadors: this.fb.array([]),
       entrenadors: this.fb.array([]),
-    });
+    })
   }
 
   ngOnInit(): void {
-    this.addPlayer();
-    this.addCoach();
-    this.agregarSteps();
+    this.addPlayer()
+    this.addCoach()
+    this.agregarSteps()
   }
 
   get players(): FormArray {
-    return this.teamForm.get('jugadors') as FormArray;
+    return this.teamForm.get('jugadors') as FormArray
   }
 
   get coaches(): FormArray {
-    return this.teamForm.get('entrenadors') as FormArray;
+    return this.teamForm.get('entrenadors') as FormArray
   }
 
   addPlayer(): void {
@@ -62,12 +75,12 @@ export class TeamFormComponent implements OnInit {
       nom: ['', Validators.required],
       cognoms: ['', Validators.required],
       tallaSamarreta: ['', Validators.required],
-    });
-    this.players.push(playerForm);
+    })
+    this.players.push(playerForm)
   }
 
   removePlayer(index: number): void {
-    this.players.removeAt(index);
+    this.players.removeAt(index)
   }
 
   addCoach(): void {
@@ -76,27 +89,27 @@ export class TeamFormComponent implements OnInit {
       cognoms: ['', Validators.required],
       tallaSamarreta: ['', Validators.required],
       esPrincipal: [false],
-    });
-    this.coaches.push(coachForm);
+    })
+    this.coaches.push(coachForm)
   }
 
   removeCoach(index: number): void {
-    this.coaches.removeAt(index);
+    this.coaches.removeAt(index)
   }
 
   onClubSelected(selectedClub: string): void {
-    this.teamForm.patchValue({ club: selectedClub });
+    this.teamForm.patchValue({ club: selectedClub })
   }
 
   onSubmit(): void {
     if (this.teamForm.valid) {
-      const formValue = this.teamForm.value;
+      const formValue = this.teamForm.value
       formValue.intolerancies = formValue.intolerancies
         ? formValue.intolerancies.split(',').map((s: string) => s.trim())
-        : [];
-      console.log('Team Form Submitted:', formValue);
+        : []
+      console.log('Team Form Submitted:', formValue)
     } else {
-      console.log('Form is invalid');
+      console.log('Form is invalid')
     }
   }
 
@@ -104,31 +117,31 @@ export class TeamFormComponent implements OnInit {
     this.steps = [
       {
         id: 0,
-        name: 'Dades Generals'
+        name: 'Dades Generals',
       },
       {
         id: 1,
-        name: 'Dades Jugadors'
+        name: 'Dades Jugadors',
       },
       {
-        id:2,
-        name: 'Fitxes Jugadors'
+        id: 2,
+        name: 'Fitxes Jugadors',
       },
       {
         id: 3,
-        name: 'Dades Entrenadors'
+        name: 'Dades Entrenadors',
       },
       {
         id: 4,
-        name: 'Intoleràncies'
+        name: 'Intoleràncies',
       },
       {
         id: 5,
-        name: 'Documents'
+        name: 'Documents',
       },
       {
         id: 6,
-        name: 'Resum'
+        name: 'Resum',
       },
     ]
   }

@@ -4,8 +4,8 @@
   max-width: 600px;
   margin: 0 auto;
   padding: 16px;
-  color: #CCC;
-  background-color: #1A1A1A;
+  color: #ccc;
+  background-color: #1a1a1a;
   min-height: 100vh;
 }
 
@@ -81,7 +81,6 @@
   color: var(--dark);
 }
 
-
 /* Section styles */
 section {
   margin-bottom: 32px;
@@ -105,7 +104,9 @@ h2::after {
 }
 
 /* Info cards */
-.info-card, .jugador-card, .entrenador-card {
+.info-card,
+.jugador-card,
+.entrenador-card {
   background-color: #333;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -171,13 +172,15 @@ h2::after {
 }
 
 /* Jugadors and Entrenadors */
-.jugadors-list, .entrenadors-list {
+.jugadors-list,
+.entrenadors-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.jugador-card, .entrenador-card {
+.jugador-card,
+.entrenador-card {
   display: flex;
   align-items: flex-start;
 }
@@ -195,7 +198,8 @@ h2::after {
   font-weight: 600;
 }
 
-.jugador-details, .entrenador-details {
+.jugador-details,
+.entrenador-details {
   flex: 1;
 }
 
@@ -209,7 +213,8 @@ h3 {
   justify-content: space-between;
 }
 
-.jugador-info, .entrenador-info {
+.jugador-info,
+.entrenador-info {
   font-size: 14px;
 }
 
@@ -222,23 +227,25 @@ h3 {
   max-width: 40px;
   height: 40px;
   background-color: var(--secondary);
-  color: #1A1A1A;
+  color: #1a1a1a;
   font-weight: 600;
-  clip-path: polygon(20% 0%,
-      35% 0%,
-      45% 8%,
-      50% 12%,
-      55% 8%,
-      65% 0%,
-      80% 0%,
-      95% 20%,
-      95% 30%,
-      90% 40%,
-      90% 100%,
-      10% 100%,
-      10% 40%,
-      5% 30%,
-      5% 20%);
+  clip-path: polygon(
+    20% 0%,
+    35% 0%,
+    45% 8%,
+    50% 12%,
+    55% 8%,
+    65% 0%,
+    80% 0%,
+    95% 20%,
+    95% 30%,
+    90% 40%,
+    90% 100%,
+    10% 100%,
+    10% 40%,
+    5% 30%,
+    5% 20%
+  );
 }
 
 /* Principal badge */

@@ -31,7 +31,10 @@ export class QrCodeInfoComponent implements OnInit {
   public teamDetails?: QRTeamDetails
   public orderedShirtSizes: { key: string; value: number }[] = []
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.pipe(take(1)).subscribe((params: { [key: string]: string }) => {

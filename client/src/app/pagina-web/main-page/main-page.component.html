@@ -6,9 +6,12 @@
   <section class="carrusel-section">
     <div class="hero-carousel">
       <div class="carousel-container">
-        <div class="carousel-images" [style.transform]="'translateX(-' + (currentImageIndex * 100) + '%)'">
+        <div
+          class="carousel-images"
+          [style.transform]="'translateX(-' + currentImageIndex * 100 + '%)'"
+        >
           <div class="carousel-image" *ngFor="let image of carouselImages">
-            <img [src]="image" alt="Basketball event">
+            <img [src]="image" alt="Basketball event" />
             <div class="hero-text">
               <h2>BENVINGUTS AL</h2>
               <h1>LUDIBÀSQUET</h1>
@@ -22,20 +25,27 @@
       <!-- Scrolling Text Banner -->
       <div class="scrolling-banner">
         <div class="scrolling-text">
-          <span *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]"> BÀSQUET 24 HORES&nbsp;&nbsp; </span>
+          <span *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]">
+            BÀSQUET 24 HORES&nbsp;&nbsp;
+          </span>
         </div>
       </div>
 
       <!-- Carousel Indicators -->
       <div class="carousel-indicators">
         <div class="indicator-container">
-          <span *ngFor="let image of carouselImages; let i = index" [class.active]="i === currentImageIndex"
-            (click)="currentImageIndex = i"></span>
+          <span
+            *ngFor="let image of carouselImages; let i = index"
+            [class.active]="i === currentImageIndex"
+            (click)="currentImageIndex = i"
+            (keydown.enter)="currentImageIndex = i"
+            tabindex="0"
+            role="button"
+          ></span>
         </div>
       </div>
     </div>
   </section>
-
 
   <!-- Section Labels -->
   <section class="countdown">
@@ -60,7 +70,9 @@
   <!-- Inscripcions -->
   <section class="boton">
     <div class="section-labels">
-      <button [routerLink]="'/info-inscripcions'" class='inscripcions-button'>Fes una Inscripció</button>
+      <button [routerLink]="'/info-inscripcions'" class="inscripcions-button">
+        Fes una Inscripció
+      </button>
     </div>
   </section>
 
@@ -69,7 +81,7 @@
     <div class="photo-gallery">
       <div class="gallery-container">
         <div class="gallery-item" *ngFor="let image of galleryImages">
-          <img [src]="image" alt="Basketball gallery image">
+          <img [src]="image" alt="Basketball gallery image" />
         </div>
       </div>
     </div>
@@ -78,21 +90,34 @@
     <div class="text-content">
       <div class="content-container">
         <div class="content-column">
-          <p>A LUDIBÀSQUET vivim el bàsquet amb passió, compromís i il·lusió. Des de l’any 2000 treballem per fer
-            créixer aquest esport dins la nostra comunitat, oferint espais on tothom —grans i petits— pugui gaudir,
-            aprendre i compartir moments inoblidables.</p>
-          <p>Som molt més que un club. Som una entitat que aposta per l’educació a través de l’esport, pel foment de
-            valors com el respecte, l’esforç, la convivència i el treball en equip. El nostre objectiu és crear
-            experiències que deixin empremta, tant dins com fora de la pista.</p>
+          <p>
+            A LUDIBÀSQUET vivim el bàsquet amb passió, compromís i il·lusió. Des de l’any 2000
+            treballem per fer créixer aquest esport dins la nostra comunitat, oferint espais on
+            tothom —grans i petits— pugui gaudir, aprendre i compartir moments inoblidables.
+          </p>
+          <p>
+            Som molt més que un club. Som una entitat que aposta per l’educació a través de
+            l’esport, pel foment de valors com el respecte, l’esforç, la convivència i el treball en
+            equip. El nostre objectiu és crear experiències que deixin empremta, tant dins com fora
+            de la pista.
+          </p>
         </div>
         <div class="content-column">
-          <p>El nostre esdeveniment més emblemàtic és el torneig de 24 hores de LUDIBÀSQUET, una gran festa oberta a
-            tothom, on el bàsquet es combina amb tallers infantils, inflables, espectacles i activitats per a tota la
-            família. Un cap de setmana ple d’energia, diversió i passió per l’esport.</p>
-          <p>A més, durant l’any impulsem tallers educatius per a nens i nenes, campus, activitats socials i propostes
-            inclusives perquè el bàsquet arribi a tothom, independentment del nivell o la condició.</p>
-          <p>Si estàs buscant molt més que un club esportiu, has arribat al lloc ideal.<br>
-            Vine a viure l’experiència LUDIBÀSQUET!</p>
+          <p>
+            El nostre esdeveniment més emblemàtic és el torneig de 24 hores de LUDIBÀSQUET, una gran
+            festa oberta a tothom, on el bàsquet es combina amb tallers infantils, inflables,
+            espectacles i activitats per a tota la família. Un cap de setmana ple d’energia,
+            diversió i passió per l’esport.
+          </p>
+          <p>
+            A més, durant l’any impulsem tallers educatius per a nens i nenes, campus, activitats
+            socials i propostes inclusives perquè el bàsquet arribi a tothom, independentment del
+            nivell o la condició.
+          </p>
+          <p>
+            Si estàs buscant molt més que un club esportiu, has arribat al lloc ideal.<br />
+            Vine a viure l’experiència LUDIBÀSQUET!
+          </p>
         </div>
       </div>
     </div>

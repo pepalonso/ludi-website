@@ -14,7 +14,8 @@
     <div
       class="dropdown-item"
       *ngFor="let club of filteredClubs"
-      (mousedown)="selectClub(club.club_name)">
+      (mousedown)="selectClub(club.club_name)"
+    >
       {{ club.club_name }}
     </div>
   </div>

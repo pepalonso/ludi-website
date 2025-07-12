@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { firebaseApp } from '../app.config';
-import { AuthService } from '../serveis/auth.service';
+import { Component, OnInit } from '@angular/core'
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
+import { CommonModule } from '@angular/common'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { firebaseApp } from '../app.config'
+import { AuthService } from '../serveis/auth.service'
 
 @Component({
   selector: 'app-login',
@@ -19,9 +14,9 @@ import { AuthService } from '../serveis/auth.service';
   standalone: true,
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  errorMessage: string = '';
-  auth = getAuth(firebaseApp);
+  loginForm: FormGroup
+  errorMessage: string = ''
+  auth = getAuth(firebaseApp)
 
   constructor(
     private fb: FormBuilder,
@@ -31,28 +26,28 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-    });
+    })
   }
 
   ngOnInit() {
     // Check if user is already logged in using the service
-    this.authService.user$.subscribe((user) => {
+    this.authService.user$.subscribe(user => {
       if (user) {
-        this.router.navigate(['/administrador']);
+        this.router.navigate(['/administrador'])
       }
-    });
+    })
   }
 
   async onSubmit() {
-    if (this.loginForm.invalid) return;
+    if (this.loginForm.invalid) return
 
-    const { email, password } = this.loginForm.value;
+    const { email, password } = this.loginForm.value
 
     try {
-      await signInWithEmailAndPassword(this.auth, email, password);
-      this.router.navigate(['/administrador']);
+      await signInWithEmailAndPassword(this.auth, email, password)
+      this.router.navigate(['/administrador'])
     } catch (error: any) {
-      this.errorMessage = error.message || 'Identificació incorrecta';
+      this.errorMessage = error.message || 'Identificació incorrecta'
     }
   }
 }

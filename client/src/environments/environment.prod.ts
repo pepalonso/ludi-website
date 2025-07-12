@@ -11,4 +11,4 @@ export const environment = {
     appId: process.env['APP_ID'] || '',
     measurementId: process.env['MEASUREMENT_ID'] || '',
   },
-};
+}

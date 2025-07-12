@@ -4,24 +4,14 @@
   </header>
 
   <nav class="nav-tabs">
-    <button
-      [class.active]="activeTab === 'dashboard'"
-      (click)="setActiveTab('dashboard')">
+    <button [class.active]="activeTab === 'dashboard'" (click)="setActiveTab('dashboard')">
       Dashboard
     </button>
-    <button
-      [class.active]="activeTab === 'teams'"
-      (click)="setActiveTab('teams')">
-      Equips
-    </button>
-    <button
-      [class.active]="activeTab === 'players'"
-      (click)="setActiveTab('players')">
+    <button [class.active]="activeTab === 'teams'" (click)="setActiveTab('teams')">Equips</button>
+    <button [class.active]="activeTab === 'players'" (click)="setActiveTab('players')">
       Jugadors
     </button>
-    <button
-      [class.active]="activeTab === 'coaches'"
-      (click)="setActiveTab('coaches')">
+    <button [class.active]="activeTab === 'coaches'" (click)="setActiveTab('coaches')">
       Entrenadors
     </button>
   </nav>
@@ -99,7 +89,9 @@
           <label for="categoria">Categoría</label>
           <select formControlName="categoria" id="categoria">
             <option value="">Totes les categoríes</option>
-            <option *ngFor="let categoria of categories" [value]="categoria">{{ categoria }}</option>
+            <option *ngFor="let categoria of categories" [value]="categoria">
+              {{ categoria }}
+            </option>
           </select>
         </div>
 
@@ -147,7 +139,7 @@
             <td>{{ equip.club_nom }}</td>
             <td>{{ equip.email }}</td>
             <td>{{ equip.telefon }}</td>
-            <td>{{ equip.data_incripcio | date:'short' }}</td>
+            <td>{{ equip.data_incripcio | date: 'short' }}</td>
             <td>{{ equip.jugadors || 0 }}</td>
             <td>{{ equip.entrenadors || 0 }}</td>
           </tr>

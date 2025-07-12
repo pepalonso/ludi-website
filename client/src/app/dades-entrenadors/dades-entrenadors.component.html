@@ -9,7 +9,10 @@
         <div class="form-group">
           <label for="nom">Nom</label>
           <input type="text" id="nom" formControlName="nom" required />
-          <div class="error-message" *ngIf="entrenadorForm.get('nom')?.invalid && entrenadorForm.get('nom')?.touched">
+          <div
+            class="error-message"
+            *ngIf="entrenadorForm.get('nom')?.invalid && entrenadorForm.get('nom')?.touched"
+          >
             El nom es requerit
           </div>
         </div>
@@ -17,7 +20,10 @@
         <div class="form-group">
           <label for="cognoms">Primer cognom</label>
           <input type="text" id="cognoms" formControlName="cognoms" required />
-          <div class="error-message" *ngIf="entrenadorForm.get('cognoms')?.invalid && entrenadorForm.get('cognoms')?.touched">
+          <div
+            class="error-message"
+            *ngIf="entrenadorForm.get('cognoms')?.invalid && entrenadorForm.get('cognoms')?.touched"
+          >
             El cognom és requerit
           </div>
         </div>
@@ -28,7 +34,13 @@
             <option value="" disabled selected>Seleccionar talla</option>
             <option *ngFor="let talla of tallas" [value]="talla">{{ talla }}</option>
           </select>
-          <div class="error-message" *ngIf="entrenadorForm.get('tallaSamarreta')?.invalid && entrenadorForm.get('tallaSamarreta')?.touched">
+          <div
+            class="error-message"
+            *ngIf="
+              entrenadorForm.get('tallaSamarreta')?.invalid &&
+              entrenadorForm.get('tallaSamarreta')?.touched
+            "
+          >
             La talla es requerida
           </div>
         </div>
@@ -48,9 +60,16 @@
           El tercer entrenador s'ha de designar com a principal, ja que encara no n'hi ha cap.
         </div>
 
-
-        <button type="submit" class="btn-add"
-          [disabled]="entrenadorForm.invalid || maxCoachesReached || duplicatePrincipal || thirdCoachPrincipalMissing">
+        <button
+          type="submit"
+          class="btn-add"
+          [disabled]="
+            entrenadorForm.invalid ||
+            maxCoachesReached ||
+            duplicatePrincipal ||
+            thirdCoachPrincipalMissing
+          "
+        >
           <span class="btn-icon">+</span>
           <span>Agregar</span>
         </button>
@@ -78,7 +97,11 @@
               <td>{{ entrenador.tallaSamarreta }}</td>
               <td>{{ entrenador.esPrincipal ? 'Sí' : 'No' }}</td>
               <td class="center-actions">
-                <button class="btn-delete" (click)="eliminarEntrenador(i)" aria-label="Eliminar entrenador">
+                <button
+                  class="btn-delete"
+                  (click)="eliminarEntrenador(i)"
+                  aria-label="Eliminar entrenador"
+                >
                   <span class="material-icons">delete</span>
                 </button>
               </td>
@@ -95,7 +118,11 @@
         </button>
       </div>
       <div class="dreta">
-        <button class="btn-next" (click)="nextStep()" [disabled]="entrenadores.length < 1 || entrenadores.length > 3">
+        <button
+          class="btn-next"
+          (click)="nextStep()"
+          [disabled]="entrenadores.length < 1 || entrenadores.length > 3"
+        >
           <span>Següent</span>
           <span class="material-icons">arrow_forward</span>
         </button>

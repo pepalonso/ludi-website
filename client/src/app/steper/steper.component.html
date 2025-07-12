@@ -4,19 +4,26 @@
       <button
         class="style-button"
         [class.example-active]="selectedIndex === i"
-        (click)="selectStepByIndex(i)">
-        
+        (click)="selectStepByIndex(i)"
+      >
         <span class="step-number">{{ i }}</span>
         <span class="step-name">{{ getStepName(i) }}</span>
       </button>
     }
   </header>
-  
+
   <div class="mobile-stepper">
     <div class="progress-circle">
       <svg viewBox="0 0 36 36" class="circular-chart">
-        <path class="circle-bg" d="M18 2.084a15.916 15.916 0 1 1 0 31.832 15.916 15.916 0 1 1 0-31.832" />
-        <path class="circle" [attr.stroke-dasharray]="(selectedIndex / (steps.length - 1)) * 100 + ', 100'" d="M18 2.084a15.916 15.916 0 1 1 0 31.832 15.916 15.916 0 1 1 0-31.832" />
+        <path
+          class="circle-bg"
+          d="M18 2.084a15.916 15.916 0 1 1 0 31.832 15.916 15.916 0 1 1 0-31.832"
+        />
+        <path
+          class="circle"
+          [attr.stroke-dasharray]="(selectedIndex / (steps.length - 1)) * 100 + ', 100'"
+          d="M18 2.084a15.916 15.916 0 1 1 0 31.832 15.916 15.916 0 1 1 0-31.832"
+        />
       </svg>
       <span class="step-number">{{ selectedIndex + 1 }}</span>
     </div>

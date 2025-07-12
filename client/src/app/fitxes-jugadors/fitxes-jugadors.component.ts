@@ -1,20 +1,20 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {  HttpClient, HttpEventType } from '@angular/common/http';
-import { finalize } from 'rxjs/operators';
-import { CdkStepper } from '@angular/cdk/stepper';
-import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
-import { Team } from '../interfaces/ludi.interface';
-import { environment } from '../../environments/environment.prod';
+import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { HttpClient, HttpEventType } from '@angular/common/http'
+import { finalize } from 'rxjs/operators'
+import { CdkStepper } from '@angular/cdk/stepper'
+import { PrevisualitzacioService } from '../serveis/previsualitzacio.service'
+import { Team } from '../interfaces/ludi.interface'
+import { environment } from '../../environments/environment.prod'
 
 interface FileItem {
-  file: File;
-  name: string;
-  size: string;
-  type: string;
-  progress: number;
-  uploaded: boolean;
-  error: boolean;
-  id: string;
+  file: File
+  name: string
+  size: string
+  type: string
+  progress: number
+  uploaded: boolean
+  error: boolean
+  id: string
 }
 
 @Component({
@@ -24,37 +24,41 @@ interface FileItem {
   styleUrls: ['./fitxes-jugadors.component.css'],
 })
 export class FitxesJugadorsComponent {
-  @Input() maxFiles = 5;
-  @Input() maxFileSize = 5;
-  @Input() acceptedFileTypes = '*';
-  @Input() uploadUrl = `https://${environment.apiUrl}/enviar-fitxes`;
+  @Input() maxFiles = 5
+  @Input() maxFileSize = 5
+  @Input() acceptedFileTypes = '*'
+  @Input() uploadUrl = `https://${environment.apiUrl}/enviar-fitxes`
 
-  @Output() filesChanged = new EventEmitter<File[]>();
+  @Output() filesChanged = new EventEmitter<File[]>()
   @Output() uploadComplete = new EventEmitter<{
-    success: boolean;
-    files: FileItem[];
-  }>();
+    success: boolean
+    files: FileItem[]
+  }>()
 
-  public team!: Team;
-  public files: FileItem[] = [];
-  public isDragging = false;
-  public isUploading = false;
-  public habilitarSeguent = true;
-  arnsFitxes: string[] = [];
+  public team!: Team
+  public files: FileItem[] = []
+  public isDragging = false
+  public isUploading = false
+  public habilitarSeguent = true
+  arnsFitxes: string[] = []
 
-  constructor(private http: HttpClient, private stepper: CdkStepper, private previService: PrevisualitzacioService) {
-    this.previService.getFormData().subscribe((data) => {
+  constructor(
+    private http: HttpClient,
+    private stepper: CdkStepper,
+    private previService: PrevisualitzacioService
+  ) {
+    this.previService.getFormData().subscribe(data => {
       if (data.value) {
-        this.team = data.value;
+        this.team = data.value
       }
-    });
+    })
   }
 
   onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement
     if (input.files) {
-      this.addFiles(Array.from(input.files));
-      input.value = '';
+      this.addFiles(Array.from(input.files))
+      input.value = ''
     }
   }
 
@@ -62,24 +66,24 @@ export class FitxesJugadorsComponent {
    * Handles drag events
    */
   onDragOver(event: DragEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragging = true;
+    event.preventDefault()
+    event.stopPropagation()
+    this.isDragging = true
   }
 
   onDragLeave(event: DragEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragging = false;
+    event.preventDefault()
+    event.stopPropagation()
+    this.isDragging = false
   }
 
   onDrop(event: DragEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragging = false;
+    event.preventDefault()
+    event.stopPropagation()
+    this.isDragging = false
 
     if (event.dataTransfer?.files) {
-      this.addFiles(Array.from(event.dataTransfer.files));
+      this.addFiles(Array.from(event.dataTransfer.files))
     }
   }
 
@@ -89,18 +93,16 @@ export class FitxesJugadorsComponent {
   private addFiles(newFiles: File[]): void {
     // Check if adding these files would exceed the maximum
     if (this.files.length + newFiles.length > this.maxFiles) {
-      alert(`You can only upload a maximum of ${this.maxFiles} files.`);
-      return;
+      alert(`You can only upload a maximum of ${this.maxFiles} files.`)
+      return
     }
 
     // Process each file
-    newFiles.forEach((file) => {
+    newFiles.forEach(file => {
       // Check file size
       if (file.size > this.maxFileSize * 1024 * 1024) {
-        alert(
-          `File ${file.name} exceeds the maximum size of ${this.maxFileSize}MB.`
-        );
-        return;
+        alert(`File ${file.name} exceeds the maximum size of ${this.maxFileSize}MB.`)
+        return
       }
 
       // Create a file item
@@ -113,21 +115,21 @@ export class FitxesJugadorsComponent {
         uploaded: false,
         error: false,
         id: this.generateId(),
-      };
+      }
 
-      this.files.push(fileItem);
-    });
+      this.files.push(fileItem)
+    })
 
     // Emit the updated files array
-    this.filesChanged.emit(this.files.map((f) => f.file));
+    this.filesChanged.emit(this.files.map(f => f.file))
   }
 
   /**
    * Remove a file from the list
    */
   removeFile(index: number): void {
-    this.files.splice(index, 1);
-    this.filesChanged.emit(this.files.map((f) => f.file));
+    this.files.splice(index, 1)
+    this.filesChanged.emit(this.files.map(f => f.file))
   }
 
   /**
@@ -135,27 +137,27 @@ export class FitxesJugadorsComponent {
    */
   uploadFiles(): void {
     if (this.files.length === 0 || !this.uploadUrl) {
-      return;
+      return
     }
 
-    this.isUploading = true;
-    let completedUploads = 0;
-    let failedUploads = 0;
+    this.isUploading = true
+    let completedUploads = 0
+    let failedUploads = 0
 
-    this.files.forEach((fileItem, index) => {
+    this.files.forEach(fileItem => {
       if (fileItem.uploaded) {
-        completedUploads++;
-        this.checkUploadCompletion(completedUploads, failedUploads);
-        return;
+        completedUploads++
+        this.checkUploadCompletion(completedUploads, failedUploads)
+        return
       }
 
-      const formData = new FormData();
+      const formData = new FormData()
 
-      const key = this.team.nomEquip ?
-       `${this.team.club}/${this.team.categoria}-${this.team.sexe}/${this.team.nomEquip}` :
-       `${this.team.club}/${this.team.categoria}-${this.team.sexe}`
-      formData.append('key', key);
-      formData.append('file', fileItem.file, fileItem.name);
+      const key = this.team.nomEquip
+        ? `${this.team.club}/${this.team.categoria}-${this.team.sexe}/${this.team.nomEquip}`
+        : `${this.team.club}/${this.team.categoria}-${this.team.sexe}`
+      formData.append('key', key)
+      formData.append('file', fileItem.file, fileItem.name)
 
       this.http
         .post(this.uploadUrl, formData, {
@@ -165,86 +167,83 @@ export class FitxesJugadorsComponent {
         .pipe(
           finalize(() => {
             if (!fileItem.uploaded) {
-              failedUploads++;
-              fileItem.error = true;
+              failedUploads++
+              fileItem.error = true
             }
-            this.checkUploadCompletion(completedUploads, failedUploads);
+            this.checkUploadCompletion(completedUploads, failedUploads)
           })
         )
         .subscribe(
-          (event) => {
+          event => {
             if (event.type === HttpEventType.UploadProgress && event.total) {
-              fileItem.progress = Math.round(
-                (100 * event.loaded) / event.total
-              );
+              fileItem.progress = Math.round((100 * event.loaded) / event.total)
             } else if (event.type === HttpEventType.Response) {
               if (event.status === 200) {
-                fileItem.uploaded = true;
-                fileItem.progress = 100;
-                completedUploads++;
+                fileItem.uploaded = true
+                fileItem.progress = 100
+                completedUploads++
 
-                const responseBody: any = event.body;
+                const responseBody: any = event.body
                 if (responseBody && responseBody.files) {
                   const fileArns: string[] = responseBody.files.map(
                     (uploadedFile: any) => uploadedFile.arn
-                  );
-                  this.arnsFitxes = fileArns;
+                  )
+                  this.arnsFitxes = fileArns
                 }
-                this.habilitarSeguent = false;
+                this.habilitarSeguent = false
               }
-
             }
           },
-          (error) => {
-            fileItem.error = true;
-            failedUploads++;
+          error => {
+            console.log(error)
+            fileItem.error = true
+            failedUploads++
           }
-        );
-    });
+        )
+    })
   }
 
   private checkUploadCompletion(completed: number, failed: number): void {
     if (completed + failed === this.files.length) {
-      this.isUploading = false;
+      this.isUploading = false
       this.uploadComplete.emit({
         success: failed === 0,
         files: this.files,
-      });
+      })
     }
   }
 
-
   private formatFileSize(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
+    if (bytes === 0) return '0 Bytes'
 
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    const k = 1024
+    const sizes = ['Bytes', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
 
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
   private getFileType(file: File): string {
-    const extension = file.name.split('.').pop()?.toLowerCase() || '';
+    const extension = file.name.split('.').pop()?.toLowerCase() || ''
 
     if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'].includes(extension)) {
-      return 'image';
+      return 'image'
     } else if (['pdf'].includes(extension)) {
-      return 'pdf';
+      return 'pdf'
     } else if (['doc', 'docx'].includes(extension)) {
-      return 'word';
+      return 'word'
     } else if (['xls', 'xlsx'].includes(extension)) {
-      return 'excel';
+      return 'excel'
     } else if (['ppt', 'pptx'].includes(extension)) {
-      return 'powerpoint';
+      return 'powerpoint'
     } else if (['zip', 'rar', '7z', 'tar', 'gz'].includes(extension)) {
-      return 'archive';
+      return 'archive'
     } else if (['mp4', 'avi', 'mov', 'wmv'].includes(extension)) {
-      return 'video';
+      return 'video'
     } else if (['mp3', 'wav', 'ogg'].includes(extension)) {
-      return 'audio';
+      return 'audio'
     } else {
-      return 'file';
+      return 'file'
     }
   }
 
@@ -252,10 +251,7 @@ export class FitxesJugadorsComponent {
    * Generate a unique ID for each file
    */
   private generateId(): string {
-    return (
-      Math.random().toString(36).substring(2, 15) +
-      Math.random().toString(36).substring(2, 15)
-    );
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
   }
 
   /**
@@ -264,33 +260,33 @@ export class FitxesJugadorsComponent {
   getFileIconClass(fileType: string): string {
     switch (fileType) {
       case 'image':
-        return 'image';
+        return 'image'
       case 'pdf':
-        return 'picture_as_pdf';
+        return 'picture_as_pdf'
       case 'word':
-        return 'description';
+        return 'description'
       case 'excel':
-        return 'table_chart';
+        return 'table_chart'
       case 'powerpoint':
-        return 'slideshow';
+        return 'slideshow'
       case 'archive':
-        return 'folder_zip';
+        return 'folder_zip'
       case 'video':
-        return 'videocam';
+        return 'videocam'
       case 'audio':
-        return 'audiotrack';
+        return 'audiotrack'
       default:
-        return 'insert_drive_file';
+        return 'insert_drive_file'
     }
   }
 
   nextStep() {
-    console.log(this.arnsFitxes);
-    this.previService.setFormData({ fitxes: this.arnsFitxes });
-    this.stepper.next();
+    console.log(this.arnsFitxes)
+    this.previService.setFormData({ fitxes: this.arnsFitxes })
+    this.stepper.next()
   }
 
   previStep() {
-    this.stepper.previous();
+    this.stepper.previous()
   }
 }

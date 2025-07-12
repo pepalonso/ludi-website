@@ -1,23 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { RegistrationSuccessComponent } from './registration-success.component';
+import { RegistrationSuccessComponent } from './registration-success.component'
 
 describe('RegistrationSuccessComponent', () => {
-  let component: RegistrationSuccessComponent;
-  let fixture: ComponentFixture<RegistrationSuccessComponent>;
+  let component: RegistrationSuccessComponent
+  let fixture: ComponentFixture<RegistrationSuccessComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RegistrationSuccessComponent]
-    })
-    .compileComponents();
+      imports: [RegistrationSuccessComponent],
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(RegistrationSuccessComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(RegistrationSuccessComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

@@ -1,6 +1,10 @@
 <div class="success-container">
   <!-- Toast notification -->
-  <div *ngIf="showToast" class="toast" [ngClass]="{'toast-success': toastType === 'success', 'toast-error': toastType === 'error'}">
+  <div
+    *ngIf="showToast"
+    class="toast"
+    [ngClass]="{ 'toast-success': toastType === 'success', 'toast-error': toastType === 'error' }"
+  >
     <div class="toast-content">
       <span>{{ toastMessage }}</span>
     </div>
@@ -9,7 +13,7 @@
 
   <div class="header">
     <h1 class="title">{{ teamName ?? '' }}</h1>
-    <img *ngIf="imageUrl" [attr.src]="imageUrl" alt="logo equip" class="logo">
+    <img *ngIf="imageUrl" [attr.src]="imageUrl" alt="logo equip" class="logo" />
   </div>
 
   <div class="success-message">
@@ -56,7 +60,7 @@
         <div class="copy-value">
           <span class="info-value">{{ paymentInfo.accountNumber }}</span>
           <button class="copy-btn" (click)="copyToClipboard(paymentInfo.accountNumber)">
-            <img src="../../assets/copy.png" alt="Copy Icon" class="copy-icon">
+            <img src="../../assets/copy.png" alt="Copy Icon" class="copy-icon" />
           </button>
         </div>
       </div>
@@ -69,12 +73,14 @@
         <div class="copy-value">
           <span class="info-value">{{ paymentInfo.concept }}</span>
           <button class="copy-btn" (click)="copyToClipboard(paymentInfo.concept)">
-            <img src="../../assets/copy.png" alt="Copy Icon" class="copy-icon">
+            <img src="../../assets/copy.png" alt="Copy Icon" class="copy-icon" />
           </button>
         </div>
       </div>
       <div class="payment-note">
-        <p>Si us plau, realitza el pagament en els pròxims 3 dies per confirmar la teva inscripció.</p>
+        <p>
+          Si us plau, realitza el pagament en els pròxims 3 dies per confirmar la teva inscripció.
+        </p>
       </div>
     </div>
   </div>
@@ -88,9 +94,6 @@
     <button (click)="navigateTeamDetails()" class="view-registration-btn">
       Veure la meva inscripció
     </button>
-    <a routerLink="/home" class="home-btn">
-      Tornar a l'inici
-    </a>
+    <a routerLink="/home" class="home-btn"> Tornar a l'inici </a>
   </div>
 </div>
-

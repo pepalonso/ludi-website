@@ -1,8 +1,7 @@
 // app.routes.ts
 import { Routes } from '@angular/router'
-import { LudiCountdown } from './countdown/countdown.component'
+import { LudiCountdownComponent } from './countdown/countdown.component'
 import { Ludi3x3Component } from './3x3/inscipcions/ludi3x3.component'
-import { TeamFormComponent } from './team-form/team-form.component'
 import { DetallsEquipComponent } from './detalls-equip/detalls-equip.component'
 import { SteperComponent } from './steper/steper.component'
 import { RedirectorComponent } from './utils/redirector/redirector.component'
@@ -25,7 +24,7 @@ export const routes: Routes = [
   { path: 'administrador', component: PanellAdminComponent },
   { path: 'admin', component: PanellAdminComponent },
   { path: 'equip', component: DetallsEquipComponent },
-  { path: 'countdown', component: LudiCountdown },
+  { path: 'countdown', component: LudiCountdownComponent },
   { path: 'ludi3x3', component: Ludi3x3Component },
   { path: 'info-inscripcions', component: InformacioInscripcioComponent },
   // Inscripcions tancades 29/05/2025

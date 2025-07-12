@@ -1,0 +1,40 @@
+name: Lint Check
+
+on:
+  push:
+    paths:
+      - "client/**"
+  pull_request:
+    paths:
+      - "client/**"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+          cache-dependency-path: client/pnpm-lock.yaml
+
+      - name: Install dependencies
+        working-directory: ./client
+        run: pnpm install
+
+      - name: Run ESLint
+        working-directory: ./client
+        run: pnpm run lint
+
+      - name: Run TypeScript check
+        working-directory: ./client
+        run: npx tsc --noEmit

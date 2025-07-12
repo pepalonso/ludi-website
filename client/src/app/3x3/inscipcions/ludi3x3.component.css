@@ -77,7 +77,8 @@ body {
   .form-group {
     width: 88% !important;
   }
-  .centerButton button, .submit-button button {
+  .centerButton button,
+  .submit-button button {
     width: 60% !important;
   }
   .action-btn {
@@ -85,7 +86,8 @@ body {
     margin-bottom: 5px;
   }
 
-  .toast, .toast2 {
+  .toast,
+  .toast2 {
     width: 80% !important;
   }
 }
@@ -109,7 +111,7 @@ body {
   width: 100%;
 }
 
-input{
+input {
   width: 96%;
   padding: 10px;
   border: 2px solid white;
@@ -118,7 +120,9 @@ input{
   border-radius: 5px;
   font-size: 1.1em;
   outline: none;
-  transition: border-color 0.3s ease, color 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
 input:focus {
@@ -231,7 +235,9 @@ thead {
   margin: 0 2px;
   border-radius: 4px;
   cursor: pointer;
-  transition: border-color 0.3s ease, color 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .edit-btn i,
@@ -264,7 +270,9 @@ select {
   border-radius: 5px;
   font-size: 1.1em;
   outline: none;
-  transition: border-color 0.3s ease, color 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
 select:focus ~ .label2,
@@ -299,7 +307,9 @@ button {
   border-radius: 5px;
   font-size: 1.1em;
   outline: none;
-  transition: border-color 0.3s ease, color 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .centerButton button:hover {
@@ -323,7 +333,9 @@ button {
   color: #fff;
   background-color: #d36600;
   border-color: #d36600;
-  box-shadow: 0 0 10px rgba(211, 102, 0, 0.7), 0 0 20px rgba(211, 102, 0, 0.5);
+  box-shadow:
+    0 0 10px rgba(211, 102, 0, 0.7),
+    0 0 20px rgba(211, 102, 0, 0.5);
   transition: box-shadow 0.3s ease;
 }
 
@@ -410,7 +422,9 @@ button {
   transform: translateX(-50%);
   z-index: 1;
   opacity: 0;
-  transition: visibility 0s, opacity 1s ease;
+  transition:
+    visibility 0s,
+    opacity 1s ease;
   font-size: large;
 }
 
@@ -430,7 +444,9 @@ button {
   transform: translateX(-50%);
   z-index: 1;
   opacity: 0;
-  transition: visibility 0s, opacity 1s ease;
+  transition:
+    visibility 0s,
+    opacity 1s ease;
   font-size: large;
 }
 
