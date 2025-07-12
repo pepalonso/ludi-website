@@ -31,6 +31,10 @@ jobs:
         working-directory: ./client
         run: pnpm install
 
+      - name: Install Prettier
+        working-directory: ./client
+        run: pnpm add -D prettier
+
       - name: Run ESLint
         working-directory: ./client
         run: pnpm run lint
