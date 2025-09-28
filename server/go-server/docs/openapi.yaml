@@ -1,0 +1,666 @@
+openapi: 3.0.3
+info:
+  title: Ludibàsquet API
+  description: API for managing tournament clubs, players, and coaches
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Development server
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      description: Check if the API is running
+      responses:
+        "200":
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+                  uptime:
+                    type: string
+                    example: "2h15m30s"
+
+  /api/clubs:
+    get:
+      summary: List all clubs
+      description: Retrieve all clubs in the system
+      responses:
+        "200":
+          description: List of clubs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Club"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      summary: Create a new club
+      description: Create a new club in the system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: Name of the club
+                  example: "Barcelona Basketball Club"
+      responses:
+        "201":
+          description: Club created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Club"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/clubs/{id}:
+    get:
+      summary: Get club by ID
+      description: Retrieve a specific club by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Club ID
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      responses:
+        "200":
+          description: Club found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Club"
+        "404":
+          description: Club not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    put:
+      summary: Update club
+      description: Update an existing club
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Club ID
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: Name of the club
+                  example: "FC Barcelona Basketball"
+      responses:
+        "200":
+          description: Club updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Club"
+        "404":
+          description: Club not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    delete:
+      summary: Delete club
+      description: Delete a club from the system
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Club ID
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      responses:
+        "204":
+          description: Club deleted successfully
+        "404":
+          description: Club not found
+
+  /api/players:
+    get:
+      summary: List players
+      description: Retrieve a list of players
+      responses:
+        "200":
+          description: List of players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Player"
+
+    post:
+      summary: Create a new player
+      description: Create a new player in the system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - first_name
+                - last_name
+                - shirt_size
+                - team_id
+              properties:
+                first_name:
+                  type: string
+                  example: "John"
+                last_name:
+                  type: string
+                  example: "Doe"
+                shirt_size:
+                  type: string
+                  example: "M"
+                team_id:
+                  type: integer
+                  example: 123
+      responses:
+        "201":
+          description: Player created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Player"
+
+  /api/players/{id}:
+    get:
+      summary: Get player by ID
+      description: Retrieve a specific player by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Player ID
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      responses:
+        "200":
+          description: Player found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Player"
+
+    put:
+      summary: Update player
+      description: Update an existing player
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Player ID
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - first_name
+                - last_name
+                - shirt_size
+              properties:
+                first_name:
+                  type: string
+                  example: "Johnny"
+                last_name:
+                  type: string
+                  example: "Doe"
+                shirt_size:
+                  type: string
+                  example: "L"
+      responses:
+        "200":
+          description: Player updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Player"
+
+    delete:
+      summary: Delete player
+      description: Delete a player from the system
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Player ID
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      responses:
+        "204":
+          description: Player deleted successfully
+
+  /api/coaches:
+    get:
+      summary: List coaches
+      description: Retrieve a list of coaches
+      responses:
+        "200":
+          description: List of coaches
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Coach"
+
+    post:
+      summary: Create a new coach
+      description: Create a new coach in the system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - first_name
+                - last_name
+                - shirt_size
+                - phone
+                - team_id
+              properties:
+                first_name:
+                  type: string
+                  example: "Mike"
+                last_name:
+                  type: string
+                  example: "Johnson"
+                shirt_size:
+                  type: string
+                  enum:
+                    [
+                      "8",
+                      "10",
+                      "12",
+                      "14",
+                      "S",
+                      "M",
+                      "L",
+                      "XL",
+                      "2XL",
+                      "3XL",
+                      "4XL",
+                    ]
+                  example: "M"
+                phone:
+                  type: string
+                  example: "+34612345678"
+                email:
+                  type: string
+                  format: email
+                  example: "mike@example.com"
+                team_id:
+                  type: integer
+                  minimum: 1
+                  example: 1
+                is_head_coach:
+                  type: boolean
+                  default: false
+                  example: false
+      responses:
+        "201":
+          description: Coach created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Coach"
+
+  /api/coaches/{id}:
+    get:
+      summary: Get coach by ID
+      description: Retrieve a specific coach by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Coach ID
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      responses:
+        "200":
+          description: Coach found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Coach"
+
+    put:
+      summary: Update coach
+      description: Update an existing coach
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Coach ID
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - first_name
+                - last_name
+                - shirt_size
+                - phone
+                - team_id
+              properties:
+                first_name:
+                  type: string
+                  example: "Mike"
+                last_name:
+                  type: string
+                  example: "Johnson"
+                shirt_size:
+                  type: string
+                  enum:
+                    [
+                      "8",
+                      "10",
+                      "12",
+                      "14",
+                      "S",
+                      "M",
+                      "L",
+                      "XL",
+                      "2XL",
+                      "3XL",
+                      "4XL",
+                    ]
+                  example: "M"
+                phone:
+                  type: string
+                  example: "+34612345678"
+                email:
+                  type: string
+                  format: email
+                  example: "mike@example.com"
+                team_id:
+                  type: integer
+                  minimum: 1
+                  example: 1
+                is_head_coach:
+                  type: boolean
+                  default: false
+                  example: false
+      responses:
+        "200":
+          description: Coach updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Coach"
+
+    delete:
+      summary: Delete coach
+      description: Delete a coach from the system
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Coach ID
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      responses:
+        "204":
+          description: Coach deleted successfully
+
+  /api/allergies:
+    get:
+      summary: List allergies
+      responses:
+        "200":
+          description: List of allergies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Allergy"
+
+    post:
+      summary: Create allergy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AllergyCreateRequest"
+      responses:
+        "201":
+          description: Allergy created
+
+  /api/allergies/{id}:
+    delete:
+      summary: Delete allergy
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Allergy deleted
+
+  /api/allergies/team/{team_id}:
+    get:
+      summary: Get allergies by team
+      parameters:
+        - name: team_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Allergies for team
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Allergy"
+
+components:
+  schemas:
+    Club:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Barcelona Basketball Club"
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-19T20:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-19T20:30:00Z"
+      required:
+        - id
+        - name
+
+    Player:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        first_name:
+          type: string
+          example: "John"
+        last_name:
+          type: string
+          example: "Doe"
+        shirt_size:
+          type: string
+          example: "M"
+        team_id:
+          type: integer
+          example: 123
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-19T20:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-19T20:30:00Z"
+      required:
+        - id
+        - first_name
+        - last_name
+        - shirt_size
+
+    Coach:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        first_name:
+          type: string
+          example: "Mike"
+        last_name:
+          type: string
+          example: "Johnson"
+        shirt_size:
+          type: string
+          enum:
+            ["8", "10", "12", "14", "S", "M", "L", "XL", "2XL", "3XL", "4XL"]
+          example: "M"
+        phone:
+          type: string
+          example: "+34612345678"
+        email:
+          type: string
+          format: email
+          example: "mike@example.com"
+        team_id:
+          type: integer
+          example: 1
+        is_head_coach:
+          type: boolean
+          example: false
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-19T20:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-19T20:30:00Z"
+      required:
+        - id
+        - first_name
+        - last_name
+        - shirt_size
+        - phone
+        - team_id
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Resource not found"
+      required:
+        - error
+
+    Allergy:
+      type: object
+      properties:
+        id:
+          type: integer
+        player_id:
+          type: integer
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    AllergyCreateRequest:
+      type: object
+      properties:
+        player_id:
+          type: integer
+        description:
+          type: string
+      required:
+        - player_id
