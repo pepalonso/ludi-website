@@ -529,6 +529,177 @@ paths:
                 items:
                   $ref: "#/components/schemas/Allergy"
 
+  /api/teams:
+    get:
+      summary: List teams
+      description: Retrieve a paginated list of teams with optional filters
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+        - name: club_id
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: ["Pre-mini", "Mini", "Pre-infantil", "Infantil", "Cadet", "Júnior"]
+        - name: gender
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: ["Masculí", "Femení"]
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: ["pending_payment", "canceled", "active"]
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of teams
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamListResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a new team
+      description: Create a new team in the system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TeamCreateRequest"
+      responses:
+        "201":
+          description: Team created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Team"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/teams/stats:
+    get:
+      summary: Get team statistics
+      description: Retrieve aggregate statistics for teams
+      responses:
+        "200":
+          description: Team statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamStats"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/teams/{id}:
+    get:
+      summary: Get team by ID
+      description: Retrieve a specific team by its ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Team ID
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      responses:
+        "200":
+          description: Team found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Team"
+        "404":
+          description: Team not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Update team
+      description: Update an existing team
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Team ID
+          schema:
+            type: integer
+            minimum: 1
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TeamUpdateRequest"
+      responses:
+        "200":
+          description: Team updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Team"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Team not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   schemas:
     Club:
@@ -664,3 +835,195 @@ components:
           type: string
       required:
         - player_id
+
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Club Barca Mini"
+        email:
+          type: string
+          format: email
+          example: "mini@club.com"
+        category:
+          type: string
+          enum: ["Pre-mini", "Mini", "Pre-infantil", "Infantil", "Cadet", "Júnior"]
+          example: "Mini"
+        phone:
+          type: string
+          example: "+34600000000"
+        gender:
+          type: string
+          enum: ["Masculí", "Femení"]
+          example: "Masculí"
+        club_id:
+          type: integer
+          example: 1
+        observations:
+          type: string
+          nullable: true
+        registration_date:
+          type: string
+          format: date-time
+          example: "2025-01-19T20:30:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-19T20:30:00Z"
+        status:
+          type: string
+          enum: ["pending_payment", "canceled", "active"]
+          example: "pending_payment"
+      required:
+        - id
+        - name
+        - email
+        - category
+        - phone
+        - gender
+        - club_id
+        - status
+
+    TeamCreateRequest:
+      type: object
+      required:
+        - name
+        - email
+        - category
+        - phone
+        - gender
+        - club_id
+      properties:
+        name:
+          type: string
+          example: "Club Barca Mini"
+        email:
+          type: string
+          format: email
+          example: "mini@club.com"
+        category:
+          type: string
+          enum: ["Pre-mini", "Mini", "Pre-infantil", "Infantil", "Cadet", "Júnior"]
+          example: "Mini"
+        phone:
+          type: string
+          example: "+34600000000"
+        gender:
+          type: string
+          enum: ["Masculí", "Femení"]
+          example: "Masculí"
+        club_id:
+          type: integer
+          minimum: 1
+          example: 1
+        observations:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: ["pending_payment", "canceled", "active"]
+          default: "pending_payment"
+          example: "pending_payment"
+
+    TeamUpdateRequest:
+      type: object
+      required:
+        - name
+        - email
+        - category
+        - phone
+        - gender
+        - club_id
+      properties:
+        name:
+          type: string
+          example: "Club Barca Mini"
+        email:
+          type: string
+          format: email
+          example: "mini@club.com"
+        category:
+          type: string
+          enum: ["Pre-mini", "Mini", "Pre-infantil", "Infantil", "Cadet", "Júnior"]
+          example: "Mini"
+        phone:
+          type: string
+          example: "+34600000000"
+        gender:
+          type: string
+          enum: ["Masculí", "Femení"]
+          example: "Masculí"
+        club_id:
+          type: integer
+          minimum: 1
+          example: 1
+        observations:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: ["pending_payment", "canceled", "active"]
+          example: "active"
+
+    TeamListResponse:
+      type: object
+      properties:
+        teams:
+          type: array
+          items:
+            $ref: "#/components/schemas/Team"
+        total:
+          type: integer
+          example: 42
+        page:
+          type: integer
+          example: 1
+        page_size:
+          type: integer
+          example: 10
+        total_pages:
+          type: integer
+          example: 5
+      required:
+        - teams
+        - total
+        - page
+        - page_size
+        - total_pages
+
+    TeamStats:
+      type: object
+      properties:
+        total_teams:
+          type: integer
+          example: 100
+        active_teams:
+          type: integer
+          example: 80
+        pending_payment:
+          type: integer
+          example: 15
+        canceled_teams:
+          type: integer
+          example: 5
+        by_category:
+          type: object
+          additionalProperties:
+            type: integer
+          description: Count per category (Pre-mini, Mini, etc.)
+        by_gender:
+          type: object
+          additionalProperties:
+            type: integer
+          description: Count per gender (Masculí, Femení)
+      required:
+        - total_teams
+        - active_teams
+        - pending_payment
+        - canceled_teams
+        - by_category
+        - by_gender

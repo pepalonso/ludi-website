@@ -58,6 +58,15 @@ func checkDocker() error {
 	return cmd.Run()
 }
 
+// dockerComposeCmd returns the executable name and any prefix args for compose.
+// Prefers "docker compose" (v2) when "docker-compose" (v1) is not in PATH.
+func dockerComposeCmd() (name string, prefix []string) {
+	if _, err := exec.LookPath("docker-compose"); err == nil {
+		return "docker-compose", nil
+	}
+	return "docker", []string{"compose"}
+}
+
 // Load environment variables from .env.dev file
 func loadEnv() (*Env, error) {
 	env := &Env{

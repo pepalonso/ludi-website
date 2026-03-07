@@ -14,10 +14,10 @@ func stopDev() {
 		os.Exit(1)
 	}
 
-	// Set environment variables for docker-compose
 	setDockerEnv(env)
 
-	cmd := exec.Command("docker-compose", "down", "--remove-orphans")
+	name, prefix := dockerComposeCmd()
+	cmd := exec.Command(name, append(prefix, "down", "--remove-orphans")...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 

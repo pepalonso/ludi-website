@@ -25,12 +25,13 @@ func NewDocumentRepository(db *sql.DB) *DocumentRepository {
 // CreateDocument creates a new document
 func (r *DocumentRepository) CreateDocument(ctx context.Context, document *models.DocumentCreateRequest) error {
 	query := `
-		INSERT INTO documents (team_id, file_name, file_path, file_size, mime_type, uploaded_at)
+		INSERT INTO documents (team_id, document_type, file_name, file_path, file_size, mime_type, uploaded_at)
 		VALUES (?, ?, ?, ?, ?, ?, NOW())
 	`
 
 	_, err := r.DB.ExecContext(ctx, query,
 		document.TeamID,
+		document.DocumentType,
 		document.FileName,
 		document.FilePath,
 		document.FileSize,
@@ -95,7 +96,7 @@ func (r *DocumentRepository) DeleteDocument(ctx context.Context, id int) error {
 
 // ListDocuments retrieves a paginated list of documents
 func (r *DocumentRepository) ListDocuments(ctx context.Context, filters models.DocumentFilters) (*models.DocumentListResponse, error) {
-	query := `SELECT id, team_id, file_name, file_path, file_size, mime_type, uploaded_at FROM documents`
+	query := `SELECT id, team_id, document_type, file_name, file_path, file_size, mime_type, uploaded_at FROM documents`
 	args := []interface{}{}
 
 	var conditions []string
@@ -103,6 +104,11 @@ func (r *DocumentRepository) ListDocuments(ctx context.Context, filters models.D
 	if filters.TeamID != nil {
 		conditions = append(conditions, "team_id = ?")
 		args = append(args, *filters.TeamID)
+	}
+
+	if filters.DocumentType != nil {
+		conditions = append(conditions, "document_type = ?")
+		args = append(args, *filters.DocumentType)
 	}
 
 	whereClause := ""
@@ -136,6 +142,7 @@ func (r *DocumentRepository) ListDocuments(ctx context.Context, filters models.D
 		err := rows.Scan(
 			&document.ID,
 			&document.TeamID,
+			&document.DocumentType,
 			&document.FileName,
 			&document.FilePath,
 			&document.FileSize,
@@ -147,13 +154,14 @@ func (r *DocumentRepository) ListDocuments(ctx context.Context, filters models.D
 		}
 
 		documents = append(documents, models.DocumentResponse{
-			ID:         document.ID,
-			TeamID:     document.TeamID,
-			FileName:   document.FileName,
-			FilePath:   document.FilePath,
-			FileSize:   document.FileSize,
-			MimeType:   document.MimeType,
-			UploadedAt: document.UploadedAt,
+			ID:           document.ID,
+			TeamID:       document.TeamID,
+			DocumentType: document.DocumentType,
+			FileName:     document.FileName,
+			FilePath:     document.FilePath,
+			FileSize:     document.FileSize,
+			MimeType:     document.MimeType,
+			UploadedAt:   document.UploadedAt,
 		})
 	}
 

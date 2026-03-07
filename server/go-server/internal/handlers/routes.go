@@ -11,8 +11,8 @@ import (
 var serverStartTime = time.Now()
 
 type Router struct {
-	clubHandler *ClubHandler
-	// teamHandler    *TeamHandler
+	clubHandler    *ClubHandler
+	teamHandler    *TeamHandler
 	playerHandler  *PlayerHandler
 	coachHandler   *CoachHandler
 	allergyHandler *AllergyHandler
@@ -21,8 +21,8 @@ type Router struct {
 
 func NewRouter(repo database.Repository) *Router {
 	return &Router{
-		clubHandler: NewClubHandler(repo),
-		// teamHandler:    NewTeamHandler(repo),
+		clubHandler:    NewClubHandler(repo),
+		teamHandler:    NewTeamHandler(repo),
 		playerHandler:  NewPlayerHandler(repo),
 		coachHandler:   NewCoachHandler(repo),
 		allergyHandler: NewAllergyHandler(repo),
@@ -38,13 +38,12 @@ func (r *Router) SetupRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("PUT /api/clubs/{id}", r.clubHandler.UpdateClub)
 	mux.HandleFunc("DELETE /api/clubs/{id}", r.clubHandler.DeleteClub)
 
-	// Team routes (uncomment when you create TeamHandler)
-	// mux.HandleFunc("POST /api/teams", r.teamHandler.CreateTeam)
-	// mux.HandleFunc("GET /api/teams", r.teamHandler.ListTeams)
-	// mux.HandleFunc("GET /api/teams/{id}", r.teamHandler.GetTeam)
-	// mux.HandleFunc("PUT /api/teams/{id}", r.teamHandler.UpdateTeam)
-	// mux.HandleFunc("DELETE /api/teams/{id}", r.teamHandler.DeleteTeam)
-	// mux.HandleFunc("GET /api/teams/stats", r.teamHandler.GetTeamStats)
+	// Team routes (GET /api/teams/stats before /api/teams/{id} so it matches first)
+	mux.HandleFunc("GET /api/teams/stats", r.teamHandler.GetTeamStats)
+	mux.HandleFunc("POST /api/teams", r.teamHandler.CreateTeam)
+	mux.HandleFunc("GET /api/teams", r.teamHandler.ListTeams)
+	mux.HandleFunc("GET /api/teams/{id}", r.teamHandler.GetTeam)
+	mux.HandleFunc("PUT /api/teams/{id}", r.teamHandler.UpdateTeam)
 
 	// Player routes (uncomment when you create PlayerHandler)
 	mux.HandleFunc("POST /api/players", r.playerHandler.CreatePlayer)

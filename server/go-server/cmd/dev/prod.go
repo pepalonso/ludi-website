@@ -21,10 +21,10 @@ func startProd() {
 		os.Exit(1)
 	}
 
-	// Set environment variables for docker-compose
 	setDockerEnv(env)
 
-	cmd := exec.Command("docker-compose", "-f", "docker-compose.prod.yml", "--env-file", ".env.prod", "up", "-d")
+	name, prefix := dockerComposeCmd()
+	cmd := exec.Command(name, append(prefix, "-f", "docker-compose.prod.yml", "--env-file", ".env.prod", "up", "-d")...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
@@ -65,8 +65,8 @@ func viewLogsProd() {
 	if len(os.Args) > 2 {
 		args = append(args, os.Args[2:]...)
 	}
-
-	cmd := exec.Command("docker-compose", args...)
+	name, prefix := dockerComposeCmd()
+	cmd := exec.Command(name, append(prefix, args...)...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
@@ -79,7 +79,8 @@ func viewLogsProd() {
 func showStatusProd() {
 	printStatus("Production environment status:")
 
-	cmd := exec.Command("docker-compose", "-f", "docker-compose.prod.yml", "ps")
+	name, prefix := dockerComposeCmd()
+	cmd := exec.Command(name, append(prefix, "-f", "docker-compose.prod.yml", "ps")...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 

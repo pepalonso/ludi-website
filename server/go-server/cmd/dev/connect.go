@@ -12,7 +12,6 @@ func connectDB() {
 		os.Exit(1)
 	}
 
-	// Set environment variables for docker-compose
 	setDockerEnv(env)
 
 	printStatus("Connecting to database...")
@@ -22,8 +21,8 @@ func connectDB() {
 		"-p" + env.DBPassword,
 		env.DBName,
 	}
-
-	cmd := exec.Command("docker-compose", args...)
+	name, prefix := dockerComposeCmd()
+	cmd := exec.Command(name, append(prefix, args...)...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
