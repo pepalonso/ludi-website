@@ -9,7 +9,8 @@ import (
 func showStatus() {
 	printStatus("Development environment status:")
 
-	cmd := exec.Command("docker-compose", "ps")
+	name, prefix := dockerComposeCmd()
+	cmd := exec.Command(name, append(prefix, "ps")...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 

@@ -23,10 +23,10 @@ func resetDB() {
 			os.Exit(1)
 		}
 
-		// Set environment variables for docker-compose
 		setDockerEnv(env)
 
-		cmd := exec.Command("docker-compose", "down", "-v", "--remove-orphans")
+		name, prefix := dockerComposeCmd()
+		cmd := exec.Command(name, append(prefix, "down", "-v", "--remove-orphans")...)
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 

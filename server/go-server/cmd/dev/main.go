@@ -14,6 +14,8 @@ func main() {
 	switch command {
 	case "start":
 		startDev()
+	case "start-db":
+		startDBOnly()
 	case "start-prod":
 		startProd()
 	case "stop":

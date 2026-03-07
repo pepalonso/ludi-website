@@ -12,15 +12,14 @@ func viewLogs() {
 		os.Exit(1)
 	}
 
-	// Set environment variables for docker-compose
 	setDockerEnv(env)
 
 	args := []string{"logs", "-f"}
 	if len(os.Args) > 2 {
 		args = append(args, os.Args[2])
 	}
-
-	cmd := exec.Command("docker-compose", args...)
+	name, prefix := dockerComposeCmd()
+	cmd := exec.Command(name, append(prefix, args...)...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
