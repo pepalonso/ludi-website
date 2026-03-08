@@ -37,12 +37,12 @@ func main() {
 	}
 
 	sender := auth.NewTwilioSMTPSender()
-	router := handlers.NewRouter(repo, appConfig.UploadDir, sender, appConfig.FrontendURL, sender)
+	router := handlers.NewRouter(repo, appConfig.UploadDir, sender, appConfig.AllowedOrigins, sender)
 
 	mux := http.NewServeMux()
 	router.SetupRoutes(mux)
 
-	handler := addMiddleware(mux)
+	handler := addMiddleware(mux, appConfig.AllowedOrigins)
 
 	server := &http.Server{
 		Addr:         ":8080",
@@ -75,9 +75,14 @@ func main() {
 	log.Println("Server exited")
 }
 
-func addMiddleware(next http.Handler) http.Handler {
+func addMiddleware(next http.Handler, allowedOrigins []string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
+		origin := r.Header.Get("Origin")
+		if len(allowedOrigins) == 0 {
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+		} else if origin != "" && config.OriginMatches(origin, allowedOrigins) {
+			w.Header().Set("Access-Control-Allow-Origin", origin)
+		}
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
