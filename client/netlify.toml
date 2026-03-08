@@ -2,6 +2,8 @@
 NODE_VERSION = "22"
 # Allow install when lockfile is out of sync (e.g. PR branches); remove once all branches have updated lockfile
 PNPM_FLAGS = "--no-frozen-lockfile"
+# API_URL is intentionally in the frontend build (not a secret); omit from secrets scan
+SECRETS_SCAN_OMIT_KEYS = "API_URL"
 
 [build]
   command = "node inject-env.js && ng build --configuration=production"
