@@ -23,7 +23,7 @@ type Router struct {
 	registrationHandler *RegistrationHandler
 }
 
-func NewRouter(repo database.Repository, uploadDir string, pinSender auth.PINSender, frontendURL string, registrationNotifier auth.RegistrationNotifier) *Router {
+func NewRouter(repo database.Repository, uploadDir string, pinSender auth.PINSender, allowedOrigins []string, registrationNotifier auth.RegistrationNotifier) *Router {
 	return &Router{
 		clubHandler:         NewClubHandler(repo),
 		teamHandler:         NewTeamHandler(repo),
@@ -33,7 +33,7 @@ func NewRouter(repo database.Repository, uploadDir string, pinSender auth.PINSen
 		documentHandler:     NewDocumentHandler(repo, uploadDir),
 		authHandler:         NewAuthHandler(repo, pinSender),
 		adminAuthHandler:    NewAdminAuthHandler(repo),
-		registrationHandler: NewRegistrationHandler(repo, frontendURL, registrationNotifier),
+		registrationHandler: NewRegistrationHandler(repo, allowedOrigins, registrationNotifier),
 	}
 }
 

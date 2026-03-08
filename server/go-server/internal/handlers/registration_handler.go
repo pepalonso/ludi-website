@@ -6,10 +6,12 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
 
 	"tournament-dev/internal/auth"
+	"tournament-dev/internal/config"
 	"tournament-dev/internal/database"
 	"tournament-dev/internal/models"
 	"tournament-dev/internal/request"
@@ -32,17 +34,38 @@ func truncBytes(b []byte, max int) string {
 // RegistrationHandler handles public registration (inscription) endpoint.
 type RegistrationHandler struct {
 	*BaseHandler
-	FrontendURL string
-	Notifier    auth.RegistrationNotifier
+	AllowedOrigins []string
+	Notifier       auth.RegistrationNotifier
 }
 
 // NewRegistrationHandler creates a new registration handler.
-func NewRegistrationHandler(repo database.Repository, frontendURL string, notifier auth.RegistrationNotifier) *RegistrationHandler {
+// allowedOrigins: origins allowed for CORS; registration link uses the request's Origin when it's in this list.
+func NewRegistrationHandler(repo database.Repository, allowedOrigins []string, notifier auth.RegistrationNotifier) *RegistrationHandler {
 	return &RegistrationHandler{
-		BaseHandler:  NewBaseHandler(repo),
-		FrontendURL:  strings.TrimSuffix(frontendURL, "/"),
-		Notifier:     notifier,
+		BaseHandler:    NewBaseHandler(repo),
+		AllowedOrigins: allowedOrigins,
+		Notifier:       notifier,
 	}
+}
+
+// requestOrigin returns the origin of the request (Origin header, or scheme+host from Referer).
+func requestOrigin(r *http.Request) string {
+	if o := r.Header.Get("Origin"); o != "" {
+		return strings.TrimSuffix(o, "/")
+	}
+	ref := r.Header.Get("Referer")
+	if ref == "" {
+		return ""
+	}
+	u, err := url.Parse(ref)
+	if err != nil || u.Scheme == "" || u.Host == "" {
+		return ""
+	}
+	return u.Scheme + "://" + u.Host
+}
+
+func (h *RegistrationHandler) isAllowedOrigin(origin string) bool {
+	return config.OriginMatches(origin, h.AllowedOrigins)
 }
 
 // RegisterInscription handles POST /api/registrar-incripcio (no auth).
@@ -204,11 +227,11 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 		return
 	}
 
-	// 8. Registration path and URL
+	// 8. Registration path and URL (use request origin when allowed, so dev/prod frontend get correct link)
 	registrationPath := frontendTeamPath + "?token=" + token
 	registrationURL := registrationPath
-	if h.FrontendURL != "" {
-		registrationURL = h.FrontendURL + registrationPath
+	if origin := requestOrigin(r); origin != "" && h.isAllowedOrigin(origin) {
+		registrationURL = origin + registrationPath
 	}
 
 	// 9. Send WhatsApp and email confirmation (best-effort; do not fail response)
