@@ -46,6 +46,18 @@ func (r *AuthRepository) GetTeamIDByRegistrationToken(ctx context.Context, token
 	return &teamID, nil
 }
 
+// GetAdminByEmail returns the password_hash for the admin with the given email, or ErrNoRows.
+func (r *AuthRepository) GetAdminByEmail(ctx context.Context, email string) (passwordHash string, err error) {
+	err = r.DB.QueryRowContext(ctx, `SELECT password_hash FROM admins WHERE email = ? LIMIT 1`, email).Scan(&passwordHash)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return "", nil
+		}
+		return "", fmt.Errorf("failed to get admin by email: %w", err)
+	}
+	return passwordHash, nil
+}
+
 // CreateEditSession inserts an edit session (2FA pending: pin_hash set, session_token returned after validation)
 func (r *AuthRepository) CreateEditSession(ctx context.Context, teamID int, sessionToken, pinHash, contactMethod string, expiresAt time.Time) error {
 	query := `INSERT INTO edit_sessions (team_id, session_token, pin_hash, contact_method, is_used, expires_at)

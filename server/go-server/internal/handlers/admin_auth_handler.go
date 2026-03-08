@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"os"
 	"time"
 
 	"tournament-dev/internal/database"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 const adminSessionTTL = 15 * time.Minute
@@ -47,14 +48,18 @@ func (h *AdminAuthHandler) AdminLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	adminEmail := os.Getenv("ADMIN_EMAIL")
-	adminPassword := os.Getenv("ADMIN_PASSWORD")
-	if adminEmail == "" || adminPassword == "" {
-		log.Printf("[auth/admin] login skipped: admin not configured")
-		h.ErrorResponse(w, http.StatusInternalServerError, "admin not configured")
+	passwordHash, err := h.repo.GetAdminByEmail(r.Context(), req.Email)
+	if err != nil {
+		log.Printf("[auth/admin] login failed: %v", err)
+		h.ErrorResponse(w, http.StatusInternalServerError, "login failed")
 		return
 	}
-	if req.Email != adminEmail || req.Password != adminPassword {
+	if passwordHash == "" {
+		log.Printf("[auth/admin] login failed: invalid credentials")
+		h.ErrorResponse(w, http.StatusUnauthorized, "invalid credentials")
+		return
+	}
+	if bcrypt.CompareHashAndPassword([]byte(passwordHash), []byte(req.Password)) != nil {
 		log.Printf("[auth/admin] login failed: invalid credentials")
 		h.ErrorResponse(w, http.StatusUnauthorized, "invalid credentials")
 		return
