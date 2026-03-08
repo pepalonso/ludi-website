@@ -3,7 +3,7 @@ package models
 import "time"
 
 type DocumentBase struct {
-	TeamID       int          `json:"team_id" db:"team_id" validate:"required,gt=0,foreign_key=teams.id"`
+	TeamID       *int         `json:"team_id,omitempty" db:"team_id" validate:"omitempty,gt=0"`
 	DocumentType DocumentType `json:"document_type" db:"document_type" validate:"required"`
 	FileName     string       `json:"file_name" db:"file_name" validate:"required,min=1,max=255"`
 	FilePath     string       `json:"file_path" db:"file_path" validate:"required,min=1,max=500"`
@@ -24,17 +24,14 @@ type DocumentCreateRequest struct {
 	FileSize *int `json:"file_size,omitempty"`
 }
 
+// DocumentUpdateRequest allows only assigning or changing team_id (nil = unassign).
 type DocumentUpdateRequest struct {
-	DocumentType DocumentType `json:"document_type,omitempty"`
-	FileName     string       `json:"file_name,omitempty"`
-	FilePath     string       `json:"file_path,omitempty"`
-	FileSize     *int         `json:"file_size,omitempty"`
-	MimeType     *string      `json:"mime_type,omitempty"`
+	TeamID *int `json:"team_id,omitempty"`
 }
 
 type DocumentResponse struct {
 	ID           int           `json:"id"`
-	TeamID       int           `json:"team_id"`
+	TeamID       *int          `json:"team_id,omitempty"`
 	DocumentType DocumentType  `json:"document_type"`
 	FileName     string        `json:"file_name"`
 	FilePath     string        `json:"file_path"`
@@ -60,6 +57,6 @@ type DocumentFilters struct {
 }
 
 type DocumentUploadRequest struct {
-	TeamID       int          `json:"team_id" validate:"required"`
+	TeamID       *int         `json:"team_id,omitempty"`
 	DocumentType DocumentType `json:"document_type" validate:"required"`
 }

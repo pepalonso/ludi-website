@@ -167,13 +167,14 @@ func (r *AllergyRepository) ListAllergies(ctx context.Context, filters models.Al
 	}, nil
 }
 
-// GetAllergiesByTeamID retrieves all allergies for a specific team
+// GetAllergiesByTeamID retrieves all allergies for a specific team (via players)
 func (r *AllergyRepository) GetAllergiesByTeamID(ctx context.Context, teamID int) ([]models.Allergy, error) {
 	query := `
-		SELECT id, player_id, description, created_at, updated_at
-		FROM allergies
-		WHERE team_id = ?
-		ORDER BY created_at DESC
+		SELECT a.id, a.player_id, a.description, a.created_at, a.updated_at
+		FROM allergies a
+		INNER JOIN players p ON a.player_id = p.id
+		WHERE p.team_id = ?
+		ORDER BY a.created_at DESC
 	`
 
 	rows, err := r.DB.QueryContext(ctx, query, teamID)

@@ -9,24 +9,31 @@ import (
 	"syscall"
 	"time"
 
+	"tournament-dev/internal/auth"
+	"tournament-dev/internal/config"
 	"tournament-dev/internal/database"
 	"tournament-dev/internal/database/mysql"
 	"tournament-dev/internal/handlers"
 )
 
 func main() {
-	config := database.LoadConfigFromEnv()
-	conn, err := database.NewConnection(config)
+	dbConfig := database.LoadConfigFromEnv()
+	conn, err := database.NewConnection(dbConfig)
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 	defer conn.Close()
 
 	db := conn.GetDB()
-
 	repo := mysql.NewRepository(db)
 
-	router := handlers.NewRouter(repo)
+	appConfig := config.LoadFromEnv()
+	if err := appConfig.EnsureUploadDir(); err != nil {
+		log.Fatalf("Failed to create upload directory: %v", err)
+	}
+
+	sender := auth.NewTwilioSMTPSender()
+	router := handlers.NewRouter(repo, appConfig.UploadDir, sender, appConfig.FrontendURL, sender)
 
 	mux := http.NewServeMux()
 	router.SetupRoutes(mux)

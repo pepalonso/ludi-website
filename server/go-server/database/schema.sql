@@ -75,14 +75,16 @@ CREATE TABLE allergies (
 -- Documents table
 CREATE TABLE documents (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    team_id INT NOT NULL,
+    team_id INT NULL,
+    document_type VARCHAR(50) NOT NULL DEFAULT 'other',
     file_name VARCHAR(255) NOT NULL,
     file_path VARCHAR(500) NOT NULL,
     file_size INT,
     mime_type VARCHAR(100),
     uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE,
+    FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE SET NULL,
     INDEX idx_team_id (team_id),
+    INDEX idx_document_type (document_type),
     INDEX idx_uploaded_at (uploaded_at)
 );
 
@@ -124,16 +126,20 @@ CREATE TABLE qr_tokens (
     INDEX idx_expires_at (expires_at)
 );
 
--- Edit sessions for team modifications
+-- Edit sessions for team modifications (2FA: pin_hash + contact_method; session_token after validation)
 CREATE TABLE edit_sessions (
     id INT PRIMARY KEY AUTO_INCREMENT,
     team_id INT NOT NULL,
     session_token VARCHAR(255) NOT NULL UNIQUE,
+    pin_hash VARCHAR(255) NOT NULL,
+    contact_method ENUM('email', 'whatsapp', 'admin') NOT NULL DEFAULT 'email',
+    is_used BOOLEAN NOT NULL DEFAULT FALSE,
     expires_at TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE,
     INDEX idx_session_token (session_token),
-    INDEX idx_expires_at (expires_at)
+    INDEX idx_expires_at (expires_at),
+    INDEX idx_team_id (team_id)
 );
 
 -- Changes log for audit trail

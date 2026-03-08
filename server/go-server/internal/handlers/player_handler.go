@@ -158,3 +158,121 @@ func (h *PlayerHandler) DeletePlayer(w http.ResponseWriter, r *http.Request) {
 
 	h.JSONResponse(w, http.StatusNoContent, nil)
 }
+
+// Me players: team_id from context, scope enforced
+
+func (h *PlayerHandler) ListMePlayers(w http.ResponseWriter, r *http.Request) {
+	teamID := TeamIDFromContext(r.Context())
+	if teamID == 0 {
+		h.ErrorResponse(w, http.StatusUnauthorized, "missing team context")
+		return
+	}
+	page := request.ExtractIntQueryParamWithDefault(r, "page", 1)
+	pageSize := request.ExtractIntQueryParamWithDefault(r, "page_size", 10)
+	filters := models.PlayerFilters{Page: page, PageSize: pageSize, TeamID: &teamID}
+	resp, err := h.repo.ListPlayers(r.Context(), filters)
+	if err != nil {
+		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to list players")
+		return
+	}
+	h.JSONResponse(w, http.StatusOK, resp)
+}
+
+func (h *PlayerHandler) CreateMePlayer(w http.ResponseWriter, r *http.Request) {
+	teamID := TeamIDFromContext(r.Context())
+	if teamID == 0 {
+		h.ErrorResponse(w, http.StatusUnauthorized, "missing team context")
+		return
+	}
+	var player models.PlayerCreateRequest
+	decoder := request.NewDecoder(w)
+	if err := decoder.Decode(r, &player); err != nil {
+		return
+	}
+	player.TeamID = teamID
+	validate := validator.New()
+	if err := validate.Struct(&player); err != nil {
+		h.ErrorResponse(w, http.StatusBadRequest, fmt.Sprintf("Validation failed: %v", err))
+		return
+	}
+	if err := h.repo.CreatePlayer(r.Context(), &player); err != nil {
+		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to create player")
+		return
+	}
+	h.JSONResponse(w, http.StatusCreated, player)
+}
+
+func (h *PlayerHandler) GetMePlayer(w http.ResponseWriter, r *http.Request) {
+	teamID := TeamIDFromContext(r.Context())
+	if teamID == 0 {
+		h.ErrorResponse(w, http.StatusUnauthorized, "missing team context")
+		return
+	}
+	id, err := request.ExtractIntParam(r, "id")
+	if err != nil {
+		h.ErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+	player, err := h.repo.GetPlayerByID(r.Context(), id)
+	if err != nil || player == nil || player.TeamID != teamID {
+		h.ErrorResponse(w, http.StatusNotFound, "Player not found")
+		return
+	}
+	h.JSONResponse(w, http.StatusOK, player)
+}
+
+func (h *PlayerHandler) UpdateMePlayer(w http.ResponseWriter, r *http.Request) {
+	teamID := TeamIDFromContext(r.Context())
+	if teamID == 0 {
+		h.ErrorResponse(w, http.StatusUnauthorized, "missing team context")
+		return
+	}
+	id, err := request.ExtractIntParam(r, "id")
+	if err != nil {
+		h.ErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+	player, err := h.repo.GetPlayerByID(r.Context(), id)
+	if err != nil || player == nil || player.TeamID != teamID {
+		h.ErrorResponse(w, http.StatusNotFound, "Player not found")
+		return
+	}
+	var req models.PlayerUpdateRequest
+	decoder := request.NewDecoder(w)
+	if err := decoder.Decode(r, &req); err != nil {
+		return
+	}
+	validate := validator.New()
+	if err := validate.Struct(&req); err != nil {
+		h.ErrorResponse(w, http.StatusBadRequest, fmt.Sprintf("Validation failed: %v", err))
+		return
+	}
+	if err := h.repo.UpdatePlayer(r.Context(), id, &req); err != nil {
+		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to update player")
+		return
+	}
+	h.JSONResponse(w, http.StatusOK, req)
+}
+
+func (h *PlayerHandler) DeleteMePlayer(w http.ResponseWriter, r *http.Request) {
+	teamID := TeamIDFromContext(r.Context())
+	if teamID == 0 {
+		h.ErrorResponse(w, http.StatusUnauthorized, "missing team context")
+		return
+	}
+	id, err := request.ExtractIntParam(r, "id")
+	if err != nil {
+		h.ErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+	player, err := h.repo.GetPlayerByID(r.Context(), id)
+	if err != nil || player == nil || player.TeamID != teamID {
+		h.ErrorResponse(w, http.StatusNotFound, "Player not found")
+		return
+	}
+	if err := h.repo.DeletePlayer(r.Context(), id); err != nil {
+		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to delete player")
+		return
+	}
+	h.JSONResponse(w, http.StatusNoContent, nil)
+}

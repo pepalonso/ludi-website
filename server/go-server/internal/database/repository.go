@@ -2,8 +2,15 @@ package database
 
 import (
 	"context"
+	"errors"
+	"time"
 
 	"tournament-dev/internal/models"
+)
+
+var (
+	ErrSessionNotFound = errors.New("session not found")
+	ErrInvalidToken    = errors.New("invalid or expired token")
 )
 
 // Repository defines the interface for all database operations
@@ -20,6 +27,27 @@ type Repository interface {
 	AllergyRepository
 	// Document operations
 	DocumentRepository
+	// Auth operations
+	AuthRepository
+}
+
+// AuthRepository defines auth/session database operations
+type AuthRepository interface {
+	CreateRegistrationToken(ctx context.Context, teamID int, token string, expiresAt time.Time) error
+	GetTeamIDByRegistrationToken(ctx context.Context, token string) (*int, error)
+	CreateWAToken(ctx context.Context, teamID int, phoneNumber, token string) error
+	CreateEditSession(ctx context.Context, teamID int, sessionToken, pinHash, contactMethod string, expiresAt time.Time) error
+	GetPendingSessionsByTeamID(ctx context.Context, teamID int) ([]EditSessionRow, error)
+	MarkSessionUsedByToken(ctx context.Context, sessionToken string) error
+	GetTeamIDBySessionToken(ctx context.Context, sessionToken string) (*int, error)
+	ResolveBearerToken(ctx context.Context, token string) (teamID int, err error)
+}
+
+// EditSessionRow is a pending edit session (for PIN verification)
+type EditSessionRow struct {
+	SessionToken string
+	PinHash      string
+	ExpiresAt    time.Time
 }
 
 // ClubRepository defines club-related database operations
@@ -76,8 +104,9 @@ type AllergyRepository interface {
 
 // DocumentRepository defines document-related database operations
 type DocumentRepository interface {
-	CreateDocument(ctx context.Context, document *models.DocumentCreateRequest) error
+	CreateDocument(ctx context.Context, document *models.DocumentCreateRequest) (int64, error)
 	GetDocumentByID(ctx context.Context, id int) (*models.Document, error)
+	UpdateDocument(ctx context.Context, id int, req *models.DocumentUpdateRequest) error
 	DeleteDocument(ctx context.Context, id int) error
 	ListDocuments(ctx context.Context, filters models.DocumentFilters) (*models.DocumentListResponse, error)
 	GetDocumentsByTeamID(ctx context.Context, teamID int) ([]models.Document, error)
