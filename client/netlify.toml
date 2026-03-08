@@ -1,5 +1,7 @@
 [build.environment]
 NODE_VERSION = "22"
+# Allow install when lockfile is out of sync (e.g. PR branches); remove once all branches have updated lockfile
+PNPM_FLAGS = "--no-frozen-lockfile"
 
 [build]
   command = "node inject-env.js && ng build --configuration=production"
