@@ -16,28 +16,18 @@ func main() {
 		startDev()
 	case "start-db":
 		startDBOnly()
-	case "start-prod":
-		startProd()
 	case "stop":
 		stopDev()
-	case "stop-prod":
-		stopProd()
 	case "restart":
 		restartDev()
-	case "restart-prod":
-		restartProd()
 	case "logs":
 		viewLogs()
-	case "logs-prod":
-		viewLogsProd()
 	case "reset":
 		resetDB()
 	case "connect":
 		connectDB()
 	case "status":
 		showStatus()
-	case "status-prod":
-		showStatusProd()
 	case "help", "--help", "-h":
 		showHelp()
 	default:

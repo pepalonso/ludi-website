@@ -24,7 +24,7 @@ export interface Team {
   jugadors: Jugador[];
   entrenadors: Entrenador[];
   observacions?: string;
-  fitxes?: string[];
+  fitxes?: number[];
   logoUrl?: string;
   primaryColor?: string;
   secondaryColor?: string;

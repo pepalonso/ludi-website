@@ -7,9 +7,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { firebaseApp } from '../app.config';
 import { AuthService } from '../serveis/auth.service';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +20,8 @@ import { AuthService } from '../serveis/auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: string = '';
-  auth = getAuth(firebaseApp);
+
+  private apiBase = environment.apiBaseUrl;
 
   constructor(
     private fb: FormBuilder,
@@ -35,24 +35,32 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Check if user is already logged in using the service
-    this.authService.user$.subscribe((user) => {
-      if (user) {
-        this.router.navigate(['/administrador']);
-      }
-    });
+    if (this.authService.isAdminAuthenticated()) {
+      this.router.navigate(['/administrador']);
+    }
   }
 
   async onSubmit() {
     if (this.loginForm.invalid) return;
 
+    this.errorMessage = '';
     const { email, password } = this.loginForm.value;
 
     try {
-      await signInWithEmailAndPassword(this.auth, email, password);
+      const res = await fetch(`${this.apiBase}/auth/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        this.errorMessage = data?.error ?? 'Identificació incorrecta';
+        return;
+      }
+      this.authService.setAdminToken(data.admin_token, data.expires_at);
       this.router.navigate(['/administrador']);
-    } catch (error: any) {
-      this.errorMessage = error.message || 'Identificació incorrecta';
+    } catch {
+      this.errorMessage = 'Error de connexió';
     }
   }
 }

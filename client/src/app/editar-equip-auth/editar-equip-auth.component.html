@@ -21,20 +21,14 @@
       <span>Admin</span>
     </button>
 
-    <!-- Edició tancada 29/05/2025 -->
     <div *ngIf="!showPinInput && !showAdminLogin" class="method-selection">
       <h2>Autenticació en dos passos</h2>
-      <p>
-        La inscripció està tancada. Si necessites contactar amb nosaltres,
-        escriu al +34659173158
-      </p>
 
       <div class="method-buttons">
         <button
           [class.selected]="selectedMethod === 'email'"
           (click)="selectMethod('email')"
           class="method-button"
-          disabled
         >
           <svg
             width="25"
@@ -75,12 +69,10 @@
           <span class="method-label">Email</span>
         </button>
 
-        <!-- Edició tancada 29/05/2025 -->
         <button
           [class.selected]="selectedMethod === 'whatsapp'"
           (click)="selectMethod('whatsapp')"
           class="method-button"
-          disabled
         >
           <svg
             width="25"

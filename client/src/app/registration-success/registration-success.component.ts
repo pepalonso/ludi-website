@@ -4,24 +4,12 @@ import { Router } from '@angular/router';
 import { FooterComponent } from '../utils/footer/footer.component';
 import { Categories, Sexe, Team } from '../interfaces/ludi.interface';
 import { RegistrationStateService } from '../serveis/registration-data.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment.prod';
 
 export interface RegistrationProps {
   message: string;
   teamId: string;
   registrationUrl: string;
   registrationPath: string;
-  waToken: string;
-}
-
-interface NotificationPayload {
-  wa_number: string;
-  path: string;
-  team_name: string;
-  club_name: string;
-  num_players: string;
-  num_coaches: string;
 }
 
 @Component({
@@ -37,7 +25,6 @@ export class RegistrationSuccessComponent {
     teamId: '123456',
     registrationUrl: '',
     registrationPath: '/equip',
-    waToken: '',
   };
   public numPlayers?: number;
   public numEntrenadors?: number;
@@ -48,7 +35,6 @@ export class RegistrationSuccessComponent {
   public club?: string;
   public telefon?: string;
 
-  private _waToken: string = '';
   public showToast: boolean = false;
   public toastMessage: string = '';
   public toastType: 'success' | 'error' = 'success';
@@ -64,8 +50,7 @@ export class RegistrationSuccessComponent {
 
   public constructor(
     private router: Router,
-    private registrationStateService: RegistrationStateService,
-    private http: HttpClient
+    private registrationStateService: RegistrationStateService
   ) {}
 
   ngOnInit(): void {
@@ -77,14 +62,12 @@ export class RegistrationSuccessComponent {
 
     if (state) {
       console.log('Registration state:', state);
-      this._waToken = state['wa_token'] || '';
 
       this.registration = {
         message: 'Inscripció realitzada correctament',
         teamId: state['team_id'] || '123456',
         registrationUrl: state['registration_url'] || '',
         registrationPath: state['registration_path'] || '/equip',
-        waToken: this._waToken,
       };
 
       if (state['team']) {
@@ -107,7 +90,6 @@ export class RegistrationSuccessComponent {
       }
 
       this.updatePaymentConcept();
-      this.sendNotification();
     } else {
       console.error('No registration state available');
       alert(
@@ -134,45 +116,6 @@ export class RegistrationSuccessComponent {
         ? ' - ID: ' + this.numPlayers + this.registration.teamId
         : ''
     }`;
-  }
-
-  private sendNotification() {
-    if (!this.telefon || !this.registration.registrationPath) {
-      console.error('Missing required data for notification');
-      this.showToastMessage("No s'ha pogut enviar la notificació", 'error');
-      return;
-    }
-
-    const formattedPhone =
-      '34' + this.telefon.replace(/\s+/g, '').replace(/^\+/, '');
-
-    const payload: NotificationPayload = {
-      wa_number: formattedPhone,
-      path: this.registration.registrationPath,
-      team_name: this.teamName || `${this.categoria} ${this.sexe}`,
-      club_name: this.club || 'No especificat',
-      num_players: this.numPlayers?.toString() || '0',
-      num_coaches: this.numEntrenadors?.toString() || '0',
-    };
-
-    console.log('Sending notification with payload:', payload);
-
-    const url = `https://${environment.apiUrl}/enviar-notificacio`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this._waToken}`,
-    });
-
-    this.http.post(url, payload, { headers }).subscribe({
-      next: (response) => {
-        console.log('Notification sent successfully:', response);
-        this.showToastMessage('Notificació enviada correctament', 'success');
-      },
-      error: (error) => {
-        console.error('Error sending notification:', error);
-        this.showToastMessage("No s'ha pogut enviar la notificació", 'error');
-      },
-    });
   }
 
   public showToastMessage(message: string, type: 'success' | 'error') {

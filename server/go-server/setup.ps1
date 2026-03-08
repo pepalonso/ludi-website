@@ -47,6 +47,6 @@ Write-Host "🚀 Setup Complete!" -ForegroundColor Green
 Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Cyan
 Write-Host "1. For development: go run cmd/dev/main.go start" -ForegroundColor White
-Write-Host "2. For production:  go run cmd/dev/main.go start-prod" -ForegroundColor White
+Write-Host "2. For production:  use scripts/deploy_test.sh or scripts/deploy_prod.sh (see docs/REGISTRY_AND_DEPLOY.md)" -ForegroundColor White
 Write-Host ""
 Write-Host "Remember to edit .env.prod.local with secure passwords before using production!" -ForegroundColor Yellow 

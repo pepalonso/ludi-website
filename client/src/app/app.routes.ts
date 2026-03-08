@@ -28,10 +28,9 @@ export const routes: Routes = [
   { path: 'countdown', component: LudiCountdown },
   { path: 'ludi3x3', component: Ludi3x3Component },
   { path: 'info-inscripcions', component: InformacioInscripcioComponent },
-  // Inscripcions tancades 29/05/2025
-  { path: 'inscripcions', component: InscripcionsTancadesComponent },
-  // Inscripcions tancades 29/05/2025
-  { path: 'stepper', component: SteperComponent },
+  { path: 'inscripcions', component: TeamFormComponent },
+  { path: 'inscripcions-tancades', component: InscripcionsTancadesComponent },
+  { path: 'stepper', component: TeamFormComponent },
   { path: 'contactawha', component: RedirectorComponent },
   { path: 'inscripcio-completa', component: RegistrationSuccessComponent },
   { path: '404', component: NotFoundComponent },
@@ -47,3 +46,4 @@ export const routes: Routes = [
   { path: 'menjars', component: QrCodeInfoComponent },
   { path: '**', redirectTo: '/pagina-principal', pathMatch: 'full' },
 ]
+

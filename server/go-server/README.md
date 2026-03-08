@@ -27,8 +27,8 @@ server/go-server/
 │       └── help.go        # Help command
 ├── database/
 │   └── schema.sql          # Database schema
-├── docker-compose.yml      # Development environment
-├── docker-compose.prod.yml # Production environment
+├── docker-compose.yml                 # Development environment
+├── docker-compose.prod.registry.yml   # Production (registry image, no build on server)
 ├── .env.dev                # Development environment variables
 ├── .env.prod               # Production environment variables template
 ├── dev.ps1                 # PowerShell helper script
@@ -115,23 +115,14 @@ go run cmd/dev/main.go status
 go run cmd/dev/main.go help
 ```
 
-## 🚀 Production Commands
+## 🚀 Production (build → deploy)
+
+Two steps: build and push the image, then deploy to an environment. See **docs/REGISTRY_AND_DEPLOY.md**.
 
 ```bash
-# Start production environment
-go run cmd/dev/main.go start-prod
-
-# Stop production environment
-go run cmd/dev/main.go stop-prod
-
-# Restart production environment
-go run cmd/dev/main.go restart-prod
-
-# View production logs
-go run cmd/dev/main.go logs-prod
-
-# Show production status
-go run cmd/dev/main.go status-prod
+./scripts/build-push.sh     # Build multi-arch and push to registry (tag from VERSION)
+./scripts/deploy_test.sh   # Deploy to test (pull + restart on server)
+./scripts/deploy_prod.sh   # Deploy to prod
 ```
 
 ## 🗄️ Database Schema
@@ -188,16 +179,10 @@ nano .env.prod.local
 
 #### 2. Deploy Production
 
-```bash
-# Using the deployment script (recommended)
-./deploy.sh
+From your machine (build + push + SSH): **./scripts/deploy_test.sh** or **./scripts/deploy_prod.sh** (see docs/REGISTRY_AND_DEPLOY.md).
 
-# Or using the Go CLI tool
-go run cmd/dev/main.go start-prod
-
-# Or manually
-docker-compose -f docker-compose.prod.yml --env-file .env.prod.local up -d
-```
+On the server (if compose is already set up):  
+`docker-compose -f docker-compose.prod.registry.yml --env-file .env.prod.local up -d` (set APP_IMAGE in env first).
 
 ### Windows Deployment
 
@@ -213,13 +198,7 @@ notepad .env.prod.local
 
 #### 2. Deploy Production
 
-```bash
-# Using the Go CLI tool
-go run cmd/dev/main.go start-prod
-
-# Or manually
-docker-compose -f docker-compose.prod.yml --env-file .env.prod.local up -d
-```
+Use the deploy scripts from WSL or a Unix-like env (see docs/REGISTRY_AND_DEPLOY.md), or on the server run docker-compose as above.
 
 ### 3. Production Features
 
