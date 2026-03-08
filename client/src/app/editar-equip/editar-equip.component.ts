@@ -4,8 +4,10 @@ import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Entrenador, Jugador, TallaSamarreta, Team } from '../interfaces/ludi.interface'
 import { mapTeamResponse } from '../detalls-equip/data-mapper'
-import { environment } from '../../environments/environment.prod'
+import { environment } from '../../environments/environment'
 import { interval, Subscription } from 'rxjs'
+import { firstValueFrom } from 'rxjs'
+import { ClubService } from '../utils/club-dropdown/club.service'
 import { takeWhile } from 'rxjs/operators'
 
 type EditOption =
@@ -72,7 +74,8 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private clubService: ClubService
   ) {}
 
   ngOnInit() {
@@ -164,6 +167,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
     }
 
     try {
+      const clubs = await firstValueFrom(this.clubService.loadClubs())
       const response = await fetch(`${base}/api/me/team`, { method: 'GET', headers })
       if (!response.ok) {
         console.error('Error fetching team details:', response.statusText)
@@ -173,7 +177,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
         return
       }
       const responseData = await response.json()
-      this.team = await mapTeamResponse(responseData)
+      this.team = await mapTeamResponse(responseData, clubs)
       this.observationsText = this.team.observacions || ''
       await this.fetchMeAllergies(token)
       this.isLoading = false

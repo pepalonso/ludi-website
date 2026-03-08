@@ -7,7 +7,9 @@ import { CommonModule } from '@angular/common'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { TeamMobileComponent } from './mobile/detalls-equip-monile.component'
 import { TeamDesktopComponent } from './desktop/detalls-equip-desktop.component'
-import { environment } from '../../environments/environment.prod'
+import { firstValueFrom } from 'rxjs'
+import { environment } from '../../environments/environment'
+import { ClubService } from '../utils/club-dropdown/club.service'
 
 @Component({
   selector: 'app-detalls-equip',
@@ -28,7 +30,8 @@ export class DetallsEquipComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private clubService: ClubService
   ) {}
 
   ngOnInit() {
@@ -52,10 +55,8 @@ export class DetallsEquipComponent implements OnInit {
     }
 
     try {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers,
-      })
+      const clubs = await firstValueFrom(this.clubService.loadClubs())
+      const response = await fetch(url, { method: 'GET', headers })
 
       if (!response.ok) {
         console.error('Error fetching team details:', response.statusText)
@@ -64,7 +65,7 @@ export class DetallsEquipComponent implements OnInit {
       }
 
       const responseData = await response.json()
-      this.team = await mapTeamResponse(responseData)
+      this.team = await mapTeamResponse(responseData, clubs)
     } catch (error) {
       this.error = true
       console.error('Error fetching team details:', error)

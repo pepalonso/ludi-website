@@ -24,11 +24,11 @@ func NewClubRepository(db *sql.DB) *ClubRepository {
 // CreateClub creates a new club
 func (r *ClubRepository) CreateClub(ctx context.Context, club *models.ClubCreateRequest) error {
 	query := `
-		INSERT INTO clubs (name, created_at, updated_at)
-		VALUES (?, NOW(), NOW())
+		INSERT INTO clubs (name, logo_url, created_at, updated_at)
+		VALUES (?, ?, NOW(), NOW())
 	`
 
-	_, err := r.DB.ExecContext(ctx, query, club.Name)
+	_, err := r.DB.ExecContext(ctx, query, club.Name, club.LogoURL)
 	if err != nil {
 		return fmt.Errorf("failed to create club: %w", err)
 	}
@@ -39,7 +39,7 @@ func (r *ClubRepository) CreateClub(ctx context.Context, club *models.ClubCreate
 // GetClubByID retrieves a club by ID
 func (r *ClubRepository) GetClubByID(ctx context.Context, id int) (*models.Club, error) {
 	query := `
-		SELECT id, name, created_at, updated_at
+		SELECT id, name, logo_url, created_at, updated_at
 		FROM clubs
 		WHERE id = ?
 	`
@@ -48,6 +48,7 @@ func (r *ClubRepository) GetClubByID(ctx context.Context, id int) (*models.Club,
 	err := r.DB.QueryRowContext(ctx, query, id).Scan(
 		&club.ID,
 		&club.Name,
+		&club.LogoURL,
 		&club.CreatedAt,
 		&club.UpdatedAt,
 	)
@@ -65,7 +66,7 @@ func (r *ClubRepository) GetClubByID(ctx context.Context, id int) (*models.Club,
 // GetClubByName retrieves a club by name
 func (r *ClubRepository) GetClubByName(ctx context.Context, name string) (*models.Club, error) {
 	query := `
-		SELECT id, name, created_at, updated_at
+		SELECT id, name, logo_url, created_at, updated_at
 		FROM clubs
 		WHERE name = ?
 	`
@@ -74,6 +75,7 @@ func (r *ClubRepository) GetClubByName(ctx context.Context, name string) (*model
 	err := r.DB.QueryRowContext(ctx, query, name).Scan(
 		&club.ID,
 		&club.Name,
+		&club.LogoURL,
 		&club.CreatedAt,
 		&club.UpdatedAt,
 	)
@@ -92,11 +94,11 @@ func (r *ClubRepository) GetClubByName(ctx context.Context, name string) (*model
 func (r *ClubRepository) UpdateClub(ctx context.Context, id int, club *models.ClubUpdateRequest) error {
 	query := `
 		UPDATE clubs
-		SET name = ?, updated_at = NOW()
+		SET name = ?, logo_url = ?, updated_at = NOW()
 		WHERE id = ?
 	`
 
-	result, err := r.DB.ExecContext(ctx, query, club.Name, id)
+	result, err := r.DB.ExecContext(ctx, query, club.Name, club.LogoURL, id)
 	if err != nil {
 		return fmt.Errorf("failed to update club: %w", err)
 	}
@@ -136,8 +138,7 @@ func (r *ClubRepository) DeleteClub(ctx context.Context, id int) error {
 
 // ListClubs retrieves all clubs
 func (r *ClubRepository) ListClubs(ctx context.Context) (*models.ClubListResponse, error) {
-	// Simple query to get all clubs
-	query := `SELECT id, name, created_at, updated_at FROM clubs ORDER BY name`
+	query := `SELECT id, name, logo_url, created_at, updated_at FROM clubs ORDER BY name`
 
 	rows, err := r.DB.QueryContext(ctx, query)
 	if err != nil {
@@ -148,7 +149,7 @@ func (r *ClubRepository) ListClubs(ctx context.Context) (*models.ClubListRespons
 	var clubs []models.ClubResponse
 	for rows.Next() {
 		var club models.Club
-		err := rows.Scan(&club.ID, &club.Name, &club.CreatedAt, &club.UpdatedAt)
+		err := rows.Scan(&club.ID, &club.Name, &club.LogoURL, &club.CreatedAt, &club.UpdatedAt)
 		if err != nil {
 			return nil, fmt.Errorf("failed to scan club: %w", err)
 		}
@@ -156,6 +157,7 @@ func (r *ClubRepository) ListClubs(ctx context.Context) (*models.ClubListRespons
 		clubs = append(clubs, models.ClubResponse{
 			ID:        club.ID,
 			Name:      club.Name,
+			LogoURL:   club.LogoURL,
 			CreatedAt: club.CreatedAt,
 			UpdatedAt: club.UpdatedAt,
 		})

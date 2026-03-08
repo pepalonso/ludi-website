@@ -1,12 +1,16 @@
 import { Vibrant } from 'node-vibrant/browser'
-import { CLUBS_DATA } from '../data/club-data'
 import { Team, Jugador, Entrenador, TallaSamarreta, Sexe } from '../interfaces/ludi.interface'
+
+export type ClubListItem = { club_name: string; logo_url: string }
 
 /**
  * Maps raw API response to properly typed Team object and extracts the primary color from the logo.
- * Note: The function is now async.
+ * Pass clubs from ClubService.loadClubs() so logo URL can be resolved.
  */
-export async function mapTeamResponse(response: any): Promise<Team> {
+export async function mapTeamResponse(
+  response: any,
+  clubs: ClubListItem[] = []
+): Promise<Team> {
   const rawIntolerancies: string[] = response.intolerancies || []
   const intolerancies = groupIntolerancies(rawIntolerancies)
   const team: Team = {
@@ -20,7 +24,7 @@ export async function mapTeamResponse(response: any): Promise<Team> {
     intolerancies: intolerancies,
     jugadors: response.jugadors.map(mapJugador),
     entrenadors: response.entrenadors.map(mapEntrenador),
-    logoUrl: getUrlImage(response.club),
+    logoUrl: getUrlImage(response.club, clubs),
     primaryColor: undefined,
     secondaryColor: undefined,
     darkColor: undefined,
@@ -60,8 +64,8 @@ function groupIntolerancies(intolerancies: string[]): { name: string; count: num
   return Object.keys(counts).map(name => ({ name, count: counts[name] }))
 }
 
-export function getUrlImage(clubName: string): string {
-  const originalUrl = CLUBS_DATA.find(club => club.club_name === clubName)?.logo_url || ''
+export function getUrlImage(clubName: string, clubs: ClubListItem[] = []): string {
+  const originalUrl = clubs.find((c: ClubListItem) => c.club_name === clubName)?.logo_url || ''
 
   if (
     originalUrl.startsWith('https://d3ah0nqesr6vwc.cloudfront.net') ||

@@ -39,6 +39,7 @@ func NewRouter(repo database.Repository, uploadDir string, pinSender auth.PINSen
 
 func (r *Router) SetupRoutes(mux *http.ServeMux) {
 	// Public routes (no auth)
+	mux.HandleFunc("GET /api/clubs/list", r.clubHandler.ListClubsPublic)
 	mux.HandleFunc("POST /api/registrar-incripcio", r.registrationHandler.RegisterInscription)
 	mux.HandleFunc("POST /registrar-incripcio", r.registrationHandler.RegisterInscription)
 	mux.HandleFunc("POST /auth/generate", r.authHandler.Generate)

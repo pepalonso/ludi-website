@@ -1,12 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { ClubService } from './club.service';
-
-interface Club {
-  club_name: string;
-  logo_url: string;
-}
+import { ClubService, Club } from './club.service';
 
 @Component({
   selector: 'app-input-dropdown',
@@ -36,8 +31,10 @@ export class ClubDropdownComponent implements OnInit, ControlValueAccessor {
   }
 
   loadClubs(): void {
-    this.clubs = this.clubService.getClubs();
-    this.filteredClubs = [...this.clubs];
+    this.clubService.loadClubs().subscribe((clubs) => {
+      this.clubs = clubs;
+      this.filteredClubs = [...this.clubs];
+    });
   }
 
   toggleDropdown(show: boolean): void {
