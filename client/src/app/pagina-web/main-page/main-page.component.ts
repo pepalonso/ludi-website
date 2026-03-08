@@ -13,14 +13,14 @@ import { FooterComponent } from "../../utils/footer/footer.component";
 })
 export class MainPageComponent implements OnInit, OnDestroy {
 
-  public targetDate: Date = new Date('2025-06-07T00:00:00');
+  public targetDate: Date = new Date('2026-06-13T00:00:00');
   private intervalId: any;
 
   public days: number = 0;
   public hours: number = 0;
   public minutes: number = 0;
   public seconds: number = 0;
-  
+
   carouselImages: string[] = [
     "assets/images/carrusel-3.JPG",
     "assets/images/carrusel-5.JPG",
@@ -37,8 +37,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
   ]
 
   constructor() {}
-
-  
 
   ngOnInit(): void {
     this.startCountdown();
