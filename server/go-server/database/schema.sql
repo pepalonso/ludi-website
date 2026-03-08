@@ -17,7 +17,7 @@ CREATE TABLE clubs (
 CREATE TABLE teams (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
     category ENUM('Pre-mini', 'Mini', 'Pre-infantil', 'Infantil', 'Cadet', 'Júnior') NOT NULL,
     phone VARCHAR(255) NOT NULL,
     gender ENUM('Masculí', 'Femení') NOT NULL,
@@ -140,6 +140,16 @@ CREATE TABLE edit_sessions (
     INDEX idx_session_token (session_token),
     INDEX idx_expires_at (expires_at),
     INDEX idx_team_id (team_id)
+);
+
+-- Admin sessions
+CREATE TABLE admin_sessions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    token VARCHAR(255) NOT NULL UNIQUE,
+    expires_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_token (token),
+    INDEX idx_expires_at (expires_at)
 );
 
 -- Changes log for audit trail

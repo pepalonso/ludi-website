@@ -43,12 +43,13 @@ func (h *TeamHandler) CreateTeam(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
-	if err := h.repo.CreateTeam(ctx, &team); err != nil {
+	teamID, err := h.repo.CreateTeam(ctx, &team)
+	if err != nil {
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to create team: %v", err))
 		return
 	}
 
-	created, err := h.repo.GetTeamByEmail(ctx, team.Email)
+	created, err := h.repo.GetTeamByID(ctx, teamID)
 	if err != nil {
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to load created team")
 		return
@@ -210,6 +211,10 @@ func (h *TeamHandler) GetMeTeam(w http.ResponseWriter, r *http.Request) {
 	if team.Club != nil {
 		clubName = team.Club.Name
 	}
+	observacions := ""
+	if team.Observations != nil {
+		observacions = *team.Observations
+	}
 	resp := models.MeTeamResponse{
 		NomEquip:       team.Name,
 		Email:          team.Email,
@@ -217,6 +222,7 @@ func (h *TeamHandler) GetMeTeam(w http.ResponseWriter, r *http.Request) {
 		Sexe:           string(team.Gender),
 		Categoria:      string(team.Category),
 		Club:           clubName,
+		Observacions:   observacions,
 		DataInscripcio: team.RegistrationDate.Format("2006-01-02T15:04:05Z07:00"),
 		Intolerancies:  intolerancies,
 		Jugadors:       make([]models.MeTeamJugador, 0, len(team.Players)),
@@ -242,25 +248,20 @@ func (h *TeamHandler) GetMeTeam(w http.ResponseWriter, r *http.Request) {
 	h.JSONResponse(w, http.StatusOK, resp)
 }
 
-// UpdateMeTeam handles PUT /api/me/team (requires auth; team_id from context)
+// UpdateMeTeam handles PUT /api/me/team (requires auth; team_id from context). Only observations are accepted.
 func (h *TeamHandler) UpdateMeTeam(w http.ResponseWriter, r *http.Request) {
 	teamID := TeamIDFromContext(r.Context())
 	if teamID == 0 {
 		h.ErrorResponse(w, http.StatusUnauthorized, "missing team context")
 		return
 	}
-	var team models.TeamUpdateRequest
+	var req models.MeTeamUpdateRequest
 	decoder := request.NewDecoder(w)
-	if err := decoder.Decode(r, &team); err != nil {
-		return
-	}
-	validate := validator.New()
-	if err := validate.Struct(&team); err != nil {
-		h.ErrorResponse(w, http.StatusBadRequest, fmt.Sprintf("Validation failed: %v", err))
+	if err := decoder.Decode(r, &req); err != nil {
 		return
 	}
 	ctx := r.Context()
-	if err := h.repo.UpdateTeam(ctx, teamID, &team); err != nil {
+	if err := h.repo.UpdateTeamObservations(ctx, teamID, req.Observations); err != nil {
 		if err != nil && strings.Contains(err.Error(), "not found") {
 			h.ErrorResponse(w, http.StatusNotFound, "Team not found")
 			return

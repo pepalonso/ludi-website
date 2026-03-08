@@ -22,14 +22,14 @@ func NewTeamRepository(db *sql.DB) *TeamRepository {
 	}
 }
 
-// CreateTeam creates a new team
-func (r *TeamRepository) CreateTeam(ctx context.Context, team *models.TeamCreateRequest) error {
+// CreateTeam creates a new team and returns the new team ID.
+func (r *TeamRepository) CreateTeam(ctx context.Context, team *models.TeamCreateRequest) (int, error) {
 	query := `
 		INSERT INTO teams (name, email, category, phone, gender, club_id, observations, registration_date, updated_at, status)
 		VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?)
 	`
 
-	_, err := r.DB.ExecContext(ctx, query,
+	res, err := r.DB.ExecContext(ctx, query,
 		team.Name,
 		team.Email,
 		team.Category,
@@ -40,10 +40,13 @@ func (r *TeamRepository) CreateTeam(ctx context.Context, team *models.TeamCreate
 		team.Status,
 	)
 	if err != nil {
-		return fmt.Errorf("failed to create team: %w", err)
+		return 0, fmt.Errorf("failed to create team: %w", err)
 	}
-
-	return nil
+	id, err := res.LastInsertId()
+	if err != nil {
+		return 0, fmt.Errorf("failed to get team id: %w", err)
+	}
+	return int(id), nil
 }
 
 // GetTeamByID retrieves a team by ID
@@ -144,6 +147,23 @@ func (r *TeamRepository) UpdateTeam(ctx context.Context, id int, team *models.Te
 		return fmt.Errorf("team not found with ID: %d", id)
 	}
 
+	return nil
+}
+
+// UpdateTeamObservations updates only the observations column (for PUT /api/me/team).
+func (r *TeamRepository) UpdateTeamObservations(ctx context.Context, id int, observations *string) error {
+	query := `UPDATE teams SET observations = ?, updated_at = NOW() WHERE id = ?`
+	result, err := r.DB.ExecContext(ctx, query, observations, id)
+	if err != nil {
+		return fmt.Errorf("failed to update team observations: %w", err)
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("failed to get rows affected: %w", err)
+	}
+	if rowsAffected == 0 {
+		return fmt.Errorf("team not found with ID: %d", id)
+	}
 	return nil
 }
 
