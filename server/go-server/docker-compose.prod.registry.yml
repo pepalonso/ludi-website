@@ -5,6 +5,7 @@
 services:
   app:
     image: ${APP_IMAGE}
+    user: "0:0"
     # Bind to 0.0.0.0 so Cloudflare tunnel (e.g. host.docker.internal:8081) can reach the app
     ports:
       - "0.0.0.0:${GO_SERVER_PORT:-8081}:8080"
@@ -16,6 +17,7 @@ services:
       - UPLOAD_DIR=/app/uploads
     volumes:
       - uploads_data:/app/uploads
+    command: ["sh", "-c", "chown -R 1001:1001 /app/uploads && exec su appuser -s /bin/sh -c 'exec /app/main'"]
     depends_on:
       db:
         condition: service_healthy

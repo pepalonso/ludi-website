@@ -85,7 +85,7 @@ func (h *AuthHandler) Generate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	expiresAt := time.Now().Add(sessionExpiry)
+	expiresAt := time.Now().UTC().Add(sessionExpiry)
 	if err := h.repo.CreateEditSession(r.Context(), *teamID, sessionToken, string(pinHash), req.Method, expiresAt); err != nil {
 		h.ErrorResponse(w, http.StatusInternalServerError, "failed to create session")
 		return

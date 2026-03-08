@@ -4,6 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
+	"strings"
 	"time"
 
 	"tournament-dev/internal/database/base"
@@ -32,9 +34,14 @@ func (r *AuthRepository) CreateRegistrationToken(ctx context.Context, teamID int
 	return nil
 }
 
-// GetTeamIDByRegistrationToken returns team_id if token is valid and not expired
+// GetTeamIDByRegistrationToken returns team_id if token is valid and not expired.
+// Uses UTC for expiry comparison to avoid timezone mismatches.
 func (r *AuthRepository) GetTeamIDByRegistrationToken(ctx context.Context, token string) (*int, error) {
-	query := `SELECT team_id FROM registration_tokens WHERE token = ? AND expires_at > NOW() LIMIT 1`
+	token = strings.TrimSpace(token)
+	if token == "" {
+		return nil, nil
+	}
+	query := `SELECT team_id FROM registration_tokens WHERE token = ? AND expires_at > UTC_TIMESTAMP() LIMIT 1`
 	var teamID int
 	err := r.DB.QueryRowContext(ctx, query, token).Scan(&teamID)
 	if err != nil {
@@ -103,11 +110,16 @@ func (r *AuthRepository) MarkSessionUsedByToken(ctx context.Context, sessionToke
 	return nil
 }
 
-// GetTeamIDBySessionToken returns team_id if session token is valid and not expired
+// GetTeamIDBySessionToken returns team_id if session token is valid and not expired.
+// Uses UTC for expiry comparison to avoid timezone mismatches between app and DB.
 func (r *AuthRepository) GetTeamIDBySessionToken(ctx context.Context, sessionToken string) (*int, error) {
-	query := `SELECT team_id FROM edit_sessions WHERE session_token = ? AND expires_at > NOW() LIMIT 1`
+	token := strings.TrimSpace(sessionToken)
+	if token == "" {
+		return nil, nil
+	}
+	query := `SELECT team_id FROM edit_sessions WHERE session_token = ? AND expires_at > UTC_TIMESTAMP() LIMIT 1`
 	var teamID int
-	err := r.DB.QueryRowContext(ctx, query, sessionToken).Scan(&teamID)
+	err := r.DB.QueryRowContext(ctx, query, token).Scan(&teamID)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, nil
@@ -119,12 +131,21 @@ func (r *AuthRepository) GetTeamIDBySessionToken(ctx context.Context, sessionTok
 
 // ResolveBearerToken returns teamID for either a valid session token or registration token
 func (r *AuthRepository) ResolveBearerToken(ctx context.Context, token string) (teamID int, err error) {
+	token = strings.TrimSpace(token)
+	if token == "" {
+		return 0, database.ErrInvalidToken
+	}
 	if id := r.getTeamIDBySessionToken(ctx, token); id != nil {
 		return *id, nil
 	}
 	if id := r.getTeamIDByRegistrationToken(ctx, token); id != nil {
 		return *id, nil
 	}
+	prefix := token
+	if len(prefix) > 8 {
+		prefix = prefix[:8]
+	}
+	log.Printf("[auth] Bearer token resolution failed (prefix=%s)", prefix)
 	return 0, database.ErrInvalidToken
 }
 

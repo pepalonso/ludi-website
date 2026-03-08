@@ -206,10 +206,18 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Helper method to get the appropriate token for requests
+  // Helper method to get the appropriate token for requests.
+  // Always read from sessionStorage so we use the latest token (avoids stale in-memory token
+  // when another tab validated or when init ran before sessionStorage was set after redirect).
   private getAuthToken(): string {
-    // Use session token for data-modifying operations if available
-    return this.sessionToken || this.teamToken || ''
+    const stored = sessionStorage.getItem('session_token')
+    if (stored) {
+      this.sessionToken = stored
+      const expiryStr = sessionStorage.getItem('token_expiry')
+      if (expiryStr) this.tokenExpiryTime = parseInt(expiryStr, 10)
+      return stored
+    }
+    return this.teamToken || ''
   }
 
   onOptionChange() {
