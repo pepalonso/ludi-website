@@ -7,6 +7,7 @@ import { CdkStepper } from '@angular/cdk/stepper'
 import { Router } from '@angular/router'
 import { getUrlImage } from '../detalls-equip/data-mapper'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
+import { ClubService } from '../utils/club-dropdown/club.service'
 import { RegistrationStateService } from '../serveis/registration-data.service'
 import { PrevisualitzacioDesktopComponent } from './desktop/detalls-equip-desktop.component'
 import { PrevisualitzacioMobileComponent } from './mobile/detalls-equip-monile.component'
@@ -38,7 +39,8 @@ export class PrevisualitzacioComponent {
     private stepper: CdkStepper,
     private router: Router,
     private http: HttpClient,
-    private registrationStateService: RegistrationStateService
+    private registrationStateService: RegistrationStateService,
+    private clubService: ClubService
   ) {}
 
   ngOnInit() {
@@ -49,7 +51,9 @@ export class PrevisualitzacioComponent {
     this.previService.getFormData().subscribe(data => {
       if (data.value) {
         this.team = data.value
-        this.team.logoUrl = getUrlImage(this.team.club)
+        this.clubService.loadClubs().subscribe(clubs => {
+          this.team.logoUrl = getUrlImage(this.team.club, clubs)
+        })
       }
       if (data.entrenadors) {
         this.team.entrenadors = data.entrenadors
