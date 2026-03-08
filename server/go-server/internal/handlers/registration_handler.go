@@ -82,6 +82,7 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 	// 1. Club: find or create by name
 	club, err := h.repo.GetClubByName(ctx, strings.TrimSpace(body.Club))
 	if err != nil {
+		log.Printf("[registration] lookup club failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to lookup club")
 		return
 	}
@@ -93,6 +94,7 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 		}
 		club, err = h.repo.GetClubByName(ctx, clubName)
 		if err != nil || club == nil {
+			log.Printf("[registration] load created club failed: %v", err)
 			h.ErrorResponse(w, http.StatusInternalServerError, "Failed to load created club")
 			return
 		}
@@ -122,6 +124,7 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 	}
 	createdTeam, err := h.repo.GetTeamByID(ctx, teamID)
 	if err != nil {
+		log.Printf("[registration] load created team failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to load created team")
 		return
 	}
@@ -174,6 +177,7 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 			},
 		}
 		if err := h.repo.CreateCoach(ctx, &req); err != nil {
+			log.Printf("[registration] create coach failed team_id=%d: %v", teamID, err)
 			h.ErrorResponse(w, http.StatusInternalServerError, "Failed to create coach")
 			return
 		}
@@ -200,25 +204,14 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 		return
 	}
 
-	// 8. wa_token
-	waToken, err := randomHex(32)
-	if err != nil {
-		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to create wa_token")
-		return
-	}
-	if err := h.repo.CreateWAToken(ctx, teamID, createdTeam.Phone, waToken); err != nil {
-		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to create wa_token")
-		return
-	}
-
-	// 9. Registration path and URL
+	// 8. Registration path and URL
 	registrationPath := frontendTeamPath + "?token=" + token
 	registrationURL := registrationPath
 	if h.FrontendURL != "" {
 		registrationURL = h.FrontendURL + registrationPath
 	}
 
-	// 10. Send WhatsApp and email confirmation (best-effort; do not fail response)
+	// 9. Send WhatsApp and email confirmation (best-effort; do not fail response)
 	if h.Notifier != nil {
 		notifData := auth.RegistrationMessageData{
 			TeamName:         createdTeam.Name,
@@ -238,7 +231,6 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 	h.JSONResponse(w, http.StatusCreated, models.RegisterInscriptionResponse{
 		RegistrationURL:  registrationURL,
 		RegistrationPath: registrationPath,
-		WAToken:          waToken,
 		Message:          "Inscripció registrada correctament.",
 		TeamID:           teamID,
 	})

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"net/smtp"
@@ -13,6 +14,8 @@ import (
 	"strconv"
 	"strings"
 )
+
+const twilioErrorBodyLimit = 1024
 
 // TwilioSMTPSender implements PINSender using Twilio (WhatsApp) and SMTP (email).
 type TwilioSMTPSender struct{}
@@ -69,9 +72,31 @@ func (s *TwilioSMTPSender) sendWhatsApp(ctx context.Context, pin, phone string) 
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return fmt.Errorf("twilio returned %d", resp.StatusCode)
+		msg := twilioErrorResponse(resp)
+		log.Printf("[twilio] send failed status=%d body=%s", resp.StatusCode, msg)
+		return fmt.Errorf("twilio returned %d: %s", resp.StatusCode, msg)
 	}
 	return nil
+}
+
+// twilioErrorResponse reads up to 1KB of response body and returns a safe string for logging/error.
+// Twilio error JSON often has a "message" field; we include it when present.
+func twilioErrorResponse(resp *http.Response) string {
+	body, err := io.ReadAll(io.LimitReader(resp.Body, twilioErrorBodyLimit))
+	if err != nil {
+		return "(failed to read body)"
+	}
+	s := strings.TrimSpace(string(body))
+	if s == "" {
+		return "(empty body)"
+	}
+	var out struct {
+		Message string `json:"message"`
+	}
+	if json.Unmarshal(body, &out) == nil && out.Message != "" {
+		return out.Message
+	}
+	return s
 }
 
 // cleanPhoneNumber normalizes to 34 + 9 digits (Spanish format, no +).
@@ -183,7 +208,9 @@ func (s *TwilioSMTPSender) sendWhatsAppRegistration(ctx context.Context, data Re
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return fmt.Errorf("twilio returned %d", resp.StatusCode)
+		msg := twilioErrorResponse(resp)
+		log.Printf("[twilio] send failed status=%d body=%s", resp.StatusCode, msg)
+		return fmt.Errorf("twilio returned %d: %s", resp.StatusCode, msg)
 	}
 	return nil
 }

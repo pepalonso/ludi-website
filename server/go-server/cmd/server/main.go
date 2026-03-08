@@ -9,6 +9,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/joho/godotenv"
 	"tournament-dev/internal/auth"
 	"tournament-dev/internal/config"
 	"tournament-dev/internal/database"
@@ -17,6 +18,9 @@ import (
 )
 
 func main() {
+	if err := godotenv.Load(); err != nil {
+		log.Printf("No .env file loaded (optional): %v", err)
+	}
 	dbConfig := database.LoadConfigFromEnv()
 	conn, err := database.NewConnection(dbConfig)
 	if err != nil {

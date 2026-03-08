@@ -148,7 +148,6 @@ go run cmd/dev/main.go status-prod
 ### Management Tables
 
 - **registration_tokens** - Team access tokens
-- **wa_tokens** - WhatsApp notification tokens
 - **qr_tokens** - QR code access tokens
 - **edit_sessions** - Team editing sessions
 - **changes_log** - Audit trail

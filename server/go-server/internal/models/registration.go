@@ -88,7 +88,6 @@ func (o *observacionsPayload) UnmarshalJSON(data []byte) error {
 type RegisterInscriptionResponse struct {
 	RegistrationURL  string `json:"registration_url"`
 	RegistrationPath string `json:"registration_path"`
-	WAToken          string `json:"wa_token"`
 	Message          string `json:"message,omitempty"`
 	TeamID           int    `json:"team_id"`
 }
