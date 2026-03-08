@@ -145,6 +145,14 @@ export class FitxesJugadorsComponent {
     let completedUploads = 0
     let failedUploads = 0
 
+    // Reset error and progress for non-uploaded files so retry shows clean state
+    this.files.forEach(f => {
+      if (!f.uploaded) {
+        f.error = false
+        f.progress = 0
+      }
+    })
+
     this.files.forEach((fileItem, index) => {
       if (fileItem.uploaded) {
         completedUploads++
@@ -189,7 +197,7 @@ export class FitxesJugadorsComponent {
           },
           error => {
             fileItem.error = true
-            failedUploads++
+            // Do not increment failedUploads here - finalize() will count this file once
           }
         )
     })
