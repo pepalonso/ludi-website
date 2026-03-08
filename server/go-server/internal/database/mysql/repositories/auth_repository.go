@@ -46,16 +46,6 @@ func (r *AuthRepository) GetTeamIDByRegistrationToken(ctx context.Context, token
 	return &teamID, nil
 }
 
-// CreateWAToken inserts a WhatsApp token for a team
-func (r *AuthRepository) CreateWAToken(ctx context.Context, teamID int, phoneNumber, token string) error {
-	query := `INSERT INTO wa_tokens (team_id, phone_number, token) VALUES (?, ?, ?)`
-	_, err := r.DB.ExecContext(ctx, query, teamID, phoneNumber, token)
-	if err != nil {
-		return fmt.Errorf("failed to create wa_token: %w", err)
-	}
-	return nil
-}
-
 // CreateEditSession inserts an edit session (2FA pending: pin_hash set, session_token returned after validation)
 func (r *AuthRepository) CreateEditSession(ctx context.Context, teamID int, sessionToken, pinHash, contactMethod string, expiresAt time.Time) error {
 	query := `INSERT INTO edit_sessions (team_id, session_token, pin_hash, contact_method, is_used, expires_at)

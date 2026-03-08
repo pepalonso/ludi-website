@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -49,21 +50,25 @@ func (h *AdminAuthHandler) AdminLogin(w http.ResponseWriter, r *http.Request) {
 	adminEmail := os.Getenv("ADMIN_EMAIL")
 	adminPassword := os.Getenv("ADMIN_PASSWORD")
 	if adminEmail == "" || adminPassword == "" {
+		log.Printf("[auth/admin] login skipped: admin not configured")
 		h.ErrorResponse(w, http.StatusInternalServerError, "admin not configured")
 		return
 	}
 	if req.Email != adminEmail || req.Password != adminPassword {
+		log.Printf("[auth/admin] login failed: invalid credentials")
 		h.ErrorResponse(w, http.StatusUnauthorized, "invalid credentials")
 		return
 	}
 
 	token, err := randomHex(32)
 	if err != nil {
+		log.Printf("[auth/admin] login failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "failed to generate token")
 		return
 	}
 	expiresAt := time.Now().Add(adminSessionTTL)
 	if err := h.repo.CreateAdminSession(r.Context(), token, expiresAt); err != nil {
+		log.Printf("[auth/admin] login failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "failed to create session")
 		return
 	}
@@ -112,17 +117,20 @@ func (h *AdminAuthHandler) GenerateAdminSessionToken(w http.ResponseWriter, r *h
 
 	teamID, err := h.repo.GetTeamIDByRegistrationToken(r.Context(), req.TeamToken)
 	if err != nil || teamID == nil {
+		log.Printf("[auth/admin] generate session failed: invalid team_token")
 		h.ErrorResponse(w, http.StatusBadRequest, "invalid or expired team_token")
 		return
 	}
 
 	sessionToken, err := randomHex(32)
 	if err != nil {
+		log.Printf("[auth/admin] generate session failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "failed to generate session")
 		return
 	}
 	expiresAt := time.Now().Add(30 * time.Minute)
 	if err := h.repo.CreateAdminGrantedTeamSession(r.Context(), *teamID, sessionToken, expiresAt); err != nil {
+		log.Printf("[auth/admin] generate session failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "failed to create session")
 		return
 	}

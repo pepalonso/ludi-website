@@ -100,19 +100,6 @@ CREATE TABLE registration_tokens (
     INDEX idx_expires_at (expires_at)
 );
 
--- WhatsApp notification tokens
-CREATE TABLE wa_tokens (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    team_id INT NOT NULL,
-    phone_number VARCHAR(20) NOT NULL,
-    token VARCHAR(255) NOT NULL UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    verified_at TIMESTAMP NULL,
-    FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE,
-    INDEX idx_phone_number (phone_number),
-    INDEX idx_token (token)
-);
-
 -- QR code access tokens
 CREATE TABLE qr_tokens (
     id INT PRIMARY KEY AUTO_INCREMENT,

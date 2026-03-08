@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
+	"log"
 	"net/http"
 	"time"
 
@@ -91,6 +92,7 @@ func (h *AuthHandler) Generate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := h.sender.SendPIN(r.Context(), req.Method, pin, team.Email, team.Phone); err != nil {
+		log.Printf("[auth/generate] send failed (method=%s): %v", req.Method, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "failed to send code")
 		return
 	}
@@ -119,6 +121,7 @@ func (h *AuthHandler) Validator(w http.ResponseWriter, r *http.Request) {
 
 	sessions, err := h.repo.GetPendingSessionsByTeamID(r.Context(), *teamID)
 	if err != nil {
+		log.Printf("[auth/validator] verify failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "failed to verify")
 		return
 	}
@@ -130,11 +133,13 @@ func (h *AuthHandler) Validator(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if matched == nil {
+		log.Printf("[auth/validator] invalid or expired code (team_id=%d)", *teamID)
 		h.ErrorResponse(w, http.StatusUnauthorized, "invalid or expired code")
 		return
 	}
 
 	if err := h.repo.MarkSessionUsedByToken(r.Context(), matched.SessionToken); err != nil {
+		log.Printf("[auth/validator] mark session used failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "failed to complete login")
 		return
 	}
