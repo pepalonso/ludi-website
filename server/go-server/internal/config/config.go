@@ -3,19 +3,69 @@ package config
 import (
 	"os"
 	"path/filepath"
+	"regexp"
+	"strings"
 )
 
-// App holds application configuration (e.g. document upload path, frontend URL).
+// App holds application configuration.
 type App struct {
-	UploadDir   string
-	FrontendURL string
+	UploadDir     string
+	AllowedOrigins []string // From CORS_ALLOWED_ORIGINS; used for CORS and registration link base URL.
 }
 
 // LoadFromEnv loads app config from environment variables.
 func LoadFromEnv() App {
 	uploadDir := getEnv("UPLOAD_DIR", "uploads")
-	frontendURL := getEnv("FRONTEND_URL", "")
-	return App{UploadDir: uploadDir, FrontendURL: frontendURL}
+	allowed := parseCommaSeparated(getEnv("CORS_ALLOWED_ORIGINS", ""))
+	return App{UploadDir: uploadDir, AllowedOrigins: allowed}
+}
+
+// parseCommaSeparated returns trimmed non-empty parts of s.
+func parseCommaSeparated(s string) []string {
+	var out []string
+	for _, v := range strings.Split(s, ",") {
+		if t := strings.TrimSpace(v); t != "" {
+			out = append(out, t)
+		}
+	}
+	return out
+}
+
+// ContainsOrigin returns true if origin is in the allowed list (exact or wildcard match).
+func (a *App) ContainsOrigin(origin string) bool {
+	return OriginMatches(origin, a.AllowedOrigins)
+}
+
+func OriginMatches(origin string, patterns []string) bool {
+	origin = strings.TrimSuffix(origin, "/")
+	for _, p := range patterns {
+		if originMatchesPattern(origin, strings.TrimSuffix(p, "/")) {
+			return true
+		}
+	}
+	return false
+}
+
+func originMatchesPattern(origin, pattern string) bool {
+	if pattern == "" {
+		return false
+	}
+	if strings.IndexByte(pattern, '*') < 0 {
+		return origin == pattern
+	}
+	var b strings.Builder
+	for _, r := range pattern {
+		if r == '*' {
+			b.WriteString(".*")
+		} else {
+			b.WriteString(regexp.QuoteMeta(string(r)))
+		}
+	}
+	re, err := regexp.Compile("^" + b.String() + "$")
+	if err != nil {
+		return false
+	}
+	return re.MatchString(origin)
 }
 
 // EnsureUploadDir creates the upload directory if it does not exist.
