@@ -41,6 +41,10 @@ type AuthRepository interface {
 	MarkSessionUsedByToken(ctx context.Context, sessionToken string) error
 	GetTeamIDBySessionToken(ctx context.Context, sessionToken string) (*int, error)
 	ResolveBearerToken(ctx context.Context, token string) (teamID int, err error)
+	CreateAdminSession(ctx context.Context, token string, expiresAt time.Time) error
+	ValidateAdminSession(ctx context.Context, token string) (bool, error)
+	DeleteAdminSession(ctx context.Context, token string) error
+	CreateAdminGrantedTeamSession(ctx context.Context, teamID int, sessionToken string, expiresAt time.Time) error
 }
 
 // EditSessionRow is a pending edit session (for PIN verification)
@@ -62,10 +66,11 @@ type ClubRepository interface {
 
 // TeamRepository defines team-related database operations
 type TeamRepository interface {
-	CreateTeam(ctx context.Context, team *models.TeamCreateRequest) error
+	CreateTeam(ctx context.Context, team *models.TeamCreateRequest) (int, error)
 	GetTeamByID(ctx context.Context, id int) (*models.Team, error)
 	GetTeamByEmail(ctx context.Context, email string) (*models.Team, error)
 	UpdateTeam(ctx context.Context, id int, team *models.TeamUpdateRequest) error
+	UpdateTeamObservations(ctx context.Context, id int, observations *string) error
 	DeleteTeam(ctx context.Context, id int) error
 	ListTeams(ctx context.Context, filters models.TeamFilters) (*models.TeamListResponse, error)
 	GetTeamStats(ctx context.Context) (*models.TeamStats, error)

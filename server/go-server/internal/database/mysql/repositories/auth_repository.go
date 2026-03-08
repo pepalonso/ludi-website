@@ -135,3 +135,50 @@ func (r *AuthRepository) getTeamIDByRegistrationToken(ctx context.Context, token
 	id, _ := r.GetTeamIDByRegistrationToken(ctx, token)
 	return id
 }
+
+// CreateAdminSession inserts an admin session token with expiry (15 min TTL)
+func (r *AuthRepository) CreateAdminSession(ctx context.Context, token string, expiresAt time.Time) error {
+	query := `INSERT INTO admin_sessions (token, expires_at) VALUES (?, ?)`
+	_, err := r.DB.ExecContext(ctx, query, token, expiresAt)
+	if err != nil {
+		return fmt.Errorf("failed to create admin session: %w", err)
+	}
+	return nil
+}
+
+// ValidateAdminSession returns true if token exists and is not expired
+func (r *AuthRepository) ValidateAdminSession(ctx context.Context, token string) (bool, error) {
+	query := `SELECT 1 FROM admin_sessions WHERE token = ? AND expires_at > NOW() LIMIT 1`
+	var one int
+	err := r.DB.QueryRowContext(ctx, query, token).Scan(&one)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return false, nil
+		}
+		return false, fmt.Errorf("failed to validate admin session: %w", err)
+	}
+	return true, nil
+}
+
+// DeleteAdminSession removes the admin session (for logout)
+func (r *AuthRepository) DeleteAdminSession(ctx context.Context, token string) error {
+	query := `DELETE FROM admin_sessions WHERE token = ?`
+	_, err := r.DB.ExecContext(ctx, query, token)
+	if err != nil {
+		return fmt.Errorf("failed to delete admin session: %w", err)
+	}
+	return nil
+}
+
+// CreateAdminGrantedTeamSession inserts an edit_session for admin-granted access (no PIN; is_used=TRUE).
+// pin_hash is a placeholder to satisfy NOT NULL; contact_method is 'admin'.
+func (r *AuthRepository) CreateAdminGrantedTeamSession(ctx context.Context, teamID int, sessionToken string, expiresAt time.Time) error {
+	const placeholderPinHash = "$2a$10$adminplaceholder"
+	query := `INSERT INTO edit_sessions (team_id, session_token, pin_hash, contact_method, is_used, expires_at)
+		VALUES (?, ?, ?, 'admin', TRUE, ?)`
+	_, err := r.DB.ExecContext(ctx, query, teamID, sessionToken, placeholderPinHash, expiresAt)
+	if err != nil {
+		return fmt.Errorf("failed to create admin-granted team session: %w", err)
+	}
+	return nil
+}

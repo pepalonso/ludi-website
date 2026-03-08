@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"strings"
@@ -19,6 +21,13 @@ const (
 	// Not tied to /api/me/*; the token is used for auth/validator then Bearer for me APIs.
 	frontendTeamPath = "/equip"
 )
+
+func truncBytes(b []byte, max int) string {
+	if len(b) <= max {
+		return string(b)
+	}
+	return string(b[:max]) + "..."
+}
 
 // RegistrationHandler handles public registration (inscription) endpoint.
 type RegistrationHandler struct {
@@ -38,10 +47,29 @@ func NewRegistrationHandler(repo database.Repository, frontendURL string, notifi
 
 // RegisterInscription handles POST /api/registrar-incripcio (no auth).
 func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http.Request) {
-	var body models.RegisterInscriptionRequest
-	decoder := request.NewDecoder(w)
-	if err := decoder.Decode(r, &body); err != nil {
+	bodyBytes, err := io.ReadAll(r.Body)
+	if err != nil {
+		request.NewDecoder(w).SendError(http.StatusBadRequest, "Invalid request body", "INVALID_JSON")
 		return
+	}
+
+	var body models.RegisterInscriptionRequest
+	if err := json.Unmarshal(bodyBytes, &body); err != nil {
+		// Try double-encoded JSON (body is a JSON string) for frontend compatibility
+		var inner string
+		if err2 := json.Unmarshal(bodyBytes, &inner); err2 == nil {
+			if err3 := json.Unmarshal([]byte(inner), &body); err3 == nil {
+				// success
+			} else {
+				log.Printf("[registration] decode failed (inner): %v", err3)
+				request.NewDecoder(w).SendError(http.StatusBadRequest, "Invalid request body", "INVALID_JSON")
+				return
+			}
+		} else {
+			log.Printf("[registration] decode failed: %v | body prefix: %q", err, truncBytes(bodyBytes, 200))
+			request.NewDecoder(w).SendError(http.StatusBadRequest, "Invalid request body", "INVALID_JSON")
+			return
+		}
 	}
 
 	if err := h.validateRegistrationBody(&body); err != nil {
@@ -87,16 +115,16 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 	if teamReq.Observations != nil && *teamReq.Observations == "" {
 		teamReq.Observations = nil
 	}
-	if err := h.repo.CreateTeam(ctx, &teamReq); err != nil {
+	teamID, err := h.repo.CreateTeam(ctx, &teamReq)
+	if err != nil {
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to create team: %v", err))
 		return
 	}
-	createdTeam, err := h.repo.GetTeamByEmail(ctx, teamReq.Email)
+	createdTeam, err := h.repo.GetTeamByID(ctx, teamID)
 	if err != nil {
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to load created team")
 		return
 	}
-	teamID := createdTeam.ID
 
 	// 3. Players (keep first player ID for intolerancies)
 	for _, j := range body.Jugadors {
@@ -134,10 +162,7 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 
 	// 5. Coaches (use team phone as coach phone)
 	for _, e := range body.Entrenadors {
-		esPrincipal := false
-		if e.EsPrincipal != nil && *e.EsPrincipal == 1 {
-			esPrincipal = true
-		}
+		esPrincipal := e.EsPrincipal.Value == 1
 		req := models.CoachCreateRequest{
 			CoachBase: models.CoachBase{
 				FirstName:   strings.TrimSpace(e.Nom),

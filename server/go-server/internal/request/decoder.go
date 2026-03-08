@@ -17,13 +17,14 @@ func NewDecoder(responseWriter http.ResponseWriter) *Decoder {
 
 func (decoder *Decoder) Decode(request *http.Request, target interface{}) error {
 	if err := json.NewDecoder(request.Body).Decode(target); err != nil {
-		decoder.sendError(http.StatusBadRequest, "Invalid request body", "INVALID_JSON")
+		decoder.SendError(http.StatusBadRequest, "Invalid request body", "INVALID_JSON")
 		return err
 	}
 	return nil
 }
 
-func (decoder *Decoder) sendError(status int, message, code string) {
+// SendError writes a JSON error response (exported for use by handlers that decode manually).
+func (decoder *Decoder) SendError(status int, message, code string) {
 	response := map[string]interface{}{
 		"error": message,
 		"code":  code,
@@ -32,3 +33,4 @@ func (decoder *Decoder) sendError(status int, message, code string) {
 	decoder.responseWriter.WriteHeader(status)
 	json.NewEncoder(decoder.responseWriter).Encode(response)
 }
+

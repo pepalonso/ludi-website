@@ -45,6 +45,30 @@ func RequireTeamAuth(repo database.Repository) func(http.Handler) http.Handler {
 	}
 }
 
+// RequireAdminAuth returns an http.Handler that validates Authorization: Bearer <admin_token>
+// against admin_sessions. Responds with 401 if missing or invalid.
+func RequireAdminAuth(repo database.Repository) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			token := extractBearerToken(r)
+			if token == "" {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusUnauthorized)
+				w.Write([]byte(`{"error":"missing or invalid authorization"}`))
+				return
+			}
+			valid, err := repo.ValidateAdminSession(r.Context(), token)
+			if err != nil || !valid {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusUnauthorized)
+				w.Write([]byte(`{"error":"invalid or expired admin token"}`))
+				return
+			}
+			next.ServeHTTP(w, r)
+		})
+	}
+}
+
 func extractBearerToken(r *http.Request) string {
 	h := r.Header.Get("Authorization")
 	if h == "" {

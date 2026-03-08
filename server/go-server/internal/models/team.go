@@ -4,7 +4,7 @@ import "time"
 
 type TeamBase struct {
 	Name     string   `json:"name" db:"name" validate:"required,min=1,max=255"`
-	Email    string   `json:"email" db:"email" validate:"required,email,unique=teams.email"`
+	Email    string   `json:"email" db:"email" validate:"required,email"`
 	Category Category `json:"category" db:"category" validate:"required,oneof=Pre-mini Mini Pre-infantil Infantil Cadet Júnior"`
 	Phone    string   `json:"phone" db:"phone" validate:"required,min=1,max=255"`
 	Gender   Gender   `json:"gender" db:"gender" validate:"required,oneof=Masculí Femení"`
@@ -78,16 +78,21 @@ type TeamStats struct {
 
 // MeTeamResponse is the "my team" payload for GET /api/me/team (frontend shape: mapTeamResponse)
 type MeTeamResponse struct {
-	NomEquip       string            `json:"nomEquip"`
-	Email          string            `json:"email"`
-	Telefon        string            `json:"telefon"`
-	Sexe           string            `json:"sexe"`   // "Masculí" or "Femení"
-	Categoria      string            `json:"categoria"`
-	Club           string            `json:"club"`   // club name
-	DataInscripcio string            `json:"dataInscripcio,omitempty"`
-	Intolerancies  []string          `json:"intolerancies"`
-	Jugadors       []MeTeamJugador   `json:"jugadors"`
+	NomEquip       string             `json:"nomEquip"`
+	Email          string             `json:"email"`
+	Telefon        string             `json:"telefon"`
+	Sexe           string             `json:"sexe"`   // "Masculí" or "Femení"
+	Categoria      string             `json:"categoria"`
+	Club           string             `json:"club"`   // club name
+	Observacions   string             `json:"observacions,omitempty"`
+	DataInscripcio string             `json:"dataInscripcio,omitempty"`
+	Intolerancies  []string           `json:"intolerancies"`
+	Jugadors       []MeTeamJugador    `json:"jugadors"`
 	Entrenadors    []MeTeamEntrenador `json:"entrenadors"`
+}
+
+type MeTeamUpdateRequest struct {
+	Observations *string `json:"observations,omitempty"`
 }
 
 type MeTeamJugador struct {

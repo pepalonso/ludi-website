@@ -25,10 +25,36 @@ type RegisterInscriptionJug struct {
 }
 
 type RegisterInscriptionEntr struct {
-	Nom            string `json:"nom"`
-	Cognoms        string `json:"cognoms"`
-	TallaSamarreta string `json:"tallaSamarreta"`
-	EsPrincipal    *int   `json:"esPrincipal"` // 0 or 1 from frontend
+	Nom            string          `json:"nom"`
+	Cognoms        string          `json:"cognoms"`
+	TallaSamarreta string          `json:"tallaSamarreta"`
+	EsPrincipal    esPrincipalFlex `json:"esPrincipal"` // accepts true/false or 0/1 from frontend
+}
+
+// esPrincipalFlex unmarshals from either boolean or number (0/1) for frontend compatibility.
+type esPrincipalFlex struct{ Value int }
+
+func (e *esPrincipalFlex) UnmarshalJSON(data []byte) error {
+	if len(data) == 0 {
+		return nil
+	}
+	// Try number first (0 or 1)
+	var i int
+	if err := json.Unmarshal(data, &i); err == nil {
+		if i != 0 {
+			e.Value = 1
+		}
+		return nil
+	}
+	// Then boolean
+	var b bool
+	if err := json.Unmarshal(data, &b); err != nil {
+		return err
+	}
+	if b {
+		e.Value = 1
+	}
+	return nil
 }
 
 // observacionsPayload accepts either a string or an object { "observacio": "..." }

@@ -80,7 +80,7 @@ func (r *ClubRepository) GetClubByName(ctx context.Context, name string) (*model
 
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return nil, fmt.Errorf("club with name '%s' not found", name)
+			return nil, nil
 		}
 		return nil, fmt.Errorf("failed to get club by name: %w", err)
 	}

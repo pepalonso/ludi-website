@@ -12,13 +12,14 @@ import (
 var serverStartTime = time.Now()
 
 type Router struct {
-	clubHandler        *ClubHandler
-	teamHandler        *TeamHandler
-	playerHandler      *PlayerHandler
-	coachHandler       *CoachHandler
-	allergyHandler     *AllergyHandler
+	clubHandler         *ClubHandler
+	teamHandler         *TeamHandler
+	playerHandler       *PlayerHandler
+	coachHandler        *CoachHandler
+	allergyHandler      *AllergyHandler
 	documentHandler    *DocumentHandler
 	authHandler        *AuthHandler
+	adminAuthHandler   *AdminAuthHandler
 	registrationHandler *RegistrationHandler
 }
 
@@ -31,58 +32,56 @@ func NewRouter(repo database.Repository, uploadDir string, pinSender auth.PINSen
 		allergyHandler:      NewAllergyHandler(repo),
 		documentHandler:     NewDocumentHandler(repo, uploadDir),
 		authHandler:         NewAuthHandler(repo, pinSender),
+		adminAuthHandler:    NewAdminAuthHandler(repo),
 		registrationHandler: NewRegistrationHandler(repo, frontendURL, registrationNotifier),
 	}
 }
 
 func (r *Router) SetupRoutes(mux *http.ServeMux) {
-	// Club routes
-	mux.HandleFunc("POST /api/clubs", r.clubHandler.CreateClub)
-	mux.HandleFunc("GET /api/clubs", r.clubHandler.ListClubs)
-	mux.HandleFunc("GET /api/clubs/{id}", r.clubHandler.GetClub)
-	mux.HandleFunc("PUT /api/clubs/{id}", r.clubHandler.UpdateClub)
-	mux.HandleFunc("DELETE /api/clubs/{id}", r.clubHandler.DeleteClub)
-
-	// Team routes (GET /api/teams/stats before /api/teams/{id} so it matches first)
-	mux.HandleFunc("GET /api/teams/stats", r.teamHandler.GetTeamStats)
-	mux.HandleFunc("POST /api/teams", r.teamHandler.CreateTeam)
-	mux.HandleFunc("GET /api/teams", r.teamHandler.ListTeams)
-	mux.HandleFunc("GET /api/teams/{id}", r.teamHandler.GetTeam)
-	mux.HandleFunc("PUT /api/teams/{id}", r.teamHandler.UpdateTeam)
-
-	// Player routes (uncomment when you create PlayerHandler)
-	mux.HandleFunc("POST /api/players", r.playerHandler.CreatePlayer)
-	mux.HandleFunc("GET /api/players", r.playerHandler.ListPlayers)
-	mux.HandleFunc("GET /api/players/{id}", r.playerHandler.GetPlayer)
-	mux.HandleFunc("PUT /api/players/{id}", r.playerHandler.UpdatePlayer)
-	mux.HandleFunc("DELETE /api/players/{id}", r.playerHandler.DeletePlayer)
-
-	// Coach routes (uncomment when you create CoachHandler)
-	mux.HandleFunc("POST /api/coaches", r.coachHandler.CreateCoach)
-	mux.HandleFunc("GET /api/coaches", r.coachHandler.ListCoaches)
-	mux.HandleFunc("GET /api/coaches/{id}", r.coachHandler.GetCoach)
-	mux.HandleFunc("PUT /api/coaches/{id}", r.coachHandler.UpdateCoach)
-	mux.HandleFunc("DELETE /api/coaches/{id}", r.coachHandler.DeleteCoach)
-
-	// Allergy routes
-	mux.HandleFunc("POST /api/allergies", r.allergyHandler.CreateAllergy)
-	mux.HandleFunc("GET /api/allergies", r.allergyHandler.ListAllergies)
-	mux.HandleFunc("GET /api/allergies/team/{team_id}", r.allergyHandler.ListAllergiesByTeam)
-	mux.HandleFunc("DELETE /api/allergies/{id}", r.allergyHandler.DeleteAllergy)
-
-	// Public registration (inscription) - no auth (both paths for frontend compatibility)
+	// Public routes (no auth)
 	mux.HandleFunc("POST /api/registrar-incripcio", r.registrationHandler.RegisterInscription)
 	mux.HandleFunc("POST /registrar-incripcio", r.registrationHandler.RegisterInscription)
-
-	// Document routes (upload before /api/documents/{id} so path matches correctly)
-	mux.HandleFunc("POST /api/documents/upload", r.documentHandler.UploadDocument)
-	mux.HandleFunc("GET /api/documents", r.documentHandler.ListDocuments)
-	mux.HandleFunc("GET /api/documents/{id}", r.documentHandler.GetDocument)
-	mux.HandleFunc("PUT /api/documents/{id}", r.documentHandler.UpdateDocument)
-
-	// Auth
 	mux.HandleFunc("POST /auth/generate", r.authHandler.Generate)
 	mux.HandleFunc("POST /auth/validator", r.authHandler.Validator)
+	mux.HandleFunc("POST /api/documents/upload", r.documentHandler.UploadDocument)
+	mux.HandleFunc("POST /auth/admin/login", r.adminAuthHandler.AdminLogin)
+	mux.HandleFunc("POST /auth/admin/logout", r.adminAuthHandler.AdminLogout)
+
+	// Admin-protected routes (Bearer = admin session token)
+	requireAdminAuth := RequireAdminAuth(r.clubHandler.GetRepository())
+	mux.Handle("POST /auth/generate-admin-session-token", requireAdminAuth(http.HandlerFunc(r.adminAuthHandler.GenerateAdminSessionToken)))
+	mux.Handle("POST /api/clubs", requireAdminAuth(http.HandlerFunc(r.clubHandler.CreateClub)))
+	mux.Handle("GET /api/clubs", requireAdminAuth(http.HandlerFunc(r.clubHandler.ListClubs)))
+	mux.Handle("GET /api/clubs/{id}", requireAdminAuth(http.HandlerFunc(r.clubHandler.GetClub)))
+	mux.Handle("PUT /api/clubs/{id}", requireAdminAuth(http.HandlerFunc(r.clubHandler.UpdateClub)))
+	mux.Handle("DELETE /api/clubs/{id}", requireAdminAuth(http.HandlerFunc(r.clubHandler.DeleteClub)))
+
+	mux.Handle("GET /api/teams/stats", requireAdminAuth(http.HandlerFunc(r.teamHandler.GetTeamStats)))
+	mux.Handle("POST /api/teams", requireAdminAuth(http.HandlerFunc(r.teamHandler.CreateTeam)))
+	mux.Handle("GET /api/teams", requireAdminAuth(http.HandlerFunc(r.teamHandler.ListTeams)))
+	mux.Handle("GET /api/teams/{id}", requireAdminAuth(http.HandlerFunc(r.teamHandler.GetTeam)))
+	mux.Handle("PUT /api/teams/{id}", requireAdminAuth(http.HandlerFunc(r.teamHandler.UpdateTeam)))
+
+	mux.Handle("POST /api/players", requireAdminAuth(http.HandlerFunc(r.playerHandler.CreatePlayer)))
+	mux.Handle("GET /api/players", requireAdminAuth(http.HandlerFunc(r.playerHandler.ListPlayers)))
+	mux.Handle("GET /api/players/{id}", requireAdminAuth(http.HandlerFunc(r.playerHandler.GetPlayer)))
+	mux.Handle("PUT /api/players/{id}", requireAdminAuth(http.HandlerFunc(r.playerHandler.UpdatePlayer)))
+	mux.Handle("DELETE /api/players/{id}", requireAdminAuth(http.HandlerFunc(r.playerHandler.DeletePlayer)))
+
+	mux.Handle("POST /api/coaches", requireAdminAuth(http.HandlerFunc(r.coachHandler.CreateCoach)))
+	mux.Handle("GET /api/coaches", requireAdminAuth(http.HandlerFunc(r.coachHandler.ListCoaches)))
+	mux.Handle("GET /api/coaches/{id}", requireAdminAuth(http.HandlerFunc(r.coachHandler.GetCoach)))
+	mux.Handle("PUT /api/coaches/{id}", requireAdminAuth(http.HandlerFunc(r.coachHandler.UpdateCoach)))
+	mux.Handle("DELETE /api/coaches/{id}", requireAdminAuth(http.HandlerFunc(r.coachHandler.DeleteCoach)))
+
+	mux.Handle("POST /api/allergies", requireAdminAuth(http.HandlerFunc(r.allergyHandler.CreateAllergy)))
+	mux.Handle("GET /api/allergies", requireAdminAuth(http.HandlerFunc(r.allergyHandler.ListAllergies)))
+	mux.Handle("GET /api/allergies/team/{team_id}", requireAdminAuth(http.HandlerFunc(r.allergyHandler.ListAllergiesByTeam)))
+	mux.Handle("DELETE /api/allergies/{id}", requireAdminAuth(http.HandlerFunc(r.allergyHandler.DeleteAllergy)))
+
+	mux.Handle("GET /api/documents", requireAdminAuth(http.HandlerFunc(r.documentHandler.ListDocuments)))
+	mux.Handle("GET /api/documents/{id}", requireAdminAuth(http.HandlerFunc(r.documentHandler.GetDocument)))
+	mux.Handle("PUT /api/documents/{id}", requireAdminAuth(http.HandlerFunc(r.documentHandler.UpdateDocument)))
 
 	// Team-owner routes under /api/me/ (require Bearer token → team_id)
 	requireTeamAuth := RequireTeamAuth(r.teamHandler.GetRepository())
