@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   standalone: true
 })
 export class LudiCountdown implements OnInit, OnDestroy {
-  public targetDate: Date = new Date('2025-06-07T00:00:00');
+  public targetDate: Date = new Date('2026-06-13T00:00:00');
   private intervalId: any;
 
   public days: number = 0;
