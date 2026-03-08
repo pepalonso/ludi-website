@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { RegistrationStateService } from '../serveis/registration-data.service'
 import { PrevisualitzacioDesktopComponent } from './desktop/detalls-equip-desktop.component'
 import { PrevisualitzacioMobileComponent } from './mobile/detalls-equip-monile.component'
-import { environment } from '../../environments/environment.prod'
+import { environment } from '../../environments/environment'
 
 @Component({
   selector: 'app-previsualitzacio',
@@ -25,7 +25,7 @@ export class PrevisualitzacioComponent {
   public apiResponse: any
   public isSubmitting = false
   public errorMessage: string | null = null
-  public contactPhone = '659173158'
+  public contactPhone = environment.contactPhone
 
   // Toast properties
   public showToast = false

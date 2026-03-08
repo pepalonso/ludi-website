@@ -18,7 +18,8 @@ export const environment = {
   production: true,
   apiUrl: "${process.env.API_URL || ""}",
   get apiBaseUrl() { return (this.apiUrl || "").replace(/\\/$/, ""); },
-  apiKey: "${process.env.API_KEY || ""}"
+  apiKey: "${process.env.API_KEY || ""}",
+  contactPhone: "${process.env.CONTACT_PHONE || "659173158"}"
 };
 `;
 
