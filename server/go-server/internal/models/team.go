@@ -75,3 +75,32 @@ type TeamStats struct {
 	ByCategory     map[Category]int `json:"by_category"`
 	ByGender       map[Gender]int   `json:"by_gender"`
 }
+
+// MeTeamResponse is the "my team" payload for GET /api/me/team (frontend shape: mapTeamResponse)
+type MeTeamResponse struct {
+	NomEquip       string            `json:"nomEquip"`
+	Email          string            `json:"email"`
+	Telefon        string            `json:"telefon"`
+	Sexe           string            `json:"sexe"`   // "Masculí" or "Femení"
+	Categoria      string            `json:"categoria"`
+	Club           string            `json:"club"`   // club name
+	DataInscripcio string            `json:"dataInscripcio,omitempty"`
+	Intolerancies  []string          `json:"intolerancies"`
+	Jugadors       []MeTeamJugador   `json:"jugadors"`
+	Entrenadors    []MeTeamEntrenador `json:"entrenadors"`
+}
+
+type MeTeamJugador struct {
+	ID             int    `json:"id"`
+	Nom            string `json:"nom"`
+	Cognoms        string `json:"cognoms"`
+	TallaSamarreta string `json:"tallaSamarreta"`
+}
+
+type MeTeamEntrenador struct {
+	ID             int    `json:"id"`
+	Nom            string `json:"nom"`
+	Cognoms        string `json:"cognoms"`
+	TallaSamarreta string `json:"tallaSamarreta"`
+	EsPrincipal    bool   `json:"esPrincipal"`
+}

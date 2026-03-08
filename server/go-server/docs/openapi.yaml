@@ -700,6 +700,154 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /api/documents:
+    get:
+      summary: List documents
+      description: Retrieve a paginated list of documents with optional filters
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: page_size
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+        - name: team_id
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: document_type
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: ["medical_certificate", "parental_consent", "photo_release", "other"]
+      responses:
+        "200":
+          description: List of documents
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocumentListResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/documents/upload:
+    post:
+      summary: Upload a document
+      description: Upload a file. team_id is optional; documents can exist without a team and be assigned later. File is stored locally; third-party sync is done asynchronously.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - document_type
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The document file
+                team_id:
+                  type: integer
+                  description: Optional. Team to assign; omit to create an unassigned document.
+                document_type:
+                  type: string
+                  enum: ["medical_certificate", "parental_consent", "photo_release", "other"]
+      responses:
+        "201":
+          description: Document uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/documents/{id}:
+    get:
+      summary: Get document by ID
+      description: Retrieve document metadata by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        "200":
+          description: Document found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+        "404":
+          description: Document not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Update document team assignment
+      description: Only team_id can be updated; omit or null to unassign.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DocumentUpdateRequest"
+      responses:
+        "200":
+          description: Document updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+        "400":
+          description: Invalid team_id or team not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Document not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   schemas:
     Club:
@@ -1027,3 +1175,72 @@ components:
         - canceled_teams
         - by_category
         - by_gender
+
+    Document:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        team_id:
+          type: integer
+          nullable: true
+          description: Optional; null when document is not assigned to a team
+          example: 1
+        document_type:
+          type: string
+          enum: ["medical_certificate", "parental_consent", "photo_release", "other"]
+          example: "medical_certificate"
+        file_name:
+          type: string
+          example: "cert.pdf"
+        file_path:
+          type: string
+          description: Server path where file is stored
+        file_size:
+          type: integer
+          nullable: true
+        mime_type:
+          type: string
+          nullable: true
+        uploaded_at:
+          type: string
+          format: date-time
+      required:
+        - id
+        - document_type
+        - file_name
+        - file_path
+        - uploaded_at
+
+    DocumentUpdateRequest:
+      type: object
+      description: Only team_id can be updated; omit or null to unassign.
+      properties:
+        team_id:
+          type: integer
+          nullable: true
+          description: Optional. Set to assign or change team; omit or null to unassign.
+          example: 1
+
+    DocumentListResponse:
+      type: object
+      properties:
+        documents:
+          type: array
+          items:
+            $ref: "#/components/schemas/Document"
+        total:
+          type: integer
+        page:
+          type: integer
+        page_size:
+          type: integer
+        total_pages:
+          type: integer
+      required:
+        - documents
+        - total
+        - page
+        - page_size
+        - total_pages

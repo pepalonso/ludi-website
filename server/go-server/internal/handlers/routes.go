@@ -5,28 +5,33 @@ import (
 	"net/http"
 	"time"
 
+	"tournament-dev/internal/auth"
 	"tournament-dev/internal/database"
 )
 
 var serverStartTime = time.Now()
 
 type Router struct {
-	clubHandler    *ClubHandler
-	teamHandler    *TeamHandler
-	playerHandler  *PlayerHandler
-	coachHandler   *CoachHandler
-	allergyHandler *AllergyHandler
-	// documentHandler *DocumentHandler
+	clubHandler        *ClubHandler
+	teamHandler        *TeamHandler
+	playerHandler      *PlayerHandler
+	coachHandler       *CoachHandler
+	allergyHandler     *AllergyHandler
+	documentHandler    *DocumentHandler
+	authHandler        *AuthHandler
+	registrationHandler *RegistrationHandler
 }
 
-func NewRouter(repo database.Repository) *Router {
+func NewRouter(repo database.Repository, uploadDir string, pinSender auth.PINSender, frontendURL string, registrationNotifier auth.RegistrationNotifier) *Router {
 	return &Router{
-		clubHandler:    NewClubHandler(repo),
-		teamHandler:    NewTeamHandler(repo),
-		playerHandler:  NewPlayerHandler(repo),
-		coachHandler:   NewCoachHandler(repo),
-		allergyHandler: NewAllergyHandler(repo),
-		// documentHandler: NewDocumentHandler(repo),
+		clubHandler:         NewClubHandler(repo),
+		teamHandler:         NewTeamHandler(repo),
+		playerHandler:       NewPlayerHandler(repo),
+		coachHandler:        NewCoachHandler(repo),
+		allergyHandler:      NewAllergyHandler(repo),
+		documentHandler:     NewDocumentHandler(repo, uploadDir),
+		authHandler:         NewAuthHandler(repo, pinSender),
+		registrationHandler: NewRegistrationHandler(repo, frontendURL, registrationNotifier),
 	}
 }
 
@@ -65,11 +70,37 @@ func (r *Router) SetupRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /api/allergies/team/{team_id}", r.allergyHandler.ListAllergiesByTeam)
 	mux.HandleFunc("DELETE /api/allergies/{id}", r.allergyHandler.DeleteAllergy)
 
-	// Document routes (uncomment when you create DocumentHandler)
-	// mux.HandleFunc("POST /api/documents", r.documentHandler.CreateDocument)
-	// mux.HandleFunc("GET /api/documents", r.documentHandler.ListDocuments)
-	// mux.HandleFunc("GET /api/documents/{id}", r.documentHandler.GetDocument)
-	// mux.HandleFunc("DELETE /api/documents/{id}", r.documentHandler.DeleteDocument)
+	// Public registration (inscription) - no auth (both paths for frontend compatibility)
+	mux.HandleFunc("POST /api/registrar-incripcio", r.registrationHandler.RegisterInscription)
+	mux.HandleFunc("POST /registrar-incripcio", r.registrationHandler.RegisterInscription)
+
+	// Document routes (upload before /api/documents/{id} so path matches correctly)
+	mux.HandleFunc("POST /api/documents/upload", r.documentHandler.UploadDocument)
+	mux.HandleFunc("GET /api/documents", r.documentHandler.ListDocuments)
+	mux.HandleFunc("GET /api/documents/{id}", r.documentHandler.GetDocument)
+	mux.HandleFunc("PUT /api/documents/{id}", r.documentHandler.UpdateDocument)
+
+	// Auth
+	mux.HandleFunc("POST /auth/generate", r.authHandler.Generate)
+	mux.HandleFunc("POST /auth/validator", r.authHandler.Validator)
+
+	// Team-owner routes under /api/me/ (require Bearer token → team_id)
+	requireTeamAuth := RequireTeamAuth(r.teamHandler.GetRepository())
+	mux.Handle("GET /api/me/team", requireTeamAuth(http.HandlerFunc(r.teamHandler.GetMeTeam)))
+	mux.Handle("PUT /api/me/team", requireTeamAuth(http.HandlerFunc(r.teamHandler.UpdateMeTeam)))
+	mux.Handle("GET /api/me/players", requireTeamAuth(http.HandlerFunc(r.playerHandler.ListMePlayers)))
+	mux.Handle("POST /api/me/players", requireTeamAuth(http.HandlerFunc(r.playerHandler.CreateMePlayer)))
+	mux.Handle("GET /api/me/players/{id}", requireTeamAuth(http.HandlerFunc(r.playerHandler.GetMePlayer)))
+	mux.Handle("PUT /api/me/players/{id}", requireTeamAuth(http.HandlerFunc(r.playerHandler.UpdateMePlayer)))
+	mux.Handle("DELETE /api/me/players/{id}", requireTeamAuth(http.HandlerFunc(r.playerHandler.DeleteMePlayer)))
+	mux.Handle("GET /api/me/coaches", requireTeamAuth(http.HandlerFunc(r.coachHandler.ListMeCoaches)))
+	mux.Handle("POST /api/me/coaches", requireTeamAuth(http.HandlerFunc(r.coachHandler.CreateMeCoach)))
+	mux.Handle("GET /api/me/coaches/{id}", requireTeamAuth(http.HandlerFunc(r.coachHandler.GetMeCoach)))
+	mux.Handle("PUT /api/me/coaches/{id}", requireTeamAuth(http.HandlerFunc(r.coachHandler.UpdateMeCoach)))
+	mux.Handle("DELETE /api/me/coaches/{id}", requireTeamAuth(http.HandlerFunc(r.coachHandler.DeleteMeCoach)))
+	mux.Handle("GET /api/me/allergies", requireTeamAuth(http.HandlerFunc(r.allergyHandler.ListMeAllergies)))
+	mux.Handle("POST /api/me/allergies", requireTeamAuth(http.HandlerFunc(r.allergyHandler.CreateMeAllergy)))
+	mux.Handle("DELETE /api/me/allergies/{id}", requireTeamAuth(http.HandlerFunc(r.allergyHandler.DeleteMeAllergy)))
 
 	// Health check
 	mux.HandleFunc("GET /health", r.healthCheck)

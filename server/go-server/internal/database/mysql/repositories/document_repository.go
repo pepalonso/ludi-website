@@ -22,15 +22,20 @@ func NewDocumentRepository(db *sql.DB) *DocumentRepository {
 	}
 }
 
-// CreateDocument creates a new document
-func (r *DocumentRepository) CreateDocument(ctx context.Context, document *models.DocumentCreateRequest) error {
+// CreateDocument creates a new document and returns the new document ID.
+func (r *DocumentRepository) CreateDocument(ctx context.Context, document *models.DocumentCreateRequest) (int64, error) {
 	query := `
 		INSERT INTO documents (team_id, document_type, file_name, file_path, file_size, mime_type, uploaded_at)
 		VALUES (?, ?, ?, ?, ?, ?, NOW())
 	`
 
-	_, err := r.DB.ExecContext(ctx, query,
-		document.TeamID,
+	teamIDArg := sql.NullInt64{}
+	if document.TeamID != nil {
+		teamIDArg = sql.NullInt64{Int64: int64(*document.TeamID), Valid: true}
+	}
+
+	result, err := r.DB.ExecContext(ctx, query,
+		teamIDArg,
 		document.DocumentType,
 		document.FileName,
 		document.FilePath,
@@ -38,39 +43,69 @@ func (r *DocumentRepository) CreateDocument(ctx context.Context, document *model
 		document.MimeType,
 	)
 	if err != nil {
-		return fmt.Errorf("failed to create document: %w", err)
+		return 0, fmt.Errorf("failed to create document: %w", err)
 	}
 
-	return nil
+	id, err := result.LastInsertId()
+	if err != nil {
+		return 0, fmt.Errorf("failed to get document id: %w", err)
+	}
+	return id, nil
 }
 
 // GetDocumentByID retrieves a document by ID
 func (r *DocumentRepository) GetDocumentByID(ctx context.Context, id int) (*models.Document, error) {
 	query := `
-		SELECT id, team_id, file_name, file_path, file_size, mime_type, uploaded_at
+		SELECT id, team_id, document_type, file_name, file_path, file_size, mime_type, uploaded_at
 		FROM documents
 		WHERE id = ?
 	`
 
 	document := &models.Document{}
+	var teamIDNull sql.NullInt64
 	err := r.DB.QueryRowContext(ctx, query, id).Scan(
 		&document.ID,
-		&document.TeamID,
+		&teamIDNull,
+		&document.DocumentType,
 		&document.FileName,
 		&document.FilePath,
 		&document.FileSize,
 		&document.MimeType,
 		&document.UploadedAt,
 	)
-
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, fmt.Errorf("document not found with ID: %d", id)
 		}
 		return nil, fmt.Errorf("failed to get document: %w", err)
 	}
+	if teamIDNull.Valid {
+		tid := int(teamIDNull.Int64)
+		document.TeamID = &tid
+	}
 
 	return document, nil
+}
+
+// UpdateDocument updates only the team_id of a document.
+func (r *DocumentRepository) UpdateDocument(ctx context.Context, id int, req *models.DocumentUpdateRequest) error {
+	query := `UPDATE documents SET team_id = ? WHERE id = ?`
+	teamIDArg := sql.NullInt64{}
+	if req.TeamID != nil {
+		teamIDArg = sql.NullInt64{Int64: int64(*req.TeamID), Valid: true}
+	}
+	result, err := r.DB.ExecContext(ctx, query, teamIDArg, id)
+	if err != nil {
+		return fmt.Errorf("failed to update document: %w", err)
+	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("failed to get rows affected: %w", err)
+	}
+	if rowsAffected == 0 {
+		return fmt.Errorf("document not found with ID: %d", id)
+	}
+	return nil
 }
 
 // DeleteDocument deletes a document by ID
@@ -138,30 +173,35 @@ func (r *DocumentRepository) ListDocuments(ctx context.Context, filters models.D
 
 	var documents []models.DocumentResponse
 	for rows.Next() {
-		var document models.Document
+		var doc models.Document
+		var teamIDNull sql.NullInt64
 		err := rows.Scan(
-			&document.ID,
-			&document.TeamID,
-			&document.DocumentType,
-			&document.FileName,
-			&document.FilePath,
-			&document.FileSize,
-			&document.MimeType,
-			&document.UploadedAt,
+			&doc.ID,
+			&teamIDNull,
+			&doc.DocumentType,
+			&doc.FileName,
+			&doc.FilePath,
+			&doc.FileSize,
+			&doc.MimeType,
+			&doc.UploadedAt,
 		)
 		if err != nil {
 			return nil, fmt.Errorf("failed to scan document: %w", err)
 		}
-
+		var teamID *int
+		if teamIDNull.Valid {
+			tid := int(teamIDNull.Int64)
+			teamID = &tid
+		}
 		documents = append(documents, models.DocumentResponse{
-			ID:           document.ID,
-			TeamID:       document.TeamID,
-			DocumentType: document.DocumentType,
-			FileName:     document.FileName,
-			FilePath:     document.FilePath,
-			FileSize:     document.FileSize,
-			MimeType:     document.MimeType,
-			UploadedAt:   document.UploadedAt,
+			ID:           doc.ID,
+			TeamID:       teamID,
+			DocumentType: doc.DocumentType,
+			FileName:     doc.FileName,
+			FilePath:     doc.FilePath,
+			FileSize:     doc.FileSize,
+			MimeType:     doc.MimeType,
+			UploadedAt:   doc.UploadedAt,
 		})
 	}
 
@@ -187,7 +227,7 @@ func (r *DocumentRepository) ListDocuments(ctx context.Context, filters models.D
 // GetDocumentsByTeamID retrieves all documents for a specific team
 func (r *DocumentRepository) GetDocumentsByTeamID(ctx context.Context, teamID int) ([]models.Document, error) {
 	query := `
-		SELECT id, team_id, file_name, file_path, file_size, mime_type, uploaded_at
+		SELECT id, team_id, document_type, file_name, file_path, file_size, mime_type, uploaded_at
 		FROM documents
 		WHERE team_id = ?
 		ORDER BY uploaded_at DESC
@@ -201,20 +241,26 @@ func (r *DocumentRepository) GetDocumentsByTeamID(ctx context.Context, teamID in
 
 	var documents []models.Document
 	for rows.Next() {
-		var document models.Document
+		var doc models.Document
+		var teamIDNull sql.NullInt64
 		err := rows.Scan(
-			&document.ID,
-			&document.TeamID,
-			&document.FileName,
-			&document.FilePath,
-			&document.FileSize,
-			&document.MimeType,
-			&document.UploadedAt,
+			&doc.ID,
+			&teamIDNull,
+			&doc.DocumentType,
+			&doc.FileName,
+			&doc.FilePath,
+			&doc.FileSize,
+			&doc.MimeType,
+			&doc.UploadedAt,
 		)
 		if err != nil {
 			return nil, fmt.Errorf("failed to scan document: %w", err)
 		}
-		documents = append(documents, document)
+		if teamIDNull.Valid {
+			tid := int(teamIDNull.Int64)
+			doc.TeamID = &tid
+		}
+		documents = append(documents, doc)
 	}
 
 	return documents, nil

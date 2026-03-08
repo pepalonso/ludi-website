@@ -48,14 +48,25 @@ func (h *TeamHandler) CreateTeam(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Option B: load created team by email and return it
 	created, err := h.repo.GetTeamByEmail(ctx, team.Email)
 	if err != nil {
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to load created team")
 		return
 	}
 
-	h.JSONResponse(w, http.StatusCreated, created)
+	h.JSONResponse(w, http.StatusCreated, map[string]interface{}{
+		"id":                created.ID,
+		"name":              created.Name,
+		"email":             created.Email,
+		"category":          created.Category,
+		"phone":             created.Phone,
+		"gender":            created.Gender,
+		"club_id":           created.ClubID,
+		"observations":      created.Observations,
+		"registration_date": created.RegistrationDate,
+		"updated_at":        created.UpdatedAt,
+		"status":            created.Status,
+	})
 }
 
 // GetTeam handles GET /api/teams/{id}
@@ -172,6 +183,96 @@ func (h *TeamHandler) UpdateTeam(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	h.JSONResponse(w, http.StatusOK, updated)
+}
+
+// GetMeTeam handles GET /api/me/team (requires auth; team_id from context). Response shape matches frontend mapTeamResponse.
+func (h *TeamHandler) GetMeTeam(w http.ResponseWriter, r *http.Request) {
+	teamID := TeamIDFromContext(r.Context())
+	if teamID == 0 {
+		h.ErrorResponse(w, http.StatusUnauthorized, "missing team context")
+		return
+	}
+	ctx := r.Context()
+	team, err := h.repo.GetTeamWithRelations(ctx, teamID)
+	if err != nil {
+		h.ErrorResponse(w, http.StatusNotFound, "team not found")
+		return
+	}
+	allergies, _ := h.repo.GetAllergiesByTeamID(ctx, teamID)
+	intolerancies := make([]string, 0, len(allergies))
+	for _, a := range allergies {
+		if a.Description != nil && *a.Description != "" {
+			intolerancies = append(intolerancies, *a.Description)
+		}
+	}
+	clubName := ""
+	if team.Club != nil {
+		clubName = team.Club.Name
+	}
+	resp := models.MeTeamResponse{
+		NomEquip:       team.Name,
+		Email:          team.Email,
+		Telefon:        team.Phone,
+		Sexe:           string(team.Gender),
+		Categoria:      string(team.Category),
+		Club:           clubName,
+		DataInscripcio: team.RegistrationDate.Format("2006-01-02T15:04:05Z07:00"),
+		Intolerancies:  intolerancies,
+		Jugadors:       make([]models.MeTeamJugador, 0, len(team.Players)),
+		Entrenadors:    make([]models.MeTeamEntrenador, 0, len(team.Coaches)),
+	}
+	for _, p := range team.Players {
+		resp.Jugadors = append(resp.Jugadors, models.MeTeamJugador{
+			ID:             p.ID,
+			Nom:            p.FirstName,
+			Cognoms:        p.LastName,
+			TallaSamarreta: string(p.ShirtSize),
+		})
+	}
+	for _, c := range team.Coaches {
+		resp.Entrenadors = append(resp.Entrenadors, models.MeTeamEntrenador{
+			ID:             c.ID,
+			Nom:            c.FirstName,
+			Cognoms:        c.LastName,
+			TallaSamarreta: c.ShirtSize,
+			EsPrincipal:    c.IsHeadCoach,
+		})
+	}
+	h.JSONResponse(w, http.StatusOK, resp)
+}
+
+// UpdateMeTeam handles PUT /api/me/team (requires auth; team_id from context)
+func (h *TeamHandler) UpdateMeTeam(w http.ResponseWriter, r *http.Request) {
+	teamID := TeamIDFromContext(r.Context())
+	if teamID == 0 {
+		h.ErrorResponse(w, http.StatusUnauthorized, "missing team context")
+		return
+	}
+	var team models.TeamUpdateRequest
+	decoder := request.NewDecoder(w)
+	if err := decoder.Decode(r, &team); err != nil {
+		return
+	}
+	validate := validator.New()
+	if err := validate.Struct(&team); err != nil {
+		h.ErrorResponse(w, http.StatusBadRequest, fmt.Sprintf("Validation failed: %v", err))
+		return
+	}
+	ctx := r.Context()
+	if err := h.repo.UpdateTeam(ctx, teamID, &team); err != nil {
+		if err != nil && strings.Contains(err.Error(), "not found") {
+			h.ErrorResponse(w, http.StatusNotFound, "Team not found")
+			return
+		}
+		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to update team: %v", err))
+		return
+	}
+	updated, err := h.repo.GetTeamByID(ctx, teamID)
+	if err != nil {
+		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to load updated team")
+		return
+	}
 	h.JSONResponse(w, http.StatusOK, updated)
 }
 
