@@ -1,3 +1,6 @@
+[build.environment]
+NODE_VERSION = "22"
+
 [build]
   command = "node inject-env.js && ng build --configuration=production"
   publish = "dist/ludi-front"

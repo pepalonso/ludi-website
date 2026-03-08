@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { RegistrationStateService } from '../serveis/registration-data.service';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-countdown',
@@ -18,6 +19,7 @@ export class LudiCountdown implements OnInit, OnDestroy {
   public hours: number = 0;
   public minutes: number = 0;
   public seconds: number = 0;
+  public contactPhone = environment.contactPhone;
 
   public constructor(
       private router: Router,
