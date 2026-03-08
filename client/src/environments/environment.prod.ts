@@ -6,5 +6,6 @@ export const environment = {
     return (this.apiUrl || '').replace(/\/$/, '')
   },
   apiKey: process.env['API_KEY'] || '',
+  contactPhone: process.env['CONTACT_PHONE'] || '659173158',
 }
 
