@@ -129,6 +129,15 @@ CREATE TABLE edit_sessions (
     INDEX idx_team_id (team_id)
 );
 
+-- Admin accounts
+CREATE TABLE admins (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_email (email)
+);
+
 -- Admin sessions
 CREATE TABLE admin_sessions (
     id INT PRIMARY KEY AUTO_INCREMENT,
