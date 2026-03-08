@@ -1,61 +1,34 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import {
-  getAuth,
-  onAuthStateChanged,
-  User,
-  browserLocalPersistence,
-  setPersistence,
-} from 'firebase/auth';
-import { firebaseApp } from '../app.config';
+import { Injectable } from '@angular/core'
+
+const ADMIN_TOKEN_KEY = 'admin_token'
+const ADMIN_EXPIRY_KEY = 'admin_expires_at'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private auth = getAuth(firebaseApp);
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  constructor() {}
 
-  constructor() {
-    // Initialize persistence
-    this.initializePersistence();
-
-    // Keep track of auth state changes
-    onAuthStateChanged(this.auth, (user) => {
-      this.currentUserSubject.next(user);
-    });
+  setAdminToken(token: string, expiresAt: string): void {
+    sessionStorage.setItem(ADMIN_TOKEN_KEY, token)
+    sessionStorage.setItem(ADMIN_EXPIRY_KEY, expiresAt)
   }
 
-  private async initializePersistence() {
-    try {
-      await setPersistence(this.auth, browserLocalPersistence);
-    } catch (error) {
-      console.error('Error setting auth persistence:', error);
-    }
+  getAdminToken(): string {
+    return sessionStorage.getItem(ADMIN_TOKEN_KEY) ?? ''
   }
 
-  getCurrentUser(): User | null {
-    return this.currentUserSubject.value;
+  clearAdminToken(): void {
+    sessionStorage.removeItem(ADMIN_TOKEN_KEY)
+    sessionStorage.removeItem(ADMIN_EXPIRY_KEY)
   }
 
-  isAuthenticated(): boolean {
-    return this.currentUserSubject.value !== null;
+  isAdminAuthenticated(): boolean {
+    const token = this.getAdminToken()
+    const expiresAt = sessionStorage.getItem(ADMIN_EXPIRY_KEY)
+    if (!token || !expiresAt) return false
+    const expiry = new Date(expiresAt).getTime()
+    return expiry > Date.now()
   }
-
-  /**
-   * Returns Firebase ID token of the authenticated user.
-   */
-  getToken(): Promise<string> {
-    const user = this.auth.currentUser;
-    if (user) {
-      return user.getIdToken();
-    } else {
-      return Promise.reject('User is not authenticated');
-    }
-  }
-
-  /**
-   * Observable to react to auth state changes
-   */
-  user$ = this.currentUserSubject.asObservable();
 }
+

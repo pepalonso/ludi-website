@@ -53,3 +53,6 @@ node_modules
 #inglore .angular and dist sonce are generated during build
 .angular/
 dist/
+
+# Club data (sensitive contact data, not versioned)
+src/app/data/club-data.ts

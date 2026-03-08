@@ -124,7 +124,7 @@ export class Ludi3x3Component {
       };
 
       try {
-        const response = await fetch(`${environment.apiUrl}/put-item`, {
+        const response = await fetch(`${environment.apiBaseUrl}/put-item`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

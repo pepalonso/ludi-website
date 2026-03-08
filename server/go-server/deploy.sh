@@ -61,27 +61,16 @@ fi
 
 print_success "Prerequisites check passed"
 
-# Check if .env.prod exists
-if [ ! -f ".env.prod" ]; then
-    print_error ".env.prod not found!"
-    print_status "Creating from template..."
-    
-    if [ -f "env.prod.example" ]; then
-        cp env.prod.example .env.prod
-        print_success ".env.prod created from template"
-        print_warning "⚠️  IMPORTANT: Edit .env.prod with secure passwords before continuing!"
-        print_status "Please edit .env.prod and run this script again."
-        exit 1
-    else
-        print_error "env.prod.example not found!"
-        exit 1
-    fi
+# Check if .env.prod.local exists (same as server deploy folders)
+if [ ! -f ".env.prod.local" ]; then
+    print_error ".env.prod.local not found!"
+    print_status "Copy .env.prod.local.example to .env.prod.local and set APP_IMAGE, DB_*, etc."
+    exit 1
 fi
 
-# Check if passwords are still default
-if grep -q "CHANGE_THIS_TO_SECURE" .env.prod; then
-    print_error "Default passwords detected in .env.prod!"
-    print_warning "Please edit .env.prod with secure passwords before continuing."
+# APP_IMAGE required for docker-compose.prod.registry.yml
+if ! grep -q '^APP_IMAGE=.' .env.prod.local 2>/dev/null; then
+    print_error "APP_IMAGE is not set in .env.prod.local (e.g. APP_IMAGE=pepalonso/ludi-server:0.1.0-beta)"
     exit 1
 fi
 
@@ -89,15 +78,12 @@ print_success "Environment configuration verified"
 
 # Stop existing containers if running
 print_status "Stopping existing containers..."
-docker-compose -f docker-compose.prod.yml down --remove-orphans || true
+docker-compose -f docker-compose.prod.registry.yml --env-file .env.prod.local down --remove-orphans || true
 
-# Pull latest images (if using remote registry)
-print_status "Pulling latest images..."
-docker-compose -f docker-compose.prod.yml pull || true
-
-# Build and start containers
-print_status "Building and starting containers..."
-docker-compose -f docker-compose.prod.yml --env-file .env.prod up -d --build
+# Pull and start containers (no build on server)
+print_status "Pulling images and starting containers..."
+docker-compose -f docker-compose.prod.registry.yml --env-file .env.prod.local pull
+docker-compose -f docker-compose.prod.registry.yml --env-file .env.prod.local up -d
 
 # Wait for services to be healthy
 print_status "Waiting for services to be healthy..."
@@ -133,10 +119,8 @@ echo "  - API Health: http://localhost:8080/health"
 echo "  - Database: localhost:3306 (localhost only)"
 echo ""
 echo "🔧 Management Commands:"
-echo "  - View logs: docker-compose -f docker-compose.prod.yml logs -f"
-echo "  - Stop services: docker-compose -f docker-compose.prod.yml down"
-echo "  - Restart services: docker-compose -f docker-compose.prod.yml restart"
+echo "  - View logs: docker-compose -f docker-compose.prod.registry.yml --env-file .env.prod.local logs -f"
+echo "  - Stop services: docker-compose -f docker-compose.prod.registry.yml --env-file .env.prod.local down"
+echo "  - Restart: docker-compose -f docker-compose.prod.registry.yml --env-file .env.prod.local up -d"
 echo ""
-echo "📝 Logs location:"
-echo "  - Application logs: docker-compose -f docker-compose.prod.yml logs app"
-echo "  - Database logs: docker-compose -f docker-compose.prod.yml logs db" 
+echo "📝 Logs: docker-compose -f docker-compose.prod.registry.yml --env-file .env.prod.local logs app" 

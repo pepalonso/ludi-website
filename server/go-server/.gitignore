@@ -29,6 +29,7 @@ go.sum
 .env.local
 .env.dev.local
 .env.prod.local
+.env.deploy
 
 # IDE files
 .vscode/

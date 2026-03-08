@@ -29,9 +29,7 @@ export class TeamDesktopComponent {
   @Input() token?: string;
 
   constructor(private router: Router, private authService: AuthService) {
-    this.authService.user$.subscribe((user) => {
-      this.isAdmin = user !== null;
-    });
+    this.isAdmin = this.authService.isAdminAuthenticated();
   }
 
   public showToastMessage(message: string, type: 'success' | 'error') {

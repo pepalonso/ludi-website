@@ -1,20 +1,14 @@
-# Build stage
-FROM golang:1.25-alpine AS builder
+# Build stage: always run on host arch (no QEMU). Cross-compile via GOARCH.
+FROM --platform=$BUILDPLATFORM golang:1.25-alpine AS builder
+ARG TARGETOS TARGETARCH
 
-# Set working directory
 WORKDIR /app
-
-# Copy go mod files
 COPY go.mod go.sum ./
-
-# Download dependencies
 RUN go mod download
-
-# Copy source code
 COPY . .
 
-# Build the application
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main ./cmd/server
+# Cross-compile: one fast native build per target (no emulation)
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -a -installsuffix cgo -o main ./cmd/server
 
 # Final stage
 FROM alpine:latest

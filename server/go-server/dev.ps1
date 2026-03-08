@@ -16,8 +16,7 @@ $files = @(
     "cmd/dev/reset.go",
     "cmd/dev/connect.go",
     "cmd/dev/status.go",
-    "cmd/dev/help.go",
-    "cmd/dev/prod.go"
+    "cmd/dev/help.go"
 )
 
 $args = @($files) + $Command
