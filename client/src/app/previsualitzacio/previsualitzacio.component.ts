@@ -7,11 +7,10 @@ import { CdkStepper } from '@angular/cdk/stepper'
 import { Router } from '@angular/router'
 import { getUrlImage } from '../detalls-equip/data-mapper'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
-import { ClubService } from '../utils/club-dropdown/club.service'
 import { RegistrationStateService } from '../serveis/registration-data.service'
 import { PrevisualitzacioDesktopComponent } from './desktop/detalls-equip-desktop.component'
 import { PrevisualitzacioMobileComponent } from './mobile/detalls-equip-monile.component'
-import { environment } from '../../environments/environment'
+import { environment } from '../../environments/environment.prod'
 
 @Component({
   selector: 'app-previsualitzacio',
@@ -26,7 +25,7 @@ export class PrevisualitzacioComponent {
   public apiResponse: any
   public isSubmitting = false
   public errorMessage: string | null = null
-  public contactPhone = environment.contactPhone
+  public contactPhone = '659173158'
 
   // Toast properties
   public showToast = false
@@ -39,8 +38,7 @@ export class PrevisualitzacioComponent {
     private stepper: CdkStepper,
     private router: Router,
     private http: HttpClient,
-    private registrationStateService: RegistrationStateService,
-    private clubService: ClubService
+    private registrationStateService: RegistrationStateService
   ) {}
 
   ngOnInit() {
@@ -51,9 +49,7 @@ export class PrevisualitzacioComponent {
     this.previService.getFormData().subscribe(data => {
       if (data.value) {
         this.team = data.value
-        this.clubService.loadClubs().subscribe(clubs => {
-          this.team.logoUrl = getUrlImage(this.team.club, clubs)
-        })
+        this.team.logoUrl = getUrlImage(this.team.club)
       }
       if (data.entrenadors) {
         this.team.entrenadors = data.entrenadors
@@ -80,12 +76,16 @@ export class PrevisualitzacioComponent {
     this.isSubmitting = true
     this.errorMessage = null
 
+    if (this.team.fitxes) {
+      this.team.fitxes = this.team.fitxes.map(fitxa => fitxa.normalize('NFC'))
+    }
+
     const payload = {
       ...this.team,
       intolerancies: this.team.intolerancies?.flatMap(item => Array(item.count).fill(item.name)),
     }
 
-    const url = `${environment.apiBaseUrl}/api/registrar-incripcio`
+    const url = `https://${environment.apiUrl}/registrar-incripcio`
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     })
@@ -93,13 +93,12 @@ export class PrevisualitzacioComponent {
     this.http.post(url, payload, { headers }).subscribe({
       next: (response: any) => {
         this.isSubmitting = false
-        const { registration_url, registration_path, team_id, message } = response
+        const { registration_url, registration_path, wa_token } = response
 
         const state = {
           registration_url,
           registration_path,
-          team_id,
-          message,
+          wa_token,
           team: this.team,
         }
 

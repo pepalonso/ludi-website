@@ -6,7 +6,7 @@ type PlayerBase struct {
 	FirstName string    `json:"first_name" db:"first_name" validate:"required,min=1,max=255"`
 	LastName  string    `json:"last_name" db:"last_name" validate:"required,min=1,max=255"`
 	ShirtSize ShirtSize `json:"shirt_size" db:"shirt_size" validate:"required,oneof=8 10 12 14 S M L XL 2XL 3XL 4XL"`
-	TeamID    int       `json:"team_id" db:"team_id" validate:"required,gt=0,foreign_key=teams.id"`
+	TeamID    int       `json:"team_id" db:"team_id" validate:"required,gt=0"`
 }
 
 type Player struct {

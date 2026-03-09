@@ -11,6 +11,9 @@ import (
 
 var serverStartTime = time.Now()
 
+// Version is set at build time via -ldflags (e.g. 0.6.0-beta). Used in /health to verify deployment.
+var Version = "dev"
+
 type Router struct {
 	clubHandler         *ClubHandler
 	teamHandler         *TeamHandler
@@ -113,7 +116,7 @@ func (r *Router) healthCheck(w http.ResponseWriter, req *http.Request) {
 	uptime := time.Since(serverStartTime)
 	uptimeStr := formatUptime(uptime)
 
-	response := fmt.Sprintf(`{"status": "ok", "uptime": "%s"}`, uptimeStr)
+	response := fmt.Sprintf(`{"status": "ok", "uptime": "%s", "version": %q}`, uptimeStr, Version)
 	w.Write([]byte(response))
 }
 

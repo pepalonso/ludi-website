@@ -1,14 +1,16 @@
 # Build stage: always run on host arch (no QEMU). Cross-compile via GOARCH.
 FROM --platform=$BUILDPLATFORM golang:1.25-alpine AS builder
 ARG TARGETOS TARGETARCH
+ARG VERSION=dev
 
 WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 
-# Cross-compile: one fast native build per target (no emulation)
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -a -installsuffix cgo -o main ./cmd/server
+# Cross-compile: embed VERSION in binary so /health shows it (verify deployed image).
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -a -installsuffix cgo \
+  -ldflags "-X tournament-dev/internal/handlers.Version=${VERSION}" -o main ./cmd/server
 
 # Final stage
 FROM alpine:latest

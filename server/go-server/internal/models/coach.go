@@ -7,7 +7,7 @@ type CoachBase struct {
 	LastName    string  `json:"last_name" db:"last_name" validate:"required,min=1,max=255"`
 	Phone       string  `json:"phone" db:"phone" validate:"required,min=1,max=255"`
 	Email       *string `json:"email" db:"email" validate:"omitempty,email,max=255"`
-	TeamID      int     `json:"team_id" db:"team_id" validate:"required,gt=0,foreign_key=teams.id"`
+	TeamID      int     `json:"team_id" db:"team_id" validate:"required,gt=0"`
 	IsHeadCoach bool    `json:"is_head_coach" db:"is_head_coach"`
 	ShirtSize   string  `json:"shirt_size" db:"shirt_size" validate:"required"`
 }

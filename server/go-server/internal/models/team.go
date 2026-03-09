@@ -8,7 +8,7 @@ type TeamBase struct {
 	Category Category `json:"category" db:"category" validate:"required,oneof=Pre-mini Mini Pre-infantil Infantil Cadet Júnior"`
 	Phone    string   `json:"phone" db:"phone" validate:"required,min=1,max=255"`
 	Gender   Gender   `json:"gender" db:"gender" validate:"required,oneof=Masculí Femení"`
-	ClubID   int      `json:"club_id" db:"club_id" validate:"required,gt=0,foreign_key=clubs.id"`
+	ClubID   int      `json:"club_id" db:"club_id" validate:"required,gt=0"`
 	Status   Status   `json:"status" db:"status" validate:"oneof=pending_payment canceled active"`
 }
 

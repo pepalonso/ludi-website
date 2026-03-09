@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"tournament-dev/internal/database"
 	"tournament-dev/internal/models"
@@ -145,6 +146,7 @@ func (h *AllergyHandler) CreateMeAllergy(w http.ResponseWriter, r *http.Request)
 		return
 	}
 	if err := h.repo.CreateAllergy(r.Context(), &allergy); err != nil {
+		log.Printf("[allergy] CreateMeAllergy failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to create allergy")
 		return
 	}

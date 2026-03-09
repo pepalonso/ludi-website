@@ -4,12 +4,11 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"log"
 	"strings"
 	"time"
 
-	"tournament-dev/internal/database/base"
 	"tournament-dev/internal/database"
+	"tournament-dev/internal/database/base"
 )
 
 // AuthRepository implements database.AuthRepository
@@ -65,33 +64,38 @@ func (r *AuthRepository) GetAdminByEmail(ctx context.Context, email string) (pas
 	return passwordHash, nil
 }
 
-// CreateEditSession inserts an edit session (2FA pending: pin_hash set, session_token returned after validation)
+// CreateEditSession inserts an edit session (2FA pending: pin_hash set, session_token returned after validation).
+// expires_at is set in the DB to UTC_TIMESTAMP() + 30 min so session always lasts 30 min regardless of app/driver TZ.
 func (r *AuthRepository) CreateEditSession(ctx context.Context, teamID int, sessionToken, pinHash, contactMethod string, expiresAt time.Time) error {
 	query := `INSERT INTO edit_sessions (team_id, session_token, pin_hash, contact_method, is_used, expires_at)
-		VALUES (?, ?, ?, ?, FALSE, ?)`
-	_, err := r.DB.ExecContext(ctx, query, teamID, sessionToken, pinHash, contactMethod, expiresAt)
+		VALUES (?, ?, ?, ?, FALSE, DATE_ADD(UTC_TIMESTAMP(), INTERVAL 30 MINUTE))`
+	_, err := r.DB.ExecContext(ctx, query, teamID, sessionToken, pinHash, contactMethod)
 	if err != nil {
 		return fmt.Errorf("failed to create edit session: %w", err)
 	}
 	return nil
 }
 
-// GetPendingSessionsByTeamID returns non-used, non-expired sessions for the team (for PIN verification)
+// GetPendingSessionsByTeamID returns non-used, non-expired sessions for the team (for PIN verification).
+// Expiry is checked in Go (using expires_at.UTC()) to avoid MySQL session timezone vs INSERT timezone mismatch.
 func (r *AuthRepository) GetPendingSessionsByTeamID(ctx context.Context, teamID int) ([]database.EditSessionRow, error) {
 	query := `SELECT session_token, pin_hash, expires_at FROM edit_sessions
-		WHERE team_id = ? AND is_used = FALSE AND expires_at > NOW()`
+		WHERE team_id = ? AND is_used = FALSE ORDER BY id DESC`
 	rows, err := r.DB.QueryContext(ctx, query, teamID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get pending sessions: %w", err)
 	}
 	defer rows.Close()
+	now := time.Now().UTC()
 	var out []database.EditSessionRow
 	for rows.Next() {
 		var row database.EditSessionRow
 		if err := rows.Scan(&row.SessionToken, &row.PinHash, &row.ExpiresAt); err != nil {
 			return nil, fmt.Errorf("failed to scan session row: %w", err)
 		}
-		out = append(out, row)
+		if now.Before(row.ExpiresAt.UTC()) || now.Equal(row.ExpiresAt.UTC()) {
+			out = append(out, row)
+		}
 	}
 	return out, rows.Err()
 }
@@ -111,13 +115,14 @@ func (r *AuthRepository) MarkSessionUsedByToken(ctx context.Context, sessionToke
 }
 
 // GetTeamIDBySessionToken returns team_id if session token is valid and not expired.
-// Uses UTC for expiry comparison to avoid timezone mismatches between app and DB.
+// Compare in UTC so it works regardless of MySQL session time_zone (test vs local).
 func (r *AuthRepository) GetTeamIDBySessionToken(ctx context.Context, sessionToken string) (*int, error) {
 	token := strings.TrimSpace(sessionToken)
 	if token == "" {
 		return nil, nil
 	}
-	query := `SELECT team_id FROM edit_sessions WHERE session_token = ? AND expires_at > UTC_TIMESTAMP() LIMIT 1`
+	query := `SELECT team_id FROM edit_sessions WHERE session_token = ?
+		AND expires_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 60 SECOND) LIMIT 1`
 	var teamID int
 	err := r.DB.QueryRowContext(ctx, query, token).Scan(&teamID)
 	if err != nil {
@@ -141,11 +146,6 @@ func (r *AuthRepository) ResolveBearerToken(ctx context.Context, token string) (
 	if id := r.getTeamIDByRegistrationToken(ctx, token); id != nil {
 		return *id, nil
 	}
-	prefix := token
-	if len(prefix) > 8 {
-		prefix = prefix[:8]
-	}
-	log.Printf("[auth] Bearer token resolution failed (prefix=%s)", prefix)
 	return 0, database.ErrInvalidToken
 }
 
