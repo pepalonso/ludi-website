@@ -3,7 +3,7 @@
     <div class="form-card">
       <h2 class="form-title">Afegir Entrenador</h2>
 
-      <p>Podeu afegir un mínim d'1 entrenador i un màxim de 3 entrenadors.</p>
+      <p>Podeu afegir un mínim d'1 entrenador i un màxim de 2 entrenadors.</p>
 
       <form [formGroup]="entrenadorForm" (ngSubmit)="agregarEntrenador()">
         <div class="form-group">
@@ -39,18 +39,18 @@
         </div>
 
         <div class="error-message" *ngIf="maxCoachesReached">
-          Només es poden afegir 3 entrenadors.
+          Només es poden afegir 2 entrenadors.
         </div>
         <div class="error-message" *ngIf="duplicatePrincipal">
           Ja existeix un entrenador principal. Només es pot designar un.
         </div>
-        <div class="error-message" *ngIf="thirdCoachPrincipalMissing">
-          El tercer entrenador s'ha de designar com a principal, ja que encara no n'hi ha cap.
+        <div class="error-message" *ngIf="secondCoachPrincipalMissing">
+          El segon entrenador s'ha de designar com a principal, ja que encara no n'hi ha cap.
         </div>
 
 
         <button type="submit" class="btn-add"
-          [disabled]="entrenadorForm.invalid || maxCoachesReached || duplicatePrincipal || thirdCoachPrincipalMissing">
+          [disabled]="entrenadorForm.invalid || maxCoachesReached || duplicatePrincipal || secondCoachPrincipalMissing">
           <span class="btn-icon">+</span>
           <span>Agregar</span>
         </button>
@@ -95,7 +95,7 @@
         </button>
       </div>
       <div class="dreta">
-        <button class="btn-next" (click)="nextStep()" [disabled]="entrenadores.length < 1 || entrenadores.length > 3">
+        <button class="btn-next" (click)="nextStep()" [disabled]="entrenadores.length < 1 || entrenadores.length > 2">
           <span>Següent</span>
           <span class="material-icons">arrow_forward</span>
         </button>

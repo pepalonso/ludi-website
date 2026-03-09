@@ -14,7 +14,7 @@
 
         <div class="form-group">
           <label for="categoria">Categoria</label>
-          <select id="categoria" formControlName="categoria">
+          <select id="categoria" formControlName="categoria" (change)="onCategoriaChange($any($event.target).value)">
             <option value="" disabled selected>Seleccionar categoria</option>
             <option *ngFor="let categoria of categories" [value]="categoria">{{ categoria }}</option>
           </select>
@@ -63,6 +63,14 @@
         <span>Següent</span>
         <span class="material-icons">arrow_forward</span>
       </button>
+    </div>
+  </div>
+
+  <!-- Modal informatiu Pre-mini -->
+  <div class="modal-overlay" *ngIf="showPreminiModal" (click)="closePreminiModal()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+      <p class="modal-text">{{ preminiModalMessage }}</p>
+      <button type="button" class="modal-btn-ok" (click)="closePreminiModal()">D'acord</button>
     </div>
   </div>
 </div>

@@ -168,3 +168,43 @@ select:has(option:disabled:checked) {
   border-color: #D36701;
   box-shadow: 0 0 0 2px rgba(211, 103, 1, 0.2);
 }
+
+/* Pre-mini modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-box {
+  background-color: #252525;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  padding: 1.5rem;
+  max-width: 420px;
+}
+
+.modal-text {
+  color: #ffffff;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1.25rem 0;
+}
+
+.modal-btn-ok {
+  background-color: #D36701;
+  color: #ffffff;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.modal-btn-ok:hover {
+  background-color: #f07b1c;
+}
