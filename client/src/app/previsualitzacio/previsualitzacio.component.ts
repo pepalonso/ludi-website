@@ -76,10 +76,6 @@ export class PrevisualitzacioComponent {
     this.isSubmitting = true
     this.errorMessage = null
 
-    if (this.team.fitxes) {
-      this.team.fitxes = this.team.fitxes.map(fitxa => fitxa.normalize('NFC'))
-    }
-
     const payload = {
       ...this.team,
       intolerancies: this.team.intolerancies?.flatMap(item => Array(item.count).fill(item.name)),
