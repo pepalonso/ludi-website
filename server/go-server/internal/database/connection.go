@@ -26,7 +26,9 @@ type Connection struct {
 
 // NewConnection creates a new database connection
 func NewConnection(config Config) (*Connection, error) {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&loc=Local",
+	// parseTime=true: parse DATE/DATETIME into time.Time; loc=UTC: interpret as UTC in Go.
+	// time_zone='UTC': set MySQL session to UTC so TIMESTAMP read/write matches app (30min from generate).
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true&loc=UTC&time_zone=%%27UTC%%27",
 		config.User,
 		config.Password,
 		config.Host,
@@ -44,10 +46,10 @@ func NewConnection(config Config) (*Connection, error) {
 	db.SetMaxIdleConns(5)
 	db.SetConnMaxLifetime(5 * time.Minute)
 
-	// Test the connection
 	if err := db.Ping(); err != nil {
 		return nil, fmt.Errorf("failed to ping database: %w", err)
 	}
+	_, _ = db.Exec("SET time_zone = '+00:00'")
 
 	log.Println("Database connection established successfully")
 

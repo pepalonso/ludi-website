@@ -41,8 +41,10 @@ fi
 
 info "Building multi-arch: $IMAGE (linux/amd64, linux/arm64)"
 cd "$REPO_ROOT"
+# Pass VERSION so /health returns it (verify deployed image on test/prod).
 docker buildx build \
   --platform linux/amd64,linux/arm64 \
+  --build-arg VERSION="$TAG" \
   -t "$IMAGE" \
   --push \
   -f Dockerfile .

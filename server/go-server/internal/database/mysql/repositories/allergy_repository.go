@@ -26,7 +26,7 @@ func NewAllergyRepository(db *sql.DB) *AllergyRepository {
 func (r *AllergyRepository) CreateAllergy(ctx context.Context, allergy *models.AllergyCreateRequest) error {
 	query := `
 		INSERT INTO allergies (player_id, description, created_at, updated_at)
-		VALUES (?, ?, ?, ?, NOW(), NOW())
+		VALUES (?, ?, NOW(), NOW())
 	`
 
 	_, err := r.DB.ExecContext(ctx, query,

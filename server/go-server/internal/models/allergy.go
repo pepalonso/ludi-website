@@ -3,7 +3,7 @@ package models
 import "time"
 
 type AllergyBase struct {
-	PlayerID    int     `json:"player_id" db:"player_id" validate:"required,gt=0,foreign_key=players.id"`
+	PlayerID    int     `json:"player_id" db:"player_id" validate:"required,gt=0"`
 	Description *string `json:"description" db:"description"`
 }
 

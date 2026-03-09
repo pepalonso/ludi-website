@@ -63,12 +63,13 @@ IMAGE="${DOCKER_REGISTRY_IMAGE}:${TAG}"
 SSH_TARGET="${PROD_USER}@${PROD_HOST}"
 
 info "Deploying to $ENV_NAME: pull and restart (APP_IMAGE=$IMAGE)"
-# Use docker-compose (standalone) for Pi/older Docker; fallback to docker compose (plugin)
+# Use docker-compose (standalone) for Pi/older Docker; fallback to docker compose (plugin).
+# --pull always: ensure we get the latest image for this tag from the registry (avoids stale cache).
 ssh "$SSH_TARGET" "cd $PROD_APP_DIR && \
   export APP_IMAGE=$IMAGE && \
   (docker-compose -f docker-compose.prod.registry.yml --env-file .env.prod.local pull app && \
-   docker-compose -f docker-compose.prod.registry.yml --env-file .env.prod.local up -d) || \
+   docker-compose -f docker-compose.prod.registry.yml --env-file .env.prod.local up -d --force-recreate app) || \
   (docker compose -f docker-compose.prod.registry.yml --env-file .env.prod.local pull app && \
-   docker compose -f docker-compose.prod.registry.yml --env-file .env.prod.local up -d)"
+   docker compose -f docker-compose.prod.registry.yml --env-file .env.prod.local up -d --force-recreate app)"
 
 info "Done. Check health: ssh $SSH_TARGET 'curl -s http://localhost:\${GO_SERVER_PORT:-8080}/health'"
