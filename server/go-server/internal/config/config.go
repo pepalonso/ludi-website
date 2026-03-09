@@ -9,15 +9,17 @@ import (
 
 // App holds application configuration.
 type App struct {
-	UploadDir     string
-	AllowedOrigins []string // From CORS_ALLOWED_ORIGINS; used for CORS and registration link base URL.
+	UploadDir            string
+	AllowedOrigins       []string // From CORS_ALLOWED_ORIGINS; used for CORS and registration link base URL.
+	RegistrationWebhookURL string // Optional. If set, POST registration payload to this URL on new inscription.
 }
 
 // LoadFromEnv loads app config from environment variables.
 func LoadFromEnv() App {
 	uploadDir := getEnv("UPLOAD_DIR", "uploads")
 	allowed := parseCommaSeparated(getEnv("CORS_ALLOWED_ORIGINS", ""))
-	return App{UploadDir: uploadDir, AllowedOrigins: allowed}
+	webhookURL := strings.TrimSpace(os.Getenv("REGISTRATION_WEBHOOK_URL"))
+	return App{UploadDir: uploadDir, AllowedOrigins: allowed, RegistrationWebhookURL: webhookURL}
 }
 
 // parseCommaSeparated returns trimmed non-empty parts of s.

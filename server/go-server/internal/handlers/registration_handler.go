@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -16,6 +18,16 @@ import (
 	"tournament-dev/internal/models"
 	"tournament-dev/internal/request"
 )
+
+// registrationWebhookBody is the JSON payload sent to REGISTRATION_WEBHOOK_URL.
+type registrationWebhookBody struct {
+	Club             string `json:"club"`
+	NomEquip         string `json:"nomEquip"`
+	Telefon          string `json:"telefon"`
+	Jugadors         int    `json:"jugadors"`
+	Entrenadors      int    `json:"entrenadors"`
+	RegistrationPath string `json:"registration_path"`
+}
 
 const (
 	registrationTokenExpiry = 365 * 24 * time.Hour
@@ -36,15 +48,17 @@ type RegistrationHandler struct {
 	*BaseHandler
 	AllowedOrigins []string
 	Notifier       auth.RegistrationNotifier
+	WebhookURL     string // If set, POST registration payload here on success (best-effort).
 }
 
 // NewRegistrationHandler creates a new registration handler.
 // allowedOrigins: origins allowed for CORS; registration link uses the request's Origin when it's in this list.
-func NewRegistrationHandler(repo database.Repository, allowedOrigins []string, notifier auth.RegistrationNotifier) *RegistrationHandler {
+func NewRegistrationHandler(repo database.Repository, allowedOrigins []string, notifier auth.RegistrationNotifier, webhookURL string) *RegistrationHandler {
 	return &RegistrationHandler{
 		BaseHandler:    NewBaseHandler(repo),
 		AllowedOrigins: allowedOrigins,
 		Notifier:       notifier,
+		WebhookURL:     strings.TrimSpace(webhookURL),
 	}
 }
 
@@ -251,6 +265,19 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 		}
 	}
 
+	// 10. Call registration webhook if configured (best-effort; do not fail response)
+	if h.WebhookURL != "" {
+		webhookBody := registrationWebhookBody{
+			Club:             strings.TrimSpace(body.Club),
+			NomEquip:         strings.TrimSpace(body.NomEquip),
+			Telefon:          strings.TrimSpace(body.Telefon),
+			Jugadors:         len(body.Jugadors),
+			Entrenadors:      len(body.Entrenadors),
+			RegistrationPath: registrationPath,
+		}
+		go h.callRegistrationWebhook(webhookBody)
+	}
+
 	h.JSONResponse(w, http.StatusCreated, models.RegisterInscriptionResponse{
 		RegistrationURL:  registrationURL,
 		RegistrationPath: registrationPath,
@@ -294,4 +321,30 @@ func (h *RegistrationHandler) validateRegistrationBody(b *models.RegisterInscrip
 		return fmt.Errorf("invalid sexe")
 	}
 	return nil
+}
+
+// callRegistrationWebhook POSTs the registration payload to h.WebhookURL. Best-effort; errors are logged.
+func (h *RegistrationHandler) callRegistrationWebhook(body registrationWebhookBody) {
+	payload, err := json.Marshal(body)
+	if err != nil {
+		log.Printf("[registration] webhook marshal failed: %v", err)
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, h.WebhookURL, bytes.NewReader(payload))
+	if err != nil {
+		log.Printf("[registration] webhook request build failed: %v", err)
+		return
+	}
+	req.Header.Set("Content-Type", "application/json")
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		log.Printf("[registration] webhook POST failed: %v", err)
+		return
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		log.Printf("[registration] webhook returned status %d", resp.StatusCode)
+	}
 }
