@@ -5,6 +5,7 @@ import { ClubDropdownComponent } from "../utils/club-dropdown/club-dropdown.comp
 import { CdkStep, CdkStepper } from '@angular/cdk/stepper';
 import { PrevisualitzacioService } from '../serveis/previsualitzacio.service';
 import { Categories, Sexe } from '../interfaces/ludi.interface';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-dades-generals',
@@ -19,6 +20,12 @@ export class DadesGeneralsComponent {
 
   categories = Object.values(Categories);
   sexes = Object.values(Sexe);
+
+  /** Modal shown when user selects Pre-mini category. */
+  showPreminiModal = false;
+
+  /** Message for Pre-mini info modal (price from env). */
+  preminiModalMessage = `La categoria premini només participarà el diumenge i només la final serà després del show. La inscripció no inclou el dormir ni l'esmorzar de l'any passat. El preu per jugador és de ${environment.pricePerPlayerPremini}€.`;
 
   constructor(
     private fb: FormBuilder,
@@ -46,5 +53,15 @@ export class DadesGeneralsComponent {
   nextStep() {
     this.previService.setFormData(this.dadesForm);
     this.stepper.next();
+  }
+
+  onCategoriaChange(value: string): void {
+    if (value === Categories.PREMINI) {
+      this.showPreminiModal = true;
+    }
+  }
+
+  closePreminiModal(): void {
+    this.showPreminiModal = false;
   }
 }

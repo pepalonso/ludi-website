@@ -31,7 +31,7 @@ export class DadesEntrenadorsComponent {
   }
 
   get maxCoachesReached(): boolean {
-    return this.entrenadores.length >= 3;
+    return this.entrenadores.length >= 2;
   }
 
   get duplicatePrincipal(): boolean {
@@ -41,9 +41,10 @@ export class DadesEntrenadorsComponent {
     );
   }
 
-  get thirdCoachPrincipalMissing(): boolean {
+  /** When adding the second (and last) coach, one must be principal. */
+  get secondCoachPrincipalMissing(): boolean {
     return (
-      this.entrenadores.length === 2 &&
+      this.entrenadores.length === 1 &&
       !this.entrenadores.some((e) => e.esPrincipal === true) &&
       this.entrenadorForm.get('esPrincipal')?.value === false
     );
@@ -54,7 +55,7 @@ export class DadesEntrenadorsComponent {
       this.entrenadorForm.valid &&
       !this.maxCoachesReached &&
       !this.duplicatePrincipal &&
-      !this.thirdCoachPrincipalMissing
+      !this.secondCoachPrincipalMissing
     ) {
       const entrenador = { ...this.entrenadorForm.value };
       if (entrenador.esPrincipal == null) {

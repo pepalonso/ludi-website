@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FooterComponent } from '../utils/footer/footer.component';
 import { Categories, Sexe, Team } from '../interfaces/ludi.interface';
 import { RegistrationStateService } from '../serveis/registration-data.service';
+import { environment } from '../../environments/environment';
 
 export interface RegistrationProps {
   message: string;
@@ -39,7 +40,6 @@ export class RegistrationSuccessComponent {
   public toastMessage: string = '';
   public toastType: 'success' | 'error' = 'success';
 
-  private inscriptionPriceEntrenadors = 10;
   private priceErrorMessage = `Per saber l'import posat en contacte amb nosaltres`;
 
   paymentInfo = {
@@ -100,12 +100,15 @@ export class RegistrationSuccessComponent {
   }
 
   private updatePaymentConcept() {
-    const pricePerPlayer = this.categoria === Categories.PREMINI ? 40 : 50;
+    const pricePerPlayer =
+      this.categoria === Categories.PREMINI
+        ? environment.pricePerPlayerPremini
+        : environment.pricePerPlayer;
     this.paymentInfo.amount =
       this.numPlayers && this.numEntrenadors
         ? (
             this.numPlayers * pricePerPlayer +
-            this.numEntrenadors * this.inscriptionPriceEntrenadors
+            this.numEntrenadors * environment.pricePerEntrenador
           ).toString() + '€'
         : this.priceErrorMessage;
 
