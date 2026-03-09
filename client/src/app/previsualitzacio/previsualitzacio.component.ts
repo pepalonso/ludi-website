@@ -81,7 +81,7 @@ export class PrevisualitzacioComponent {
       intolerancies: this.team.intolerancies?.flatMap(item => Array(item.count).fill(item.name)),
     }
 
-    const url = `https://${environment.apiUrl}/registrar-incripcio`
+    const url = `${environment.apiBaseUrl}/registrar-incripcio`
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     })
