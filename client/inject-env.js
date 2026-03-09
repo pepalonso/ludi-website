@@ -13,13 +13,20 @@ if (missingVars.length > 0) {
 }
 
 // Build the environment file string (apiUrl must be full URL with scheme)
+const pricePerPlayer = Number(process.env.PRICE_PER_PLAYER) || 55;
+const pricePerPlayerPremini = Number(process.env.PRICE_PER_PLAYER_PREMINI) || 40;
+const pricePerEntrenador = process.env.PRICE_PER_ENTRENADOR !== undefined ? Number(process.env.PRICE_PER_ENTRENADOR) : 0;
+
 const envConfigFile = `
 export const environment = {
   production: true,
   apiUrl: "${process.env.API_URL || ""}",
   get apiBaseUrl() { return (this.apiUrl || "").replace(/\\/$/, ""); },
   apiKey: "${process.env.API_KEY || ""}",
-  contactPhone: "${process.env.CONTACT_PHONE || "659173158"}"
+  contactPhone: "${process.env.CONTACT_PHONE || "659173158"}",
+  pricePerPlayer: ${pricePerPlayer},
+  pricePerPlayerPremini: ${pricePerPlayerPremini},
+  pricePerEntrenador: ${pricePerEntrenador}
 };
 `;
 
