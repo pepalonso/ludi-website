@@ -181,13 +181,13 @@ func (s *TwilioSMTPSender) sendWhatsAppRegistration(ctx context.Context, data Re
 	if err != nil {
 		return err
 	}
+	// Template: {{club}}, {{name}}, {{players_num}}, {{coaches_num}}; path_read for URL/button.
 	contentVars, _ := json.Marshal(map[string]string{
-		"club":       data.Club,
-		"name":       data.TeamName,
+		"club":        data.Club,
+		"name":        data.TeamName,
 		"players_num": strconv.Itoa(data.NumPlayers),
 		"coaches_num": strconv.Itoa(data.NumCoaches),
 		"path_read":  data.RegistrationPath,
-		"path_write": data.RegistrationPath,
 	})
 	form := url.Values{}
 	form.Set("To", "whatsapp:"+to)
