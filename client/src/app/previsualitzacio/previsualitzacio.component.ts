@@ -25,7 +25,7 @@ export class PrevisualitzacioComponent {
   public apiResponse: any
   public isSubmitting = false
   public errorMessage: string | null = null
-  public contactPhone = '659173158'
+  public contactPhone = environment.contactPhone
 
   // Toast properties
   public showToast = false
