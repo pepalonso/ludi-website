@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-redirector',
@@ -11,6 +12,7 @@ export class RedirectorComponent {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    window.location.href = 'https://wa.me/659173158';
+    const phone = (environment.contactPhone || '').replace(/\D/g, '');
+    window.location.href = `https://wa.me/${phone || '659173158'}`;
   }
 }
