@@ -37,7 +37,7 @@ func main() {
 	}
 
 	sender := auth.NewTwilioSMTPSender()
-	router := handlers.NewRouter(repo, appConfig.UploadDir, sender, appConfig.AllowedOrigins, sender, appConfig.RegistrationWebhookURL)
+	router := handlers.NewRouter(repo, appConfig.UploadDir, sender, appConfig.AllowedOrigins, sender, appConfig.RegistrationWebhookURL, appConfig.AppEnv)
 
 	mux := http.NewServeMux()
 	router.SetupRoutes(mux)

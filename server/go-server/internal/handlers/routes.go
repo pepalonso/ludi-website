@@ -26,7 +26,7 @@ type Router struct {
 	registrationHandler *RegistrationHandler
 }
 
-func NewRouter(repo database.Repository, uploadDir string, pinSender auth.PINSender, allowedOrigins []string, registrationNotifier auth.RegistrationNotifier, registrationWebhookURL string) *Router {
+func NewRouter(repo database.Repository, uploadDir string, pinSender auth.PINSender, allowedOrigins []string, registrationNotifier auth.RegistrationNotifier, registrationWebhookURL string, appEnv string) *Router {
 	return &Router{
 		clubHandler:         NewClubHandler(repo),
 		teamHandler:         NewTeamHandler(repo),
@@ -36,7 +36,7 @@ func NewRouter(repo database.Repository, uploadDir string, pinSender auth.PINSen
 		documentHandler:     NewDocumentHandler(repo, uploadDir),
 		authHandler:         NewAuthHandler(repo, pinSender),
 		adminAuthHandler:    NewAdminAuthHandler(repo),
-		registrationHandler: NewRegistrationHandler(repo, allowedOrigins, registrationNotifier, registrationWebhookURL),
+		registrationHandler: NewRegistrationHandler(repo, allowedOrigins, registrationNotifier, registrationWebhookURL, appEnv),
 	}
 }
 

@@ -27,6 +27,7 @@ type registrationWebhookBody struct {
 	Jugadors         int    `json:"jugadors"`
 	Entrenadors      int    `json:"entrenadors"`
 	RegistrationPath string `json:"registration_path"`
+	AppEnv           string `json:"appEnv"` // APP_ENV (e.g. "production"); allows webhook to know which environment registered.
 }
 
 const (
@@ -49,16 +50,18 @@ type RegistrationHandler struct {
 	AllowedOrigins []string
 	Notifier       auth.RegistrationNotifier
 	WebhookURL     string // If set, POST registration payload here on success (best-effort).
+	AppEnv        string // APP_ENV value (e.g. "production"); included in webhook payload.
 }
 
 // NewRegistrationHandler creates a new registration handler.
 // allowedOrigins: origins allowed for CORS; registration link uses the request's Origin when it's in this list.
-func NewRegistrationHandler(repo database.Repository, allowedOrigins []string, notifier auth.RegistrationNotifier, webhookURL string) *RegistrationHandler {
+func NewRegistrationHandler(repo database.Repository, allowedOrigins []string, notifier auth.RegistrationNotifier, webhookURL string, appEnv string) *RegistrationHandler {
 	return &RegistrationHandler{
 		BaseHandler:    NewBaseHandler(repo),
 		AllowedOrigins: allowedOrigins,
 		Notifier:       notifier,
 		WebhookURL:     strings.TrimSpace(webhookURL),
+		AppEnv:         strings.TrimSpace(appEnv),
 	}
 }
 
@@ -278,6 +281,7 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 			Jugadors:         len(body.Jugadors),
 			Entrenadors:      len(body.Entrenadors),
 			RegistrationPath: registrationPath,
+			AppEnv:           h.AppEnv,
 		}
 		go h.callRegistrationWebhook(webhookBody)
 	}
