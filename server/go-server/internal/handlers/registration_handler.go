@@ -126,6 +126,7 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 	if club == nil {
 		clubName := strings.TrimSpace(body.Club)
 		if err := h.repo.CreateClub(ctx, &models.ClubCreateRequest{ClubBase: models.ClubBase{Name: clubName}}); err != nil {
+			log.Printf("[registration] CreateClub failed name=%q: %v", clubName, err)
 			h.ErrorResponse(w, http.StatusInternalServerError, "Failed to create club")
 			return
 		}
@@ -178,6 +179,7 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 			},
 		}
 		if err := h.repo.CreatePlayer(ctx, &req); err != nil {
+			log.Printf("[registration] CreatePlayer failed team_id=%d: %v", teamID, err)
 			h.ErrorResponse(w, http.StatusInternalServerError, "Failed to create player")
 			return
 		}
@@ -232,11 +234,13 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 	// 7. Registration token
 	token, err := randomHex(32)
 	if err != nil {
+		log.Printf("[registration] randomHex for token failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to create registration token")
 		return
 	}
 	expiresAt := time.Now().Add(registrationTokenExpiry)
 	if err := h.repo.CreateRegistrationToken(ctx, teamID, token, expiresAt); err != nil {
+		log.Printf("[registration] CreateRegistrationToken failed team_id=%d: %v", teamID, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to create registration token")
 		return
 	}

@@ -43,6 +43,7 @@ func (h *ClubHandler) CreateClub(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 	if err := h.repo.CreateClub(ctx, &club); err != nil {
+		log.Printf("[admin/clubs] CreateClub failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to create club: %v", err))
 		return
 	}
@@ -73,6 +74,7 @@ func (h *ClubHandler) ListClubs(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	response, err := h.repo.ListClubs(ctx)
 	if err != nil {
+		log.Printf("[admin/clubs] ListClubs failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to list clubs: %v", err))
 		return
 	}
@@ -91,6 +93,7 @@ func (h *ClubHandler) ListClubsPublic(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, basquetCatalaClubsURL+"?_="+fmt.Sprintf("%d", time.Now().UnixMilli()), nil)
 	if err != nil {
+		log.Printf("[clubs] build upstream request failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "failed to build upstream request")
 		return
 	}
@@ -108,6 +111,7 @@ func (h *ClubHandler) ListClubsPublic(w http.ResponseWriter, r *http.Request) {
 	}
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
+		log.Printf("[clubs] read upstream response failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "failed to read upstream response")
 		return
 	}
@@ -139,6 +143,7 @@ func (h *ClubHandler) DeleteClub(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 	if err := h.repo.DeleteClub(ctx, id); err != nil {
+		log.Printf("[admin/clubs] DeleteClub failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to delete club: %v", err))
 		return
 	}
@@ -168,6 +173,7 @@ func (h *ClubHandler) UpdateClub(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 	if err := h.repo.UpdateClub(ctx, id, &club); err != nil {
+		log.Printf("[admin/clubs] UpdateClub failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to update club: %v", err))
 		return
 	}

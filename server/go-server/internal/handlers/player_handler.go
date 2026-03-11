@@ -3,6 +3,7 @@ package handlers
 import (
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"tournament-dev/internal/database"
 	customerrors "tournament-dev/internal/errors"
@@ -45,6 +46,7 @@ func (h *PlayerHandler) CreatePlayer(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		log.Printf("[admin/players] CreatePlayer failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to create player")
 		return
 	}
@@ -105,6 +107,7 @@ func (h *PlayerHandler) ListPlayers(w http.ResponseWriter, r *http.Request) {
 
 	players, err := h.repo.ListPlayers(ctx, filters)
 	if err != nil {
+		log.Printf("[admin/players] ListPlayers failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to list players")
 		return
 	}
@@ -135,6 +138,7 @@ func (h *PlayerHandler) UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 	if err := h.repo.UpdatePlayer(ctx, id, &player); err != nil {
+		log.Printf("[admin/players] UpdatePlayer failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to update player")
 		return
 	}
@@ -152,6 +156,7 @@ func (h *PlayerHandler) DeletePlayer(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 	if err := h.repo.DeletePlayer(ctx, id); err != nil {
+		log.Printf("[admin/players] DeletePlayer failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to delete player")
 		return
 	}
@@ -172,6 +177,7 @@ func (h *PlayerHandler) ListMePlayers(w http.ResponseWriter, r *http.Request) {
 	filters := models.PlayerFilters{Page: page, PageSize: pageSize, TeamID: &teamID}
 	resp, err := h.repo.ListPlayers(r.Context(), filters)
 	if err != nil {
+		log.Printf("[me/players] ListMePlayers failed team_id=%d: %v", teamID, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to list players")
 		return
 	}
@@ -248,6 +254,7 @@ func (h *PlayerHandler) UpdateMePlayer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := h.repo.UpdatePlayer(r.Context(), id, &req); err != nil {
+		log.Printf("[me/players] UpdateMePlayer failed team_id=%d player_id=%d: %v", teamID, id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to update player")
 		return
 	}
@@ -271,6 +278,7 @@ func (h *PlayerHandler) DeleteMePlayer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := h.repo.DeletePlayer(r.Context(), id); err != nil {
+		log.Printf("[me/players] DeleteMePlayer failed team_id=%d player_id=%d: %v", teamID, id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to delete player")
 		return
 	}
