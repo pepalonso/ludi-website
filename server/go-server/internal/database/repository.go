@@ -35,6 +35,7 @@ type Repository interface {
 type AuthRepository interface {
 	CreateRegistrationToken(ctx context.Context, teamID int, token string, expiresAt time.Time) error
 	GetTeamIDByRegistrationToken(ctx context.Context, token string) (*int, error)
+	GetRegistrationTokenByTeamID(ctx context.Context, teamID int) (*string, error)
 	GetAdminByEmail(ctx context.Context, email string) (passwordHash string, err error)
 	CreateEditSession(ctx context.Context, teamID int, sessionToken, pinHash, contactMethod string, expiresAt time.Time) error
 	GetPendingSessionsByTeamID(ctx context.Context, teamID int) ([]EditSessionRow, error)

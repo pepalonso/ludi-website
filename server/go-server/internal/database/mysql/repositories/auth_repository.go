@@ -53,6 +53,19 @@ func (r *AuthRepository) GetTeamIDByRegistrationToken(ctx context.Context, token
 	return &teamID, nil
 }
 
+func (r *AuthRepository) GetRegistrationTokenByTeamID(ctx context.Context, teamID int) (*string, error) {
+	query := `SELECT token FROM registration_tokens WHERE team_id = ? AND expires_at > UTC_TIMESTAMP() ORDER BY created_at DESC LIMIT 1`
+	var token string
+	err := r.DB.QueryRowContext(ctx, query, teamID).Scan(&token)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+		return nil, fmt.Errorf("failed to get registration token by team id: %w", err)
+	}
+	return &token, nil
+}
+
 // GetAdminByEmail returns the password_hash for the admin with the given email, or ErrNoRows.
 func (r *AuthRepository) GetAdminByEmail(ctx context.Context, email string) (passwordHash string, err error) {
 	err = r.DB.QueryRowContext(ctx, `SELECT password_hash FROM admins WHERE email = ? LIMIT 1`, email).Scan(&passwordHash)

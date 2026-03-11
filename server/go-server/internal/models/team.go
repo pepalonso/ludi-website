@@ -79,17 +79,18 @@ type TeamStats struct {
 
 // MeTeamResponse is the "my team" payload for GET /api/me/team (frontend shape: mapTeamResponse)
 type MeTeamResponse struct {
-	NomEquip       string             `json:"nomEquip"`
-	Email          string             `json:"email"`
-	Telefon        string             `json:"telefon"`
-	Sexe           string             `json:"sexe"`   // "Masculí" or "Femení"
-	Categoria      string             `json:"categoria"`
-	Club           string             `json:"club"`   // club name
-	Observacions   string             `json:"observacions,omitempty"`
-	DataInscripcio string             `json:"dataInscripcio,omitempty"`
-	Intolerancies  []string           `json:"intolerancies"`
-	Jugadors       []MeTeamJugador    `json:"jugadors"`
-	Entrenadors    []MeTeamEntrenador `json:"entrenadors"`
+	NomEquip          string             `json:"nomEquip"`
+	Email             string             `json:"email"`
+	Telefon           string             `json:"telefon"`
+	Sexe              string             `json:"sexe"`   // "Masculí" or "Femení"
+	Categoria         string             `json:"categoria"`
+	Club              string             `json:"club"`   // club name
+	Observacions      string             `json:"observacions,omitempty"`
+	DataInscripcio    string             `json:"dataInscripcio,omitempty"`
+	Intolerancies     []string           `json:"intolerancies"`
+	Jugadors          []MeTeamJugador    `json:"jugadors"`
+	Entrenadors       []MeTeamEntrenador `json:"entrenadors"`
+	RegistrationToken *string            `json:"registrationToken,omitempty"`
 }
 
 type MeTeamUpdateRequest struct {

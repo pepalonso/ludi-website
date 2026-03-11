@@ -251,6 +251,9 @@ func (h *TeamHandler) GetMeTeam(w http.ResponseWriter, r *http.Request) {
 			EsPrincipal:    c.IsHeadCoach,
 		})
 	}
+	if regToken, _ := h.repo.GetRegistrationTokenByTeamID(ctx, teamID); regToken != nil {
+		resp.RegistrationToken = regToken
+	}
 	h.JSONResponse(w, http.StatusOK, resp)
 }
 
