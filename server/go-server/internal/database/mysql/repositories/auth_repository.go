@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
 	"strings"
 	"time"
 
@@ -146,6 +147,8 @@ func (r *AuthRepository) ResolveBearerToken(ctx context.Context, token string) (
 	if id := r.getTeamIDByRegistrationToken(ctx, token); id != nil {
 		return *id, nil
 	}
+	// Debug: help trace 401s (e.g. desktop vs mobile using same token)
+	log.Printf("[auth] ResolveBearerToken: token not found or expired (len=%d)", len(token))
 	return 0, database.ErrInvalidToken
 }
 

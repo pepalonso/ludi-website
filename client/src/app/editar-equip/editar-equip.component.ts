@@ -82,7 +82,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(params => {
       this.teamToken = params['token'] || null
       if (this.teamToken) {
-        this.fetchTeamDetails(this.teamToken)
+        this.fetchTeamDetails()
         this.initializeSessionToken()
       } else {
         this.error = true
@@ -158,13 +158,10 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
   }
 
-  private async fetchTeamDetails(token: string): Promise<void> {
+  private async fetchTeamDetails(): Promise<void> {
     this.isLoading = true
     const base = environment.apiBaseUrl
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    }
+    const headers = this.getHeadersForRead()
 
     try {
       const clubs = await firstValueFrom(this.clubService.loadClubs())
@@ -179,7 +176,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
       const responseData = await response.json()
       this.team = await mapTeamResponse(responseData, clubs)
       this.observationsText = this.team.observacions || ''
-      await this.fetchMeAllergies(token)
+      await this.fetchMeAllergies()
       this.isLoading = false
     } catch (error) {
       this.error = true
@@ -189,12 +186,12 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
     }
   }
 
-  private async fetchMeAllergies(token: string): Promise<void> {
+  private async fetchMeAllergies(): Promise<void> {
     try {
       const base = environment.apiBaseUrl
       const response = await fetch(`${base}/api/me/allergies`, {
         method: 'GET',
-        headers: { Authorization: `Bearer ${token}` },
+        headers: this.getHeadersForRead(),
       })
       if (!response.ok) return
       const list = (await response.json()) as { id: number; description?: string | null }[]
@@ -206,10 +203,16 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Helper method to get the appropriate token for requests.
-  // Always read from sessionStorage so we use the latest token (avoids stale in-memory token
-  // when another tab validated or when init ran before sessionStorage was set after redirect).
-  private getAuthToken(): string {
+  /** Header name for 2FA session token; required only for modify endpoints. */
+  private static readonly SESSION_TOKEN_HEADER = 'X-Session-Token'
+
+
+  private getRegistrationToken(): string {
+    return this.teamToken ?? ''
+  }
+
+  /** Session token (from 2FA) — required in header for POST/PUT/DELETE. */
+  private getSessionToken(): string {
     const stored = sessionStorage.getItem('session_token')
     if (stored) {
       this.sessionToken = stored
@@ -217,7 +220,35 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
       if (expiryStr) this.tokenExpiryTime = parseInt(expiryStr, 10)
       return stored
     }
-    return this.teamToken || ''
+    return ''
+  }
+
+  /** Headers for read requests: Bearer = registration token only. */
+  private getHeadersForRead(): Record<string, string> {
+    return {
+      Authorization: `Bearer ${this.getRegistrationToken()}`,
+      'Content-Type': 'application/json',
+    }
+  }
+
+  /** Headers for write requests: Bearer = registration token, X-Session-Token = session token. */
+  private getHeadersForWrite(): Record<string, string> {
+    return {
+      ...this.getHeadersForRead(),
+      [EditRegistrationComponent.SESSION_TOKEN_HEADER]: this.getSessionToken(),
+    }
+  }
+
+  /** Ensure session token exists before a write; show toast and return true if missing. */
+  private requireSessionForWrite(): boolean {
+    if (!this.getSessionToken()) {
+      this.showToastNotification(
+        "Cal completar l'autenticació (codi PIN) per fer canvis. Torneu a obrir l'enllaç i introduïu el codi.",
+        'error'
+      )
+      return true
+    }
+    return false
   }
 
   onOptionChange() {
@@ -246,15 +277,13 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
 
   async addPlayer() {
     if (!this.team) return
+    if (this.requireSessionForWrite()) return
     if (this.newPlayer.nom && this.newPlayer.cognoms) {
       try {
         const base = environment.apiBaseUrl
         const response = await fetch(`${base}/api/me/players`, {
           method: 'POST',
-          headers: {
-            Authorization: `Bearer ${this.getAuthToken()}`,
-            'Content-Type': 'application/json',
-          },
+          headers: this.getHeadersForWrite(),
           body: JSON.stringify({
             first_name: this.newPlayer.nom,
             last_name: this.newPlayer.cognoms,
@@ -266,7 +295,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
           this.showToastNotification("Error: No es pot actualitzar l'equip", 'error')
           return
         }
-        await this.fetchTeamDetails(this.teamToken)
+        await this.fetchTeamDetails()
         this.resetNewPlayerForm()
         this.showToastNotification('Jugador afegit correctament', 'success')
       } catch (error) {
@@ -278,6 +307,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
 
   async updatePlayer() {
     if (!this.team) return
+    if (this.requireSessionForWrite()) return
     if (this.selectedPlayerId >= 0 && this.newPlayer.nom && this.newPlayer.cognoms) {
       try {
         const base = environment.apiBaseUrl
@@ -285,10 +315,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
         const playerId = typeof player.id === 'number' ? player.id : Number(player.id)
         const response = await fetch(`${base}/api/me/players/${playerId}`, {
           method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${this.getAuthToken()}`,
-            'Content-Type': 'application/json',
-          },
+          headers: this.getHeadersForWrite(),
           body: JSON.stringify({
             first_name: this.newPlayer.nom,
             last_name: this.newPlayer.cognoms,
@@ -296,7 +323,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
           }),
         })
         if (!response.ok) throw new Error('Failed to update player')
-        await this.fetchTeamDetails(this.teamToken!)
+        await this.fetchTeamDetails()
         this.resetNewPlayerForm()
         this.selectedPlayerId = -1
         this.showToastNotification('Jugador actualitzat correctament', 'success')
@@ -309,16 +336,17 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
 
   async deletePlayer(index: number) {
     if (!this.team) return
+    if (this.requireSessionForWrite()) return
     try {
       const base = environment.apiBaseUrl
       const player = this.team.jugadors[index]
       const playerId = typeof player.id === 'number' ? player.id : Number(player.id)
       const response = await fetch(`${base}/api/me/players/${playerId}`, {
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${this.getAuthToken()}` },
+        headers: this.getHeadersForWrite(),
       })
       if (!response.ok) throw new Error('Failed to delete player')
-      await this.fetchTeamDetails(this.teamToken!)
+      await this.fetchTeamDetails()
       this.showToastNotification('Jugador eliminat correctament', 'success')
     } catch (error) {
       console.error('Error deleting player:', error)
@@ -345,8 +373,15 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
     this.validateForm()
   }
 
+  /** Max coaches per team (same as registration form). */
+  readonly maxCoachesPerTeam = 2
+
   async addCoach() {
     if (!this.team) return
+    if (this.team.entrenadors.length >= this.maxCoachesPerTeam) {
+      this.showToastNotification(`Màxim ${this.maxCoachesPerTeam} entrenadors per equip`, 'error')
+      return
+    }
     if (this.newCoach.nom && this.newCoach.cognoms) {
       if (this.newCoach.esPrincipal === 1 && this.team.entrenadors.some(e => e.esPrincipal === 1)) {
         this.showToastNotification('Ja existeix un entrenador principal', 'error')
@@ -356,10 +391,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
         const base = environment.apiBaseUrl
         const response = await fetch(`${base}/api/me/coaches`, {
           method: 'POST',
-          headers: {
-            Authorization: `Bearer ${this.getAuthToken()}`,
-            'Content-Type': 'application/json',
-          },
+          headers: this.getHeadersForWrite(),
           body: JSON.stringify({
             first_name: this.newCoach.nom,
             last_name: this.newCoach.cognoms,
@@ -368,8 +400,13 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
             phone: this.team.telefon,
           }),
         })
-        if (!response.ok) throw new Error('Failed to add coach')
-        await this.fetchTeamDetails(this.teamToken!)
+        if (!response.ok) {
+          const body = await response.json().catch(() => ({}))
+          const msg = (body as { error?: string })?.error || 'Error afegint entrenador'
+          this.showToastNotification(msg, 'error')
+          return
+        }
+        await this.fetchTeamDetails()
         this.resetNewCoachForm()
         this.showToastNotification('Entrenador afegit correctament', 'success')
       } catch (error) {
@@ -381,6 +418,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
 
   async updateCoach() {
     if (!this.team) return
+    if (this.requireSessionForWrite()) return
     if (this.selectedCoachId >= 0 && this.newCoach.nom && this.newCoach.cognoms) {
       const isPrincipalChange =
         this.newCoach.esPrincipal === 1 &&
@@ -398,10 +436,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
         const coachId = typeof coach.id === 'number' ? coach.id : Number(coach.id)
         const response = await fetch(`${base}/api/me/coaches/${coachId}`, {
           method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${this.getAuthToken()}`,
-            'Content-Type': 'application/json',
-          },
+          headers: this.getHeadersForWrite(),
           body: JSON.stringify({
             first_name: this.newCoach.nom,
             last_name: this.newCoach.cognoms,
@@ -411,7 +446,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
           }),
         })
         if (!response.ok) throw new Error('Failed to update coach')
-        await this.fetchTeamDetails(this.teamToken!)
+        await this.fetchTeamDetails()
         this.resetNewCoachForm()
         this.selectedCoachId = -1
         this.showToastNotification('Entrenador actualitzat correctament', 'success')
@@ -434,10 +469,10 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
       const coachId = typeof coach.id === 'number' ? coach.id : Number(coach.id)
       const response = await fetch(`${base}/api/me/coaches/${coachId}`, {
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${this.getAuthToken()}` },
+        headers: this.getHeadersForWrite(),
       })
       if (!response.ok) throw new Error('Failed to delete coach')
-      await this.fetchTeamDetails(this.teamToken!)
+      await this.fetchTeamDetails()
       this.showToastNotification('Entrenador eliminat correctament', 'success')
     } catch (error) {
       console.error('Error deleting coach:', error)
@@ -448,6 +483,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
   // Intolerances methods (allergies: POST /api/me/allergies, DELETE /api/me/allergies/{id})
   async addIntolerance() {
     if (!this.team) return
+    if (this.requireSessionForWrite()) return
     if (!this.newIntoleranceText.trim()) return
     const firstPlayer = this.team.jugadors[0]
     if (!firstPlayer) {
@@ -459,17 +495,14 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
       const playerId = typeof firstPlayer.id === 'number' ? firstPlayer.id : Number(firstPlayer.id)
       const response = await fetch(`${base}/api/me/allergies`, {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${this.getAuthToken()}`,
-          'Content-Type': 'application/json',
-        },
+        headers: this.getHeadersForWrite(),
         body: JSON.stringify({
           player_id: playerId,
           description: this.newIntoleranceText.trim(),
         }),
       })
       if (!response.ok) throw new Error('Failed to add allergy')
-      if (this.teamToken) await this.fetchTeamDetails(this.teamToken)
+      if (this.teamToken) await this.fetchTeamDetails()
       this.newIntoleranceText = ''
       this.showToastNotification('Intolerància afegida correctament', 'success')
     } catch (error) {
@@ -480,6 +513,7 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
 
   async decrementIntolerance(index: number) {
     if (!this.team?.intolerancies || index < 0 || index >= this.team.intolerancies.length) return
+    if (this.requireSessionForWrite()) return
     const name = this.team.intolerancies[index].name
     const allergy = this.meAllergies.find(a => (a.description || '').trim() === name)
     if (!allergy) {
@@ -490,10 +524,10 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
       const base = environment.apiBaseUrl
       const response = await fetch(`${base}/api/me/allergies/${allergy.id}`, {
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${this.getAuthToken()}` },
+        headers: this.getHeadersForWrite(),
       })
       if (!response.ok) throw new Error('Failed to delete allergy')
-      if (this.teamToken) await this.fetchTeamDetails(this.teamToken)
+      if (this.teamToken) await this.fetchTeamDetails()
       this.showToastNotification('Intolerància actualitzada correctament', 'success')
     } catch (error) {
       console.error('Error deleting allergy:', error)
@@ -510,11 +544,11 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
       for (const allergy of toDelete) {
         const response = await fetch(`${base}/api/me/allergies/${allergy.id}`, {
           method: 'DELETE',
-          headers: { Authorization: `Bearer ${this.getAuthToken()}` },
+          headers: this.getHeadersForWrite(),
         })
         if (!response.ok) throw new Error('Failed to delete allergy')
       }
-      if (this.teamToken) await this.fetchTeamDetails(this.teamToken)
+      if (this.teamToken) await this.fetchTeamDetails()
       this.showToastNotification('Intolerància eliminada correctament', 'success')
     } catch (error) {
       console.error('Error deleting allergies:', error)
@@ -525,18 +559,16 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
   // Observations methods
   async saveObservations() {
     if (!this.team) return
+    if (this.requireSessionForWrite()) return
     try {
       const base = environment.apiBaseUrl
       const response = await fetch(`${base}/api/me/team`, {
         method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${this.getAuthToken()}`,
-          'Content-Type': 'application/json',
-        },
+        headers: this.getHeadersForWrite(),
         body: JSON.stringify({ observations: this.observationsText.trim() }),
       })
       if (!response.ok) throw new Error('Failed to update team observations')
-      await this.fetchTeamDetails(this.teamToken!)
+      await this.fetchTeamDetails()
       this.showToastNotification('Observacions desades correctament', 'success')
     } catch (error) {
       console.error('Error updating observations:', error)

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"strings"
 
@@ -13,6 +14,9 @@ type contextKey int
 const (
 	contextKeyTeamID contextKey = iota
 )
+
+// SessionTokenHeader is the header used for the 2FA session token on modify endpoints.
+const SessionTokenHeader = "X-Session-Token"
 
 // TeamIDFromContext returns the team ID set by auth middleware, or 0 if not present.
 func TeamIDFromContext(ctx context.Context) int {
@@ -34,12 +38,52 @@ func RequireTeamAuth(repo database.Repository) func(http.Handler) http.Handler {
 			}
 			teamID, err := repo.ResolveBearerToken(r.Context(), token)
 			if err != nil || teamID == 0 {
+				// Debug: confirm token shape when 401 (e.g. mobile vs desktop)
+				prefix := token
+				if len(prefix) > 8 {
+					prefix = prefix[:8] + "..."
+				}
+				log.Printf("[auth] RequireTeamAuth 401: token len=%d prefix=%s", len(token), prefix)
 				w.Header().Set("Content-Type", "application/json")
 				w.WriteHeader(http.StatusUnauthorized)
 				w.Write([]byte(`{"error":"invalid or expired token"}`))
 				return
 			}
 			ctx := context.WithValue(r.Context(), contextKeyTeamID, teamID)
+			next.ServeHTTP(w, r.WithContext(ctx))
+		})
+	}
+}
+
+// RequireSessionTokenHeader requires Bearer (registration token) and X-Session-Token (session token).
+// Only the session token is used to resolve team_id. Use for /api/me/ routes that modify data (POST, PUT, DELETE).
+func RequireSessionTokenHeader(repo database.Repository) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			bearer := extractBearerToken(r)
+			if bearer == "" {
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusUnauthorized)
+				w.Write([]byte(`{"error":"missing or invalid authorization"}`))
+				return
+			}
+			sessionToken := strings.TrimSpace(r.Header.Get(SessionTokenHeader))
+			if sessionToken == "" {
+				log.Printf("[auth] RequireSessionTokenHeader 401: missing %s", SessionTokenHeader)
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusUnauthorized)
+				w.Write([]byte(`{"error":"session token required for this action; complete authentication first"}`))
+				return
+			}
+			teamID, err := repo.GetTeamIDBySessionToken(r.Context(), sessionToken)
+			if err != nil || teamID == nil || *teamID == 0 {
+				log.Printf("[auth] RequireSessionTokenHeader 401: invalid or expired session token")
+				w.Header().Set("Content-Type", "application/json")
+				w.WriteHeader(http.StatusUnauthorized)
+				w.Write([]byte(`{"error":"session token required for this action; complete authentication first"}`))
+				return
+			}
+			ctx := context.WithValue(r.Context(), contextKeyTeamID, *teamID)
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})
 	}

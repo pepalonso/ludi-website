@@ -4,7 +4,7 @@ import { finalize } from 'rxjs/operators'
 import { CdkStepper } from '@angular/cdk/stepper'
 import { PrevisualitzacioService } from '../serveis/previsualitzacio.service'
 import { Team } from '../interfaces/ludi.interface'
-import { environment } from '../../environments/environment.prod'
+import { environment } from '../../environments/environment'
 
 interface FileItem {
   file: File
