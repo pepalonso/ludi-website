@@ -35,18 +35,19 @@ type TeamUpdateRequest struct {
 }
 
 type TeamResponse struct {
-	ID               int           `json:"id"`
-	Name             string        `json:"name"`
-	Email            string        `json:"email"`
-	Category         Category      `json:"category"`
-	Phone            string        `json:"phone"`
-	Gender           Gender        `json:"gender"`
-	ClubID           int           `json:"club_id"`
-	Observations     *string       `json:"observations"`
-	RegistrationDate time.Time     `json:"registration_date"`
-	UpdatedAt        time.Time     `json:"updated_at"`
-	Status           Status        `json:"status"`
-	Club             *ClubResponse `json:"club,omitempty"`
+	ID                 int           `json:"id"`
+	Name               string        `json:"name"`
+	Email              string        `json:"email"`
+	Category           Category      `json:"category"`
+	Phone              string        `json:"phone"`
+	Gender             Gender        `json:"gender"`
+	ClubID             int           `json:"club_id"`
+	Observations       *string       `json:"observations"`
+	RegistrationDate   time.Time     `json:"registration_date"`
+	UpdatedAt          time.Time     `json:"updated_at"`
+	Status             Status        `json:"status"`
+	Club               *ClubResponse `json:"club,omitempty"`
+	RegistrationToken  *string       `json:"registration_token,omitempty"` // For admin: valid token to open /equip?token=...
 }
 
 type TeamListResponse struct {
