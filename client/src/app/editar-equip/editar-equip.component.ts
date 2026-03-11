@@ -7,7 +7,7 @@ import { mapTeamResponse } from '../detalls-equip/data-mapper'
 import { environment } from '../../environments/environment'
 import { interval, Subscription } from 'rxjs'
 import { firstValueFrom } from 'rxjs'
-import { ClubService } from '../utils/club-dropdown/club.service'
+import { ClubService, Club } from '../utils/club-dropdown/club.service'
 import { takeWhile } from 'rxjs/operators'
 
 type EditOption =
@@ -164,7 +164,6 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
     const headers = this.getHeadersForRead()
 
     try {
-      const clubs = await firstValueFrom(this.clubService.loadClubs())
       const response = await fetch(`${base}/api/me/team`, { method: 'GET', headers })
       if (!response.ok) {
         console.error('Error fetching team details:', response.statusText)
@@ -174,6 +173,12 @@ export class EditRegistrationComponent implements OnInit, OnDestroy {
         return
       }
       const responseData = await response.json()
+      let clubs: Club[] = []
+      try {
+        clubs = await firstValueFrom(this.clubService.loadClubs())
+      } catch (e) {
+        console.warn('Clubs list unavailable, showing team without club logo:', e)
+      }
       this.team = await mapTeamResponse(responseData, clubs)
       this.observationsText = this.team.observacions || ''
       await this.fetchMeAllergies()

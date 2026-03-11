@@ -31,9 +31,15 @@ export class ClubDropdownComponent implements OnInit, ControlValueAccessor {
   }
 
   loadClubs(): void {
-    this.clubService.loadClubs().subscribe((clubs) => {
-      this.clubs = clubs;
-      this.filteredClubs = [...this.clubs];
+    this.clubService.loadClubs().subscribe({
+      next: (clubs) => {
+        this.clubs = clubs;
+        this.filteredClubs = [...this.clubs];
+      },
+      error: () => {
+        this.clubs = [];
+        this.filteredClubs = [];
+      },
     });
   }
 
