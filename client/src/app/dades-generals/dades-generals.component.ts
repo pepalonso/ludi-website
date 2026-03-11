@@ -25,7 +25,7 @@ export class DadesGeneralsComponent {
   showPreminiModal = false;
 
   /** Message for Pre-mini info modal (price from env). */
-  preminiModalMessage = `La categoria premini només participarà el diumenge i només la final serà després del show. La inscripció no inclou el dormir ni l'esmorzar de l'any passat. El preu per jugador és de ${environment.pricePerPlayerPremini}€.`;
+  preminiModalMessage = `La categoria premini només participarà el dissabte i només la final serà després del show. La inscripció no inclou el dormir ni l'esmorzar de l'any passat. El preu per jugador és de ${environment.pricePerPlayerPremini}€.`;
 
   constructor(
     private fb: FormBuilder,
