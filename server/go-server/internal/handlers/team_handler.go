@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 
@@ -45,12 +46,14 @@ func (h *TeamHandler) CreateTeam(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	teamID, err := h.repo.CreateTeam(ctx, &team)
 	if err != nil {
+		log.Printf("[admin/teams] CreateTeam failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to create team: %v", err))
 		return
 	}
 
 	created, err := h.repo.GetTeamByID(ctx, teamID)
 	if err != nil {
+		log.Printf("[admin/teams] CreateTeam GetTeamByID failed team_id=%d: %v", teamID, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to load created team")
 		return
 	}
@@ -141,6 +144,7 @@ func (h *TeamHandler) ListTeams(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	response, err := h.repo.ListTeams(ctx, filters)
 	if err != nil {
+		log.Printf("[admin/teams] ListTeams failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to list teams: %v", err))
 		return
 	}
@@ -174,12 +178,14 @@ func (h *TeamHandler) UpdateTeam(w http.ResponseWriter, r *http.Request) {
 			h.ErrorResponse(w, http.StatusNotFound, "Team not found")
 			return
 		}
+		log.Printf("[admin/teams] UpdateTeam failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to update team: %v", err))
 		return
 	}
 
 	updated, err := h.repo.GetTeamByID(ctx, id)
 	if err != nil {
+		log.Printf("[admin/teams] UpdateTeam GetTeamByID failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to load updated team")
 		return
 	}
@@ -266,11 +272,13 @@ func (h *TeamHandler) UpdateMeTeam(w http.ResponseWriter, r *http.Request) {
 			h.ErrorResponse(w, http.StatusNotFound, "Team not found")
 			return
 		}
+		log.Printf("[me/team] UpdateMeTeam UpdateTeamObservations failed team_id=%d: %v", teamID, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to update team: %v", err))
 		return
 	}
 	updated, err := h.repo.GetTeamByID(ctx, teamID)
 	if err != nil {
+		log.Printf("[me/team] UpdateMeTeam GetTeamByID failed team_id=%d: %v", teamID, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to load updated team")
 		return
 	}
@@ -282,6 +290,7 @@ func (h *TeamHandler) GetTeamStats(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	stats, err := h.repo.GetTeamStats(ctx)
 	if err != nil {
+		log.Printf("[admin/teams] GetTeamStats failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to get team stats: %v", err))
 		return
 	}

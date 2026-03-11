@@ -75,18 +75,21 @@ func (h *AuthHandler) Generate(w http.ResponseWriter, r *http.Request) {
 	pin := generatePIN(pinLength)
 	pinHash, err := bcrypt.GenerateFromPassword([]byte(pin), bcrypt.DefaultCost)
 	if err != nil {
+		log.Printf("[auth/generate] bcrypt failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "failed to generate code")
 		return
 	}
 
 	sessionToken, err := randomHex(32)
 	if err != nil {
+		log.Printf("[auth/generate] randomHex failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "failed to generate session")
 		return
 	}
 
 	expiresAt := time.Now().UTC().Add(sessionExpiry)
 	if err := h.repo.CreateEditSession(r.Context(), *teamID, sessionToken, string(pinHash), req.Method, expiresAt); err != nil {
+		log.Printf("[auth/generate] CreateEditSession failed team_id=%d: %v", *teamID, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "failed to create session")
 		return
 	}

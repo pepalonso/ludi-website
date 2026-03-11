@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"tournament-dev/internal/database"
 	"tournament-dev/internal/models"
@@ -37,8 +38,11 @@ func (h *CoachHandler) CreateCoach(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 	if err := h.repo.CreateCoach(ctx, &coach); err != nil {
+		log.Printf("[admin/coaches] CreateCoach failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to create coach: %v", err))
+		return
 	}
+	h.JSONResponse(w, http.StatusCreated, coach)
 }
 
 // GetCoach handles GET /api/coaches/{id}
@@ -93,6 +97,7 @@ func (h *CoachHandler) ListCoaches(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	coaches, err := h.repo.ListCoaches(ctx, filters)
 	if err != nil {
+		log.Printf("[admin/coaches] ListCoaches failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to list coaches")
 		return
 	}
@@ -122,7 +127,9 @@ func (h *CoachHandler) UpdateCoach(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	if err := h.repo.UpdateCoach(ctx, id, &coach); err != nil {
+		log.Printf("[admin/coaches] UpdateCoach failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to update coach: %v", err))
+		return
 	}
 
 	h.JSONResponse(w, http.StatusOK, "Coach updated successfully")
@@ -137,7 +144,9 @@ func (h *CoachHandler) DeleteCoach(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 	if err := h.repo.DeleteCoach(ctx, id); err != nil {
+		log.Printf("[admin/coaches] DeleteCoach failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to delete coach: %v", err))
+		return
 	}
 
 	h.JSONResponse(w, http.StatusOK, "Coach deleted successfully")
@@ -154,6 +163,7 @@ func (h *CoachHandler) ListMeCoaches(w http.ResponseWriter, r *http.Request) {
 	filters := models.CoachFilters{Page: page, PageSize: pageSize, TeamID: &teamID}
 	resp, err := h.repo.ListCoaches(r.Context(), filters)
 	if err != nil {
+		log.Printf("[me/coaches] ListMeCoaches failed team_id=%d: %v", teamID, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to list coaches")
 		return
 	}
@@ -178,6 +188,7 @@ func (h *CoachHandler) CreateMeCoach(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := h.repo.CreateCoach(r.Context(), &coach); err != nil {
+		log.Printf("[me/coaches] CreateMeCoach failed team_id=%d: %v", teamID, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to create coach")
 		return
 	}
@@ -253,6 +264,7 @@ func (h *CoachHandler) DeleteMeCoach(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := h.repo.DeleteCoach(r.Context(), id); err != nil {
+		log.Printf("[me/coaches] DeleteMeCoach failed team_id=%d coach_id=%d: %v", teamID, id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to delete coach")
 		return
 	}

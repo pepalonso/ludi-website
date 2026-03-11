@@ -38,6 +38,7 @@ func (h *AllergyHandler) CreateAllergy(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 	if err := h.repo.CreateAllergy(ctx, &allergy); err != nil {
+		log.Printf("[admin/allergies] CreateAllergy failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to create allergy: %v", err))
 		return
 	}
@@ -68,6 +69,7 @@ func (h *AllergyHandler) ListAllergies(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	allergies, err := h.repo.ListAllergies(ctx, filters)
 	if err != nil {
+		log.Printf("[admin/allergies] ListAllergies failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to list allergies")
 		return
 	}
@@ -103,6 +105,7 @@ func (h *AllergyHandler) DeleteAllergy(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 	if err := h.repo.DeleteAllergy(ctx, id); err != nil {
+		log.Printf("[admin/allergies] DeleteAllergy failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to delete allergy: %v", err))
 		return
 	}
@@ -118,6 +121,7 @@ func (h *AllergyHandler) ListMeAllergies(w http.ResponseWriter, r *http.Request)
 	}
 	allergies, err := h.repo.GetAllergiesByTeamID(r.Context(), teamID)
 	if err != nil {
+		log.Printf("[me/allergies] ListMeAllergies failed team_id=%d: %v", teamID, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to list allergies")
 		return
 	}
@@ -175,6 +179,7 @@ func (h *AllergyHandler) DeleteMeAllergy(w http.ResponseWriter, r *http.Request)
 		return
 	}
 	if err := h.repo.DeleteAllergy(r.Context(), id); err != nil {
+		log.Printf("[me/allergies] DeleteMeAllergy failed team_id=%d allergy_id=%d: %v", teamID, id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to delete allergy")
 		return
 	}

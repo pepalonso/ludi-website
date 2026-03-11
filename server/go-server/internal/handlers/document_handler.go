@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -59,6 +60,7 @@ func (h *DocumentHandler) ListDocuments(w http.ResponseWriter, r *http.Request) 
 	ctx := r.Context()
 	resp, err := h.repo.ListDocuments(ctx, filters)
 	if err != nil {
+		log.Printf("[admin/documents] ListDocuments failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to list documents: %v", err))
 		return
 	}
@@ -112,12 +114,14 @@ func (h *DocumentHandler) UpdateDocument(w http.ResponseWriter, r *http.Request)
 			h.ErrorResponse(w, http.StatusNotFound, "Document not found")
 			return
 		}
+		log.Printf("[admin/documents] UpdateDocument failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to update document: %v", err))
 		return
 	}
 
 	doc, err := h.repo.GetDocumentByID(ctx, id)
 	if err != nil {
+		log.Printf("[admin/documents] UpdateDocument GetDocumentByID failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Document updated but failed to load")
 		return
 	}
@@ -190,12 +194,14 @@ func (h *DocumentHandler) UploadDocument(w http.ResponseWriter, r *http.Request)
 	fullPath := filepath.Join(h.uploadDir, relPath)
 
 	if err := ensureDir(filepath.Dir(fullPath)); err != nil {
+		log.Printf("[admin/documents] UploadDocument ensureDir failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to create upload directory")
 		return
 	}
 
 	dst, err := createFile(fullPath)
 	if err != nil {
+		log.Printf("[admin/documents] UploadDocument createFile failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to save file")
 		return
 	}
@@ -204,6 +210,7 @@ func (h *DocumentHandler) UploadDocument(w http.ResponseWriter, r *http.Request)
 	size, err := io.Copy(dst, file)
 	if err != nil {
 		_ = removeFile(fullPath)
+		log.Printf("[admin/documents] UploadDocument io.Copy failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to save file")
 		return
 	}
@@ -235,12 +242,14 @@ func (h *DocumentHandler) UploadDocument(w http.ResponseWriter, r *http.Request)
 	id, err := h.repo.CreateDocument(ctx, req)
 	if err != nil {
 		_ = removeFile(fullPath)
+		log.Printf("[admin/documents] UploadDocument CreateDocument failed: %v", err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to create document record")
 		return
 	}
 
 	created, err := h.repo.GetDocumentByID(ctx, int(id))
 	if err != nil {
+		log.Printf("[admin/documents] UploadDocument GetDocumentByID after create failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Document created but failed to load")
 		return
 	}
