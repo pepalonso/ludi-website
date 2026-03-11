@@ -25,3 +25,19 @@ To avoid putting the password on the command line:
 ```bash
 ADMIN_PASSWORD=yourpassword go run ./cmd/add-admin --email=admin@example.com
 ```
+
+## Create an admin on test or prod (deployed environment)
+
+Uses the same host and config as deploy (`.env.deploy`: `PROD_HOST`, `PROD_USER`, `PROD_APP_DIR_TEST` / `PROD_APP_DIR_PROD`). The app image must already be deployed (it includes `/app/add-admin`).
+
+From **server/go-server**:
+
+```bash
+# Password from env (recommended)
+ADMIN_PASSWORD=yourpassword ./scripts/create-admin.sh test admin@example.com
+ADMIN_PASSWORD=yourpassword ./scripts/create-admin.sh prod admin@example.com
+
+# Or pass password as third argument
+./scripts/create-admin.sh test admin@example.com yourpassword
+./scripts/create-admin.sh prod admin@example.com yourpassword
+```

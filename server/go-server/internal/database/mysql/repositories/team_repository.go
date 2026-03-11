@@ -188,10 +188,12 @@ func (r *TeamRepository) DeleteTeam(ctx context.Context, id int) error {
 	return nil
 }
 
-// ListTeams retrieves a paginated list of teams
+// ListTeams retrieves a paginated list of teams (admin). Includes a valid registration_token per team when present.
 func (r *TeamRepository) ListTeams(ctx context.Context, filters models.TeamFilters) (*models.TeamListResponse, error) {
+	// Subquery: one valid registration token per team (latest by created_at)
+	tokenSubq := `(SELECT rt.token FROM registration_tokens rt WHERE rt.team_id = teams.id AND rt.expires_at > UTC_TIMESTAMP() ORDER BY rt.created_at DESC LIMIT 1)`
 	// Build the query with filters
-	query := `SELECT id, name, email, category, phone, gender, club_id, observations, registration_date, updated_at, status FROM teams`
+	query := `SELECT teams.id, teams.name, teams.email, teams.category, teams.phone, teams.gender, teams.club_id, teams.observations, teams.registration_date, teams.updated_at, teams.status, ` + tokenSubq + ` AS registration_token FROM teams`
 	args := []interface{}{}
 
 	var conditions []string
@@ -250,6 +252,7 @@ func (r *TeamRepository) ListTeams(ctx context.Context, filters models.TeamFilte
 	var teams []models.TeamResponse
 	for rows.Next() {
 		var team models.Team
+		var registrationToken *string
 		err := rows.Scan(
 			&team.ID,
 			&team.Name,
@@ -262,23 +265,25 @@ func (r *TeamRepository) ListTeams(ctx context.Context, filters models.TeamFilte
 			&team.RegistrationDate,
 			&team.UpdatedAt,
 			&team.Status,
+			&registrationToken,
 		)
 		if err != nil {
 			return nil, fmt.Errorf("failed to scan team: %w", err)
 		}
 
 		teams = append(teams, models.TeamResponse{
-			ID:               team.ID,
-			Name:             team.Name,
-			Email:            team.Email,
-			Category:         team.Category,
-			Phone:            team.Phone,
-			Gender:           team.Gender,
-			ClubID:           team.ClubID,
-			Observations:     team.Observations,
-			RegistrationDate: team.RegistrationDate,
-			UpdatedAt:        team.UpdatedAt,
-			Status:           team.Status,
+			ID:                team.ID,
+			Name:              team.Name,
+			Email:             team.Email,
+			Category:          team.Category,
+			Phone:             team.Phone,
+			Gender:            team.Gender,
+			ClubID:            team.ClubID,
+			Observations:      team.Observations,
+			RegistrationDate:  team.RegistrationDate,
+			UpdatedAt:         team.UpdatedAt,
+			Status:            team.Status,
+			RegistrationToken: registrationToken,
 		})
 	}
 

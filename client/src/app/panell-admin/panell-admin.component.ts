@@ -240,6 +240,7 @@ export class PanellAdminComponent implements OnInit {
         club_id: clubId,
         data_incripcio: t['registration_date'],
         club_nom: this.clubs.find(c => c.id === clubId)?.nom ?? 'Unknown',
+        token: (t['registration_token'] as string) ?? undefined,
       }
     })
   }
@@ -506,7 +507,7 @@ export class PanellAdminComponent implements OnInit {
   }
 
   public navigateToTeamLink(token?: string): void {
-    this.router.navigate(['/equip'], { queryParams: { token } })
+    this.router.navigate(['/equip'], { queryParams: token ? { token } : {} })
   }
 }
 

@@ -12,6 +12,9 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -a -installsuffix cgo \
   -ldflags "-X tournament-dev/internal/handlers.Version=${VERSION}" -o main ./cmd/server
 
+# add-admin for creating admin accounts (same image; run via: docker compose exec app /app/add-admin ...)
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -a -installsuffix cgo -o add-admin ./cmd/add-admin
+
 # Final stage
 FROM alpine:latest
 
@@ -25,8 +28,9 @@ RUN addgroup -g 1001 -S appgroup && \
 # Set working directory
 WORKDIR /app
 
-# Copy the binary from builder stage
+# Copy binaries from builder stage
 COPY --from=builder /app/main .
+COPY --from=builder /app/add-admin .
 
 # Change ownership to non-root user
 RUN chown -R appuser:appgroup /app
