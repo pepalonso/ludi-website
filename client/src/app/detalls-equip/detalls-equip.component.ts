@@ -9,7 +9,7 @@ import { TeamMobileComponent } from './mobile/detalls-equip-monile.component'
 import { TeamDesktopComponent } from './desktop/detalls-equip-desktop.component'
 import { firstValueFrom } from 'rxjs'
 import { environment } from '../../environments/environment'
-import { ClubService } from '../utils/club-dropdown/club.service'
+import { ClubService, Club } from '../utils/club-dropdown/club.service'
 
 @Component({
   selector: 'app-detalls-equip',
@@ -55,7 +55,6 @@ export class DetallsEquipComponent implements OnInit {
     }
 
     try {
-      const clubs = await firstValueFrom(this.clubService.loadClubs())
       const response = await fetch(url, { method: 'GET', headers })
 
       if (!response.ok) {
@@ -65,6 +64,12 @@ export class DetallsEquipComponent implements OnInit {
       }
 
       const responseData = await response.json()
+      let clubs: Club[] = []
+      try {
+        clubs = await firstValueFrom(this.clubService.loadClubs())
+      } catch (e) {
+        console.warn('Clubs list unavailable, showing team without club logo:', e)
+      }
       this.team = await mapTeamResponse(responseData, clubs)
     } catch (error) {
       this.error = true
