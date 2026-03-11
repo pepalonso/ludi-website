@@ -17,7 +17,6 @@ export class ClubService {
 
   constructor(private http: HttpClient) {}
 
-  /** Load clubs from API (proxied from basquetcatala: name + logo_url) and cache. */
   loadClubs(): Observable<Club[]> {
     if (this.clubs.length > 0) {
       return of(this.clubs)
@@ -25,7 +24,7 @@ export class ClubService {
     if (!this.load$) {
       const url = `${environment.apiBaseUrl}/api/clubs/list`
       this.load$ = this.http.get<Club[]>(url).pipe(
-        tap((list) => {
+        tap(list => {
           this.clubs = list || []
           this.load$ = null
         })
@@ -39,3 +38,4 @@ export class ClubService {
     return this.clubs
   }
 }
+
