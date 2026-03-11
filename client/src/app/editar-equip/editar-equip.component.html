@@ -131,31 +131,36 @@
   <!-- Add Coach -->
   <div class="edit-form" *ngIf="selectedOption === 'coach-add'">
     <h3>Afegir nou entrenador</h3>
-    <div class="form-group">
-      <label for="coachName">Nom</label>
-      <input type="text" id="coachName" [(ngModel)]="newCoach.nom" (ngModelChange)="validateForm()">
-    </div>
-    <div class="form-group">
-      <label for="coachSurname">Cognoms</label>
-      <input type="text" id="coachSurname" [(ngModel)]="newCoach.cognoms" (ngModelChange)="validateForm()">
-    </div>
-    <div class="form-group">
-      <label for="coachSize">Talla samarreta</label>
-      <select id="coachSize" [(ngModel)]="newCoach.tallaSamarreta">
-        <option *ngFor="let size of tallaSamarretaOptions" [value]="size">{{size}}</option>
-      </select>
-    </div>
-    <div class="form-group checkbox-group">
-      <label>
-        <input type="checkbox" [ngModel]="newCoach.esPrincipal === 1"
-               (ngModelChange)="newCoach.esPrincipal = $event ? 1 : 0">
-        És entrenador principal
-      </label>
-    </div>
-    <div class="action-buttons">
-      <button class="cancel-button" (click)="selectedOption = 'none'">Cancel·lar</button>
-      <button class="save-button" [disabled]="!isFormValid" (click)="addCoach()">Afegir</button>
-    </div>
+    <p *ngIf="team && team.entrenadors.length >= maxCoachesPerTeam" class="empty-message">
+      Ja teniu el màxim d'entrenadors ({{ maxCoachesPerTeam }}). Elimineu-ne un si en voleu afegir un altre.
+    </p>
+    <ng-container *ngIf="!team || team.entrenadors.length < maxCoachesPerTeam">
+      <div class="form-group">
+        <label for="coachName">Nom</label>
+        <input type="text" id="coachName" [(ngModel)]="newCoach.nom" (ngModelChange)="validateForm()">
+      </div>
+      <div class="form-group">
+        <label for="coachSurname">Cognoms</label>
+        <input type="text" id="coachSurname" [(ngModel)]="newCoach.cognoms" (ngModelChange)="validateForm()">
+      </div>
+      <div class="form-group">
+        <label for="coachSize">Talla samarreta</label>
+        <select id="coachSize" [(ngModel)]="newCoach.tallaSamarreta">
+          <option *ngFor="let size of tallaSamarretaOptions" [value]="size">{{size}}</option>
+        </select>
+      </div>
+      <div class="form-group checkbox-group">
+        <label>
+          <input type="checkbox" [ngModel]="newCoach.esPrincipal === 1"
+                 (ngModelChange)="newCoach.esPrincipal = $event ? 1 : 0">
+          És entrenador principal
+        </label>
+      </div>
+      <div class="action-buttons">
+        <button class="cancel-button" (click)="selectedOption = 'none'">Cancel·lar</button>
+        <button class="save-button" [disabled]="!isFormValid" (click)="addCoach()">Afegir</button>
+      </div>
+    </ng-container>
   </div>
 
   <!-- Edit Coach -->

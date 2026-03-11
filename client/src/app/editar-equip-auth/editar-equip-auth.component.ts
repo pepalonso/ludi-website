@@ -233,7 +233,7 @@ export class EditarEquipAuthComponent implements OnInit, OnDestroy {
         })
         return
       } catch {
-        this.errorMessage = 'No s\'ha pogut obtenir la sessió. Inicia sessió de nou.'
+        this.errorMessage = "No s'ha pogut obtenir la sessió. Inicia sessió de nou."
       }
     }
     this.showAdminLogin = !this.showAdminLogin
@@ -272,7 +272,7 @@ export class EditarEquipAuthComponent implements OnInit, OnDestroy {
         body: JSON.stringify({ team_token: this.teamToken }),
       })
       if (!sessionRes.ok) {
-        this.errorMessage = 'No s\'ha pogut obtenir la sessió d\'equip'
+        this.errorMessage = "No s'ha pogut obtenir la sessió d'equip"
         this.isLoading = false
         return
       }

@@ -170,10 +170,22 @@ func (h *CoachHandler) ListMeCoaches(w http.ResponseWriter, r *http.Request) {
 	h.JSONResponse(w, http.StatusOK, resp)
 }
 
+const maxCoachesPerTeam = 2
+
 func (h *CoachHandler) CreateMeCoach(w http.ResponseWriter, r *http.Request) {
 	teamID := TeamIDFromContext(r.Context())
 	if teamID == 0 {
 		h.ErrorResponse(w, http.StatusUnauthorized, "missing team context")
+		return
+	}
+	existing, err := h.repo.GetCoachesByTeamID(r.Context(), teamID)
+	if err != nil {
+		log.Printf("[me/coaches] GetCoachesByTeamID failed team_id=%d: %v", teamID, err)
+		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to check coaches")
+		return
+	}
+	if len(existing) >= maxCoachesPerTeam {
+		h.ErrorResponse(w, http.StatusBadRequest, fmt.Sprintf("Maximum %d coaches per team", maxCoachesPerTeam))
 		return
 	}
 	var coach models.CoachCreateRequest

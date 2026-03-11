@@ -3,13 +3,13 @@ export const environment = {
   production: process.env['PRODUCTION'] === 'true' || false,
   apiUrl: process.env['API_URL'] || 'http://localhost:8080',
   get apiBaseUrl(): string {
-    return (this.apiUrl || '').replace(/\/$/, '')
+    return (this.apiUrl || 'http://localhost:8080').replace(/\/$/, '')
   },
   apiKey: process.env['API_KEY'] || '',
   /** Contact phone (digits only, e.g. 659173158). Used for WhatsApp links and display. */
   contactPhone: process.env['CONTACT_PHONE'] || '659173158',
-  pricePerPlayer: Number(process.env['PRICE_PER_PLAYER']),
-  pricePerPlayerPremini: Number(process.env['PRICE_PER_PLAYER_PREMINI']),
+  pricePerPlayer: Number(process.env['PRICE_PER_PLAYER'] || 55),
+  pricePerPlayerPremini: Number(process.env['PRICE_PER_PLAYER_PREMINI'] || 40),
   pricePerEntrenador: Number(process.env['PRICE_PER_ENTRENADOR']) ?? 0,
 }
 
