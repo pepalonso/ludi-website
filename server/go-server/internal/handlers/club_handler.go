@@ -47,7 +47,12 @@ func (h *ClubHandler) CreateClub(w http.ResponseWriter, r *http.Request) {
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to create club: %v", err))
 		return
 	}
-
+	created, _ := h.repo.GetClubByName(ctx, club.Name)
+	if created != nil {
+		if newJSON, _ := json.Marshal(created); len(newJSON) > 0 {
+			LogChange(ctx, h.repo, "clubs", created.ID, models.ChangeActionInsert, nil, newJSON, nil)
+		}
+	}
 	h.JSONResponse(w, http.StatusCreated, club)
 }
 
@@ -142,12 +147,17 @@ func (h *ClubHandler) DeleteClub(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
+	oldClub, _ := h.repo.GetClubByID(ctx, id)
 	if err := h.repo.DeleteClub(ctx, id); err != nil {
 		log.Printf("[admin/clubs] DeleteClub failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to delete club: %v", err))
 		return
 	}
-
+	if oldClub != nil {
+		if oldJSON, _ := json.Marshal(oldClub); len(oldJSON) > 0 {
+			LogChange(ctx, h.repo, "clubs", id, models.ChangeActionDelete, oldJSON, nil, nil)
+		}
+	}
 	h.JSONResponse(w, http.StatusNoContent, nil)
 }
 
@@ -172,11 +182,17 @@ func (h *ClubHandler) UpdateClub(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
+	oldClub, _ := h.repo.GetClubByID(ctx, id)
 	if err := h.repo.UpdateClub(ctx, id, &club); err != nil {
 		log.Printf("[admin/clubs] UpdateClub failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to update club: %v", err))
 		return
 	}
-
+	updated, _ := h.repo.GetClubByID(ctx, id)
+	if oldClub != nil && updated != nil {
+		oldJSON, _ := json.Marshal(oldClub)
+		newJSON, _ := json.Marshal(updated)
+		LogChange(ctx, h.repo, "clubs", id, models.ChangeActionUpdate, oldJSON, newJSON, nil)
+	}
 	h.JSONResponse(w, http.StatusOK, club)
 }

@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -101,6 +102,7 @@ func (h *DocumentHandler) UpdateDocument(w http.ResponseWriter, r *http.Request)
 	}
 
 	ctx := r.Context()
+	oldDoc, _ := h.repo.GetDocumentByID(ctx, id)
 	if req.TeamID != nil {
 		exists, err := h.repo.TeamExists(ctx, *req.TeamID)
 		if err != nil || !exists {
@@ -124,6 +126,11 @@ func (h *DocumentHandler) UpdateDocument(w http.ResponseWriter, r *http.Request)
 		log.Printf("[admin/documents] UpdateDocument GetDocumentByID failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Document updated but failed to load")
 		return
+	}
+	if oldDoc != nil && doc != nil {
+		oldJSON, _ := json.Marshal(oldDoc)
+		newJSON, _ := json.Marshal(doc)
+		LogChange(ctx, h.repo, "documents", id, models.ChangeActionUpdate, oldJSON, newJSON, doc.TeamID)
 	}
 	h.JSONResponse(w, http.StatusOK, doc)
 }
@@ -253,7 +260,11 @@ func (h *DocumentHandler) UploadDocument(w http.ResponseWriter, r *http.Request)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Document created but failed to load")
 		return
 	}
-
+	if created != nil {
+		if newJSON, _ := json.Marshal(created); len(newJSON) > 0 {
+			LogChange(ctx, h.repo, "documents", int(id), models.ChangeActionInsert, nil, newJSON, created.TeamID)
+		}
+	}
 	h.JSONResponse(w, http.StatusCreated, created)
 }
 

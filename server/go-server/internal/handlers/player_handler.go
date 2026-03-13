@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -137,12 +138,19 @@ func (h *PlayerHandler) UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
+	oldPlayer, _ := h.repo.GetPlayerByID(ctx, id)
 	if err := h.repo.UpdatePlayer(ctx, id, &player); err != nil {
 		log.Printf("[admin/players] UpdatePlayer failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to update player")
 		return
 	}
-
+	updated, _ := h.repo.GetPlayerByID(ctx, id)
+	if oldPlayer != nil && updated != nil {
+		oldJSON, _ := json.Marshal(oldPlayer)
+		newJSON, _ := json.Marshal(updated)
+		tid := oldPlayer.TeamID
+		LogChange(ctx, h.repo, "players", id, models.ChangeActionUpdate, oldJSON, newJSON, &tid)
+	}
 	h.JSONResponse(w, http.StatusOK, player)
 }
 
@@ -155,12 +163,17 @@ func (h *PlayerHandler) DeletePlayer(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
+	oldPlayer, _ := h.repo.GetPlayerByID(ctx, id)
 	if err := h.repo.DeletePlayer(ctx, id); err != nil {
 		log.Printf("[admin/players] DeletePlayer failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to delete player")
 		return
 	}
-
+	if oldPlayer != nil {
+		oldJSON, _ := json.Marshal(oldPlayer)
+		tid := oldPlayer.TeamID
+		LogChange(ctx, h.repo, "players", id, models.ChangeActionDelete, oldJSON, nil, &tid)
+	}
 	h.JSONResponse(w, http.StatusNoContent, nil)
 }
 
@@ -253,10 +266,17 @@ func (h *PlayerHandler) UpdateMePlayer(w http.ResponseWriter, r *http.Request) {
 		h.ErrorResponse(w, http.StatusBadRequest, fmt.Sprintf("Validation failed: %v", err))
 		return
 	}
+	oldPlayer := player
 	if err := h.repo.UpdatePlayer(r.Context(), id, &req); err != nil {
 		log.Printf("[me/players] UpdateMePlayer failed team_id=%d player_id=%d: %v", teamID, id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to update player")
 		return
+	}
+	updated, _ := h.repo.GetPlayerByID(r.Context(), id)
+	if oldPlayer != nil && updated != nil {
+		oldJSON, _ := json.Marshal(oldPlayer)
+		newJSON, _ := json.Marshal(updated)
+		LogChange(r.Context(), h.repo, "players", id, models.ChangeActionUpdate, oldJSON, newJSON, &teamID)
 	}
 	h.JSONResponse(w, http.StatusOK, req)
 }
@@ -277,10 +297,15 @@ func (h *PlayerHandler) DeleteMePlayer(w http.ResponseWriter, r *http.Request) {
 		h.ErrorResponse(w, http.StatusNotFound, "Player not found")
 		return
 	}
+	oldPlayer := player
 	if err := h.repo.DeletePlayer(r.Context(), id); err != nil {
 		log.Printf("[me/players] DeleteMePlayer failed team_id=%d player_id=%d: %v", teamID, id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to delete player")
 		return
+	}
+	if oldPlayer != nil {
+		oldJSON, _ := json.Marshal(oldPlayer)
+		LogChange(r.Context(), h.repo, "players", id, models.ChangeActionDelete, oldJSON, nil, &teamID)
 	}
 	h.JSONResponse(w, http.StatusNoContent, nil)
 }

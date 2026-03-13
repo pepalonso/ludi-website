@@ -15,6 +15,7 @@ type Repository struct {
 	*repositories.AllergyRepository
 	*repositories.DocumentRepository
 	*repositories.AuthRepository
+	*repositories.ChangesLogRepository
 }
 
 func NewRepository(db *sql.DB) database.Repository {
@@ -25,6 +26,7 @@ func NewRepository(db *sql.DB) database.Repository {
 		CoachRepository:    repositories.NewCoachRepository(db),
 		AllergyRepository:  repositories.NewAllergyRepository(db),
 		DocumentRepository: repositories.NewDocumentRepository(db),
-		AuthRepository:     repositories.NewAuthRepository(db),
+		AuthRepository:      repositories.NewAuthRepository(db),
+		ChangesLogRepository: repositories.NewChangesLogRepository(db),
 	}
 }

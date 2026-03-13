@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -125,13 +126,19 @@ func (h *CoachHandler) UpdateCoach(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
-
+	oldCoach, _ := h.repo.GetCoachByID(ctx, id)
 	if err := h.repo.UpdateCoach(ctx, id, &coach); err != nil {
 		log.Printf("[admin/coaches] UpdateCoach failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to update coach: %v", err))
 		return
 	}
-
+	updated, _ := h.repo.GetCoachByID(ctx, id)
+	if oldCoach != nil && updated != nil {
+		oldJSON, _ := json.Marshal(oldCoach)
+		newJSON, _ := json.Marshal(updated)
+		tid := oldCoach.TeamID
+		LogChange(ctx, h.repo, "coaches", id, models.ChangeActionUpdate, oldJSON, newJSON, &tid)
+	}
 	h.JSONResponse(w, http.StatusOK, "Coach updated successfully")
 }
 
@@ -143,12 +150,17 @@ func (h *CoachHandler) DeleteCoach(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
+	oldCoach, _ := h.repo.GetCoachByID(ctx, id)
 	if err := h.repo.DeleteCoach(ctx, id); err != nil {
 		log.Printf("[admin/coaches] DeleteCoach failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to delete coach: %v", err))
 		return
 	}
-
+	if oldCoach != nil {
+		oldJSON, _ := json.Marshal(oldCoach)
+		tid := oldCoach.TeamID
+		LogChange(ctx, h.repo, "coaches", id, models.ChangeActionDelete, oldJSON, nil, &tid)
+	}
 	h.JSONResponse(w, http.StatusOK, "Coach deleted successfully")
 }
 
@@ -252,9 +264,16 @@ func (h *CoachHandler) UpdateMeCoach(w http.ResponseWriter, r *http.Request) {
 		h.ErrorResponse(w, http.StatusBadRequest, fmt.Sprintf("Validation failed: %v", err))
 		return
 	}
+	oldCoach := coach
 	if err := h.repo.UpdateCoach(r.Context(), id, &req); err != nil {
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to update coach")
 		return
+	}
+	updated, _ := h.repo.GetCoachByID(r.Context(), id)
+	if oldCoach != nil && updated != nil {
+		oldJSON, _ := json.Marshal(oldCoach)
+		newJSON, _ := json.Marshal(updated)
+		LogChange(r.Context(), h.repo, "coaches", id, models.ChangeActionUpdate, oldJSON, newJSON, &teamID)
 	}
 	h.JSONResponse(w, http.StatusOK, req)
 }
@@ -275,10 +294,15 @@ func (h *CoachHandler) DeleteMeCoach(w http.ResponseWriter, r *http.Request) {
 		h.ErrorResponse(w, http.StatusNotFound, "Coach not found")
 		return
 	}
+	oldCoach := coach
 	if err := h.repo.DeleteCoach(r.Context(), id); err != nil {
 		log.Printf("[me/coaches] DeleteMeCoach failed team_id=%d coach_id=%d: %v", teamID, id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to delete coach")
 		return
+	}
+	if oldCoach != nil {
+		oldJSON, _ := json.Marshal(oldCoach)
+		LogChange(r.Context(), h.repo, "coaches", id, models.ChangeActionDelete, oldJSON, nil, &teamID)
 	}
 	h.JSONResponse(w, http.StatusNoContent, nil)
 }
