@@ -169,6 +169,16 @@ func (h *RegistrationHandler) RegisterInscription(w http.ResponseWriter, r *http
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to load created team")
 		return
 	}
+	if newJSON, err := json.Marshal(createdTeam); err == nil && len(newJSON) > 0 {
+		_ = h.repo.LogChange(ctx, &models.ChangeLogEntry{
+			TableName: "teams",
+			RecordID:  teamID,
+			Action:    models.ChangeActionInsert,
+			NewValues: newJSON,
+			ChangedBy: "registration",
+			TeamID:    &teamID,
+		})
+	}
 
 	// 3. Players (keep first player ID for intolerancies)
 	for _, j := range body.Jugadors {

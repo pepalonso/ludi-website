@@ -29,6 +29,14 @@ type Repository interface {
 	DocumentRepository
 	// Auth operations
 	AuthRepository
+	// Changes log (audit trail)
+	ChangesLogRepository
+}
+
+// ChangesLogRepository defines audit log operations.
+type ChangesLogRepository interface {
+	LogChange(ctx context.Context, entry *models.ChangeLogEntry) error
+	ListChangesByTeamID(ctx context.Context, teamID int, page, pageSize int) (*models.ChangeLogListResponse, error)
 }
 
 // AuthRepository defines auth/session database operations

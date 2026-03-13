@@ -136,6 +136,7 @@
             <th>Data Incripció</th>
             <th>Jugadors</th>
             <th>Entrenadors</th>
+            <th>Canvis</th>
           </tr>
         </thead>
         <tbody>
@@ -150,9 +151,113 @@
             <td>{{ equip.data_incripcio | date:'short' }}</td>
             <td>{{ equip.jugadors || 0 }}</td>
             <td>{{ equip.entrenadors || 0 }}</td>
+            <td>
+              <button type="button" class="btn-canvis" (click)="openTeamChanges(equip, $event)" title="Veure canvis">
+                Historial
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <!-- Team changes (audit) modal -->
+  <div class="changes-overlay" *ngIf="selectedTeamId != null" (click)="closeTeamChanges()">
+    <div class="changes-panel" (click)="$event.stopPropagation()">
+      <div class="changes-panel-header">
+        <h2>Canvis / Historial: {{ selectedTeamName }}</h2>
+        <button type="button" class="btn-close-panel" (click)="closeTeamChanges()" aria-label="Tancar">×</button>
+      </div>
+      <div class="changes-panel-body">
+        <div *ngIf="changesLoading" class="changes-loading">
+          <div class="spinner"></div>
+          <p>Carregant canvis...</p>
+        </div>
+        <p *ngIf="changesError" class="changes-error">{{ changesError }}</p>
+        <ng-container *ngIf="!changesLoading && !changesError && teamChanges">
+          <p *ngIf="teamChanges.changes.length === 0" class="changes-empty">Cap canvi per aquest equip.</p>
+          <div *ngIf="teamChanges.changes.length > 0" class="changes-list">
+            <table class="changes-table">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Taula</th>
+                  <th>Acció</th>
+                  <th>Registre</th>
+                  <th>Qui</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let change of teamChanges.changes">
+                  <tr>
+                    <td>{{ change.changed_at | date:'short' }}</td>
+                    <td>{{ change.table_name }}</td>
+                    <td><span class="action-badge" [class]="'action-' + change.action">{{ change.action }}</span></td>
+                    <td>{{ change.record_id }}</td>
+                    <td>{{ change.changed_by }}</td>
+                    <td>
+                      <button type="button" class="btn-detall" (click)="toggleChangeDetail(change.id)">
+                        {{ expandedChangeId === change.id ? 'Amagar' : 'Detall' }}
+                      </button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="expandedChangeId === change.id" class="detail-row">
+                    <td colspan="6" class="detail-cell">
+                      <div class="change-detail">
+                        <ng-container [ngSwitch]="change.action">
+                          <div *ngSwitchCase="'INSERT'" class="detail-block detail-new">
+                            <h4>Nous valors</h4>
+                            <dl *ngIf="decodeChangeValues(change.new_values) as obj">
+                              <ng-container *ngFor="let key of getObjectKeys(obj)">
+                                <dt>{{ getFieldLabel(key) }}</dt>
+                                <dd>{{ formatChangeValue(obj[key]) }}</dd>
+                              </ng-container>
+                            </dl>
+                          </div>
+                          <div *ngSwitchCase="'DELETE'" class="detail-block detail-old">
+                            <h4>Valors eliminats</h4>
+                            <dl *ngIf="decodeChangeValues(change.old_values) as obj">
+                              <ng-container *ngFor="let key of getObjectKeys(obj)">
+                                <dt>{{ getFieldLabel(key) }}</dt>
+                                <dd>{{ formatChangeValue(obj[key]) }}</dd>
+                              </ng-container>
+                            </dl>
+                          </div>
+                          <div *ngSwitchCase="'UPDATE'" class="detail-diff-list">
+                            <h4>Canvis per camp</h4>
+                            <dl class="diff-entries">
+                              <ng-container *ngFor="let entry of getDiffEntries(change)">
+                                <dt [class.diff-unchanged]="entry.status === 'unchanged'" [class.diff-changed]="entry.status === 'changed'" [class.diff-added]="entry.status === 'added'" [class.diff-removed]="entry.status === 'removed'">{{ entry.label }}</dt>
+                                <dd [class.diff-unchanged]="entry.status === 'unchanged'" [class.diff-changed]="entry.status === 'changed'" [class.diff-added]="entry.status === 'added'" [class.diff-removed]="entry.status === 'removed'">
+                                  <ng-container [ngSwitch]="entry.status">
+                                    <span *ngSwitchCase="'unchanged'">{{ formatChangeValue(entry.oldVal) }}</span>
+                                    <span *ngSwitchCase="'changed'">{{ formatChangeValue(entry.oldVal) }} → {{ formatChangeValue(entry.newVal) }}</span>
+                                    <span *ngSwitchCase="'added'"><span class="diff-add-mark">+</span> {{ formatChangeValue(entry.newVal) }}</span>
+                                    <span *ngSwitchCase="'removed'"><span class="diff-rem-mark">−</span> <s>{{ formatChangeValue(entry.oldVal) }}</s></span>
+                                  </ng-container>
+                                </dd>
+                              </ng-container>
+                            </dl>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+            <div class="changes-pagination">
+              <span class="pagination-info">Pàgina {{ teamChanges.page }} de {{ teamChanges.total_pages }} ({{ teamChanges.total }} total)</span>
+              <div class="pagination-buttons">
+                <button type="button" class="btn-pag" [disabled]="teamChanges.page <= 1" (click)="setChangesPage(teamChanges.page - 1)">Anterior</button>
+                <button type="button" class="btn-pag" [disabled]="teamChanges.page >= teamChanges.total_pages" (click)="setChangesPage(teamChanges.page + 1)">Següent</button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
     </div>
   </div>
 

@@ -9,6 +9,7 @@ import { CardModule } from 'primeng/card'
 import { ToastModule } from 'primeng/toast'
 import { MessageService } from 'primeng/api'
 import { Categories, Sexe } from '../interfaces/ludi.interface'
+import type { TeamChange, TeamChangesResponse } from '../interfaces/team-changes.interface'
 import { environment } from '../../environments/environment.prod'
 import { Router } from '@angular/router'
 import { AuthService } from '../serveis/auth.service'
@@ -106,6 +107,33 @@ export class PanellAdminComponent implements OnInit {
 
   // Active tab
   public activeTab: 'dashboard' | 'teams' | 'players' | 'coaches' = 'dashboard'
+
+  // Team changes (audit log) modal
+  public selectedTeamId: number | null = null
+  public selectedTeamName = ''
+  public teamChanges: TeamChangesResponse | null = null
+  public changesLoading = false
+  public changesError = ''
+  public changesPage = 1
+  public changesPageSize = 20
+  public expandedChangeId: number | null = null
+
+  /** Catalan labels for API keys in change detail */
+  public readonly fieldLabels: Record<string, string> = {
+    name: 'Nom equip',
+    first_name: 'Nom',
+    last_name: 'Cognoms',
+    club_id: 'Club',
+    category: 'Categoria',
+    gender: 'Sexe',
+    email: 'Email',
+    phone: 'Telèfon',
+    observations: 'Observacions',
+    shirt_size: 'Talla samarreta',
+    is_head_coach: 'Entrenador principal',
+    team_id: 'Equip',
+    registration_date: "Data d'inscripció",
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -508,6 +536,146 @@ export class PanellAdminComponent implements OnInit {
 
   public navigateToTeamLink(token?: string): void {
     this.router.navigate(['/equip'], { queryParams: token ? { token } : {} })
+  }
+
+  async loadTeamChanges(teamId: number, page = 1, pageSize = 20): Promise<void> {
+    this.changesLoading = true
+    this.changesError = ''
+    this.token = this.authService.getAdminToken()
+    try {
+      const response = await fetch(
+        `${this.host}/api/teams/${teamId}/changes?page=${page}&page_size=${pageSize}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      if (response.status === 401) {
+        this.router.navigate(['/administrador-login'])
+        return
+      }
+      const data = await response.json()
+      if (!response.ok) {
+        this.changesError = data?.error ?? 'Error en carregar els canvis'
+        this.teamChanges = null
+        return
+      }
+      this.teamChanges = data as TeamChangesResponse
+      this.changesPage = page
+      this.changesPageSize = pageSize
+    } catch (err) {
+      console.error('loadTeamChanges failed:', err)
+      this.changesError = 'Error del servidor. Torneu-ho a provar.'
+      this.teamChanges = null
+    } finally {
+      this.changesLoading = false
+    }
+  }
+
+  openTeamChanges(equip: Equip, event: Event): void {
+    event.stopPropagation()
+    this.selectedTeamId = equip.id
+    this.selectedTeamName = equip.nom
+    this.teamChanges = null
+    this.changesError = ''
+    this.changesPage = 1
+    this.expandedChangeId = null
+    this.loadTeamChanges(equip.id, 1, this.changesPageSize)
+  }
+
+  closeTeamChanges(): void {
+    this.selectedTeamId = null
+    this.selectedTeamName = ''
+    this.teamChanges = null
+    this.changesError = ''
+    this.expandedChangeId = null
+  }
+
+  setChangesPage(page: number): void {
+    if (this.selectedTeamId == null) return
+    this.loadTeamChanges(this.selectedTeamId, page, this.changesPageSize)
+  }
+
+  toggleChangeDetail(changeId: number): void {
+    this.expandedChangeId = this.expandedChangeId === changeId ? null : changeId
+  }
+
+  /** Decode base64 then JSON.parse, or JSON.parse if not base64; returns null on failure or empty. */
+  decodeChangeValues(value: string | null | undefined): Record<string, unknown> | null {
+    if (value == null || value === '') return null
+    try {
+      try {
+        const decoded = atob(value)
+        return JSON.parse(decoded) as Record<string, unknown>
+      } catch {
+        return JSON.parse(value) as Record<string, unknown>
+      }
+    } catch {
+      return null
+    }
+  }
+
+  getFieldLabel(key: string): string {
+    return this.fieldLabels[key] ?? key
+  }
+
+  getObjectKeys(obj: Record<string, unknown> | null): string[] {
+    return obj ? Object.keys(obj) : []
+  }
+
+  formatChangeValue(val: unknown): string {
+    if (val == null || val === '') return '—'
+    if (typeof val === 'boolean') return val ? 'Sí' : 'No'
+    if (typeof val === 'string' && /^\d{4}-\d{2}-\d{2}/.test(val)) {
+      try {
+        return new Date(val).toLocaleDateString('ca-ES', { dateStyle: 'short' })
+      } catch {
+        return String(val)
+      }
+    }
+    return String(val)
+  }
+
+  getChangeSummary(change: TeamChange): string {
+    const table = change.table_name
+    const action = change.action
+    if (change.action === 'UPDATE') {
+      const oldObj = this.decodeChangeValues(change.old_values)
+      const newObj = this.decodeChangeValues(change.new_values)
+      const keys = new Set([...(oldObj ? Object.keys(oldObj) : []), ...(newObj ? Object.keys(newObj) : [])])
+      const changedCount = Array.from(keys).filter(
+        k => (oldObj?.[k] ?? null) !== (newObj?.[k] ?? null)
+      ).length
+      return `${table} · UPDATE · ${changedCount} camp${changedCount !== 1 ? 's' : ''}`
+    }
+    return `${table} · ${action}`
+  }
+
+  /** For UPDATE: list of { key, label, oldVal, newVal, status: 'unchanged'|'changed'|'added'|'removed' }. */
+  getDiffEntries(change: TeamChange): { key: string; label: string; oldVal: unknown; newVal: unknown; status: 'unchanged' | 'changed' | 'added' | 'removed' }[] {
+    const oldObj = this.decodeChangeValues(change.old_values) ?? {}
+    const newObj = this.decodeChangeValues(change.new_values) ?? {}
+    const keys = new Set([...Object.keys(oldObj), ...Object.keys(newObj)])
+    return Array.from(keys).map(key => {
+      const oldVal = oldObj[key]
+      const newVal = newObj[key]
+      const hasOld = key in oldObj
+      const hasNew = key in newObj
+      let status: 'unchanged' | 'changed' | 'added' | 'removed' = 'unchanged'
+      if (!hasOld && hasNew) status = 'added'
+      else if (hasOld && !hasNew) status = 'removed'
+      else if (String(oldVal) !== String(newVal)) status = 'changed'
+      return {
+        key,
+        label: this.getFieldLabel(key),
+        oldVal,
+        newVal,
+        status,
+      }
+    })
   }
 }
 

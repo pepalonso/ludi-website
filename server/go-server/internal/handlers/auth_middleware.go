@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"tournament-dev/internal/database"
@@ -12,7 +13,8 @@ import (
 type contextKey int
 
 const (
-	contextKeyTeamID contextKey = iota
+	contextKeyTeamID    contextKey = iota
+	contextKeyAuditActor
 )
 
 // SessionTokenHeader is the header used for the 2FA session token on modify endpoints.
@@ -22,6 +24,14 @@ const SessionTokenHeader = "X-Session-Token"
 func TeamIDFromContext(ctx context.Context) int {
 	id, _ := ctx.Value(contextKeyTeamID).(int)
 	return id
+}
+
+// AuditActorFromContext returns who made the change: "admin", "team:123", or "" if unknown.
+func AuditActorFromContext(ctx context.Context) string {
+	if s, _ := ctx.Value(contextKeyAuditActor).(string); s != "" {
+		return s
+	}
+	return ""
 }
 
 // RequireTeamAuth returns an http.Handler that resolves Authorization: Bearer <token>
@@ -50,6 +60,7 @@ func RequireTeamAuth(repo database.Repository) func(http.Handler) http.Handler {
 				return
 			}
 			ctx := context.WithValue(r.Context(), contextKeyTeamID, teamID)
+			ctx = context.WithValue(ctx, contextKeyAuditActor, "team:"+strconv.Itoa(teamID))
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})
 	}
@@ -84,6 +95,7 @@ func RequireSessionTokenHeader(repo database.Repository) func(http.Handler) http
 				return
 			}
 			ctx := context.WithValue(r.Context(), contextKeyTeamID, *teamID)
+			ctx = context.WithValue(ctx, contextKeyAuditActor, "team:"+strconv.Itoa(*teamID))
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})
 	}
@@ -108,7 +120,8 @@ func RequireAdminAuth(repo database.Repository) func(http.Handler) http.Handler 
 				w.Write([]byte(`{"error":"invalid or expired admin token"}`))
 				return
 			}
-			next.ServeHTTP(w, r)
+			ctx := context.WithValue(r.Context(), contextKeyAuditActor, "admin")
+			next.ServeHTTP(w, r.WithContext(ctx))
 		})
 	}
 }

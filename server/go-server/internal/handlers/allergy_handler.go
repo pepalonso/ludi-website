@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -102,14 +103,23 @@ func (h *AllergyHandler) DeleteAllergy(w http.ResponseWriter, r *http.Request) {
 		h.ErrorResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
-
 	ctx := r.Context()
+	oldAllergy, _ := h.repo.GetAllergyByID(ctx, id)
+	var teamID *int
+	if oldAllergy != nil {
+		if p, _ := h.repo.GetPlayerByID(ctx, oldAllergy.PlayerID); p != nil {
+			teamID = &p.TeamID
+		}
+	}
 	if err := h.repo.DeleteAllergy(ctx, id); err != nil {
 		log.Printf("[admin/allergies] DeleteAllergy failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to delete allergy: %v", err))
 		return
 	}
-
+	if oldAllergy != nil {
+		oldJSON, _ := json.Marshal(oldAllergy)
+		LogChange(ctx, h.repo, "allergies", id, models.ChangeActionDelete, oldJSON, nil, teamID)
+	}
 	h.JSONResponse(w, http.StatusNoContent, nil)
 }
 
@@ -178,10 +188,15 @@ func (h *AllergyHandler) DeleteMeAllergy(w http.ResponseWriter, r *http.Request)
 		h.ErrorResponse(w, http.StatusNotFound, "Allergy not found")
 		return
 	}
+	oldAllergy := allergy
 	if err := h.repo.DeleteAllergy(r.Context(), id); err != nil {
 		log.Printf("[me/allergies] DeleteMeAllergy failed team_id=%d allergy_id=%d: %v", teamID, id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to delete allergy")
 		return
+	}
+	if oldAllergy != nil {
+		oldJSON, _ := json.Marshal(oldAllergy)
+		LogChange(r.Context(), h.repo, "allergies", id, models.ChangeActionDelete, oldJSON, nil, &teamID)
 	}
 	h.JSONResponse(w, http.StatusNoContent, nil)
 }

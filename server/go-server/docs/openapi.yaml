@@ -700,6 +700,44 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /api/teams/{id}/changes:
+    get:
+      summary: Get audit log for a team
+      description: Returns paginated list of changes (INSERT/UPDATE/DELETE) for the given team. Admin only. Each change includes table_name, record_id, action, old_values, new_values, changed_by (admin or team:N), changed_at.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Team ID
+          schema:
+            type: integer
+            minimum: 1
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        "200":
+          description: List of changes for the team
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangeLogListResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /api/documents:
     get:
       summary: List documents
@@ -1240,6 +1278,58 @@ components:
           type: integer
       required:
         - documents
+        - total
+        - page
+        - page_size
+        - total_pages
+
+    ChangeLogRow:
+      type: object
+      properties:
+        id:
+          type: integer
+        table_name:
+          type: string
+          example: "teams"
+        record_id:
+          type: integer
+        action:
+          type: string
+          enum: ["INSERT", "UPDATE", "DELETE"]
+        old_values:
+          type: string
+          description: JSON string of previous values (null for INSERT)
+        new_values:
+          type: string
+          description: JSON string of new values (null for DELETE)
+        changed_by:
+          type: string
+          description: "admin", "team:N", or "registration"
+          example: "team:5"
+        team_id:
+          type: integer
+          nullable: true
+        changed_at:
+          type: string
+          format: date-time
+
+    ChangeLogListResponse:
+      type: object
+      properties:
+        changes:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChangeLogRow"
+        total:
+          type: integer
+        page:
+          type: integer
+        page_size:
+          type: integer
+        total_pages:
+          type: integer
+      required:
+        - changes
         - total
         - page
         - page_size

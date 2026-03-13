@@ -64,6 +64,7 @@ func (r *Router) SetupRoutes(mux *http.ServeMux) {
 	mux.Handle("POST /api/teams", requireAdminAuth(http.HandlerFunc(r.teamHandler.CreateTeam)))
 	mux.Handle("GET /api/teams", requireAdminAuth(http.HandlerFunc(r.teamHandler.ListTeams)))
 	mux.Handle("GET /api/teams/{id}", requireAdminAuth(http.HandlerFunc(r.teamHandler.GetTeam)))
+	mux.Handle("GET /api/teams/{id}/changes", requireAdminAuth(http.HandlerFunc(r.teamHandler.GetTeamChanges)))
 	mux.Handle("PUT /api/teams/{id}", requireAdminAuth(http.HandlerFunc(r.teamHandler.UpdateTeam)))
 
 	mux.Handle("POST /api/players", requireAdminAuth(http.HandlerFunc(r.playerHandler.CreatePlayer)))

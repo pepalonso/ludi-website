@@ -149,7 +149,6 @@ CREATE TABLE admin_sessions (
     INDEX idx_expires_at (expires_at)
 );
 
--- Changes log for audit trail
 CREATE TABLE changes_log (
     id INT PRIMARY KEY AUTO_INCREMENT,
     table_name VARCHAR(50) NOT NULL,
@@ -157,9 +156,17 @@ CREATE TABLE changes_log (
     action ENUM('INSERT', 'UPDATE', 'DELETE') NOT NULL,
     old_values JSON,
     new_values JSON,
-    changed_by VARCHAR(100),
+    changed_by VARCHAR(100) NOT NULL,
     changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    team_id INT NULL,
     INDEX idx_table_record (table_name, record_id),
     INDEX idx_action (action),
-    INDEX idx_changed_at (changed_at)
+    INDEX idx_changed_at (changed_at),
+    INDEX idx_team_id (team_id)
+);
+
+-- Migration tracking (used by scripts/migrate.sh)
+CREATE TABLE IF NOT EXISTS schema_migrations (
+    version BIGINT UNSIGNED PRIMARY KEY,
+    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

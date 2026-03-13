@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -56,6 +57,9 @@ func (h *TeamHandler) CreateTeam(w http.ResponseWriter, r *http.Request) {
 		log.Printf("[admin/teams] CreateTeam GetTeamByID failed team_id=%d: %v", teamID, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to load created team")
 		return
+	}
+	if newJSON, _ := json.Marshal(created); len(newJSON) > 0 {
+		LogChange(r.Context(), h.repo, "teams", teamID, models.ChangeActionInsert, nil, newJSON, &teamID)
 	}
 
 	h.JSONResponse(w, http.StatusCreated, map[string]interface{}{
@@ -173,6 +177,7 @@ func (h *TeamHandler) UpdateTeam(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
+	oldTeam, _ := h.repo.GetTeamByID(ctx, id)
 	if err := h.repo.UpdateTeam(ctx, id, &team); err != nil {
 		if err != nil && strings.Contains(err.Error(), "not found") {
 			h.ErrorResponse(w, http.StatusNotFound, "Team not found")
@@ -188,6 +193,10 @@ func (h *TeamHandler) UpdateTeam(w http.ResponseWriter, r *http.Request) {
 		log.Printf("[admin/teams] UpdateTeam GetTeamByID failed id=%d: %v", id, err)
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to load updated team")
 		return
+	}
+	if oldJSON, _ := json.Marshal(oldTeam); updated != nil {
+		newJSON, _ := json.Marshal(updated)
+		LogChange(ctx, h.repo, "teams", id, models.ChangeActionUpdate, oldJSON, newJSON, &id)
 	}
 
 	h.JSONResponse(w, http.StatusOK, updated)
@@ -270,6 +279,7 @@ func (h *TeamHandler) UpdateMeTeam(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	ctx := r.Context()
+	oldTeam, _ := h.repo.GetTeamByID(ctx, teamID)
 	if err := h.repo.UpdateTeamObservations(ctx, teamID, req.Observations); err != nil {
 		if err != nil && strings.Contains(err.Error(), "not found") {
 			h.ErrorResponse(w, http.StatusNotFound, "Team not found")
@@ -285,7 +295,41 @@ func (h *TeamHandler) UpdateMeTeam(w http.ResponseWriter, r *http.Request) {
 		h.ErrorResponse(w, http.StatusInternalServerError, "Failed to load updated team")
 		return
 	}
+	oldObs := interface{}(nil)
+	if oldTeam != nil && oldTeam.Observations != nil {
+		oldObs = *oldTeam.Observations
+	}
+	newObs := interface{}(nil)
+	if updated != nil && updated.Observations != nil {
+		newObs = *updated.Observations
+	}
+	if oldJSON, _ := json.Marshal(map[string]interface{}{"observations": oldObs}); true {
+		newJSON, _ := json.Marshal(map[string]interface{}{"observations": newObs})
+		LogChange(ctx, h.repo, "teams", teamID, models.ChangeActionUpdate, oldJSON, newJSON, &teamID)
+	}
 	h.JSONResponse(w, http.StatusOK, updated)
+}
+
+// GetTeamChanges handles GET /api/teams/{id}/changes (admin only). Returns audit log for that team.
+func (h *TeamHandler) GetTeamChanges(w http.ResponseWriter, r *http.Request) {
+	id, err := request.ExtractIntParam(r, "id")
+	if err != nil {
+		h.ErrorResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+	page := request.ExtractIntQueryParamWithDefault(r, "page", 1)
+	pageSize := request.ExtractIntQueryParamWithDefault(r, "page_size", 20)
+	if pageSize > 100 {
+		pageSize = 100
+	}
+	ctx := r.Context()
+	resp, err := h.repo.ListChangesByTeamID(ctx, id, page, pageSize)
+	if err != nil {
+		log.Printf("[admin/teams] GetTeamChanges failed team_id=%d: %v", id, err)
+		h.ErrorResponse(w, http.StatusInternalServerError, fmt.Sprintf("Failed to get changes: %v", err))
+		return
+	}
+	h.JSONResponse(w, http.StatusOK, resp)
 }
 
 // GetTeamStats handles GET /api/teams/stats
