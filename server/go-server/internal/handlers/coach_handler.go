@@ -66,8 +66,8 @@ func (h *CoachHandler) GetCoach(w http.ResponseWriter, r *http.Request) {
 
 // ListCoaches handles GET/ /api/coaches
 func (h *CoachHandler) ListCoaches(w http.ResponseWriter, r *http.Request) {
-	page := request.ExtractIntParamWithDefault(r, "page", 1)
-	pageSize := request.ExtractIntParamWithDefault(r, "page_size", 10)
+	page := request.ExtractIntQueryParamWithDefault(r, "page", 1)
+	pageSize := request.ExtractIntQueryParamWithDefault(r, "page_size", 10)
 
 	teamId, err := request.ExtractOptionalIntQueryParam(r, "team_id")
 	if err != nil {
@@ -170,8 +170,8 @@ func (h *CoachHandler) ListMeCoaches(w http.ResponseWriter, r *http.Request) {
 		h.ErrorResponse(w, http.StatusUnauthorized, "missing team context")
 		return
 	}
-	page := request.ExtractIntParamWithDefault(r, "page", 1)
-	pageSize := request.ExtractIntParamWithDefault(r, "page_size", 10)
+	page := request.ExtractIntQueryParamWithDefault(r, "page", 1)
+	pageSize := request.ExtractIntQueryParamWithDefault(r, "page_size", 10)
 	filters := models.CoachFilters{Page: page, PageSize: pageSize, TeamID: &teamID}
 	resp, err := h.repo.ListCoaches(r.Context(), filters)
 	if err != nil {
