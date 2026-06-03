@@ -10,8 +10,6 @@ import (
 	"net/smtp"
 	"net/url"
 	"os"
-	"regexp"
-	"strconv"
 	"strings"
 )
 
@@ -45,15 +43,15 @@ func (s *TwilioSMTPSender) sendWhatsApp(ctx context.Context, pin, phone string) 
 		return fmt.Errorf("missing Twilio configuration (ACCOUNT_SID, AUTH_TOKEN, SENDER_PHONE, CONTENT_SID)")
 	}
 
-	to, err := cleanPhoneNumber(phone)
+	to, err := formatWhatsAppToAddress(phone)
 	if err != nil {
 		return err
 	}
 
 	contentVars, _ := json.Marshal(map[string]string{"1": pin})
 	form := url.Values{}
-	form.Set("To", "whatsapp:"+to)
-	form.Set("From", "whatsapp:"+sender)
+	form.Set("To", to)
+	form.Set("From", formatWhatsAppFromAddress(sender))
 	form.Set("ContentSid", contentSid)
 	form.Set("ContentVariables", string(contentVars))
 	body := strings.NewReader(form.Encode())
@@ -99,21 +97,6 @@ func twilioErrorResponse(resp *http.Response) string {
 	return s
 }
 
-// cleanPhoneNumber normalizes to 34 + 9 digits (Spanish format, no +).
-func cleanPhoneNumber(phone string) (string, error) {
-	digits := regexp.MustCompile(`\D`).ReplaceAllString(phone, "")
-	if strings.HasPrefix(digits, "34") {
-		if len(digits) == 11 {
-			return digits, nil
-		}
-		digits = digits[2:]
-	}
-	if len(digits) == 9 {
-		return "34" + digits, nil
-	}
-	return "", fmt.Errorf("invalid phone number: %s", phone)
-}
-
 func (s *TwilioSMTPSender) sendEmail(ctx context.Context, pin, email string) error {
 	host := os.Getenv("SMTP_HOST")
 	port := os.Getenv("SMTP_PORT")
@@ -140,6 +123,11 @@ func (s *TwilioSMTPSender) sendEmail(ctx context.Context, pin, email string) err
 		return err
 	}
 	return nil
+}
+
+// SendRegistrationWhatsApp sends only the registration WhatsApp confirmation.
+func (s *TwilioSMTPSender) SendRegistrationWhatsApp(ctx context.Context, data RegistrationMessageData) error {
+	return s.sendWhatsAppRegistration(ctx, data)
 }
 
 // SendRegistration sends registration confirmation via WhatsApp (Twilio Content template) and email (SMTP).
@@ -177,23 +165,19 @@ func (s *TwilioSMTPSender) sendWhatsAppRegistration(ctx context.Context, data Re
 	if accountSid == "" || authToken == "" || sender == "" {
 		return fmt.Errorf("missing Twilio configuration")
 	}
-	to, err := cleanPhoneNumber(data.Phone)
+	to, err := formatWhatsAppToAddress(data.Phone)
 	if err != nil {
 		return err
 	}
-	// Template: {{club}}, {{name}}, {{players_num}}, {{coaches_num}}; path_read for URL/button.
-	contentVars, _ := json.Marshal(map[string]string{
-		"club":        data.Club,
-		"name":        data.TeamName,
-		"players_num": strconv.Itoa(data.NumPlayers),
-		"coaches_num": strconv.Itoa(data.NumCoaches),
-		"path_read":  data.RegistrationPath,
-	})
+	contentVars, err := registrationContentVariables(data)
+	if err != nil {
+		return err
+	}
 	form := url.Values{}
-	form.Set("To", "whatsapp:"+to)
-	form.Set("From", "whatsapp:"+sender)
+	form.Set("To", to)
+	form.Set("From", formatWhatsAppFromAddress(sender))
 	form.Set("ContentSid", contentSid)
-	form.Set("ContentVariables", string(contentVars))
+	form.Set("ContentVariables", contentVars)
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost,
 		fmt.Sprintf("https://api.twilio.com/2010-04-01/Accounts/%s/Messages.json", accountSid),
 		strings.NewReader(form.Encode()))
@@ -209,7 +193,8 @@ func (s *TwilioSMTPSender) sendWhatsAppRegistration(ctx context.Context, data Re
 	defer resp.Body.Close()
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		msg := twilioErrorResponse(resp)
-		log.Printf("[twilio] send failed status=%d body=%s", resp.StatusCode, msg)
+		log.Printf("[twilio] registration WA failed team=%q club=%q phone=%s status=%d body=%s",
+			data.TeamName, data.Club, data.Phone, resp.StatusCode, msg)
 		return fmt.Errorf("twilio returned %d: %s", resp.StatusCode, msg)
 	}
 	return nil
