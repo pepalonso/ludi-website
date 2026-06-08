@@ -32,6 +32,8 @@ interface Equip {
   club_nom?: string
   jugadors?: number
   entrenadors?: number
+  observacions?: string
+  intolerancies?: string[]
   token?: string
 }
 
@@ -267,10 +269,29 @@ export class PanellAdminComponent implements OnInit {
         sexe: t['gender'],
         club_id: clubId,
         data_incripcio: t['registration_date'],
+        observacions: (t['observations'] as string | null) ?? '',
         club_nom: this.clubs.find(c => c.id === clubId)?.nom ?? 'Unknown',
         token: (t['registration_token'] as string) ?? undefined,
       }
     })
+    this.enrichEquipsWithCounts()
+  }
+
+  private enrichEquipsWithCounts(): void {
+    this.equips = this.equips.map(equip => ({
+      ...equip,
+      jugadors: this.jugadors.filter(j => j.id_equip === equip.id).length,
+      entrenadors: this.entrenadors.filter(c => c.id_equip === equip.id).length,
+      intolerancies: equip.intolerancies ?? [],
+    }))
+    this.jugadors = this.jugadors.map(j => ({
+      ...j,
+      equip_nom: this.equips.find(e => e.id === j.id_equip)?.nom ?? j.equip_nom,
+    }))
+    this.entrenadors = this.entrenadors.map(c => ({
+      ...c,
+      equip_nom: this.equips.find(e => e.id === c.id_equip)?.nom ?? c.equip_nom,
+    }))
   }
 
   async loadJugadors(): Promise<void> {
@@ -499,16 +520,16 @@ export class PanellAdminComponent implements OnInit {
             value = item.data_incripcio
             break
           case 'nº de jugadors':
-            value = item.jugadors.toString() || ''
+            value = String(item.jugadors ?? 0)
             break
           case "nº d'entrenadors":
-            value = item.entrenadors.toString() || ''
+            value = String(item.entrenadors ?? 0)
             break
           case 'nº de dietes':
-            value = (item.jugadors + item.entrenadors).toString() || ''
+            value = String((item.jugadors ?? 0) + (item.entrenadors ?? 0))
             break
           case 'Intoleràncies':
-            value = item.intolerancies.join(' | ')
+            value = (item.intolerancies ?? []).join(' | ')
             break
           case 'Talla de samarreta':
             value = item.talla_samarreta || ''
@@ -520,8 +541,14 @@ export class PanellAdminComponent implements OnInit {
             value = ''
         }
 
+        if (value == null) {
+          value = ''
+        } else if (typeof value !== 'string') {
+          value = String(value)
+        }
+
         // Escape quotes and wrap in quotes if contains comma
-        if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+        if (value.includes(',') || value.includes('"')) {
           value = `"${value.replace(/"/g, '""')}"`
         }
 
