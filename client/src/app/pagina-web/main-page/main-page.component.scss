@@ -295,10 +295,15 @@
   font-weight: bold;
   margin: 5%;
 
-  &:hover{
+  &:hover:not(:disabled) {
     background-color: #a34f00;
     transition: 0.5s;
     transform: translateY(-5%);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 

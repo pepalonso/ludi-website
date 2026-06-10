@@ -110,6 +110,11 @@ body {
   height: 60px;
 }
 
+.inscripcions-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 
 @media (max-width: 768px) {
   .countdown {
