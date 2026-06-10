@@ -17,8 +17,13 @@
   transition: background-color 0.3s;
 }
 
-.btn-download:hover {
+.btn-download:hover:not(:disabled) {
   background-color: #f07b1c;
+}
+
+.btn-download:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .btn-icon {
