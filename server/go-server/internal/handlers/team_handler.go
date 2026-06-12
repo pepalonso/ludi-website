@@ -242,6 +242,8 @@ func (h *TeamHandler) GetMeTeam(w http.ResponseWriter, r *http.Request) {
 		Intolerancies:  intolerancies,
 		Jugadors:       make([]models.MeTeamJugador, 0, len(team.Players)),
 		Entrenadors:    make([]models.MeTeamEntrenador, 0, len(team.Coaches)),
+		TornSopar:      team.DinnerTurn,
+		IdDormitori:    team.DormitoryID,
 	}
 	for _, p := range team.Players {
 		resp.Jugadors = append(resp.Jugadors, models.MeTeamJugador{

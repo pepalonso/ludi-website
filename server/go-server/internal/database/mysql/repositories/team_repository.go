@@ -52,7 +52,7 @@ func (r *TeamRepository) CreateTeam(ctx context.Context, team *models.TeamCreate
 // GetTeamByID retrieves a team by ID
 func (r *TeamRepository) GetTeamByID(ctx context.Context, id int) (*models.Team, error) {
 	query := `
-		SELECT id, name, email, category, phone, gender, club_id, observations, registration_date, updated_at, status
+		SELECT id, name, email, category, phone, gender, club_id, observations, dinner_turn, dormitory_id, registration_date, updated_at, status
 		FROM teams
 		WHERE id = ?
 	`
@@ -67,6 +67,8 @@ func (r *TeamRepository) GetTeamByID(ctx context.Context, id int) (*models.Team,
 		&team.Gender,
 		&team.ClubID,
 		&team.Observations,
+		&team.DinnerTurn,
+		&team.DormitoryID,
 		&team.RegistrationDate,
 		&team.UpdatedAt,
 		&team.Status,
@@ -85,7 +87,7 @@ func (r *TeamRepository) GetTeamByID(ctx context.Context, id int) (*models.Team,
 // GetTeamByEmail retrieves a team by email
 func (r *TeamRepository) GetTeamByEmail(ctx context.Context, email string) (*models.Team, error) {
 	query := `
-		SELECT id, name, email, category, phone, gender, club_id, observations, registration_date, updated_at, status
+		SELECT id, name, email, category, phone, gender, club_id, observations, dinner_turn, dormitory_id, registration_date, updated_at, status
 		FROM teams
 		WHERE email = ?
 	`
@@ -100,6 +102,8 @@ func (r *TeamRepository) GetTeamByEmail(ctx context.Context, email string) (*mod
 		&team.Gender,
 		&team.ClubID,
 		&team.Observations,
+		&team.DinnerTurn,
+		&team.DormitoryID,
 		&team.RegistrationDate,
 		&team.UpdatedAt,
 		&team.Status,
@@ -119,7 +123,7 @@ func (r *TeamRepository) GetTeamByEmail(ctx context.Context, email string) (*mod
 func (r *TeamRepository) UpdateTeam(ctx context.Context, id int, team *models.TeamUpdateRequest) error {
 	query := `
 		UPDATE teams
-		SET name = ?, email = ?, category = ?, phone = ?, gender = ?, club_id = ?, observations = ?, status = ?, updated_at = NOW()
+		SET name = ?, email = ?, category = ?, phone = ?, gender = ?, club_id = ?, observations = ?, dinner_turn = ?, dormitory_id = ?, status = ?, updated_at = NOW()
 		WHERE id = ?
 	`
 
@@ -131,6 +135,8 @@ func (r *TeamRepository) UpdateTeam(ctx context.Context, id int, team *models.Te
 		team.Gender,
 		team.ClubID,
 		team.Observations,
+		team.DinnerTurn,
+		team.DormitoryID,
 		team.Status,
 		id,
 	)
@@ -193,7 +199,7 @@ func (r *TeamRepository) ListTeams(ctx context.Context, filters models.TeamFilte
 	// Subquery: one valid registration token per team (latest by created_at)
 	tokenSubq := `(SELECT rt.token FROM registration_tokens rt WHERE rt.team_id = teams.id AND rt.expires_at > UTC_TIMESTAMP() ORDER BY rt.created_at DESC LIMIT 1)`
 	// Build the query with filters
-	query := `SELECT teams.id, teams.name, teams.email, teams.category, teams.phone, teams.gender, teams.club_id, teams.observations, teams.registration_date, teams.updated_at, teams.status, ` + tokenSubq + ` AS registration_token FROM teams`
+	query := `SELECT teams.id, teams.name, teams.email, teams.category, teams.phone, teams.gender, teams.club_id, teams.observations, teams.dinner_turn, teams.dormitory_id, teams.registration_date, teams.updated_at, teams.status, ` + tokenSubq + ` AS registration_token FROM teams`
 	args := []interface{}{}
 
 	var conditions []string
@@ -262,6 +268,8 @@ func (r *TeamRepository) ListTeams(ctx context.Context, filters models.TeamFilte
 			&team.Gender,
 			&team.ClubID,
 			&team.Observations,
+			&team.DinnerTurn,
+			&team.DormitoryID,
 			&team.RegistrationDate,
 			&team.UpdatedAt,
 			&team.Status,
@@ -280,6 +288,8 @@ func (r *TeamRepository) ListTeams(ctx context.Context, filters models.TeamFilte
 			Gender:            team.Gender,
 			ClubID:            team.ClubID,
 			Observations:      team.Observations,
+			DinnerTurn:        team.DinnerTurn,
+			DormitoryID:        team.DormitoryID,
 			RegistrationDate:  team.RegistrationDate,
 			UpdatedAt:         team.UpdatedAt,
 			Status:            team.Status,

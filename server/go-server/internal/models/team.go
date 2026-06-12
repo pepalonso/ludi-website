@@ -16,6 +16,8 @@ type Team struct {
 	ID int `json:"id" db:"id"`
 	TeamBase
 	Observations     *string   `json:"observations" db:"observations"`
+	DinnerTurn       *int      `json:"dinner_turn,omitempty" db:"dinner_turn"`
+	DormitoryID      *string   `json:"dormitory_id,omitempty" db:"dormitory_id"`
 	RegistrationDate time.Time `json:"registration_date" db:"registration_date"`
 	UpdatedAt        time.Time `json:"updated_at" db:"updated_at"`
 
@@ -32,6 +34,8 @@ type TeamCreateRequest struct {
 type TeamUpdateRequest struct {
 	TeamBase
 	Observations *string `json:"observations,omitempty"`
+	DinnerTurn   *int    `json:"dinner_turn,omitempty"`
+	DormitoryID  *string `json:"dormitory_id,omitempty"`
 }
 
 type TeamResponse struct {
@@ -43,6 +47,8 @@ type TeamResponse struct {
 	Gender             Gender        `json:"gender"`
 	ClubID             int           `json:"club_id"`
 	Observations       *string       `json:"observations"`
+	DinnerTurn         *int          `json:"dinner_turn,omitempty"`
+	DormitoryID        *string       `json:"dormitory_id,omitempty"`
 	RegistrationDate   time.Time     `json:"registration_date"`
 	UpdatedAt          time.Time     `json:"updated_at"`
 	Status             Status        `json:"status"`
@@ -91,6 +97,8 @@ type MeTeamResponse struct {
 	Jugadors          []MeTeamJugador    `json:"jugadors"`
 	Entrenadors       []MeTeamEntrenador `json:"entrenadors"`
 	RegistrationToken *string            `json:"registrationToken,omitempty"`
+	TornSopar         *int               `json:"tornSopar,omitempty"`
+	IdDormitori       *string            `json:"idDormitori,omitempty"`
 }
 
 type MeTeamUpdateRequest struct {
