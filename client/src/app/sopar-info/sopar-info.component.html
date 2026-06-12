@@ -20,22 +20,16 @@
     <section class="highlight-grid">
       <article class="highlight-card highlight-card--primary">
         <span class="label">Torn de sopar</span>
-        <p class="value" *ngIf="teamInfo.tornSopar != null; else noTorn">
-          {{ teamInfo.tornSopar }}
+        <p class="value" [class.value--pending]="tornSoparDisplay === '-'">
+          {{ tornSoparDisplay }}
         </p>
-        <ng-template #noTorn>
-          <p class="value value--pending">Pendent d'assignar</p>
-        </ng-template>
       </article>
 
       <article class="highlight-card">
         <span class="label">Dormitori</span>
-        <p class="value" *ngIf="teamInfo.idDormitori; else noDormitori">
-          {{ teamInfo.idDormitori }}
+        <p class="value" [class.value--pending]="dormitoriDisplay === '-'">
+          {{ dormitoriDisplay }}
         </p>
-        <ng-template #noDormitori>
-          <p class="value value--pending">Pendent d'assignar</p>
-        </ng-template>
       </article>
     </section>
 

@@ -55,6 +55,26 @@ export class SoparInfoComponent implements OnInit {
     return this.playersCount + this.coachesCount
   }
 
+  get tornSoparDisplay(): string {
+    const torn = this.teamInfo?.tornSopar
+    if (torn == null) return '-'
+    switch (torn) {
+      case 1:
+        return '20:00'
+      case 2:
+        return '20:45'
+      case 3:
+        return '21:30'
+      default:
+        return '-'
+    }
+  }
+
+  get dormitoriDisplay(): string {
+    const dormitori = this.teamInfo?.idDormitori?.trim()
+    return dormitori ? dormitori : '-'
+  }
+
   private async fetchTeamInfo(token: string): Promise<void> {
     const url = `${environment.apiBaseUrl}/api/me/team`
     const headers = {
