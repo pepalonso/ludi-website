@@ -1,0 +1,61 @@
+<div class="page">
+  <div *ngIf="!teamInfo && !error" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Carregant informació del sopar...</p>
+  </div>
+
+  <div *ngIf="error" class="error-container">
+    <h1>No s'ha pogut carregar la informació</h1>
+    <p>Comprova que l'enllaç sigui correcte i que el token sigui vàlid.</p>
+  </div>
+
+  <div *ngIf="teamInfo" class="content">
+    <header class="team-header">
+      <p class="eyebrow">Sopar LUDIBÀSQUET</p>
+      <h1>{{ teamInfo.nomEquip }}</h1>
+      <h2>{{ teamInfo.club }}</h2>
+      <p class="meta">{{ teamInfo.categoria }} · {{ teamInfo.sexe }}</p>
+    </header>
+
+    <section class="highlight-grid">
+      <article class="highlight-card highlight-card--primary">
+        <span class="label">Torn de sopar</span>
+        <p class="value" *ngIf="teamInfo.tornSopar != null; else noTorn">
+          {{ teamInfo.tornSopar }}
+        </p>
+        <ng-template #noTorn>
+          <p class="value value--pending">Pendent d'assignar</p>
+        </ng-template>
+      </article>
+
+      <article class="highlight-card">
+        <span class="label">Dormitori</span>
+        <p class="value" *ngIf="teamInfo.idDormitori; else noDormitori">
+          {{ teamInfo.idDormitori }}
+        </p>
+        <ng-template #noDormitori>
+          <p class="value value--pending">Pendent d'assignar</p>
+        </ng-template>
+      </article>
+    </section>
+
+    <section class="members-section">
+      <h3>Comensals de l'equip</h3>
+      <div class="members-grid">
+        <article class="member-card">
+          <span class="member-count">{{ playersCount }}</span>
+          <span class="member-label">Jugadors</span>
+        </article>
+        <article class="member-card">
+          <span class="member-count">{{ coachesCount }}</span>
+          <span class="member-label">Entrenadors</span>
+        </article>
+        <article class="member-card member-card--total">
+          <span class="member-count">{{ totalMembers }}</span>
+          <span class="member-label">Total comensals</span>
+        </article>
+      </div>
+    </section>
+  </div>
+</div>
+

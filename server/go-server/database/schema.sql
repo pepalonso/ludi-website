@@ -24,6 +24,8 @@ CREATE TABLE teams (
     gender ENUM('Masculí', 'Femení') NOT NULL,
     club_id INT NOT NULL,
     observations TEXT,
+    dinner_turn INT NULL,
+    dormitory_id VARCHAR(255) NULL,
     registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     status ENUM('pending_payment', 'canceled', 'active') DEFAULT 'pending_payment',

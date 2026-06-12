@@ -19,6 +19,7 @@ import { PanellAdminComponent } from './panell-admin/panell-admin.component'
 import { EditarEquipAuthComponent } from './editar-equip-auth/editar-equip-auth.component'
 import { InscripcionsTancadesComponent } from './inscripcions-tancades/inscripcions-tancades.component'
 import { QrCodeInfoComponent } from './qr-code-info/qr-code-info.component'
+import { SoparInfoComponent } from './sopar-info/sopar-info.component'
 
 export const routes: Routes = [
   { path: 'administrador-login', component: LoginComponent },
@@ -44,6 +45,7 @@ export const routes: Routes = [
     component: EditarEquipAuthComponent,
   },
   { path: 'menjars', component: QrCodeInfoComponent },
+  { path: 'sopar', component: SoparInfoComponent },
   { path: '**', redirectTo: '/pagina-principal', pathMatch: 'full' },
 ]
 
