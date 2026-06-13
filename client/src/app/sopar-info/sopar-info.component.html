@@ -33,6 +33,12 @@
       </article>
     </section>
 
+    <section *ngIf="partitsUrl" class="partits-section">
+      <a class="partits-button" [href]="partitsUrl" target="_blank" rel="noopener noreferrer">
+        Fes clic per veure els partits
+      </a>
+    </section>
+
     <section class="members-section">
       <h3>Comensals de l'equip</h3>
       <div class="members-grid">
