@@ -113,6 +113,38 @@
   opacity: 0.7;
 }
 
+.partits-section {
+  margin-bottom: 1.5rem;
+}
+
+.partits-button {
+  display: block;
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  border-radius: 16px;
+  background: var(--primary, #d36600);
+  color: #fff;
+  font-size: clamp(1.05rem, 3.5vw, 1.25rem);
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(211, 102, 0, 0.35);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.partits-button:hover {
+  background: #e57710;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(211, 102, 0, 0.45);
+}
+
+.partits-button:active {
+  transform: translateY(0);
+}
+
 .members-section {
   background: #333;
   border-radius: 16px;
@@ -165,3 +197,4 @@
   font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.75);
 }
+

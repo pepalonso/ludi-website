@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { environment } from '../../environments/environment'
 import { take } from 'rxjs'
+import { getPartitsUrl } from './sopar-partits-links'
 
 interface SoparTeamInfo {
   nomEquip: string
@@ -73,6 +74,11 @@ export class SoparInfoComponent implements OnInit {
   get dormitoriDisplay(): string {
     const dormitori = this.teamInfo?.idDormitori?.trim()
     return dormitori ? dormitori : '-'
+  }
+
+  get partitsUrl(): string | undefined {
+    if (!this.teamInfo) return undefined
+    return getPartitsUrl(this.teamInfo.categoria, this.teamInfo.sexe)
   }
 
   private async fetchTeamInfo(token: string): Promise<void> {
