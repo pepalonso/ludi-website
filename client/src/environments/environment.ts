@@ -11,5 +11,12 @@ export const environment = {
   pricePerPlayer: Number(process.env['PRICE_PER_PLAYER'] || 55),
   pricePerPlayerPremini: Number(process.env['PRICE_PER_PLAYER_PREMINI'] || 40),
   pricePerEntrenador: Number(process.env['PRICE_PER_ENTRENADOR']) ?? 0,
+  /** Immich instance base URL (no trailing slash). Set IMMICH_SERVER_CORS_ORIGIN on Immich for your site. */
+  immichBaseUrl: (process.env['IMMICH_BASE_URL'] || '').replace(/\/$/, ''),
+  immichGalleries: {
+    '2026': {
+      shareKey: process.env['IMMICH_SHARE_KEY_2026'] || '',
+    },
+  },
 }
 

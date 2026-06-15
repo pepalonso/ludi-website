@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core'
-import type { GalleryYear } from '../models/gallery.model'
-import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs'
-import { environment } from '../../../../environments/environment.prod'
+import { from, Observable } from 'rxjs'
+import { environment } from '../../../../environments/environment'
+import type { GalleryCursor, GalleryPageResult, GalleryYear } from '../models/gallery.model'
+import { ImmichGalleryService } from './immich-gallery.service'
 
 @Injectable({
   providedIn: 'root',
@@ -10,15 +10,14 @@ import { environment } from '../../../../environments/environment.prod'
 export class GalleryService {
   private galleries: GalleryYear[] = [
     {
-      year: '2025',
-      title: 'Temporada 2025',
-      description: "Recull d'imatges del Ludibasquet 2025",
-      coverImage: '/assets/images/gallery/Portada2025.JPG',
+      year: '2026',
+      title: 'Temporada 2026',
+      description: "Recull d'imatges del Ludibàsquet 2026",
       images: [],
     },
   ]
 
-  constructor(private http: HttpClient) {}
+  constructor(private immichGallery: ImmichGalleryService) {}
 
   getAllGalleries(): GalleryYear[] {
     return this.galleries
@@ -28,9 +27,33 @@ export class GalleryService {
     return this.galleries.find(gallery => gallery.year === year)
   }
 
-  carregarImatgesS3(year: string, pagina: number, tamany: number): Observable<any> {
-    const url = `${environment.apiBaseUrl}/galeria-web?year=${year}&page=${pagina}&pageSize=${tamany}`
-    return this.http.get<any>(url)
+  getShareKey(year: string): string | undefined {
+    const galleries = environment.immichGalleries as Record<string, { shareKey: string }>
+    return galleries[year]?.shareKey || undefined
+  }
+
+  isGalleryConfigured(year: string): boolean {
+    return this.immichGallery.isConfigured() && Boolean(this.getShareKey(year))
+  }
+
+  loadGalleryImages(
+    year: string,
+    cursor: GalleryCursor | null,
+    pageSize: number
+  ): Observable<GalleryPageResult> {
+    const shareKey = this.getShareKey(year)
+    if (!shareKey) {
+      throw new Error(`No hi ha configuració Immich per a l’any ${year}`)
+    }
+    return from(this.immichGallery.loadAssetsPage(shareKey, cursor, pageSize))
+  }
+
+  loadCoverImage(year: string): Observable<string | null> {
+    const shareKey = this.getShareKey(year)
+    if (!shareKey) {
+      return from(Promise.resolve(null))
+    }
+    return from(this.immichGallery.getCoverImageUrl(shareKey))
   }
 }
 

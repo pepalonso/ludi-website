@@ -1,42 +1,31 @@
-import { Component, ElementRef, viewChild, type OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { GalleryService } from '../../shared/service/gallery.service';
-import type {
-  GalleryYear,
-  GalleryImage,
-} from '../../shared/models/gallery.model';
-import { NavMenuComponent } from '../../nav-menu/nav-menu.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Component, type OnInit } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { RouterModule, ActivatedRoute, Router } from '@angular/router'
+import { GalleryService } from '../../shared/service/gallery.service'
+import type { GalleryYear, GalleryImage, GalleryCursor } from '../../shared/models/gallery.model'
+import { NavMenuComponent } from '../../nav-menu/nav-menu.component'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 @Component({
   selector: 'app-gallery-detail',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    NavMenuComponent,
-    MatProgressSpinnerModule,
-  ],
+  imports: [CommonModule, RouterModule, NavMenuComponent, MatProgressSpinnerModule],
   templateUrl: './gallery-detail.component.html',
   styleUrls: ['./gallery-detail.component.scss'],
 })
 export class GalleryDetailComponent implements OnInit {
-  gallery: GalleryYear | undefined;
-  selectedImage: any | null = null;
-  year = '';
-  fotos: any;
+  gallery: GalleryYear | undefined
+  selectedImage: GalleryImage | null = null
+  year = ''
 
-  displayedImages: string[] = [];
-  allImages: any;
-  itemsPerPage = 52;
-  currentIndex = 0;
-  page = 1;
-  limit = 52;
-  isLoading = false;
-  hasMoreImages = true;
+  displayedImages: GalleryImage[] = []
+  cursor: GalleryCursor | null = null
+  itemsPerPage = 52
+  isLoading = false
+  hasMoreImages = true
+  loadError: string | null = null
 
-  carregantMesImatges = false;
+  carregantMesImatges = false
 
   constructor(
     private route: ActivatedRoute,
@@ -45,106 +34,105 @@ export class GalleryDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.year = params['year'];
-      this.loadGallery();
-    });
+    this.route.params.subscribe(params => {
+      this.year = params['year']
+      this.loadGallery()
+    })
   }
 
   loadGallery(): void {
-    this.gallery = this.galleryService.getGalleryByYear(this.year);
+    this.gallery = this.galleryService.getGalleryByYear(this.year)
     if (!this.gallery) {
-      this.router.navigate(['/galeria']);
-      return;
+      this.router.navigate(['/galeria'])
+      return
     }
 
-    this.isLoading = true;
+    if (!this.galleryService.isGalleryConfigured(this.year)) {
+      this.loadError = 'La galeria no està configurada. Contacta amb l’organització.'
+      return
+    }
 
-    this.galleryService
-      .carregarImatgesS3(this.year, this.page, this.limit)
-      .subscribe({
-        next: (data) => {
-          this.allImages = data;
-          this.displayedImages = this.allImages.urls.slice(
-            0,
-            this.itemsPerPage
-          );
-          this.currentIndex = this.itemsPerPage;
-          this.isLoading = false;
-        },
-        error: () => (this.isLoading = false),
-      });
+    this.displayedImages = []
+    this.cursor = null
+    this.hasMoreImages = true
+    this.loadError = null
+    this.isLoading = true
+
+    this.galleryService.loadGalleryImages(this.year, null, this.itemsPerPage).subscribe({
+      next: data => {
+        this.displayedImages = data.assets
+        this.cursor = data.nextCursor
+        this.hasMoreImages = data.hasMore
+        this.isLoading = false
+      },
+      error: () => {
+        this.loadError = 'No s’han pogut carregar les imatges. Torna-ho a provar més tard.'
+        this.isLoading = false
+      },
+    })
   }
 
   loadMoreImages(): void {
-    if (this.carregantMesImatges || !this.hasMoreImages) return;
+    if (this.carregantMesImatges || !this.hasMoreImages || this.isLoading) return
 
-    this.page += 1;
+    this.carregantMesImatges = true
 
-    this.carregantMesImatges = true;
-
-    this.galleryService
-      .carregarImatgesS3(this.year, this.page, this.limit)
-      .subscribe({
-        next: (data) => {
-          if (data.length < this.limit) {
-            this.hasMoreImages = false;
-          }
-          this.carregantMesImatges = false;
-          this.displayedImages = this.displayedImages.concat(data.urls);
-        },
-        error: () => {
-          this.carregantMesImatges = false;
-          this.hasMoreImages = false;
-        },
-      });
+    this.galleryService.loadGalleryImages(this.year, this.cursor, this.itemsPerPage).subscribe({
+      next: data => {
+        this.displayedImages = this.displayedImages.concat(data.assets)
+        this.cursor = data.nextCursor
+        this.hasMoreImages = data.hasMore
+        this.carregantMesImatges = false
+      },
+      error: () => {
+        this.carregantMesImatges = false
+        this.hasMoreImages = false
+      },
+    })
   }
 
-  openLightbox(image: any): void {
-    this.selectedImage = image;
-    document.body.style.overflow = 'hidden';
+  openLightbox(image: GalleryImage): void {
+    this.selectedImage = image
+    document.body.style.overflow = 'hidden'
   }
 
   closeLightbox(): void {
-    this.selectedImage = null;
-    document.body.style.overflow = 'auto';
+    this.selectedImage = null
+    document.body.style.overflow = 'auto'
   }
 
   nextImage(): void {
-    if (!this.selectedImage || !this.displayedImages.length) return;
+    if (!this.selectedImage || !this.displayedImages.length) return
 
     const currentIndex = this.displayedImages.findIndex(
-      (url: string) => url === this.selectedImage
-    );
-    const nextIndex = (currentIndex + 1) % this.displayedImages.length;
-    this.selectedImage = this.displayedImages[nextIndex];
-    if(nextIndex + 5 == this.displayedImages.length) {
-      this.loadMoreImages();
+      image => image.id === this.selectedImage?.id
+    )
+    const nextIndex = (currentIndex + 1) % this.displayedImages.length
+    this.selectedImage = this.displayedImages[nextIndex]
+    if (nextIndex + 5 === this.displayedImages.length) {
+      this.loadMoreImages()
     }
   }
 
   prevImage(): void {
-    if (!this.selectedImage || !this.displayedImages.length) return;
+    if (!this.selectedImage || !this.displayedImages.length) return
 
     const currentIndex = this.displayedImages.findIndex(
-      (url: string) => url === this.selectedImage
-    );
-    const prevIndex =
-      (currentIndex - 1 + this.displayedImages.length) % this.displayedImages.length;
-    this.selectedImage = this.displayedImages[prevIndex];
+      image => image.id === this.selectedImage?.id
+    )
+    const prevIndex = (currentIndex - 1 + this.displayedImages.length) % this.displayedImages.length
+    this.selectedImage = this.displayedImages[prevIndex]
   }
 
   onScroll(): void {
     const scrollTop =
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop ||
-      0;
-    const windowHeight = window.innerHeight;
-    const fullHeight = document.documentElement.scrollHeight;
+      window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+    const windowHeight = window.innerHeight
+    const fullHeight = document.documentElement.scrollHeight
 
     if (scrollTop + windowHeight >= fullHeight - 2000) {
-      this.loadMoreImages();
+      this.loadMoreImages()
     }
   }
 }
+

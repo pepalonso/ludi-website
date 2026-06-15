@@ -9,5 +9,9 @@ export const environment = {
   pricePerPlayer: 55,
   pricePerPlayerPremini: 40,
   pricePerEntrenador: 0,
+  immichBaseUrl: '',
+  immichGalleries: {
+    '2026': { shareKey: '' },
+  },
 }
 
